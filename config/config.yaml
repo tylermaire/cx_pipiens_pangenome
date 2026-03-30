@@ -1,0 +1,53 @@
+﻿# ============================================================
+# Culex pipiens Complex Pangenome - Pipeline Configuration
+# ============================================================
+ 
+# -- Sample metadata --
+samples: config/samples.tsv
+ 
+# -- Reference genome (annotation donor for Liftoff) --
+reference:
+  name: Cx_quinquefasciatus
+  accession: GCF_015732765.1
+ 
+# -- Outgroup for tree rooting --
+outgroup:
+  name: Cx_tarsalis
+  accession: GCA_016859205.1
+ 
+# -- BUSCO parameters --
+busco:
+  lineage: diptera_odb10
+  mode: genome
+ 
+# -- Liftoff annotation transfer --
+liftoff:
+  coverage_threshold: 0.95
+  identity_threshold: 0.90
+ 
+# -- OrthoFinder --
+orthofinder:
+  method: msa
+  search: diamond
+ 
+# -- IQ-TREE phylogenetics --
+iqtree:
+  model: MFP
+  bootstrap: 1000
+ 
+# -- CAFE5 gene family evolution --
+cafe:
+  pvalue_threshold: 0.05
+  n_gamma_categories: 3
+ 
+# -- Minimap2 genome alignment --
+minimap2:
+  preset: asm5
+ 
+# -- RepeatMasker --
+repeatmasker:
+  species: culex
+ 
+# -- Compute resources --
+threads: 8
+memory_gb: 32

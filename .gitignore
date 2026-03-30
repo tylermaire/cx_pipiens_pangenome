@@ -1,0 +1,23 @@
+﻿# Data and results (too large for git)
+resources/genomes/
+resources/annotations/
+resources/eggnog_data/
+results/
+ 
+# Snakemake working files
+.snakemake/
+ 
+# OS files
+.DS_Store
+Thumbs.db
+ 
+# Python
+__pycache__/
+*.pyc
+ 
+# Conda
+*.conda
+ 
+# Temporary
+*.zip
+tmp_*/

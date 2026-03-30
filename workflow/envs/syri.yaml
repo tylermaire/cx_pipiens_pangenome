@@ -1,0 +1,8 @@
+﻿name: syri
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - syri>=1.6
+  - plotsr>=1.1
+  - python>=3.8

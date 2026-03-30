@@ -1,0 +1,9 @@
+﻿name: orthofinder
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - orthofinder>=2.5
+  - diamond
+  - mafft
+  - fasttree

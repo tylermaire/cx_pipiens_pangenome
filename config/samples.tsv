@@ -1,0 +1,6 @@
+﻿sample	form	accession	is_outgroup
+Cx_quinquefasciatus	quinquefasciatus	GCF_015732765.1	false
+Cx_pallens	pallens	GCF_016801865.2	false
+Cx_molestus	molestus	GCA_024516115.1	false
+Cx_pipiens	pipiens	GCA_963924435.1	false
+Cx_tarsalis	outgroup	GCA_016859205.1	true

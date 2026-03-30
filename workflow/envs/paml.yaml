@@ -1,0 +1,6 @@
+﻿name: paml
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - paml>=4.10

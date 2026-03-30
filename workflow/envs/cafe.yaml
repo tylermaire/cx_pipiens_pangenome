@@ -1,0 +1,6 @@
+﻿name: cafe
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - cafe>=5.0
