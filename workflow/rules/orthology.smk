@@ -1,4 +1,4 @@
-﻿# orthology.smk - Ortholog inference and pangenome partitioning
+# orthology.smk - Ortholog inference and pangenome partitioning
 # Owner: Person B
 # Tools: OrthoFinder
 # Outputs: results/orthofinder/output/, results/pangenome/

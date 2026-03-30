@@ -1,4 +1,4 @@
-﻿name: astral
+name: astral
 channels:
   - conda-forge
   - bioconda

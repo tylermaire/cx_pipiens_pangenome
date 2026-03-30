@@ -1,4 +1,4 @@
-﻿REF = config["reference"]["name"]
+REF = config["reference"]["name"]
  
 rule liftoff:
     input:

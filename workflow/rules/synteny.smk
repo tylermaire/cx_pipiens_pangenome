@@ -1,4 +1,4 @@
-﻿# synteny.smk - Structural variation and synteny analysis
+# synteny.smk - Structural variation and synteny analysis
 # Owner: Person D
 # Tools: minimap2, SyRI, plotsr, MUMmer4
 # Outputs: results/synteny/, results/figures/

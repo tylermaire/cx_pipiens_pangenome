@@ -1,4 +1,4 @@
-﻿"""
+"""
 Culex pipiens Complex Pangenome Analysis Pipeline
 ==================================================
 Authors: Tyler Maire and collaborators

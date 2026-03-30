@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """
 Partition OrthoFinder orthogroups into core, shell, and cloud pangenome compartments.
  

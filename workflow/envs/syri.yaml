@@ -1,4 +1,4 @@
-﻿name: syri
+name: syri
 channels:
   - conda-forge
   - bioconda

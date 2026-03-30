@@ -1,4 +1,4 @@
-﻿name: liftoff
+name: liftoff
 channels:
   - conda-forge
   - bioconda

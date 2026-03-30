@@ -1,4 +1,4 @@
-﻿# repeats.smk - Transposable element analysis
+# repeats.smk - Transposable element analysis
 # Owner: Person A
 # Tools: RepeatModeler, RepeatMasker
 # Outputs: results/repeats/

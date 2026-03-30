@@ -1,4 +1,4 @@
-﻿# functional.smk - Functional annotation and GO enrichment
+# functional.smk - Functional annotation and GO enrichment
 # Owner: Person B
 # Tools: eggNOG-mapper, R (topGO/clusterProfiler)
 # Outputs: results/eggnog/, results/functional/

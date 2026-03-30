@@ -1,4 +1,4 @@
-﻿name: trimal
+name: trimal
 channels:
   - conda-forge
   - bioconda

@@ -1,4 +1,4 @@
-﻿name: mafft
+name: mafft
 channels:
   - conda-forge
   - bioconda

@@ -1,4 +1,4 @@
-﻿name: paml
+name: paml
 channels:
   - conda-forge
   - bioconda

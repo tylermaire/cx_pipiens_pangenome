@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """
 Extract single-copy ortholog (SCO) sequences from OrthoFinder output.
 Creates one FASTA file per SCO with sequences from all species.

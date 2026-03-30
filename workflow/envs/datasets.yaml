@@ -1,4 +1,4 @@
-﻿name: datasets
+name: datasets
 channels:
   - conda-forge
 dependencies:

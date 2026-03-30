@@ -1,4 +1,4 @@
-﻿name: gffread
+name: gffread
 channels:
   - conda-forge
   - bioconda

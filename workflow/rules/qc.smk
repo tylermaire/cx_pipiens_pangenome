@@ -1,4 +1,4 @@
-﻿rule busco:
+rule busco:
     input: "resources/genomes/{sample}.fasta"
     output: directory("results/busco/{sample}")
     params:

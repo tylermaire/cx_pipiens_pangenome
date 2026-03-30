@@ -1,4 +1,4 @@
-﻿name: minimap2
+name: minimap2
 channels:
   - conda-forge
   - bioconda

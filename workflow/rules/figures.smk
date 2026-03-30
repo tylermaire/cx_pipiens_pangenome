@@ -1,4 +1,4 @@
-﻿# figures.smk - Publication figure generation
+# figures.smk - Publication figure generation
 # Owner: Person D (coordination), all contribute
 # Tools: R (ggplot2, UpSetR, ggtree, etc.)
 # Outputs: results/figures/

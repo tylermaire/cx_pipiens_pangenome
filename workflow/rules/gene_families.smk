@@ -1,4 +1,4 @@
-﻿# gene_families.smk - Gene family evolution and selection
+# gene_families.smk - Gene family evolution and selection
 # Owner: Person C
 # Tools: CAFE5, PAML
 # Outputs: results/cafe/

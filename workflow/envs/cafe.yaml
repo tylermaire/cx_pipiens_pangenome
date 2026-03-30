@@ -1,4 +1,4 @@
-﻿name: cafe
+name: cafe
 channels:
   - conda-forge
   - bioconda

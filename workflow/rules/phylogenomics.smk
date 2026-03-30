@@ -1,4 +1,4 @@
-﻿# phylogenomics.smk - Species tree inference
+# phylogenomics.smk - Species tree inference
 # Owner: Person C
 # Tools: MAFFT, trimAl, IQ-TREE, ASTRAL
 # Outputs: results/phylo/

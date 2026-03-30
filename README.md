@@ -1,4 +1,4 @@
-﻿# Culex pipiens Complex Pangenome Analysis
+# Culex pipiens Complex Pangenome Analysis
  
 A reproducible Snakemake pipeline for pangenome analysis of the *Culex pipiens*
 species complex, comparing four chromosome-scale genome assemblies representing

@@ -1,4 +1,4 @@
-﻿# go_enrichment.R
+# go_enrichment.R
 # GO term enrichment analysis: core vs shell vs cloud gene sets
 # Uses topGO or clusterProfiler
 #

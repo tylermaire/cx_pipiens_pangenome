@@ -1,4 +1,4 @@
-﻿name: eggnog
+name: eggnog
 channels:
   - conda-forge
   - bioconda
