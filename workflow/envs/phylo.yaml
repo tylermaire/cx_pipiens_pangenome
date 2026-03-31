@@ -1,0 +1,12 @@
+name: phylo
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python>=3.10
+  - biopython>=1.80
+  - pandas
+  - mafft>=7.5
+  - trimal>=1.4
+  - iqtree>=2.2
+  - fasttree
