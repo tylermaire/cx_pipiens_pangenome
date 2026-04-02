@@ -6,7 +6,7 @@ rule extract_sco_sequences:
     script: "../scripts/extract_sco.py"
 
 rule concat_and_tree:
-    """Concatenate all SCO alignments and build species tree with IQ-TREE."""
+    """Build species tree from single-copy orthologs."""
     input: "results/phylo/sco_fastas"
     output:
         tree="results/phylo/concat_tree.treefile",
@@ -20,7 +20,6 @@ rule concat_and_tree:
         """
         mkdir -p results/phylo/alignments results/phylo/trimmed results/phylo/gene_trees
 
-        # Align and trim (skip if already done)
         for fa in results/phylo/sco_fastas/*.fa; do
             og=$(basename $fa .fa)
             if [ ! -f results/phylo/trimmed/$og.trim ]; then
@@ -30,13 +29,10 @@ rule concat_and_tree:
             fi
         done
 
-        # Remove empty or too-short alignments
         find results/phylo/trimmed -name "*.trim" -size -100c -delete
-
         NTRIM=$(ls results/phylo/trimmed/*.trim 2>/dev/null | wc -l)
         echo "Trimmed alignments: $NTRIM"
 
-        # Build gene trees (skip if already done)
         for trim in results/phylo/trimmed/*.trim; do
             og=$(basename $trim .trim)
             if [ ! -f results/phylo/gene_trees/$og.treefile ]; then
@@ -45,15 +41,12 @@ rule concat_and_tree:
             fi
         done
 
-        # Collect gene trees
         cat results/phylo/gene_trees/*.treefile > results/phylo/all_gene_trees.nwk 2>/dev/null || true
 
-        # Concatenated supermatrix tree
         iqtree -p results/phylo/trimmed/ \
             -m {params.model} -bb {params.bb} -nt {threads} \
             --prefix results/phylo/concat_tree -quiet
 
-        # Gene concordance factors
         iqtree -t results/phylo/concat_tree.treefile \
             --gcf results/phylo/all_gene_trees.nwk \
             -p results/phylo/trimmed/ \
