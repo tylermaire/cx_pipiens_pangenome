@@ -1,0 +1,94 @@
+Assuming unrestricted shared filesystem usage.
+host: ip-172-31-20-25
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 16
+Rules claiming more threads will be scaled down.
+Job stats:
+job              count
+-------------  -------
+repeatmodeler        1
+repeatmasker         4
+total                5
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Apr  3 00:39:36 2026]
+localrule repeatmodeler:
+    input: resources/genomes/Cx_quinquefasciatus.fasta
+    output: results/repeats/custom_repeat_lib.fa
+    jobid: 2
+    reason: Missing output files: results/repeats/custom_repeat_lib.fa; Code has changed since last execution
+    threads: 16
+    resources: tmpdir=/tmp
+Activating conda environment: .snakemake/conda/060ab24cb70804460275ed95aebda099_
+Building database culex_db:
+  Reading /home/ubuntu/cx_pipiens_pangenome/resources/genomes/Cx_quinquefasciatus.fasta...
+Number of sequences (bp) added to database: 57 ( 573230032 bp )
+
+ERROR: The -pa parameter has been deprecated.  Please use the newer
+      "-threads #" parameter which precisely controls the maximum
+       number of simultaneous threads this program will use. Note that
+       the -pa parameter previously controlled the number of simultaneous
+       batches each run with rmblast using 4 threads, therefore -pa 4 could
+       potentially have used up to 16 threads.  Keep this in mind when
+       comparing runtime differences between versions.
+
+
+ERROR: The -pa parameter has been deprecated.  Please use the newer
+      "-threads #" parameter which precisely controls the maximum
+       number of simultaneous threads this program will use. Note that
+       the -pa parameter previously controlled the number of simultaneous
+       batches each run with rmblast using 4 threads, therefore -pa 4 could
+       potentially have used up to 16 threads.  Keep this in mind when
+       comparing runtime differences between versions.
+
+RuleException:
+CalledProcessError in file "/home/ubuntu/cx_pipiens_pangenome/workflow/rules/repeats.smk", line 9:
+Command 'source /home/ubuntu/miniconda3/bin/activate '/home/ubuntu/cx_pipiens_pangenome/.snakemake/conda/060ab24cb70804460275ed95aebda099_'; set -euo pipefail;  
+        WORKDIR=$(pwd)
+        mkdir -p results/repeats/repeatmodeler_workdir
+        cd results/repeats/repeatmodeler_workdir
+        BuildDatabase -name culex_db $WORKDIR/resources/genomes/Cx_quinquefasciatus.fasta
+        RepeatModeler -database culex_db -pa 16 -LTRStruct ||             RepeatModeler -database culex_db -pa 16
+        cp culex_db-families.fa $WORKDIR/results/repeats/custom_repeat_lib.fa' returned non-zero exit status 255.
+[Fri Apr  3 00:39:44 2026]
+Error in rule repeatmodeler:
+    message: None
+    jobid: 2
+    input: resources/genomes/Cx_quinquefasciatus.fasta
+    output: results/repeats/custom_repeat_lib.fa
+    conda-env: /home/ubuntu/cx_pipiens_pangenome/.snakemake/conda/060ab24cb70804460275ed95aebda099_
+    shell:
+        
+        WORKDIR=$(pwd)
+        mkdir -p results/repeats/repeatmodeler_workdir
+        cd results/repeats/repeatmodeler_workdir
+        BuildDatabase -name culex_db $WORKDIR/resources/genomes/Cx_quinquefasciatus.fasta
+        RepeatModeler -database culex_db -pa 16 -LTRStruct ||             RepeatModeler -database culex_db -pa 16
+        cp culex_db-families.fa $WORKDIR/results/repeats/custom_repeat_lib.fa
+        
+        (command exited with non-zero exit code)
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look below for error messages
+[Fri Apr  3 00:39:44 2026]
+Error in rule repeatmodeler:
+    message: None
+    jobid: 2
+    input: resources/genomes/Cx_quinquefasciatus.fasta
+    output: results/repeats/custom_repeat_lib.fa
+    conda-env: /home/ubuntu/cx_pipiens_pangenome/.snakemake/conda/060ab24cb70804460275ed95aebda099_
+    shell:
+        
+        WORKDIR=$(pwd)
+        mkdir -p results/repeats/repeatmodeler_workdir
+        cd results/repeats/repeatmodeler_workdir
+        BuildDatabase -name culex_db $WORKDIR/resources/genomes/Cx_quinquefasciatus.fasta
+        RepeatModeler -database culex_db -pa 16 -LTRStruct ||             RepeatModeler -database culex_db -pa 16
+        cp culex_db-families.fa $WORKDIR/results/repeats/custom_repeat_lib.fa
+        
+        (command exited with non-zero exit code)
+Complete log(s): /home/ubuntu/cx_pipiens_pangenome/.snakemake/log/2026-04-03T003934.466997.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.
