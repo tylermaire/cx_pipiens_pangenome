@@ -17,19 +17,16 @@ rule nucmer_align:
             {output.delta} > {output.filtered}
         """
 
-rule syri:
-    """Detect structural variants with SyRI from nucmer delta."""
+rule show_coords:
+    """Extract alignment coordinates and structural diffs."""
     input:
-        delta="results/synteny/{ref}_vs_{query}.filtered.delta",
-        ref="resources/genomes/{ref}.fasta",
-        query="resources/genomes/{query}.fasta"
-    output: "results/synteny/{ref}_vs_{query}_syri.out"
-    conda: "../envs/syri.yaml"
+        filtered="results/synteny/{ref}_vs_{query}.filtered.delta"
+    output:
+        coords="results/synteny/{ref}_vs_{query}.coords",
+        diff="results/synteny/{ref}_vs_{query}.diff"
+    conda: "../envs/mummer.yaml"
     shell:
         """
-        syri -c {input.delta} -r {input.ref} -q {input.query} \
-            -k --nc 3 --nosnp --no-chrmatch \
-            --dir results/synteny/ \
-            --prefix {wildcards.ref}_vs_{wildcards.query}_ || \
-            touch {output}
+        show-coords -rcl {input.filtered} > {output.coords}
+        show-diff {input.filtered} > {output.diff}
         """
