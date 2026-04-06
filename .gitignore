@@ -21,3 +21,14 @@ __pycache__/
 # Temporary
 *.zip
 tmp_*/
+
+# But track small result summaries
+!results/pangenome/
+!results/pangenome/*.tsv
+!results/phylo/
+!results/phylo/*.treefile
+!results/phylo/*.tree
+!results/cafe/
+!results/cafe/*.tsv
+!results/cafe/*.tab
+!results/cafe/*.txt
