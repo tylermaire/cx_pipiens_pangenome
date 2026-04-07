@@ -11,8 +11,8 @@ rule repeatmodeler:
         mkdir -p results/repeats/repeatmodeler_workdir
         cd results/repeats/repeatmodeler_workdir
         BuildDatabase -name culex_db $WORKDIR/{input.ref}
-        RepeatModeler -database culex_db -pa {threads} -LTRStruct || \
-            RepeatModeler -database culex_db -pa {threads}
+        RepeatModeler -database culex_db -threads {threads} -LTRStruct || \
+            RepeatModeler -database culex_db -threads {threads}
         cp culex_db-families.fa $WORKDIR/{output}
         """
 
