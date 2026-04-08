@@ -29,9 +29,16 @@ rule concat_and_tree:
             fi
         done
 
-        find results/phylo/trimmed -name "*.trim" -size -100c -delete
+        # Remove alignments too short for IQ-TREE (< 50 amino acids)
+        for f in results/phylo/trimmed/*.trim; do
+            cols=$(awk '/^[^>]/{{print length; exit}}' "$f")
+            if [ "$cols" -lt 50 ]; then
+                rm -f "$f"
+            fi
+        done
+
         NTRIM=$(ls results/phylo/trimmed/*.trim 2>/dev/null | wc -l)
-        echo "Trimmed alignments: $NTRIM"
+        echo "Trimmed alignments after filtering: $NTRIM"
 
         for trim in results/phylo/trimmed/*.trim; do
             og=$(basename $trim .trim)

@@ -32,3 +32,6 @@ tmp_*/
 !results/cafe/*.tsv
 !results/cafe/*.tab
 !results/cafe/*.txt
+full_rerun.log
+full_rerun2.log
+unmapped_features.txt
