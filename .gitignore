@@ -1,26 +1,15 @@
-# Data and results (too large for git)
+# Raw data and large results (regenerate with pipeline)
 resources/genomes/
 resources/annotations/
 resources/eggnog_data/
-results/
- 
-# Snakemake working files
-.snakemake/
- 
-# OS files
-.DS_Store
-Thumbs.db
- 
-# Python
-__pycache__/
-*.pyc
- 
-# Conda
-*.conda
- 
-# Temporary
-*.zip
-tmp_*/
+
+# Large result directories (tracked summaries are in results/pangenome, phylo, cafe)
+results/orthofinder/
+results/annotation/
+results/proteins/
+results/anvio/
+results/repeats/
+results/synteny/
 
 # But track small result summaries
 !results/pangenome/
@@ -30,8 +19,32 @@ tmp_*/
 !results/phylo/*.tree
 !results/cafe/
 !results/cafe/*.tsv
-!results/cafe/*.tab
-!results/cafe/*.txt
-full_rerun.log
-full_rerun2.log
+
+# Log files
+*.log
+
+# Snakemake working files
+.snakemake/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+
+# Conda
+*.conda
+
+# R temporary files
+.Rhistory
+.RData
+.Rproj.user/
+
+# Planning docs (not for public repo)
+Cx_pipiens_Pangenome_Checklist.docx
+Cx_pipiens_Pangenome_Snakemake_Project_Plan.docx
+
+# Intermediate outputs
 unmapped_features.txt

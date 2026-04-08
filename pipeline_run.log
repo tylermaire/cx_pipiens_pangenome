@@ -1,1536 +1,0 @@
-Assuming unrestricted shared filesystem usage.
-host: ip-172-31-20-25
-Building DAG of jobs...
-Creating conda environment workflow/envs/mummer.yaml...
-Downloading and installing remote packages.
-Cleaning up conda package tarballs.
-Environment for /home/ubuntu/cx_pipiens_pangenome/workflow/rules/../envs/mummer.yaml created (location: .snakemake/conda/34f0752168e44947e7fd854fc8cb24d6_)
-Using shell: /usr/bin/bash
-Provided cores: 16
-Rules claiming more threads will be scaled down.
-Job stats:
-job                        count
------------------------  -------
-extract_proteins               5
-liftoff                        4
-nucmer_align                   6
-syri                           6
-setup_orthofinder_input        1
-orthofinder                    1
-extract_sco_sequences          1
-partition_pangenome            1
-concat_and_tree                1
-prepare_cafe_input             1
-cafe5                          1
-parse_cafe_results             1
-total                         29
-
-Select jobs to execute...
-Execute 2 jobs...
-
-[Wed Apr  1 19:56:16 2026]
-localrule nucmer_align:
-    input: resources/genomes/Cx_quinquefasciatus.fasta, resources/genomes/Cx_pipiens.fasta
-    output: results/synteny/Cx_quinquefasciatus_vs_Cx_pipiens.delta, results/synteny/Cx_quinquefasciatus_vs_Cx_pipiens.filtered.delta
-    jobid: 1
-    reason: Missing output files: results/synteny/Cx_quinquefasciatus_vs_Cx_pipiens.filtered.delta
-    wildcards: ref=Cx_quinquefasciatus, query=Cx_pipiens
-    threads: 8
-    resources: tmpdir=/tmp
-Activating conda environment: .snakemake/conda/34f0752168e44947e7fd854fc8cb24d6_
-
-[Wed Apr  1 19:56:16 2026]
-localrule nucmer_align:
-    input: resources/genomes/Cx_quinquefasciatus.fasta, resources/genomes/Cx_pallens.fasta
-    output: results/synteny/Cx_quinquefasciatus_vs_Cx_pallens.delta, results/synteny/Cx_quinquefasciatus_vs_Cx_pallens.filtered.delta
-    jobid: 27
-    reason: Missing output files: results/synteny/Cx_quinquefasciatus_vs_Cx_pallens.filtered.delta
-    wildcards: ref=Cx_quinquefasciatus, query=Cx_pallens
-    threads: 8
-    resources: tmpdir=/tmp
-Activating conda environment: .snakemake/conda/34f0752168e44947e7fd854fc8cb24d6_
-Select jobs to execute...
-[Wed Apr  1 20:04:49 2026]
-Finished jobid: 1 (Rule: nucmer_align)
-1 of 29 steps (3%) done
-Execute 1 jobs...
-
-[Wed Apr  1 20:04:49 2026]
-localrule nucmer_align:
-    input: resources/genomes/Cx_pallens.fasta, resources/genomes/Cx_molestus.fasta
-    output: results/synteny/Cx_pallens_vs_Cx_molestus.delta, results/synteny/Cx_pallens_vs_Cx_molestus.filtered.delta
-    jobid: 23
-    reason: Missing output files: results/synteny/Cx_pallens_vs_Cx_molestus.filtered.delta
-    wildcards: ref=Cx_pallens, query=Cx_molestus
-    threads: 8
-    resources: tmpdir=/tmp
-Activating conda environment: .snakemake/conda/34f0752168e44947e7fd854fc8cb24d6_
-Select jobs to execute...
-[Wed Apr  1 20:07:10 2026]
-Finished jobid: 27 (Rule: nucmer_align)
-2 of 29 steps (7%) done
-Execute 1 jobs...
-
-[Wed Apr  1 20:07:10 2026]
-localrule liftoff:
-    input: resources/genomes/Cx_tarsalis.fasta, resources/genomes/Cx_quinquefasciatus.fasta, resources/annotations/Cx_quinquefasciatus.gff3
-    output: results/annotation/Cx_tarsalis_liftoff.gff3
-    jobid: 21
-    reason: Missing output files: results/annotation/Cx_tarsalis_liftoff.gff3; Code has changed since last execution
-    wildcards: sample=Cx_tarsalis
-    threads: 8
-    resources: tmpdir=/tmp
-Activating conda environment: .snakemake/conda/e01adab60fda5ebd9b02b33fd9c5f61a_
-Select jobs to execute...
-2026-04-01 20:07:12,268 - INFO - Populating features
-Populating features table and first-order relations: 0 featuresPopulating features table and first-order relations: 1000 featuresPopulating features table and first-order relations: 2000 featuresPopulating features table and first-order relations: 3000 featuresPopulating features table and first-order relations: 4000 featuresPopulating features table and first-order relations: 5000 featuresPopulating features table and first-order relations: 6000 featuresPopulating features table and first-order relations: 7000 featuresPopulating features table and first-order relations: 8000 featuresPopulating features table and first-order relations: 9000 featuresPopulating features table and first-order relations: 10000 featuresPopulating features table and first-order relations: 11000 featuresPopulating features table and first-order relations: 12000 featuresPopulating features table and first-order relations: 13000 featuresPopulating features table and first-order relations: 14000 featuresPopulating features table and first-order relations: 15000 featuresPopulating features table and first-order relations: 16000 featuresPopulating features table and first-order relations: 17000 featuresPopulating features table and first-order relations: 18000 featuresPopulating features table and first-order relations: 19000 featuresPopulating features table and first-order relations: 20000 featuresPopulating features table and first-order relations: 21000 featuresPopulating features table and first-order relations: 22000 featuresPopulating features table and first-order relations: 23000 featuresPopulating features table and first-order relations: 24000 featuresPopulating features table and first-order relations: 25000 featuresPopulating features table and first-order relations: 26000 featuresPopulating features table and first-order relations: 27000 featuresPopulating features table and first-order relations: 28000 featuresPopulating features table and first-order relations: 29000 featuresPopulating features table and first-order relations: 30000 featuresPopulating features table and first-order relations: 31000 featuresPopulating features table and first-order relations: 32000 featuresPopulating features table and first-order relations: 33000 featuresPopulating features table and first-order relations: 34000 featuresPopulating features table and first-order relations: 35000 featuresPopulating features table and first-order relations: 36000 featuresPopulating features table and first-order relations: 37000 featuresPopulating features table and first-order relations: 38000 featuresPopulating features table and first-order relations: 39000 featuresPopulating features table and first-order relations: 40000 featuresPopulating features table and first-order relations: 41000 featuresPopulating features table and first-order relations: 42000 featuresPopulating features table and first-order relations: 43000 featuresPopulating features table and first-order relations: 44000 featuresPopulating features table and first-order relations: 45000 featuresPopulating features table and first-order relations: 46000 featuresPopulating features table and first-order relations: 47000 featuresPopulating features table and first-order relations: 48000 featuresPopulating features table and first-order relations: 49000 featuresPopulating features table and first-order relations: 50000 featuresPopulating features table and first-order relations: 51000 featuresPopulating features table and first-order relations: 52000 featuresPopulating features table and first-order relations: 53000 featuresPopulating features table and first-order relations: 54000 featuresPopulating features table and first-order relations: 55000 featuresPopulating features table and first-order relations: 56000 featuresPopulating features table and first-order relations: 57000 featuresPopulating features table and first-order relations: 58000 featuresPopulating features table and first-order relations: 59000 featuresPopulating features table and first-order relations: 60000 featuresPopulating features table and first-order relations: 61000 featuresPopulating features table and first-order relations: 62000 featuresPopulating features table and first-order relations: 63000 featuresPopulating features table and first-order relations: 64000 featuresPopulating features table and first-order relations: 65000 featuresPopulating features table and first-order relations: 66000 featuresPopulating features table and first-order relations: 67000 featuresPopulating features table and first-order relations: 68000 featuresPopulating features table and first-order relations: 69000 featuresPopulating features table and first-order relations: 70000 featuresPopulating features table and first-order relations: 71000 featuresPopulating features table and first-order relations: 72000 featuresPopulating features table and first-order relations: 73000 featuresPopulating features table and first-order relations: 74000 featuresPopulating features table and first-order relations: 75000 featuresPopulating features table and first-order relations: 76000 featuresPopulating features table and first-order relations: 77000 featuresPopulating features table and first-order relations: 78000 featuresPopulating features table and first-order relations: 79000 featuresPopulating features table and first-order relations: 80000 featuresPopulating features table and first-order relations: 81000 featuresPopulating features table and first-order relations: 82000 featuresPopulating features table and first-order relations: 83000 featuresPopulating features table and first-order relations: 84000 featuresPopulating features table and first-order relations: 85000 featuresPopulating features table and first-order relations: 86000 featuresPopulating features table and first-order relations: 87000 featuresPopulating features table and first-order relations: 88000 featuresPopulating features table and first-order relations: 89000 featuresPopulating features table and first-order relations: 90000 featuresPopulating features table and first-order relations: 91000 featuresPopulating features table and first-order relations: 92000 featuresPopulating features table and first-order relations: 93000 featuresPopulating features table and first-order relations: 94000 featuresPopulating features table and first-order relations: 95000 featuresPopulating features table and first-order relations: 96000 featuresPopulating features table and first-order relations: 97000 featuresPopulating features table and first-order relations: 98000 featuresPopulating features table and first-order relations: 99000 featuresPopulating features table and first-order relations: 100000 featuresPopulating features table and first-order relations: 101000 featuresPopulating features table and first-order relations: 102000 featuresPopulating features table and first-order relations: 103000 featuresPopulating features table and first-order relations: 104000 featuresPopulating features table and first-order relations: 105000 featuresPopulating features table and first-order relations: 106000 featuresPopulating features table and first-order relations: 107000 featuresPopulating features table and first-order relations: 108000 featuresPopulating features table and first-order relations: 109000 featuresPopulating features table and first-order relations: 110000 featuresPopulating features table and first-order relations: 111000 featuresPopulating features table and first-order relations: 112000 featuresPopulating features table and first-order relations: 113000 featuresPopulating features table and first-order relations: 114000 featuresPopulating features table and first-order relations: 115000 featuresPopulating features table and first-order relations: 116000 featuresPopulating features table and first-order relations: 117000 featuresPopulating features table and first-order relations: 118000 featuresPopulating features table and first-order relations: 119000 featuresPopulating features table and first-order relations: 120000 featuresPopulating features table and first-order relations: 121000 featuresPopulating features table and first-order relations: 122000 featuresPopulating features table and first-order relations: 123000 featuresPopulating features table and first-order relations: 124000 featuresPopulating features table and first-order relations: 125000 featuresPopulating features table and first-order relations: 126000 featuresPopulating features table and first-order relations: 127000 featuresPopulating features table and first-order relations: 128000 featuresPopulating features table and first-order relations: 129000 featuresPopulating features table and first-order relations: 130000 featuresPopulating features table and first-order relations: 131000 featuresPopulating features table and first-order relations: 132000 featuresPopulating features table and first-order relations: 133000 featuresPopulating features table and first-order relations: 134000 featuresPopulating features table and first-order relations: 135000 featuresPopulating features table and first-order relations: 136000 featuresPopulating features table and first-order relations: 137000 featuresPopulating features table and first-order relations: 138000 featuresPopulating features table and first-order relations: 139000 featuresPopulating features table and first-order relations: 140000 featuresPopulating features table and first-order relations: 141000 featuresPopulating features table and first-order relations: 142000 featuresPopulating features table and first-order relations: 143000 featuresPopulating features table and first-order relations: 144000 featuresPopulating features table and first-order relations: 145000 featuresPopulating features table and first-order relations: 146000 featuresPopulating features table and first-order relations: 147000 featuresPopulating features table and first-order relations: 148000 featuresPopulating features table and first-order relations: 149000 featuresPopulating features table and first-order relations: 150000 featuresPopulating features table and first-order relations: 151000 featuresPopulating features table and first-order relations: 152000 featuresPopulating features table and first-order relations: 153000 featuresPopulating features table and first-order relations: 154000 featuresPopulating features table and first-order relations: 155000 featuresPopulating features table and first-order relations: 156000 featuresPopulating features table and first-order relations: 157000 featuresPopulating features table and first-order relations: 158000 featuresPopulating features table and first-order relations: 159000 featuresPopulating features table and first-order relations: 160000 featuresPopulating features table and first-order relations: 161000 featuresPopulating features table and first-order relations: 162000 featuresPopulating features table and first-order relations: 163000 featuresPopulating features table and first-order relations: 164000 featuresPopulating features table and first-order relations: 165000 featuresPopulating features table and first-order relations: 166000 featuresPopulating features table and first-order relations: 167000 featuresPopulating features table and first-order relations: 168000 featuresPopulating features table and first-order relations: 169000 featuresPopulating features table and first-order relations: 170000 featuresPopulating features table and first-order relations: 171000 featuresPopulating features table and first-order relations: 172000 featuresPopulating features table and first-order relations: 173000 featuresPopulating features table and first-order relations: 174000 featuresPopulating features table and first-order relations: 175000 featuresPopulating features table and first-order relations: 176000 featuresPopulating features table and first-order relations: 177000 featuresPopulating features table and first-order relations: 178000 featuresPopulating features table and first-order relations: 179000 featuresPopulating features table and first-order relations: 180000 featuresPopulating features table and first-order relations: 181000 featuresPopulating features table and first-order relations: 182000 featuresPopulating features table and first-order relations: 183000 featuresPopulating features table and first-order relations: 184000 featuresPopulating features table and first-order relations: 185000 featuresPopulating features table and first-order relations: 186000 featuresPopulating features table and first-order relations: 187000 featuresPopulating features table and first-order relations: 188000 featuresPopulating features table and first-order relations: 189000 featuresPopulating features table and first-order relations: 190000 featuresPopulating features table and first-order relations: 191000 featuresPopulating features table and first-order relations: 192000 featuresPopulating features table and first-order relations: 193000 featuresPopulating features table and first-order relations: 194000 featuresPopulating features table and first-order relations: 195000 featuresPopulating features table and first-order relations: 196000 featuresPopulating features table and first-order relations: 197000 featuresPopulating features table and first-order relations: 198000 featuresPopulating features table and first-order relations: 199000 featuresPopulating features table and first-order relations: 200000 featuresPopulating features table and first-order relations: 201000 featuresPopulating features table and first-order relations: 202000 featuresPopulating features table and first-order relations: 203000 featuresPopulating features table and first-order relations: 204000 featuresPopulating features table and first-order relations: 205000 featuresPopulating features table and first-order relations: 206000 featuresPopulating features table and first-order relations: 207000 featuresPopulating features table and first-order relations: 208000 featuresPopulating features table and first-order relations: 209000 featuresPopulating features table and first-order relations: 210000 featuresPopulating features table and first-order relations: 211000 featuresPopulating features table and first-order relations: 212000 featuresPopulating features table and first-order relations: 213000 featuresPopulating features table and first-order relations: 214000 featuresPopulating features table and first-order relations: 215000 featuresPopulating features table and first-order relations: 216000 featuresPopulating features table and first-order relations: 217000 featuresPopulating features table and first-order relations: 218000 featuresPopulating features table and first-order relations: 219000 featuresPopulating features table and first-order relations: 220000 featuresPopulating features table and first-order relations: 221000 featuresPopulating features table and first-order relations: 222000 featuresPopulating features table and first-order relations: 223000 featuresPopulating features table and first-order relations: 224000 featuresPopulating features table and first-order relations: 225000 featuresPopulating features table and first-order relations: 226000 featuresPopulating features table and first-order relations: 227000 featuresPopulating features table and first-order relations: 228000 featuresPopulating features table and first-order relations: 229000 featuresPopulating features table and first-order relations: 230000 featuresPopulating features table and first-order relations: 231000 featuresPopulating features table and first-order relations: 232000 featuresPopulating features table and first-order relations: 233000 featuresPopulating features table and first-order relations: 234000 featuresPopulating features table and first-order relations: 235000 featuresPopulating features table and first-order relations: 236000 featuresPopulating features table and first-order relations: 237000 featuresPopulating features table and first-order relations: 238000 featuresPopulating features table and first-order relations: 239000 featuresPopulating features table and first-order relations: 240000 featuresPopulating features table and first-order relations: 241000 featuresPopulating features table and first-order relations: 242000 featuresPopulating features table and first-order relations: 243000 featuresPopulating features table and first-order relations: 244000 featuresPopulating features table and first-order relations: 245000 featuresPopulating features table and first-order relations: 246000 featuresPopulating features table and first-order relations: 247000 featuresPopulating features table and first-order relations: 248000 featuresPopulating features table and first-order relations: 249000 featuresPopulating features table and first-order relations: 250000 featuresPopulating features table and first-order relations: 251000 featuresPopulating features table and first-order relations: 252000 featuresPopulating features table and first-order relations: 253000 featuresPopulating features table and first-order relations: 254000 featuresPopulating features table and first-order relations: 255000 featuresPopulating features table and first-order relations: 256000 featuresPopulating features table and first-order relations: 257000 featuresPopulating features table and first-order relations: 258000 featuresPopulating features table and first-order relations: 259000 featuresPopulating features table and first-order relations: 260000 featuresPopulating features table and first-order relations: 261000 featuresPopulating features table and first-order relations: 262000 featuresPopulating features table and first-order relations: 263000 featuresPopulating features table and first-order relations: 264000 featuresPopulating features table and first-order relations: 265000 featuresPopulating features table and first-order relations: 266000 featuresPopulating features table and first-order relations: 267000 featuresPopulating features table and first-order relations: 268000 featuresPopulating features table and first-order relations: 269000 featuresPopulating features table and first-order relations: 270000 featuresPopulating features table and first-order relations: 271000 featuresPopulating features table and first-order relations: 272000 featuresPopulating features table and first-order relations: 273000 featuresPopulating features table and first-order relations: 274000 featuresPopulating features table and first-order relations: 275000 featuresPopulating features table and first-order relations: 276000 featuresPopulating features table and first-order relations: 277000 featuresPopulating features table and first-order relations: 278000 featuresPopulating features table and first-order relations: 279000 featuresPopulating features table and first-order relations: 280000 featuresPopulating features table and first-order relations: 281000 featuresPopulating features table and first-order relations: 282000 featuresPopulating features table and first-order relations: 283000 featuresPopulating features table and first-order relations: 284000 featuresPopulating features table and first-order relations: 285000 featuresPopulating features table and first-order relations: 286000 featuresPopulating features table and first-order relations: 287000 featuresPopulating features table and first-order relations: 288000 featuresPopulating features table and first-order relations: 289000 featuresPopulating features table and first-order relations: 290000 featuresPopulating features table and first-order relations: 291000 featuresPopulating features table and first-order relations: 292000 featuresPopulating features table and first-order relations: 293000 featuresPopulating features table and first-order relations: 294000 featuresPopulating features table and first-order relations: 295000 featuresPopulating features table and first-order relations: 296000 featuresPopulating features table and first-order relations: 297000 featuresPopulating features table and first-order relations: 298000 featuresPopulating features table and first-order relations: 299000 featuresPopulating features table and first-order relations: 300000 featuresPopulating features table and first-order relations: 301000 featuresPopulating features table and first-order relations: 302000 featuresPopulating features table and first-order relations: 303000 featuresPopulating features table and first-order relations: 304000 featuresPopulating features table and first-order relations: 305000 featuresPopulating features table and first-order relations: 306000 featuresPopulating features table and first-order relations: 307000 featuresPopulating features table and first-order relations: 308000 featuresPopulating features table and first-order relations: 309000 featuresPopulating features table and first-order relations: 310000 featuresPopulating features table and first-order relations: 311000 featuresPopulating features table and first-order relations: 312000 featuresPopulating features table and first-order relations: 313000 featuresPopulating features table and first-order relations: 314000 featuresPopulating features table and first-order relations: 315000 featuresPopulating features table and first-order relations: 316000 featuresPopulating features table and first-order relations: 317000 featuresPopulating features table and first-order relations: 318000 featuresPopulating features table and first-order relations: 319000 featuresPopulating features table and first-order relations: 320000 featuresPopulating features table and first-order relations: 321000 featuresPopulating features table and first-order relations: 322000 featuresPopulating features table and first-order relations: 323000 featuresPopulating features table and first-order relations: 324000 featuresPopulating features table and first-order relations: 325000 featuresPopulating features table and first-order relations: 326000 featuresPopulating features table and first-order relations: 327000 featuresPopulating features table and first-order relations: 328000 featuresPopulating features table and first-order relations: 329000 featuresPopulating features table and first-order relations: 330000 featuresPopulating features table and first-order relations: 331000 featuresPopulating features table and first-order relations: 332000 featuresPopulating features table and first-order relations: 333000 featuresPopulating features table and first-order relations: 334000 featuresPopulating features table and first-order relations: 335000 featuresPopulating features table and first-order relations: 336000 featuresPopulating features table and first-order relations: 337000 featuresPopulating features table and first-order relations: 338000 featuresPopulating features table and first-order relations: 339000 featuresPopulating features table and first-order relations: 340000 featuresPopulating features table and first-order relations: 341000 featuresPopulating features table and first-order relations: 342000 featuresPopulating features table and first-order relations: 343000 featuresPopulating features table and first-order relations: 344000 featuresPopulating features table and first-order relations: 345000 featuresPopulating features table and first-order relations: 346000 featuresPopulating features table and first-order relations: 347000 featuresPopulating features table and first-order relations: 348000 featuresPopulating features table and first-order relations: 349000 features2026-04-01 20:07:30,928 - INFO - Populating features table and first-order relations: 349278 features
-2026-04-01 20:07:30,928 - INFO - Updating relations
-2026-04-01 20:07:33,197 - INFO - Creating relations(parent) index
-2026-04-01 20:07:33,342 - INFO - Creating relations(child) index
-2026-04-01 20:07:33,539 - INFO - Creating features(featuretype) index
-2026-04-01 20:07:33,658 - INFO - Creating features (seqid, start, end) index
-2026-04-01 20:07:33,810 - INFO - Creating features (seqid, start, end, strand) index
-2026-04-01 20:07:33,972 - INFO - Running ANALYZE features
-extracting features
-[M::mm_idx_gen::1.135*1.00] collected minimizers
-[M::mm_idx_gen::1.244*1.61] sorted minimizers
-[M::main::1.530*1.49] loaded/built the index for 32 target sequence(s)
-[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 32
-[M::mm_idx_stat::1.620*1.47] distinct minimizers: 8574091 (93.30% are singletons); average occurrences: 1.111; average spacing: 5.351; total length: 50989260
-@SQ	SN:JABFOA010000001.1	LN:6619767
-@SQ	SN:JABFOA010000010.1	LN:2899088
-@SQ	SN:JABFOA010000011.1	LN:2829541
-@SQ	SN:JABFOA010000012.1	LN:2104550
-@SQ	SN:JABFOA010000013.1	LN:1442902
-@SQ	SN:JABFOA010000014.1	LN:1192005
-@SQ	SN:JABFOA010000015.1	LN:64139
-@SQ	SN:JABFOA010000016.1	LN:27030
-@SQ	SN:JABFOA010000017.1	LN:24029
-@SQ	SN:JABFOA010000018.1	LN:14826
-@SQ	SN:JABFOA010000019.1	LN:10373
-@SQ	SN:JABFOA010000002.1	LN:5520453
-@SQ	SN:JABFOA010000020.1	LN:5269
-@SQ	SN:JABFOA010000021.1	LN:4751
-@SQ	SN:JABFOA010000022.1	LN:3853
-@SQ	SN:JABFOA010000023.1	LN:3847
-@SQ	SN:JABFOA010000024.1	LN:3522
-@SQ	SN:JABFOA010000025.1	LN:3501
-@SQ	SN:JABFOA010000026.1	LN:3337
-@SQ	SN:JABFOA010000027.1	LN:3154
-@SQ	SN:JABFOA010000028.1	LN:3071
-@SQ	SN:JABFOA010000003.1	LN:5301985
-@SQ	SN:JABFOA010000029.1	LN:2359
-@SQ	SN:JABFOA010000030.1	LN:2225
-@SQ	SN:JABFOA010000031.1	LN:1297
-@SQ	SN:JABFOA010000032.1	LN:1271
-@SQ	SN:JABFOA010000004.1	LN:4840815
-@SQ	SN:JABFOA010000005.1	LN:4335466
-@SQ	SN:JABFOA010000006.1	LN:3989366
-@SQ	SN:JABFOA010000007.1	LN:3353777
-@SQ	SN:JABFOA010000008.1	LN:3284906
-@SQ	SN:JABFOA010000009.1	LN:3092785
-@PG	ID:minimap2	PN:minimap2	VN:2.24-r1122	CL:minimap2 -d resources/genomes/Cx_tarsalis.fasta.mmi -a --end-bonus 5 --eqx -N 50 -p 0.5 -t 8 resources/genomes/Cx_tarsalis.fasta
-[M::main] Version: 2.24-r1122
-[M::main] CMD: minimap2 -d resources/genomes/Cx_tarsalis.fasta.mmi -a --end-bonus 5 --eqx -N 50 -p 0.5 -t 8 resources/genomes/Cx_tarsalis.fasta
-[M::main] Real time: 1.631 sec; CPU: 2.386 sec; Peak RSS: 1.287 GB
-[M::main::0.342*1.00] loaded/built the index for 32 target sequence(s)
-[M::mm_mapopt_update::0.464*1.00] mid_occ = 28
-[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 32
-[M::mm_idx_stat::0.553*1.00] distinct minimizers: 8574091 (93.30% are singletons); average occurrences: 1.111; average spacing: 5.351; total length: 50989260
-[M::worker_pipeline::3.849*5.61] mapped 17836 sequences
-[M::main] Version: 2.24-r1122
-[M::main] CMD: minimap2 -o results/annotation/liftoff_intermediates/Cx_tarsalis/reference_all_to_target_all.sam -a --end-bonus 5 --eqx -N 50 -p 0.5 -t 8 resources/genomes/Cx_tarsalis.fasta.mmi results/annotation/liftoff_intermediates/Cx_tarsalis/reference_all_genes.fa
-[M::main] Real time: 3.857 sec; CPU: 21.594 sec; Peak RSS: 1.287 GB
-aligning features
-lifting features
-[Wed Apr  1 20:08:00 2026]
-Finished jobid: 21 (Rule: liftoff)
-3 of 29 steps (10%) done
-Execute 1 jobs...
-
-[Wed Apr  1 20:08:00 2026]
-localrule liftoff:
-    input: resources/genomes/Cx_pipiens.fasta, resources/genomes/Cx_quinquefasciatus.fasta, resources/annotations/Cx_quinquefasciatus.gff3
-    output: results/annotation/Cx_pipiens_liftoff.gff3
-    jobid: 18
-    reason: Missing output files: results/annotation/Cx_pipiens_liftoff.gff3
-    wildcards: sample=Cx_pipiens
-    threads: 8
-    resources: tmpdir=/tmp
-Activating conda environment: .snakemake/conda/e01adab60fda5ebd9b02b33fd9c5f61a_
-2026-04-01 20:08:00,820 - INFO - Populating features
-Populating features table and first-order relations: 0 featuresSelect jobs to execute...
-Populating features table and first-order relations: 1000 featuresPopulating features table and first-order relations: 2000 featuresPopulating features table and first-order relations: 3000 featuresPopulating features table and first-order relations: 4000 featuresPopulating features table and first-order relations: 5000 featuresPopulating features table and first-order relations: 6000 featuresPopulating features table and first-order relations: 7000 featuresPopulating features table and first-order relations: 8000 featuresPopulating features table and first-order relations: 9000 featuresPopulating features table and first-order relations: 10000 featuresPopulating features table and first-order relations: 11000 featuresPopulating features table and first-order relations: 12000 featuresPopulating features table and first-order relations: 13000 featuresPopulating features table and first-order relations: 14000 featuresPopulating features table and first-order relations: 15000 featuresPopulating features table and first-order relations: 16000 featuresPopulating features table and first-order relations: 17000 featuresPopulating features table and first-order relations: 18000 featuresPopulating features table and first-order relations: 19000 featuresPopulating features table and first-order relations: 20000 featuresPopulating features table and first-order relations: 21000 featuresPopulating features table and first-order relations: 22000 featuresPopulating features table and first-order relations: 23000 featuresPopulating features table and first-order relations: 24000 featuresPopulating features table and first-order relations: 25000 featuresPopulating features table and first-order relations: 26000 featuresPopulating features table and first-order relations: 27000 featuresPopulating features table and first-order relations: 28000 featuresPopulating features table and first-order relations: 29000 featuresPopulating features table and first-order relations: 30000 featuresPopulating features table and first-order relations: 31000 featuresPopulating features table and first-order relations: 32000 featuresPopulating features table and first-order relations: 33000 featuresPopulating features table and first-order relations: 34000 featuresPopulating features table and first-order relations: 35000 featuresPopulating features table and first-order relations: 36000 featuresPopulating features table and first-order relations: 37000 featuresPopulating features table and first-order relations: 38000 featuresPopulating features table and first-order relations: 39000 featuresPopulating features table and first-order relations: 40000 featuresPopulating features table and first-order relations: 41000 featuresPopulating features table and first-order relations: 42000 featuresPopulating features table and first-order relations: 43000 featuresPopulating features table and first-order relations: 44000 featuresPopulating features table and first-order relations: 45000 featuresPopulating features table and first-order relations: 46000 featuresPopulating features table and first-order relations: 47000 featuresPopulating features table and first-order relations: 48000 featuresPopulating features table and first-order relations: 49000 featuresPopulating features table and first-order relations: 50000 featuresPopulating features table and first-order relations: 51000 featuresPopulating features table and first-order relations: 52000 featuresPopulating features table and first-order relations: 53000 featuresPopulating features table and first-order relations: 54000 featuresPopulating features table and first-order relations: 55000 featuresPopulating features table and first-order relations: 56000 featuresPopulating features table and first-order relations: 57000 featuresPopulating features table and first-order relations: 58000 featuresPopulating features table and first-order relations: 59000 featuresPopulating features table and first-order relations: 60000 featuresPopulating features table and first-order relations: 61000 featuresPopulating features table and first-order relations: 62000 featuresPopulating features table and first-order relations: 63000 featuresPopulating features table and first-order relations: 64000 featuresPopulating features table and first-order relations: 65000 featuresPopulating features table and first-order relations: 66000 featuresPopulating features table and first-order relations: 67000 featuresPopulating features table and first-order relations: 68000 featuresPopulating features table and first-order relations: 69000 featuresPopulating features table and first-order relations: 70000 featuresPopulating features table and first-order relations: 71000 featuresPopulating features table and first-order relations: 72000 featuresPopulating features table and first-order relations: 73000 featuresPopulating features table and first-order relations: 74000 featuresPopulating features table and first-order relations: 75000 featuresPopulating features table and first-order relations: 76000 featuresPopulating features table and first-order relations: 77000 featuresPopulating features table and first-order relations: 78000 featuresPopulating features table and first-order relations: 79000 featuresPopulating features table and first-order relations: 80000 featuresPopulating features table and first-order relations: 81000 featuresPopulating features table and first-order relations: 82000 featuresPopulating features table and first-order relations: 83000 featuresPopulating features table and first-order relations: 84000 featuresPopulating features table and first-order relations: 85000 featuresPopulating features table and first-order relations: 86000 featuresPopulating features table and first-order relations: 87000 featuresPopulating features table and first-order relations: 88000 featuresPopulating features table and first-order relations: 89000 featuresPopulating features table and first-order relations: 90000 featuresPopulating features table and first-order relations: 91000 featuresPopulating features table and first-order relations: 92000 featuresPopulating features table and first-order relations: 93000 featuresPopulating features table and first-order relations: 94000 featuresPopulating features table and first-order relations: 95000 featuresPopulating features table and first-order relations: 96000 featuresPopulating features table and first-order relations: 97000 featuresPopulating features table and first-order relations: 98000 featuresPopulating features table and first-order relations: 99000 featuresPopulating features table and first-order relations: 100000 featuresPopulating features table and first-order relations: 101000 featuresPopulating features table and first-order relations: 102000 featuresPopulating features table and first-order relations: 103000 featuresPopulating features table and first-order relations: 104000 featuresPopulating features table and first-order relations: 105000 featuresPopulating features table and first-order relations: 106000 featuresPopulating features table and first-order relations: 107000 featuresPopulating features table and first-order relations: 108000 featuresPopulating features table and first-order relations: 109000 featuresPopulating features table and first-order relations: 110000 featuresPopulating features table and first-order relations: 111000 featuresPopulating features table and first-order relations: 112000 featuresPopulating features table and first-order relations: 113000 featuresPopulating features table and first-order relations: 114000 featuresPopulating features table and first-order relations: 115000 featuresPopulating features table and first-order relations: 116000 featuresPopulating features table and first-order relations: 117000 featuresPopulating features table and first-order relations: 118000 featuresPopulating features table and first-order relations: 119000 featuresPopulating features table and first-order relations: 120000 featuresPopulating features table and first-order relations: 121000 featuresPopulating features table and first-order relations: 122000 featuresPopulating features table and first-order relations: 123000 featuresPopulating features table and first-order relations: 124000 featuresPopulating features table and first-order relations: 125000 featuresPopulating features table and first-order relations: 126000 featuresPopulating features table and first-order relations: 127000 featuresPopulating features table and first-order relations: 128000 featuresPopulating features table and first-order relations: 129000 featuresPopulating features table and first-order relations: 130000 featuresPopulating features table and first-order relations: 131000 featuresPopulating features table and first-order relations: 132000 featuresPopulating features table and first-order relations: 133000 featuresPopulating features table and first-order relations: 134000 featuresPopulating features table and first-order relations: 135000 featuresPopulating features table and first-order relations: 136000 featuresPopulating features table and first-order relations: 137000 featuresPopulating features table and first-order relations: 138000 featuresPopulating features table and first-order relations: 139000 featuresPopulating features table and first-order relations: 140000 featuresPopulating features table and first-order relations: 141000 featuresPopulating features table and first-order relations: 142000 featuresPopulating features table and first-order relations: 143000 featuresPopulating features table and first-order relations: 144000 featuresPopulating features table and first-order relations: 145000 featuresPopulating features table and first-order relations: 146000 featuresPopulating features table and first-order relations: 147000 featuresPopulating features table and first-order relations: 148000 featuresPopulating features table and first-order relations: 149000 featuresPopulating features table and first-order relations: 150000 featuresPopulating features table and first-order relations: 151000 featuresPopulating features table and first-order relations: 152000 featuresPopulating features table and first-order relations: 153000 featuresPopulating features table and first-order relations: 154000 featuresPopulating features table and first-order relations: 155000 featuresPopulating features table and first-order relations: 156000 featuresPopulating features table and first-order relations: 157000 featuresPopulating features table and first-order relations: 158000 featuresPopulating features table and first-order relations: 159000 featuresPopulating features table and first-order relations: 160000 featuresPopulating features table and first-order relations: 161000 featuresPopulating features table and first-order relations: 162000 featuresPopulating features table and first-order relations: 163000 featuresPopulating features table and first-order relations: 164000 featuresPopulating features table and first-order relations: 165000 featuresPopulating features table and first-order relations: 166000 featuresPopulating features table and first-order relations: 167000 featuresPopulating features table and first-order relations: 168000 featuresPopulating features table and first-order relations: 169000 featuresPopulating features table and first-order relations: 170000 featuresPopulating features table and first-order relations: 171000 featuresPopulating features table and first-order relations: 172000 featuresPopulating features table and first-order relations: 173000 featuresPopulating features table and first-order relations: 174000 featuresPopulating features table and first-order relations: 175000 featuresPopulating features table and first-order relations: 176000 featuresPopulating features table and first-order relations: 177000 featuresPopulating features table and first-order relations: 178000 featuresPopulating features table and first-order relations: 179000 featuresPopulating features table and first-order relations: 180000 featuresPopulating features table and first-order relations: 181000 featuresPopulating features table and first-order relations: 182000 featuresPopulating features table and first-order relations: 183000 featuresPopulating features table and first-order relations: 184000 featuresPopulating features table and first-order relations: 185000 featuresPopulating features table and first-order relations: 186000 featuresPopulating features table and first-order relations: 187000 featuresPopulating features table and first-order relations: 188000 featuresPopulating features table and first-order relations: 189000 featuresPopulating features table and first-order relations: 190000 featuresPopulating features table and first-order relations: 191000 featuresPopulating features table and first-order relations: 192000 featuresPopulating features table and first-order relations: 193000 featuresPopulating features table and first-order relations: 194000 featuresPopulating features table and first-order relations: 195000 featuresPopulating features table and first-order relations: 196000 featuresPopulating features table and first-order relations: 197000 featuresPopulating features table and first-order relations: 198000 featuresPopulating features table and first-order relations: 199000 featuresPopulating features table and first-order relations: 200000 featuresPopulating features table and first-order relations: 201000 featuresPopulating features table and first-order relations: 202000 featuresPopulating features table and first-order relations: 203000 featuresPopulating features table and first-order relations: 204000 featuresPopulating features table and first-order relations: 205000 featuresPopulating features table and first-order relations: 206000 featuresPopulating features table and first-order relations: 207000 featuresPopulating features table and first-order relations: 208000 featuresPopulating features table and first-order relations: 209000 featuresPopulating features table and first-order relations: 210000 featuresPopulating features table and first-order relations: 211000 featuresPopulating features table and first-order relations: 212000 featuresPopulating features table and first-order relations: 213000 featuresPopulating features table and first-order relations: 214000 featuresPopulating features table and first-order relations: 215000 featuresPopulating features table and first-order relations: 216000 featuresPopulating features table and first-order relations: 217000 featuresPopulating features table and first-order relations: 218000 featuresPopulating features table and first-order relations: 219000 featuresPopulating features table and first-order relations: 220000 featuresPopulating features table and first-order relations: 221000 featuresPopulating features table and first-order relations: 222000 featuresPopulating features table and first-order relations: 223000 featuresPopulating features table and first-order relations: 224000 featuresPopulating features table and first-order relations: 225000 featuresPopulating features table and first-order relations: 226000 featuresPopulating features table and first-order relations: 227000 featuresPopulating features table and first-order relations: 228000 featuresPopulating features table and first-order relations: 229000 featuresPopulating features table and first-order relations: 230000 featuresPopulating features table and first-order relations: 231000 featuresPopulating features table and first-order relations: 232000 featuresPopulating features table and first-order relations: 233000 featuresPopulating features table and first-order relations: 234000 featuresPopulating features table and first-order relations: 235000 featuresPopulating features table and first-order relations: 236000 featuresPopulating features table and first-order relations: 237000 featuresPopulating features table and first-order relations: 238000 featuresPopulating features table and first-order relations: 239000 featuresPopulating features table and first-order relations: 240000 featuresPopulating features table and first-order relations: 241000 featuresPopulating features table and first-order relations: 242000 featuresPopulating features table and first-order relations: 243000 featuresPopulating features table and first-order relations: 244000 featuresPopulating features table and first-order relations: 245000 featuresPopulating features table and first-order relations: 246000 featuresPopulating features table and first-order relations: 247000 featuresPopulating features table and first-order relations: 248000 featuresPopulating features table and first-order relations: 249000 featuresPopulating features table and first-order relations: 250000 featuresPopulating features table and first-order relations: 251000 featuresPopulating features table and first-order relations: 252000 featuresPopulating features table and first-order relations: 253000 featuresPopulating features table and first-order relations: 254000 featuresPopulating features table and first-order relations: 255000 featuresPopulating features table and first-order relations: 256000 featuresPopulating features table and first-order relations: 257000 featuresPopulating features table and first-order relations: 258000 featuresPopulating features table and first-order relations: 259000 featuresPopulating features table and first-order relations: 260000 featuresPopulating features table and first-order relations: 261000 featuresPopulating features table and first-order relations: 262000 featuresPopulating features table and first-order relations: 263000 featuresPopulating features table and first-order relations: 264000 featuresPopulating features table and first-order relations: 265000 featuresPopulating features table and first-order relations: 266000 featuresPopulating features table and first-order relations: 267000 featuresPopulating features table and first-order relations: 268000 featuresPopulating features table and first-order relations: 269000 featuresPopulating features table and first-order relations: 270000 featuresPopulating features table and first-order relations: 271000 featuresPopulating features table and first-order relations: 272000 featuresPopulating features table and first-order relations: 273000 featuresPopulating features table and first-order relations: 274000 featuresPopulating features table and first-order relations: 275000 featuresPopulating features table and first-order relations: 276000 featuresPopulating features table and first-order relations: 277000 featuresPopulating features table and first-order relations: 278000 featuresPopulating features table and first-order relations: 279000 featuresPopulating features table and first-order relations: 280000 featuresPopulating features table and first-order relations: 281000 featuresPopulating features table and first-order relations: 282000 featuresPopulating features table and first-order relations: 283000 featuresPopulating features table and first-order relations: 284000 featuresPopulating features table and first-order relations: 285000 featuresPopulating features table and first-order relations: 286000 featuresPopulating features table and first-order relations: 287000 featuresPopulating features table and first-order relations: 288000 featuresPopulating features table and first-order relations: 289000 featuresPopulating features table and first-order relations: 290000 featuresPopulating features table and first-order relations: 291000 featuresPopulating features table and first-order relations: 292000 featuresPopulating features table and first-order relations: 293000 featuresPopulating features table and first-order relations: 294000 featuresPopulating features table and first-order relations: 295000 featuresPopulating features table and first-order relations: 296000 featuresPopulating features table and first-order relations: 297000 featuresPopulating features table and first-order relations: 298000 featuresPopulating features table and first-order relations: 299000 featuresPopulating features table and first-order relations: 300000 featuresPopulating features table and first-order relations: 301000 featuresPopulating features table and first-order relations: 302000 featuresPopulating features table and first-order relations: 303000 featuresPopulating features table and first-order relations: 304000 featuresPopulating features table and first-order relations: 305000 featuresPopulating features table and first-order relations: 306000 featuresPopulating features table and first-order relations: 307000 featuresPopulating features table and first-order relations: 308000 featuresPopulating features table and first-order relations: 309000 featuresPopulating features table and first-order relations: 310000 featuresPopulating features table and first-order relations: 311000 featuresPopulating features table and first-order relations: 312000 featuresPopulating features table and first-order relations: 313000 featuresPopulating features table and first-order relations: 314000 featuresPopulating features table and first-order relations: 315000 featuresPopulating features table and first-order relations: 316000 featuresPopulating features table and first-order relations: 317000 featuresPopulating features table and first-order relations: 318000 featuresPopulating features table and first-order relations: 319000 featuresPopulating features table and first-order relations: 320000 featuresPopulating features table and first-order relations: 321000 featuresPopulating features table and first-order relations: 322000 featuresPopulating features table and first-order relations: 323000 featuresPopulating features table and first-order relations: 324000 featuresPopulating features table and first-order relations: 325000 featuresPopulating features table and first-order relations: 326000 featuresPopulating features table and first-order relations: 327000 featuresPopulating features table and first-order relations: 328000 featuresPopulating features table and first-order relations: 329000 featuresPopulating features table and first-order relations: 330000 featuresPopulating features table and first-order relations: 331000 featuresPopulating features table and first-order relations: 332000 featuresPopulating features table and first-order relations: 333000 featuresPopulating features table and first-order relations: 334000 featuresPopulating features table and first-order relations: 335000 featuresPopulating features table and first-order relations: 336000 featuresPopulating features table and first-order relations: 337000 featuresPopulating features table and first-order relations: 338000 featuresPopulating features table and first-order relations: 339000 featuresPopulating features table and first-order relations: 340000 featuresPopulating features table and first-order relations: 341000 featuresPopulating features table and first-order relations: 342000 featuresPopulating features table and first-order relations: 343000 featuresPopulating features table and first-order relations: 344000 featuresPopulating features table and first-order relations: 345000 featuresPopulating features table and first-order relations: 346000 featuresPopulating features table and first-order relations: 347000 featuresPopulating features table and first-order relations: 348000 featuresPopulating features table and first-order relations: 349000 features2026-04-01 20:08:19,208 - INFO - Populating features table and first-order relations: 349278 features
-2026-04-01 20:08:19,208 - INFO - Updating relations
-2026-04-01 20:08:21,495 - INFO - Creating relations(parent) index
-2026-04-01 20:08:21,639 - INFO - Creating relations(child) index
-2026-04-01 20:08:21,823 - INFO - Creating features(featuretype) index
-2026-04-01 20:08:21,941 - INFO - Creating features (seqid, start, end) index
-2026-04-01 20:08:22,092 - INFO - Creating features (seqid, start, end, strand) index
-2026-04-01 20:08:22,253 - INFO - Running ANALYZE features
-extracting features
-[M::mm_idx_gen::8.723*1.34] collected minimizers
-[M::mm_idx_gen::9.938*2.14] sorted minimizers
-[M::main::11.320*2.00] loaded/built the index for 30 target sequence(s)
-[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 30
-[M::mm_idx_stat::11.747*1.97] distinct minimizers: 34573439 (69.55% are singletons); average occurrences: 2.866; average spacing: 5.381; total length: 533168032
-@SQ	SN:OZ004311.1	LN:128522754
-@SQ	SN:CAWUPT010000001.1	LN:53000
-@SQ	SN:OZ004312.1	LN:213114244
-@SQ	SN:OZ004313.1	LN:190882370
-@SQ	SN:CAWUPT010000002.1	LN:3000
-@SQ	SN:CAWUPT010000003.1	LN:22902
-@SQ	SN:CAWUPT010000004.1	LN:18280
-@SQ	SN:CAWUPT010000005.1	LN:18743
-@SQ	SN:CAWUPT010000006.1	LN:22178
-@SQ	SN:CAWUPT010000007.1	LN:60000
-@SQ	SN:CAWUPT010000008.1	LN:1000
-@SQ	SN:CAWUPT010000009.1	LN:114081
-@SQ	SN:CAWUPT010000010.1	LN:2000
-@SQ	SN:CAWUPT010000011.1	LN:28140
-@SQ	SN:CAWUPT010000012.1	LN:22469
-@SQ	SN:CAWUPT010000013.1	LN:1000
-@SQ	SN:CAWUPT010000014.1	LN:1000
-@SQ	SN:CAWUPT010000015.1	LN:16945
-@SQ	SN:CAWUPT010000016.1	LN:20756
-@SQ	SN:CAWUPT010000017.1	LN:23603
-@SQ	SN:CAWUPT010000018.1	LN:19020
-@SQ	SN:CAWUPT010000019.1	LN:26000
-@SQ	SN:CAWUPT010000020.1	LN:19124
-@SQ	SN:CAWUPT010000021.1	LN:2000
-@SQ	SN:CAWUPT010000022.1	LN:29781
-@SQ	SN:CAWUPT010000023.1	LN:57691
-@SQ	SN:CAWUPT010000024.1	LN:25849
-@SQ	SN:CAWUPT010000025.1	LN:3000
-@SQ	SN:CAWUPT010000026.1	LN:21515
-@SQ	SN:OZ004314.1	LN:15587
-@PG	ID:minimap2	PN:minimap2	VN:2.24-r1122	CL:minimap2 -d resources/genomes/Cx_pipiens.fasta.mmi -a --end-bonus 5 --eqx -N 50 -p 0.5 -t 8 resources/genomes/Cx_pipiens.fasta
-[M::main] Version: 2.24-r1122
-[M::main] CMD: minimap2 -d resources/genomes/Cx_pipiens.fasta.mmi -a --end-bonus 5 --eqx -N 50 -p 0.5 -t 8 resources/genomes/Cx_pipiens.fasta
-[M::main] Real time: 11.801 sec; CPU: 23.159 sec; Peak RSS: 2.934 GB
-[M::main::1.495*1.00] loaded/built the index for 30 target sequence(s)
-[M::mm_mapopt_update::2.193*1.00] mid_occ = 679
-[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 30
-[M::mm_idx_stat::2.618*1.00] distinct minimizers: 34573439 (69.55% are singletons); average occurrences: 2.866; average spacing: 5.381; total length: 533168032
-[M::worker_pipeline::515.009*7.91] mapped 17836 sequences
-[M::main] Version: 2.24-r1122
-[M::main] CMD: minimap2 -o results/annotation/liftoff_intermediates/Cx_pipiens/reference_all_to_target_all.sam -a --end-bonus 5 --eqx -N 50 -p 0.5 -t 8 resources/genomes/Cx_pipiens.fasta.mmi results/annotation/liftoff_intermediates/Cx_pipiens/reference_all_genes.fa
-[M::main] Real time: 515.036 sec; CPU: 4076.155 sec; Peak RSS: 9.483 GB
-aligning features
-lifting features
-[Wed Apr  1 20:20:06 2026]
-Finished jobid: 18 (Rule: liftoff)
-4 of 29 steps (14%) done
-Execute 1 jobs...
-
-[Wed Apr  1 20:20:06 2026]
-localrule liftoff:
-    input: resources/genomes/Cx_pallens.fasta, resources/genomes/Cx_quinquefasciatus.fasta, resources/annotations/Cx_quinquefasciatus.gff3
-    output: results/annotation/Cx_pallens_liftoff.gff3
-    jobid: 14
-    reason: Missing output files: results/annotation/Cx_pallens_liftoff.gff3
-    wildcards: sample=Cx_pallens
-    threads: 8
-    resources: tmpdir=/tmp
-Activating conda environment: .snakemake/conda/e01adab60fda5ebd9b02b33fd9c5f61a_
-Select jobs to execute...
-2026-04-01 20:20:07,701 - INFO - Populating features
-Populating features table and first-order relations: 0 featuresPopulating features table and first-order relations: 1000 featuresPopulating features table and first-order relations: 2000 featuresPopulating features table and first-order relations: 3000 featuresPopulating features table and first-order relations: 4000 featuresPopulating features table and first-order relations: 5000 featuresPopulating features table and first-order relations: 6000 featuresPopulating features table and first-order relations: 7000 featuresPopulating features table and first-order relations: 8000 featuresPopulating features table and first-order relations: 9000 featuresPopulating features table and first-order relations: 10000 featuresPopulating features table and first-order relations: 11000 featuresPopulating features table and first-order relations: 12000 featuresPopulating features table and first-order relations: 13000 featuresPopulating features table and first-order relations: 14000 featuresPopulating features table and first-order relations: 15000 featuresPopulating features table and first-order relations: 16000 featuresPopulating features table and first-order relations: 17000 featuresPopulating features table and first-order relations: 18000 featuresPopulating features table and first-order relations: 19000 featuresPopulating features table and first-order relations: 20000 featuresPopulating features table and first-order relations: 21000 featuresPopulating features table and first-order relations: 22000 featuresPopulating features table and first-order relations: 23000 featuresPopulating features table and first-order relations: 24000 featuresPopulating features table and first-order relations: 25000 featuresPopulating features table and first-order relations: 26000 featuresPopulating features table and first-order relations: 27000 featuresPopulating features table and first-order relations: 28000 featuresPopulating features table and first-order relations: 29000 featuresPopulating features table and first-order relations: 30000 featuresPopulating features table and first-order relations: 31000 featuresPopulating features table and first-order relations: 32000 featuresPopulating features table and first-order relations: 33000 featuresPopulating features table and first-order relations: 34000 featuresPopulating features table and first-order relations: 35000 featuresPopulating features table and first-order relations: 36000 featuresPopulating features table and first-order relations: 37000 featuresPopulating features table and first-order relations: 38000 featuresPopulating features table and first-order relations: 39000 featuresPopulating features table and first-order relations: 40000 featuresPopulating features table and first-order relations: 41000 featuresPopulating features table and first-order relations: 42000 featuresPopulating features table and first-order relations: 43000 featuresPopulating features table and first-order relations: 44000 featuresPopulating features table and first-order relations: 45000 featuresPopulating features table and first-order relations: 46000 featuresPopulating features table and first-order relations: 47000 featuresPopulating features table and first-order relations: 48000 featuresPopulating features table and first-order relations: 49000 featuresPopulating features table and first-order relations: 50000 featuresPopulating features table and first-order relations: 51000 featuresPopulating features table and first-order relations: 52000 featuresPopulating features table and first-order relations: 53000 featuresPopulating features table and first-order relations: 54000 featuresPopulating features table and first-order relations: 55000 featuresPopulating features table and first-order relations: 56000 featuresPopulating features table and first-order relations: 57000 featuresPopulating features table and first-order relations: 58000 featuresPopulating features table and first-order relations: 59000 featuresPopulating features table and first-order relations: 60000 featuresPopulating features table and first-order relations: 61000 featuresPopulating features table and first-order relations: 62000 featuresPopulating features table and first-order relations: 63000 featuresPopulating features table and first-order relations: 64000 featuresPopulating features table and first-order relations: 65000 featuresPopulating features table and first-order relations: 66000 featuresPopulating features table and first-order relations: 67000 featuresPopulating features table and first-order relations: 68000 featuresPopulating features table and first-order relations: 69000 featuresPopulating features table and first-order relations: 70000 featuresPopulating features table and first-order relations: 71000 featuresPopulating features table and first-order relations: 72000 featuresPopulating features table and first-order relations: 73000 featuresPopulating features table and first-order relations: 74000 featuresPopulating features table and first-order relations: 75000 featuresPopulating features table and first-order relations: 76000 featuresPopulating features table and first-order relations: 77000 featuresPopulating features table and first-order relations: 78000 featuresPopulating features table and first-order relations: 79000 featuresPopulating features table and first-order relations: 80000 featuresPopulating features table and first-order relations: 81000 featuresPopulating features table and first-order relations: 82000 featuresPopulating features table and first-order relations: 83000 featuresPopulating features table and first-order relations: 84000 featuresPopulating features table and first-order relations: 85000 featuresPopulating features table and first-order relations: 86000 featuresPopulating features table and first-order relations: 87000 featuresPopulating features table and first-order relations: 88000 featuresPopulating features table and first-order relations: 89000 featuresPopulating features table and first-order relations: 90000 featuresPopulating features table and first-order relations: 91000 featuresPopulating features table and first-order relations: 92000 featuresPopulating features table and first-order relations: 93000 featuresPopulating features table and first-order relations: 94000 featuresPopulating features table and first-order relations: 95000 featuresPopulating features table and first-order relations: 96000 featuresPopulating features table and first-order relations: 97000 featuresPopulating features table and first-order relations: 98000 featuresPopulating features table and first-order relations: 99000 featuresPopulating features table and first-order relations: 100000 featuresPopulating features table and first-order relations: 101000 featuresPopulating features table and first-order relations: 102000 featuresPopulating features table and first-order relations: 103000 featuresPopulating features table and first-order relations: 104000 featuresPopulating features table and first-order relations: 105000 featuresPopulating features table and first-order relations: 106000 featuresPopulating features table and first-order relations: 107000 featuresPopulating features table and first-order relations: 108000 featuresPopulating features table and first-order relations: 109000 featuresPopulating features table and first-order relations: 110000 featuresPopulating features table and first-order relations: 111000 featuresPopulating features table and first-order relations: 112000 featuresPopulating features table and first-order relations: 113000 featuresPopulating features table and first-order relations: 114000 featuresPopulating features table and first-order relations: 115000 featuresPopulating features table and first-order relations: 116000 featuresPopulating features table and first-order relations: 117000 featuresPopulating features table and first-order relations: 118000 featuresPopulating features table and first-order relations: 119000 featuresPopulating features table and first-order relations: 120000 featuresPopulating features table and first-order relations: 121000 featuresPopulating features table and first-order relations: 122000 featuresPopulating features table and first-order relations: 123000 featuresPopulating features table and first-order relations: 124000 featuresPopulating features table and first-order relations: 125000 featuresPopulating features table and first-order relations: 126000 featuresPopulating features table and first-order relations: 127000 featuresPopulating features table and first-order relations: 128000 featuresPopulating features table and first-order relations: 129000 featuresPopulating features table and first-order relations: 130000 featuresPopulating features table and first-order relations: 131000 featuresPopulating features table and first-order relations: 132000 featuresPopulating features table and first-order relations: 133000 featuresPopulating features table and first-order relations: 134000 featuresPopulating features table and first-order relations: 135000 featuresPopulating features table and first-order relations: 136000 featuresPopulating features table and first-order relations: 137000 featuresPopulating features table and first-order relations: 138000 featuresPopulating features table and first-order relations: 139000 featuresPopulating features table and first-order relations: 140000 featuresPopulating features table and first-order relations: 141000 featuresPopulating features table and first-order relations: 142000 featuresPopulating features table and first-order relations: 143000 featuresPopulating features table and first-order relations: 144000 featuresPopulating features table and first-order relations: 145000 featuresPopulating features table and first-order relations: 146000 featuresPopulating features table and first-order relations: 147000 featuresPopulating features table and first-order relations: 148000 featuresPopulating features table and first-order relations: 149000 featuresPopulating features table and first-order relations: 150000 featuresPopulating features table and first-order relations: 151000 featuresPopulating features table and first-order relations: 152000 featuresPopulating features table and first-order relations: 153000 featuresPopulating features table and first-order relations: 154000 featuresPopulating features table and first-order relations: 155000 featuresPopulating features table and first-order relations: 156000 featuresPopulating features table and first-order relations: 157000 featuresPopulating features table and first-order relations: 158000 featuresPopulating features table and first-order relations: 159000 featuresPopulating features table and first-order relations: 160000 featuresPopulating features table and first-order relations: 161000 featuresPopulating features table and first-order relations: 162000 featuresPopulating features table and first-order relations: 163000 featuresPopulating features table and first-order relations: 164000 featuresPopulating features table and first-order relations: 165000 featuresPopulating features table and first-order relations: 166000 featuresPopulating features table and first-order relations: 167000 featuresPopulating features table and first-order relations: 168000 featuresPopulating features table and first-order relations: 169000 featuresPopulating features table and first-order relations: 170000 featuresPopulating features table and first-order relations: 171000 featuresPopulating features table and first-order relations: 172000 featuresPopulating features table and first-order relations: 173000 featuresPopulating features table and first-order relations: 174000 featuresPopulating features table and first-order relations: 175000 featuresPopulating features table and first-order relations: 176000 featuresPopulating features table and first-order relations: 177000 featuresPopulating features table and first-order relations: 178000 featuresPopulating features table and first-order relations: 179000 featuresPopulating features table and first-order relations: 180000 featuresPopulating features table and first-order relations: 181000 featuresPopulating features table and first-order relations: 182000 featuresPopulating features table and first-order relations: 183000 featuresPopulating features table and first-order relations: 184000 featuresPopulating features table and first-order relations: 185000 featuresPopulating features table and first-order relations: 186000 featuresPopulating features table and first-order relations: 187000 featuresPopulating features table and first-order relations: 188000 featuresPopulating features table and first-order relations: 189000 featuresPopulating features table and first-order relations: 190000 featuresPopulating features table and first-order relations: 191000 featuresPopulating features table and first-order relations: 192000 featuresPopulating features table and first-order relations: 193000 featuresPopulating features table and first-order relations: 194000 featuresPopulating features table and first-order relations: 195000 featuresPopulating features table and first-order relations: 196000 featuresPopulating features table and first-order relations: 197000 featuresPopulating features table and first-order relations: 198000 featuresPopulating features table and first-order relations: 199000 featuresPopulating features table and first-order relations: 200000 featuresPopulating features table and first-order relations: 201000 featuresPopulating features table and first-order relations: 202000 featuresPopulating features table and first-order relations: 203000 featuresPopulating features table and first-order relations: 204000 featuresPopulating features table and first-order relations: 205000 featuresPopulating features table and first-order relations: 206000 featuresPopulating features table and first-order relations: 207000 featuresPopulating features table and first-order relations: 208000 featuresPopulating features table and first-order relations: 209000 featuresPopulating features table and first-order relations: 210000 featuresPopulating features table and first-order relations: 211000 featuresPopulating features table and first-order relations: 212000 featuresPopulating features table and first-order relations: 213000 featuresPopulating features table and first-order relations: 214000 featuresPopulating features table and first-order relations: 215000 featuresPopulating features table and first-order relations: 216000 featuresPopulating features table and first-order relations: 217000 featuresPopulating features table and first-order relations: 218000 featuresPopulating features table and first-order relations: 219000 featuresPopulating features table and first-order relations: 220000 featuresPopulating features table and first-order relations: 221000 featuresPopulating features table and first-order relations: 222000 featuresPopulating features table and first-order relations: 223000 featuresPopulating features table and first-order relations: 224000 featuresPopulating features table and first-order relations: 225000 featuresPopulating features table and first-order relations: 226000 featuresPopulating features table and first-order relations: 227000 featuresPopulating features table and first-order relations: 228000 featuresPopulating features table and first-order relations: 229000 featuresPopulating features table and first-order relations: 230000 featuresPopulating features table and first-order relations: 231000 featuresPopulating features table and first-order relations: 232000 featuresPopulating features table and first-order relations: 233000 featuresPopulating features table and first-order relations: 234000 featuresPopulating features table and first-order relations: 235000 featuresPopulating features table and first-order relations: 236000 featuresPopulating features table and first-order relations: 237000 featuresPopulating features table and first-order relations: 238000 featuresPopulating features table and first-order relations: 239000 featuresPopulating features table and first-order relations: 240000 featuresPopulating features table and first-order relations: 241000 featuresPopulating features table and first-order relations: 242000 featuresPopulating features table and first-order relations: 243000 featuresPopulating features table and first-order relations: 244000 featuresPopulating features table and first-order relations: 245000 featuresPopulating features table and first-order relations: 246000 featuresPopulating features table and first-order relations: 247000 featuresPopulating features table and first-order relations: 248000 featuresPopulating features table and first-order relations: 249000 featuresPopulating features table and first-order relations: 250000 featuresPopulating features table and first-order relations: 251000 featuresPopulating features table and first-order relations: 252000 featuresPopulating features table and first-order relations: 253000 featuresPopulating features table and first-order relations: 254000 featuresPopulating features table and first-order relations: 255000 featuresPopulating features table and first-order relations: 256000 featuresPopulating features table and first-order relations: 257000 featuresPopulating features table and first-order relations: 258000 featuresPopulating features table and first-order relations: 259000 featuresPopulating features table and first-order relations: 260000 featuresPopulating features table and first-order relations: 261000 featuresPopulating features table and first-order relations: 262000 featuresPopulating features table and first-order relations: 263000 featuresPopulating features table and first-order relations: 264000 featuresPopulating features table and first-order relations: 265000 featuresPopulating features table and first-order relations: 266000 featuresPopulating features table and first-order relations: 267000 featuresPopulating features table and first-order relations: 268000 featuresPopulating features table and first-order relations: 269000 featuresPopulating features table and first-order relations: 270000 featuresPopulating features table and first-order relations: 271000 featuresPopulating features table and first-order relations: 272000 featuresPopulating features table and first-order relations: 273000 featuresPopulating features table and first-order relations: 274000 featuresPopulating features table and first-order relations: 275000 featuresPopulating features table and first-order relations: 276000 featuresPopulating features table and first-order relations: 277000 featuresPopulating features table and first-order relations: 278000 featuresPopulating features table and first-order relations: 279000 featuresPopulating features table and first-order relations: 280000 featuresPopulating features table and first-order relations: 281000 featuresPopulating features table and first-order relations: 282000 featuresPopulating features table and first-order relations: 283000 featuresPopulating features table and first-order relations: 284000 featuresPopulating features table and first-order relations: 285000 featuresPopulating features table and first-order relations: 286000 featuresPopulating features table and first-order relations: 287000 featuresPopulating features table and first-order relations: 288000 featuresPopulating features table and first-order relations: 289000 featuresPopulating features table and first-order relations: 290000 featuresPopulating features table and first-order relations: 291000 featuresPopulating features table and first-order relations: 292000 featuresPopulating features table and first-order relations: 293000 featuresPopulating features table and first-order relations: 294000 featuresPopulating features table and first-order relations: 295000 featuresPopulating features table and first-order relations: 296000 featuresPopulating features table and first-order relations: 297000 featuresPopulating features table and first-order relations: 298000 featuresPopulating features table and first-order relations: 299000 featuresPopulating features table and first-order relations: 300000 featuresPopulating features table and first-order relations: 301000 featuresPopulating features table and first-order relations: 302000 featuresPopulating features table and first-order relations: 303000 featuresPopulating features table and first-order relations: 304000 featuresPopulating features table and first-order relations: 305000 featuresPopulating features table and first-order relations: 306000 featuresPopulating features table and first-order relations: 307000 featuresPopulating features table and first-order relations: 308000 featuresPopulating features table and first-order relations: 309000 featuresPopulating features table and first-order relations: 310000 featuresPopulating features table and first-order relations: 311000 featuresPopulating features table and first-order relations: 312000 featuresPopulating features table and first-order relations: 313000 featuresPopulating features table and first-order relations: 314000 featuresPopulating features table and first-order relations: 315000 featuresPopulating features table and first-order relations: 316000 featuresPopulating features table and first-order relations: 317000 featuresPopulating features table and first-order relations: 318000 featuresPopulating features table and first-order relations: 319000 featuresPopulating features table and first-order relations: 320000 featuresPopulating features table and first-order relations: 321000 featuresPopulating features table and first-order relations: 322000 featuresPopulating features table and first-order relations: 323000 featuresPopulating features table and first-order relations: 324000 featuresPopulating features table and first-order relations: 325000 featuresPopulating features table and first-order relations: 326000 featuresPopulating features table and first-order relations: 327000 featuresPopulating features table and first-order relations: 328000 featuresPopulating features table and first-order relations: 329000 featuresPopulating features table and first-order relations: 330000 featuresPopulating features table and first-order relations: 331000 featuresPopulating features table and first-order relations: 332000 featuresPopulating features table and first-order relations: 333000 featuresPopulating features table and first-order relations: 334000 featuresPopulating features table and first-order relations: 335000 featuresPopulating features table and first-order relations: 336000 featuresPopulating features table and first-order relations: 337000 featuresPopulating features table and first-order relations: 338000 featuresPopulating features table and first-order relations: 339000 featuresPopulating features table and first-order relations: 340000 featuresPopulating features table and first-order relations: 341000 featuresPopulating features table and first-order relations: 342000 featuresPopulating features table and first-order relations: 343000 featuresPopulating features table and first-order relations: 344000 featuresPopulating features table and first-order relations: 345000 featuresPopulating features table and first-order relations: 346000 featuresPopulating features table and first-order relations: 347000 featuresPopulating features table and first-order relations: 348000 featuresPopulating features table and first-order relations: 349000 features2026-04-01 20:20:26,276 - INFO - Populating features table and first-order relations: 349278 features
-2026-04-01 20:20:26,276 - INFO - Updating relations
-2026-04-01 20:20:28,530 - INFO - Creating relations(parent) index
-2026-04-01 20:20:28,673 - INFO - Creating relations(child) index
-2026-04-01 20:20:28,850 - INFO - Creating features(featuretype) index
-2026-04-01 20:20:28,967 - INFO - Creating features (seqid, start, end) index
-2026-04-01 20:20:29,118 - INFO - Creating features (seqid, start, end, strand) index
-2026-04-01 20:20:29,278 - INFO - Running ANALYZE features
-extracting features
-[M::mm_idx_gen::9.029*1.39] collected minimizers
-[M::mm_idx_gen::10.191*2.14] sorted minimizers
-@SQ	SN:NC_068937.1	LN:139153999
-@SQ	SN:NC_068938.1	LN:224097512
-@SQ	SN:NC_068939.1	LN:186194774
-@SQ	SN:NW_026292818.1	LN:1585000
-@SQ	SN:NW_026292819.1	LN:1515000
-@SQ	SN:NW_026292820.1	LN:1208100
-@SQ	SN:NW_026292821.1	LN:874949
-@SQ	SN:NW_026292822.1	LN:755000
-@SQ	SN:NW_026292823.1	LN:382000
-@SQ	SN:NW_026292824.1	LN:377000
-@SQ	SN:NW_026292825.1	LN:315000
-@SQ	SN:NW_026292826.1	LN:315000
-@SQ	SN:NW_026292827.1	LN:303487
-@SQ	SN:NW_026292828.1	LN:282894
-@SQ	SN:NW_026292829.1	LN:253000
-@SQ	SN:NW_026292830.1	LN:241697
-@SQ	SN:NW_026292831.1	LN:233000
-@SQ	SN:NW_026292832.1	LN:218608
-@SQ	SN:NW_026292833.1	LN:215000
-@SQ	SN:NW_026292834.1	LN:205000
-@SQ	SN:NW_026292835.1	LN:185546
-@SQ	SN:NW_026292836.1	LN:159466
-@SQ	SN:NW_026292837.1	LN:106000
-@SQ	SN:NW_026292838.1	LN:103000
-@SQ	SN:NW_026292839.1	LN:102000
-@SQ	SN:NW_026292840.1	LN:100374
-@SQ	SN:NW_026292841.1	LN:94888
-@SQ	SN:NW_026292842.1	LN:88334
-@SQ	SN:NW_026292843.1	LN:86936
-@SQ	SN:NW_026292844.1	LN:78226
-@SQ	SN:NW_026292845.1	LN:75000
-@SQ	SN:NW_026292846.1	LN:75000
-@SQ	SN:NW_026292847.1	LN:74149
-@SQ	SN:NW_026292848.1	LN:73655
-@SQ	SN:NW_026292849.1	LN:73000
-@SQ	SN:NW_026292850.1	LN:70000
-@SQ	SN:NW_026292851.1	LN:62280
-@SQ	SN:NW_026292852.1	LN:62027
-@SQ	SN:NW_026292853.1	LN:61980
-@SQ	SN:NW_026292854.1	LN:61000
-@SQ	SN:NW_026292855.1	LN:60332
-@SQ	SN:NW_026292856.1	LN:59837
-@SQ	SN:NW_026292857.1	LN:59501
-@SQ	SN:NW_026292858.1	LN:58347
-@SQ	SN:NW_026292859.1	LN:57567
-@SQ	SN:NW_026292860.1	LN:56000
-@SQ	SN:NW_026292861.1	LN:50571
-@SQ	SN:NW_026292862.1	LN:50000
-@SQ	SN:NW_026292863.1	LN:50000
-@SQ	SN:NW_026292864.1	LN:49703
-@SQ	SN:NW_026292865.1	LN:49000
-@SQ	SN:NW_026292866.1	LN:48446
-@SQ	SN:NW_026292867.1	LN:46594
-@SQ	SN:NW_026292868.1	LN:45383
-@SQ	SN:NW_026292869.1	LN:44723
-@SQ	SN:NW_026292870.1	LN:43898
-@SQ	SN:NW_026292871.1	LN:42000
-@SQ	SN:NW_026292872.1	LN:40956
-@SQ	SN:NW_026292873.1	LN:39758
-@SQ	SN:NW_026292874.1	LN:39568
-@SQ	SN:NW_026292875.1	LN:39378
-@SQ	SN:NW_026292876.1	LN:39167
-@SQ	SN:NW_026292877.1	LN:39127
-@SQ	SN:NW_026292878.1	LN:38527
-@SQ	SN:NW_026292879.1	LN:38381
-@SQ	SN:NW_026292880.1	LN:38026
-@SQ	SN:NW_026292881.1	LN:36683
-@SQ	SN:NW_026292882.1	LN:36665
-@SQ	SN:NW_026292883.1	LN:36619
-@SQ	SN:NW_026292884.1	LN:36182
-@SQ	SN:NW_026292885.1	LN:36000
-@SQ	SN:NW_026292886.1	LN:35296
-@SQ	SN:NW_026292887.1	LN:34840
-@SQ	SN:NW_026292888.1	LN:34662
-@SQ	SN:NW_026292889.1	LN:34323
-@SQ	SN:NW_026292890.1	LN:33733
-@SQ	SN:NW_026292891.1	LN:33674
-@SQ	SN:NW_026292892.1	LN:33658
-@SQ	SN:NW_026292893.1	LN:33012
-@SQ	SN:NW_026292894.1	LN:32835
-@SQ	SN:NW_026292895.1	LN:32706
-@SQ	SN:NW_026292896.1	LN:31645
-@SQ	SN:NW_026292897.1	LN:31602
-@SQ	SN:NW_026292898.1	LN:31515
-@SQ	SN:NW_026292899.1	LN:31460
-@SQ	SN:NW_026292900.1	LN:30893
-@SQ	SN:NW_026292901.1	LN:30308
-@SQ	SN:NW_026292902.1	LN:30040
-@SQ	SN:NW_026292903.1	LN:29661
-@SQ	SN:NW_026292904.1	LN:29415
-@SQ	SN:NW_026292905.1	LN:28994
-@SQ	SN:NW_026292906.1	LN:28527
-@SQ	SN:NW_026292907.1	LN:27974
-@SQ	SN:NW_026292908.1	LN:27736
-@SQ	SN:NW_026292909.1	LN:27383
-@SQ	SN:NW_026292910.1	LN:26867
-@SQ	SN:NW_026292911.1	LN:26783
-@SQ	SN:NW_026292912.1	LN:26539
-@SQ	SN:NW_026292913.1	LN:26443
-@SQ	SN:NW_026292914.1	LN:26000
-@SQ	SN:NW_026292915.1	LN:25597
-@SQ	SN:NW_026292916.1	LN:25549
-@SQ	SN:NW_026292917.1	LN:25447
-@SQ	SN:NW_026292918.1	LN:25123
-@SQ	SN:NW_026292919.1	LN:25000
-@SQ	SN:NW_026292920.1	LN:25000
-@SQ	SN:NW_026292921.1	LN:25000
-@SQ	SN:NW_026292922.1	LN:25000
-@SQ	SN:NW_026292923.1	LN:25000
-@SQ	SN:NW_026292924.1	LN:25000
-@SQ	SN:NW_026292925.1	LN:25000
-@SQ	SN:NW_026292926.1	LN:25000
-@SQ	SN:NW_026292927.1	LN:25000
-@SQ	SN:NW_026292928.1	LN:25000
-@SQ	SN:NW_026292929.1	LN:25000
-@SQ	SN:NW_026292930.1	LN:25000
-@SQ	SN:NW_026292931.1	LN:25000
-@SQ	SN:NW_026292932.1	LN:25000
-@SQ	SN:NW_026292933.1	LN:25000
-@SQ	SN:NW_026292934.1	LN:25000
-@SQ	SN:NW_026292935.1	LN:25000
-@SQ	SN:NW_026292936.1	LN:25000
-@SQ	SN:NW_026292937.1	LN:25000
-@SQ	SN:NW_026292938.1	LN:25000
-@SQ	SN:NW_026292939.1	LN:25000
-@SQ	SN:NW_026292940.1	LN:25000
-@SQ	SN:NW_026292941.1	LN:25000
-@SQ	SN:NW_026292942.1	LN:25000
-@SQ	SN:NW_026292943.1	LN:25000
-@SQ	SN:NW_026292944.1	LN:25000
-@SQ	SN:NW_026292945.1	LN:25000
-@SQ	SN:NW_026292946.1	LN:25000
-@SQ	SN:NW_026292947.1	LN:25000
-@SQ	SN:NW_026292948.1	LN:25000
-@SQ	SN:NW_026292949.1	LN:25000
-@SQ	SN:NW_026292950.1	LN:25000
-@SQ	SN:NW_026292951.1	LN:25000
-@SQ	SN:NW_026292952.1	LN:25000
-@SQ	SN:NW_026292953.1	LN:25000
-@SQ	SN:NW_026292954.1	LN:25000
-@SQ	SN:NW_026292955.1	LN:25000
-@SQ	SN:NW_026292956.1	LN:25000
-@SQ	SN:NW_026292957.1	LN:25000
-@SQ	SN:NW_026292958.1	LN:25000
-@SQ	SN:NW_026292959.1	LN:25000
-@SQ	SN:NW_026292960.1	LN:25000
-@SQ	SN:NW_026292961.1	LN:25000
-@SQ	SN:NW_026292962.1	LN:25000
-@SQ	SN:NW_026292963.1	LN:25000
-@SQ	SN:NW_026292964.1	LN:25000
-@SQ	SN:NW_026292965.1	LN:25000
-@SQ	SN:NW_026292966.1	LN:25000
-@SQ	SN:NW_026292967.1	LN:25000
-@SQ	SN:NW_026292968.1	LN:25000
-@SQ	SN:NW_026292969.1	LN:25000
-@SQ	SN:NW_026292970.1	LN:25000
-@SQ	SN:NW_026292971.1	LN:25000
-@SQ	SN:NW_026292972.1	LN:25000
-@SQ	SN:NW_026292973.1	LN:25000
-@SQ	SN:NW_026292974.1	LN:25000
-@SQ	SN:NW_026292975.1	LN:25000
-@SQ	SN:NW_026292976.1	LN:25000
-@SQ	SN:NW_026292977.1	LN:25000
-@SQ	SN:NW_026292978.1	LN:25000
-@SQ	SN:NW_026292979.1	LN:25000
-@SQ	SN:NW_026292980.1	LN:25000
-@SQ	SN:NW_026292981.1	LN:25000
-@SQ	SN:NW_026292982.1	LN:25000
-@SQ	SN:NW_026292983.1	LN:25000
-@SQ	SN:NW_026292984.1	LN:24381
-@SQ	SN:NW_026292985.1	LN:23994
-@SQ	SN:NW_026292986.1	LN:23488
-@SQ	SN:NW_026292987.1	LN:23462
-@SQ	SN:NW_026292988.1	LN:23407
-@SQ	SN:NW_026292989.1	LN:23269
-@SQ	SN:NW_026292990.1	LN:23031
-@SQ	SN:NW_026292991.1	LN:22870
-@SQ	SN:NW_026292992.1	LN:22292
-@SQ	SN:NW_026292993.1	LN:21962
-@SQ	SN:NW_026292994.1	LN:21666
-@SQ	SN:NW_026292995.1	LN:21607
-@SQ	SN:NW_026292996.1	LN:21539
-@SQ	SN:NW_026292997.1	LN:20788
-@SQ	SN:NW_026292998.1	LN:20506
-@SQ	SN:NW_026292999.1	LN:20441
-@SQ	SN:NW_026293000.1	LN:20239
-@SQ	SN:NW_026293001.1	LN:20000
-@SQ	SN:NW_026293002.1	LN:19743
-@SQ	SN:NW_026293003.1	LN:19634
-@SQ	SN:NW_026293004.1	LN:19627
-@SQ	SN:NW_026293005.1	LN:19484
-@SQ	SN:NW_026293006.1	LN:19381
-@SQ	SN:NW_026293007.1	LN:19255
-@SQ	SN:NW_026293008.1	LN:18694
-@SQ	SN:NW_026293009.1	LN:18600
-@SQ	SN:NW_026293010.1	LN:18381
-@SQ	SN:NW_026293011.1	LN:18295
-@SQ	SN:NW_026293012.1	LN:17835
-@SQ	SN:NW_026293013.1	LN:17772
-@SQ	SN:NW_026293014.1	LN:17215
-@SQ	SN:NW_026293015.1	LN:16676
-@SQ	SN:NW_026293016.1	LN:16398
-@SQ	SN:NW_026293017.1	LN:16370
-@SQ	SN:NW_026293018.1	LN:16127
-@SQ	SN:NW_026293019.1	LN:15611
-@SQ	SN:NW_026293020.1	LN:15297
-@SQ	SN:NW_026293021.1	LN:15228
-@SQ	SN:NW_026293022.1	LN:15113
-@SQ	SN:NW_026293023.1	LN:14968
-@SQ	SN:NW_026293024.1	LN:14828
-@SQ	SN:NW_026293025.1	LN:14826
-@SQ	SN:NW_026293026.1	LN:14807
-@SQ	SN:NW_026293027.1	LN:14806
-@SQ	SN:NW_026293028.1	LN:14735
-@SQ	SN:NW_026293029.1	LN:14665
-@SQ	SN:NW_026293030.1	LN:14606
-@SQ	SN:NW_026293031.1	LN:14592
-@SQ	SN:NW_026293032.1	LN:14432
-@SQ	SN:NW_026293033.1	LN:14405
-@SQ	SN:NW_026293034.1	LN:14379
-@SQ	SN:NW_026293035.1	LN:14311
-@SQ	SN:NW_026293036.1	LN:14258
-@SQ	SN:NW_026293037.1	LN:14175
-@SQ	SN:NW_026293038.1	LN:14000
-@SQ	SN:NW_026293039.1	LN:13916
-@SQ	SN:NW_026293040.1	LN:13908
-@SQ	SN:NW_026293041.1	LN:13892
-@SQ	SN:NW_026293042.1	LN:13869
-@SQ	SN:NW_026293043.1	LN:13838
-@SQ	SN:NW_026293044.1	LN:13712
-@SQ	SN:NW_026293045.1	LN:13705
-@SQ	SN:NW_026293046.1	LN:13682
-@SQ	SN:NW_026293047.1	LN:13659
-@SQ	SN:NW_026293048.1	LN:13653
-@SQ	SN:NW_026293049.1	LN:13649
-@SQ	SN:NW_026293050.1	LN:13426
-@SQ	SN:NW_026293051.1	LN:13401
-@SQ	SN:NW_026293052.1	LN:13323
-@SQ	SN:NW_026293053.1	LN:13318
-@SQ	SN:NW_026293054.1	LN:13291
-@SQ	SN:NW_026293055.1	LN:13285
-@SQ	SN:NW_026293056.1	LN:13267
-@SQ	SN:NW_026293057.1	LN:13179
-@SQ	SN:NW_026293058.1	LN:13152
-@SQ	SN:NW_026293059.1	LN:13053
-@SQ	SN:NW_026293060.1	LN:12995
-@SQ	SN:NW_026293061.1	LN:12937
-@SQ	SN:NW_026293062.1	LN:12932
-@SQ	SN:NW_026293063.1	LN:12880
-@SQ	SN:NW_026293064.1	LN:12855
-@SQ	SN:NW_026293065.1	LN:12846
-@SQ	SN:NW_026293066.1	LN:12800
-@SQ	SN:NW_026293067.1	LN:12748
-@SQ	SN:NW_026293068.1	LN:12713
-@SQ	SN:NW_026293069.1	LN:12516
-@SQ	SN:NW_026293070.1	LN:12418
-@SQ	SN:NW_026293071.1	LN:12383
-@SQ	SN:NW_026293072.1	LN:12302
-@SQ	SN:NW_026293073.1	LN:12247
-@SQ	SN:NW_026293074.1	LN:12187
-@SQ	SN:NW_026293075.1	LN:12063
-@SQ	SN:NW_026293076.1	LN:12005
-@SQ	SN:NW_026293077.1	LN:11947
-@SQ	SN:NW_[M::main::11.603*2.00] loaded/built the index for 290 target sequence(s)
-[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 290
-[M::mm_idx_stat::12.036*1.96] distinct minimizers: 35330963 (67.93% are singletons); average occurrences: 2.986; average spacing: 5.368; total length: 566354144
-026293078.1	LN:11766
-@SQ	SN:NW_026293079.1	LN:11752
-@SQ	SN:NW_026293080.1	LN:11717
-@SQ	SN:NW_026293081.1	LN:11607
-@SQ	SN:NW_026293082.1	LN:11556
-@SQ	SN:NW_026293083.1	LN:11496
-@SQ	SN:NW_026293084.1	LN:11440
-@SQ	SN:NW_026293085.1	LN:11318
-@SQ	SN:NW_026293086.1	LN:11274
-@SQ	SN:NW_026293087.1	LN:11206
-@SQ	SN:NW_026293088.1	LN:11162
-@SQ	SN:NW_026293089.1	LN:11083
-@SQ	SN:NW_026293090.1	LN:11044
-@SQ	SN:NW_026293091.1	LN:11040
-@SQ	SN:NW_026293092.1	LN:10971
-@SQ	SN:NW_026293093.1	LN:10874
-@SQ	SN:NW_026293094.1	LN:10601
-@SQ	SN:NW_026293095.1	LN:10545
-@SQ	SN:NW_026293096.1	LN:10538
-@SQ	SN:NW_026293097.1	LN:10520
-@SQ	SN:NW_026293098.1	LN:10485
-@SQ	SN:NW_026293099.1	LN:10461
-@SQ	SN:NW_026293100.1	LN:10432
-@SQ	SN:NW_026293101.1	LN:10418
-@SQ	SN:NW_026293102.1	LN:10279
-@SQ	SN:NW_026293103.1	LN:10220
-@SQ	SN:NC_015079.1	LN:14856
-@PG	ID:minimap2	PN:minimap2	VN:2.24-r1122	CL:minimap2 -d resources/genomes/Cx_pallens.fasta.mmi -a --end-bonus 5 --eqx -N 50 -p 0.5 -t 8 resources/genomes/Cx_pallens.fasta
-[M::main] Version: 2.24-r1122
-[M::main] CMD: minimap2 -d resources/genomes/Cx_pallens.fasta.mmi -a --end-bonus 5 --eqx -N 50 -p 0.5 -t 8 resources/genomes/Cx_pallens.fasta
-[M::main] Real time: 12.133 sec; CPU: 23.721 sec; Peak RSS: 3.645 GB
-[M::main::1.493*1.00] loaded/built the index for 290 target sequence(s)
-[M::mm_mapopt_update::2.122*1.00] mid_occ = 708
-[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 290
-[M::mm_idx_stat::2.554*1.00] distinct minimizers: 35330963 (67.93% are singletons); average occurrences: 2.986; average spacing: 5.368; total length: 566354144
-[Wed Apr  1 20:27:48 2026]
-Finished jobid: 23 (Rule: nucmer_align)
-5 of 29 steps (17%) done
-Execute 1 jobs...
-
-[Wed Apr  1 20:27:48 2026]
-localrule nucmer_align:
-    input: resources/genomes/Cx_pallens.fasta, resources/genomes/Cx_pipiens.fasta
-    output: results/synteny/Cx_pallens_vs_Cx_pipiens.delta, results/synteny/Cx_pallens_vs_Cx_pipiens.filtered.delta
-    jobid: 31
-    reason: Missing output files: results/synteny/Cx_pallens_vs_Cx_pipiens.filtered.delta
-    wildcards: ref=Cx_pallens, query=Cx_pipiens
-    threads: 8
-    resources: tmpdir=/tmp
-Activating conda environment: .snakemake/conda/34f0752168e44947e7fd854fc8cb24d6_
-Select jobs to execute...
-[M::worker_pipeline::464.649*7.89] mapped 17836 sequences
-[M::main] Version: 2.24-r1122
-[M::main] CMD: minimap2 -o results/annotation/liftoff_intermediates/Cx_pallens/reference_all_to_target_all.sam -a --end-bonus 5 --eqx -N 50 -p 0.5 -t 8 resources/genomes/Cx_pallens.fasta.mmi results/annotation/liftoff_intermediates/Cx_pallens/reference_all_genes.fa
-[M::main] Real time: 464.680 sec; CPU: 3664.176 sec; Peak RSS: 9.666 GB
-aligning features
-lifting features
-[Wed Apr  1 20:31:02 2026]
-Finished jobid: 14 (Rule: liftoff)
-6 of 29 steps (21%) done
-Execute 1 jobs...
-
-[Wed Apr  1 20:31:02 2026]
-localrule liftoff:
-    input: resources/genomes/Cx_molestus.fasta, resources/genomes/Cx_quinquefasciatus.fasta, resources/annotations/Cx_quinquefasciatus.gff3
-    output: results/annotation/Cx_molestus_liftoff.gff3
-    jobid: 16
-    reason: Missing output files: results/annotation/Cx_molestus_liftoff.gff3
-    wildcards: sample=Cx_molestus
-    threads: 8
-    resources: tmpdir=/tmp
-Activating conda environment: .snakemake/conda/e01adab60fda5ebd9b02b33fd9c5f61a_
-Select jobs to execute...
-2026-04-01 20:31:03,297 - INFO - Populating features
-Populating features table and first-order relations: 0 featuresPopulating features table and first-order relations: 1000 featuresPopulating features table and first-order relations: 2000 featuresPopulating features table and first-order relations: 3000 featuresPopulating features table and first-order relations: 4000 featuresPopulating features table and first-order relations: 5000 featuresPopulating features table and first-order relations: 6000 featuresPopulating features table and first-order relations: 7000 featuresPopulating features table and first-order relations: 8000 featuresPopulating features table and first-order relations: 9000 featuresPopulating features table and first-order relations: 10000 featuresPopulating features table and first-order relations: 11000 featuresPopulating features table and first-order relations: 12000 featuresPopulating features table and first-order relations: 13000 featuresPopulating features table and first-order relations: 14000 featuresPopulating features table and first-order relations: 15000 featuresPopulating features table and first-order relations: 16000 featuresPopulating features table and first-order relations: 17000 featuresPopulating features table and first-order relations: 18000 featuresPopulating features table and first-order relations: 19000 featuresPopulating features table and first-order relations: 20000 featuresPopulating features table and first-order relations: 21000 featuresPopulating features table and first-order relations: 22000 featuresPopulating features table and first-order relations: 23000 featuresPopulating features table and first-order relations: 24000 featuresPopulating features table and first-order relations: 25000 featuresPopulating features table and first-order relations: 26000 featuresPopulating features table and first-order relations: 27000 featuresPopulating features table and first-order relations: 28000 featuresPopulating features table and first-order relations: 29000 featuresPopulating features table and first-order relations: 30000 featuresPopulating features table and first-order relations: 31000 featuresPopulating features table and first-order relations: 32000 featuresPopulating features table and first-order relations: 33000 featuresPopulating features table and first-order relations: 34000 featuresPopulating features table and first-order relations: 35000 featuresPopulating features table and first-order relations: 36000 featuresPopulating features table and first-order relations: 37000 featuresPopulating features table and first-order relations: 38000 featuresPopulating features table and first-order relations: 39000 featuresPopulating features table and first-order relations: 40000 featuresPopulating features table and first-order relations: 41000 featuresPopulating features table and first-order relations: 42000 featuresPopulating features table and first-order relations: 43000 featuresPopulating features table and first-order relations: 44000 featuresPopulating features table and first-order relations: 45000 featuresPopulating features table and first-order relations: 46000 featuresPopulating features table and first-order relations: 47000 featuresPopulating features table and first-order relations: 48000 featuresPopulating features table and first-order relations: 49000 featuresPopulating features table and first-order relations: 50000 featuresPopulating features table and first-order relations: 51000 featuresPopulating features table and first-order relations: 52000 featuresPopulating features table and first-order relations: 53000 featuresPopulating features table and first-order relations: 54000 featuresPopulating features table and first-order relations: 55000 featuresPopulating features table and first-order relations: 56000 featuresPopulating features table and first-order relations: 57000 featuresPopulating features table and first-order relations: 58000 featuresPopulating features table and first-order relations: 59000 featuresPopulating features table and first-order relations: 60000 featuresPopulating features table and first-order relations: 61000 featuresPopulating features table and first-order relations: 62000 featuresPopulating features table and first-order relations: 63000 featuresPopulating features table and first-order relations: 64000 featuresPopulating features table and first-order relations: 65000 featuresPopulating features table and first-order relations: 66000 featuresPopulating features table and first-order relations: 67000 featuresPopulating features table and first-order relations: 68000 featuresPopulating features table and first-order relations: 69000 featuresPopulating features table and first-order relations: 70000 featuresPopulating features table and first-order relations: 71000 featuresPopulating features table and first-order relations: 72000 featuresPopulating features table and first-order relations: 73000 featuresPopulating features table and first-order relations: 74000 featuresPopulating features table and first-order relations: 75000 featuresPopulating features table and first-order relations: 76000 featuresPopulating features table and first-order relations: 77000 featuresPopulating features table and first-order relations: 78000 featuresPopulating features table and first-order relations: 79000 featuresPopulating features table and first-order relations: 80000 featuresPopulating features table and first-order relations: 81000 featuresPopulating features table and first-order relations: 82000 featuresPopulating features table and first-order relations: 83000 featuresPopulating features table and first-order relations: 84000 featuresPopulating features table and first-order relations: 85000 featuresPopulating features table and first-order relations: 86000 featuresPopulating features table and first-order relations: 87000 featuresPopulating features table and first-order relations: 88000 featuresPopulating features table and first-order relations: 89000 featuresPopulating features table and first-order relations: 90000 featuresPopulating features table and first-order relations: 91000 featuresPopulating features table and first-order relations: 92000 featuresPopulating features table and first-order relations: 93000 featuresPopulating features table and first-order relations: 94000 featuresPopulating features table and first-order relations: 95000 featuresPopulating features table and first-order relations: 96000 featuresPopulating features table and first-order relations: 97000 featuresPopulating features table and first-order relations: 98000 featuresPopulating features table and first-order relations: 99000 featuresPopulating features table and first-order relations: 100000 featuresPopulating features table and first-order relations: 101000 featuresPopulating features table and first-order relations: 102000 featuresPopulating features table and first-order relations: 103000 featuresPopulating features table and first-order relations: 104000 featuresPopulating features table and first-order relations: 105000 featuresPopulating features table and first-order relations: 106000 featuresPopulating features table and first-order relations: 107000 featuresPopulating features table and first-order relations: 108000 featuresPopulating features table and first-order relations: 109000 featuresPopulating features table and first-order relations: 110000 featuresPopulating features table and first-order relations: 111000 featuresPopulating features table and first-order relations: 112000 featuresPopulating features table and first-order relations: 113000 featuresPopulating features table and first-order relations: 114000 featuresPopulating features table and first-order relations: 115000 featuresPopulating features table and first-order relations: 116000 featuresPopulating features table and first-order relations: 117000 featuresPopulating features table and first-order relations: 118000 featuresPopulating features table and first-order relations: 119000 featuresPopulating features table and first-order relations: 120000 featuresPopulating features table and first-order relations: 121000 featuresPopulating features table and first-order relations: 122000 featuresPopulating features table and first-order relations: 123000 featuresPopulating features table and first-order relations: 124000 featuresPopulating features table and first-order relations: 125000 featuresPopulating features table and first-order relations: 126000 featuresPopulating features table and first-order relations: 127000 featuresPopulating features table and first-order relations: 128000 featuresPopulating features table and first-order relations: 129000 featuresPopulating features table and first-order relations: 130000 featuresPopulating features table and first-order relations: 131000 featuresPopulating features table and first-order relations: 132000 featuresPopulating features table and first-order relations: 133000 featuresPopulating features table and first-order relations: 134000 featuresPopulating features table and first-order relations: 135000 featuresPopulating features table and first-order relations: 136000 featuresPopulating features table and first-order relations: 137000 featuresPopulating features table and first-order relations: 138000 featuresPopulating features table and first-order relations: 139000 featuresPopulating features table and first-order relations: 140000 featuresPopulating features table and first-order relations: 141000 featuresPopulating features table and first-order relations: 142000 featuresPopulating features table and first-order relations: 143000 featuresPopulating features table and first-order relations: 144000 featuresPopulating features table and first-order relations: 145000 featuresPopulating features table and first-order relations: 146000 featuresPopulating features table and first-order relations: 147000 featuresPopulating features table and first-order relations: 148000 featuresPopulating features table and first-order relations: 149000 featuresPopulating features table and first-order relations: 150000 featuresPopulating features table and first-order relations: 151000 featuresPopulating features table and first-order relations: 152000 featuresPopulating features table and first-order relations: 153000 featuresPopulating features table and first-order relations: 154000 featuresPopulating features table and first-order relations: 155000 featuresPopulating features table and first-order relations: 156000 featuresPopulating features table and first-order relations: 157000 featuresPopulating features table and first-order relations: 158000 featuresPopulating features table and first-order relations: 159000 featuresPopulating features table and first-order relations: 160000 featuresPopulating features table and first-order relations: 161000 featuresPopulating features table and first-order relations: 162000 featuresPopulating features table and first-order relations: 163000 featuresPopulating features table and first-order relations: 164000 featuresPopulating features table and first-order relations: 165000 featuresPopulating features table and first-order relations: 166000 featuresPopulating features table and first-order relations: 167000 featuresPopulating features table and first-order relations: 168000 featuresPopulating features table and first-order relations: 169000 featuresPopulating features table and first-order relations: 170000 featuresPopulating features table and first-order relations: 171000 featuresPopulating features table and first-order relations: 172000 featuresPopulating features table and first-order relations: 173000 featuresPopulating features table and first-order relations: 174000 featuresPopulating features table and first-order relations: 175000 featuresPopulating features table and first-order relations: 176000 featuresPopulating features table and first-order relations: 177000 featuresPopulating features table and first-order relations: 178000 featuresPopulating features table and first-order relations: 179000 featuresPopulating features table and first-order relations: 180000 featuresPopulating features table and first-order relations: 181000 featuresPopulating features table and first-order relations: 182000 featuresPopulating features table and first-order relations: 183000 featuresPopulating features table and first-order relations: 184000 featuresPopulating features table and first-order relations: 185000 featuresPopulating features table and first-order relations: 186000 featuresPopulating features table and first-order relations: 187000 featuresPopulating features table and first-order relations: 188000 featuresPopulating features table and first-order relations: 189000 featuresPopulating features table and first-order relations: 190000 featuresPopulating features table and first-order relations: 191000 featuresPopulating features table and first-order relations: 192000 featuresPopulating features table and first-order relations: 193000 featuresPopulating features table and first-order relations: 194000 featuresPopulating features table and first-order relations: 195000 featuresPopulating features table and first-order relations: 196000 featuresPopulating features table and first-order relations: 197000 featuresPopulating features table and first-order relations: 198000 featuresPopulating features table and first-order relations: 199000 featuresPopulating features table and first-order relations: 200000 featuresPopulating features table and first-order relations: 201000 featuresPopulating features table and first-order relations: 202000 featuresPopulating features table and first-order relations: 203000 featuresPopulating features table and first-order relations: 204000 featuresPopulating features table and first-order relations: 205000 featuresPopulating features table and first-order relations: 206000 featuresPopulating features table and first-order relations: 207000 featuresPopulating features table and first-order relations: 208000 featuresPopulating features table and first-order relations: 209000 featuresPopulating features table and first-order relations: 210000 featuresPopulating features table and first-order relations: 211000 featuresPopulating features table and first-order relations: 212000 featuresPopulating features table and first-order relations: 213000 featuresPopulating features table and first-order relations: 214000 featuresPopulating features table and first-order relations: 215000 featuresPopulating features table and first-order relations: 216000 featuresPopulating features table and first-order relations: 217000 featuresPopulating features table and first-order relations: 218000 featuresPopulating features table and first-order relations: 219000 featuresPopulating features table and first-order relations: 220000 featuresPopulating features table and first-order relations: 221000 featuresPopulating features table and first-order relations: 222000 featuresPopulating features table and first-order relations: 223000 featuresPopulating features table and first-order relations: 224000 featuresPopulating features table and first-order relations: 225000 featuresPopulating features table and first-order relations: 226000 featuresPopulating features table and first-order relations: 227000 featuresPopulating features table and first-order relations: 228000 featuresPopulating features table and first-order relations: 229000 featuresPopulating features table and first-order relations: 230000 featuresPopulating features table and first-order relations: 231000 featuresPopulating features table and first-order relations: 232000 featuresPopulating features table and first-order relations: 233000 featuresPopulating features table and first-order relations: 234000 featuresPopulating features table and first-order relations: 235000 featuresPopulating features table and first-order relations: 236000 featuresPopulating features table and first-order relations: 237000 featuresPopulating features table and first-order relations: 238000 featuresPopulating features table and first-order relations: 239000 featuresPopulating features table and first-order relations: 240000 featuresPopulating features table and first-order relations: 241000 featuresPopulating features table and first-order relations: 242000 featuresPopulating features table and first-order relations: 243000 featuresPopulating features table and first-order relations: 244000 featuresPopulating features table and first-order relations: 245000 featuresPopulating features table and first-order relations: 246000 featuresPopulating features table and first-order relations: 247000 featuresPopulating features table and first-order relations: 248000 featuresPopulating features table and first-order relations: 249000 featuresPopulating features table and first-order relations: 250000 featuresPopulating features table and first-order relations: 251000 featuresPopulating features table and first-order relations: 252000 featuresPopulating features table and first-order relations: 253000 featuresPopulating features table and first-order relations: 254000 featuresPopulating features table and first-order relations: 255000 featuresPopulating features table and first-order relations: 256000 featuresPopulating features table and first-order relations: 257000 featuresPopulating features table and first-order relations: 258000 featuresPopulating features table and first-order relations: 259000 featuresPopulating features table and first-order relations: 260000 featuresPopulating features table and first-order relations: 261000 featuresPopulating features table and first-order relations: 262000 featuresPopulating features table and first-order relations: 263000 featuresPopulating features table and first-order relations: 264000 featuresPopulating features table and first-order relations: 265000 featuresPopulating features table and first-order relations: 266000 featuresPopulating features table and first-order relations: 267000 featuresPopulating features table and first-order relations: 268000 featuresPopulating features table and first-order relations: 269000 featuresPopulating features table and first-order relations: 270000 featuresPopulating features table and first-order relations: 271000 featuresPopulating features table and first-order relations: 272000 featuresPopulating features table and first-order relations: 273000 featuresPopulating features table and first-order relations: 274000 featuresPopulating features table and first-order relations: 275000 featuresPopulating features table and first-order relations: 276000 featuresPopulating features table and first-order relations: 277000 featuresPopulating features table and first-order relations: 278000 featuresPopulating features table and first-order relations: 279000 featuresPopulating features table and first-order relations: 280000 featuresPopulating features table and first-order relations: 281000 featuresPopulating features table and first-order relations: 282000 featuresPopulating features table and first-order relations: 283000 featuresPopulating features table and first-order relations: 284000 featuresPopulating features table and first-order relations: 285000 featuresPopulating features table and first-order relations: 286000 featuresPopulating features table and first-order relations: 287000 featuresPopulating features table and first-order relations: 288000 featuresPopulating features table and first-order relations: 289000 featuresPopulating features table and first-order relations: 290000 featuresPopulating features table and first-order relations: 291000 featuresPopulating features table and first-order relations: 292000 featuresPopulating features table and first-order relations: 293000 featuresPopulating features table and first-order relations: 294000 featuresPopulating features table and first-order relations: 295000 featuresPopulating features table and first-order relations: 296000 featuresPopulating features table and first-order relations: 297000 featuresPopulating features table and first-order relations: 298000 featuresPopulating features table and first-order relations: 299000 featuresPopulating features table and first-order relations: 300000 featuresPopulating features table and first-order relations: 301000 featuresPopulating features table and first-order relations: 302000 featuresPopulating features table and first-order relations: 303000 featuresPopulating features table and first-order relations: 304000 featuresPopulating features table and first-order relations: 305000 featuresPopulating features table and first-order relations: 306000 featuresPopulating features table and first-order relations: 307000 featuresPopulating features table and first-order relations: 308000 featuresPopulating features table and first-order relations: 309000 featuresPopulating features table and first-order relations: 310000 featuresPopulating features table and first-order relations: 311000 featuresPopulating features table and first-order relations: 312000 featuresPopulating features table and first-order relations: 313000 featuresPopulating features table and first-order relations: 314000 featuresPopulating features table and first-order relations: 315000 featuresPopulating features table and first-order relations: 316000 featuresPopulating features table and first-order relations: 317000 featuresPopulating features table and first-order relations: 318000 featuresPopulating features table and first-order relations: 319000 featuresPopulating features table and first-order relations: 320000 featuresPopulating features table and first-order relations: 321000 featuresPopulating features table and first-order relations: 322000 featuresPopulating features table and first-order relations: 323000 featuresPopulating features table and first-order relations: 324000 featuresPopulating features table and first-order relations: 325000 featuresPopulating features table and first-order relations: 326000 featuresPopulating features table and first-order relations: 327000 featuresPopulating features table and first-order relations: 328000 featuresPopulating features table and first-order relations: 329000 featuresPopulating features table and first-order relations: 330000 featuresPopulating features table and first-order relations: 331000 featuresPopulating features table and first-order relations: 332000 featuresPopulating features table and first-order relations: 333000 featuresPopulating features table and first-order relations: 334000 featuresPopulating features table and first-order relations: 335000 featuresPopulating features table and first-order relations: 336000 featuresPopulating features table and first-order relations: 337000 featuresPopulating features table and first-order relations: 338000 featuresPopulating features table and first-order relations: 339000 featuresPopulating features table and first-order relations: 340000 featuresPopulating features table and first-order relations: 341000 featuresPopulating features table and first-order relations: 342000 featuresPopulating features table and first-order relations: 343000 featuresPopulating features table and first-order relations: 344000 featuresPopulating features table and first-order relations: 345000 featuresPopulating features table and first-order relations: 346000 featuresPopulating features table and first-order relations: 347000 featuresPopulating features table and first-order relations: 348000 featuresPopulating features table and first-order relations: 349000 features2026-04-01 20:31:21,940 - INFO - Populating features table and first-order relations: 349278 features
-2026-04-01 20:31:21,940 - INFO - Updating relations
-2026-04-01 20:31:24,199 - INFO - Creating relations(parent) index
-2026-04-01 20:31:24,344 - INFO - Creating relations(child) index
-2026-04-01 20:31:24,532 - INFO - Creating features(featuretype) index
-2026-04-01 20:31:24,651 - INFO - Creating features (seqid, start, end) index
-2026-04-01 20:31:24,804 - INFO - Creating features (seqid, start, end, strand) index
-2026-04-01 20:31:24,966 - INFO - Running ANALYZE features
-extracting features
-[M::mm_idx_gen::8.814*1.40] collected minimizers
-[M::mm_idx_gen::10.028*2.20] sorted minimizers
-@SQ	SN:CM044968.1	LN:118347671
-@SQ	SN:CM044969.1	LN:211251167
-@SQ	SN:CM044970.1	LN:200952345
-@SQ	SN:JAGKSF010000004.1	LN:550000
-@SQ	SN:JAGKSF010000005.1	LN:534508
-@SQ	SN:JAGKSF010000006.1	LN:511377
-@SQ	SN:JAGKSF010000007.1	LN:410906
-@SQ	SN:JAGKSF010000008.1	LN:406316
-@SQ	SN:JAGKSF010000009.1	LN:374415
-@SQ	SN:JAGKSF010000010.1	LN:369857
-@SQ	SN:JAGKSF010000011.1	LN:354000
-@SQ	SN:JAGKSF010000012.1	LN:332276
-@SQ	SN:JAGKSF010000013.1	LN:316000
-@SQ	SN:JAGKSF010000014.1	LN:274773
-@SQ	SN:JAGKSF010000015.1	LN:272000
-@SQ	SN:JAGKSF010000016.1	LN:271826
-@SQ	SN:JAGKSF010000017.1	LN:270380
-@SQ	SN:JAGKSF010000018.1	LN:270000
-@SQ	SN:JAGKSF010000019.1	LN:267175
-@SQ	SN:JAGKSF010000020.1	LN:267000
-@SQ	SN:JAGKSF010000021.1	LN:259644
-@SQ	SN:JAGKSF010000022.1	LN:258298
-@SQ	SN:JAGKSF010000023.1	LN:254639
-@SQ	SN:JAGKSF010000024.1	LN:250000
-@SQ	SN:JAGKSF010000025.1	LN:228027
-@SQ	SN:JAGKSF010000026.1	LN:216856
-@SQ	SN:JAGKSF010000027.1	LN:211580
-@SQ	SN:JAGKSF010000028.1	LN:210033
-@SQ	SN:JAGKSF010000029.1	LN:202000
-@SQ	SN:JAGKSF010000030.1	LN:200000
-@SQ	SN:JAGKSF010000031.1	LN:194258
-@SQ	SN:JAGKSF010000032.1	LN:193101
-@SQ	SN:JAGKSF010000033.1	LN:187243
-@SQ	SN:JAGKSF010000034.1	LN:185682
-@SQ	SN:JAGKSF010000035.1	LN:180100
-@SQ	SN:JAGKSF010000036.1	LN:179913
-@SQ	SN:JAGKSF010000037.1	LN:177996
-@SQ	SN:JAGKSF010000038.1	LN:175488
-@SQ	SN:JAGKSF010000039.1	LN:172224
-@SQ	SN:JAGKSF010000040.1	LN:171615
-@SQ	SN:JAGKSF010000041.1	LN:169216
-@SQ	SN:JAGKSF010000042.1	LN:166914
-@SQ	SN:JAGKSF010000043.1	LN:165621
-@SQ	SN:JAGKSF010000044.1	LN:163311
-@SQ	SN:JAGKSF010000045.1	LN:152343
-@SQ	SN:JAGKSF010000046.1	LN:150439
-@SQ	SN:JAGKSF010000047.1	LN:148330
-@SQ	SN:JAGKSF010000048.1	LN:145599
-@SQ	SN:JAGKSF010000049.1	LN:144030
-@SQ	SN:JAGKSF010000050.1	LN:138389
-@SQ	SN:JAGKSF010000051.1	LN:138028
-@SQ	SN:JAGKSF010000052.1	LN:133690
-@SQ	SN:JAGKSF010000053.1	LN:130904
-@SQ	SN:JAGKSF010000054.1	LN:127832
-@SQ	SN:JAGKSF010000055.1	LN:126068
-@SQ	SN:JAGKSF010000056.1	LN:123223
-@SQ	SN:JAGKSF010000057.1	LN:119556
-@SQ	SN:JAGKSF010000058.1	LN:113819
-@SQ	SN:JAGKSF010000059.1	LN:113468
-@SQ	SN:JAGKSF010000060.1	LN:112000
-@SQ	SN:JAGKSF010000061.1	LN:107910
-@SQ	SN:JAGKSF010000062.1	LN:103344
-@SQ	SN:JAGKSF010000063.1	LN:101249
-@SQ	SN:JAGKSF010000064.1	LN:99304
-@SQ	SN:JAGKSF010000065.1	LN:97082
-@SQ	SN:JAGKSF010000066.1	LN:97069
-@SQ	SN:JAGKSF010000067.1	LN:96964
-@SQ	SN:JAGKSF010000068.1	LN:95159
-@SQ	SN:JAGKSF010000069.1	LN:87502
-@SQ	SN:JAGKSF010000070.1	LN:84525
-@SQ	SN:JAGKSF010000071.1	LN:84457
-@SQ	SN:JAGKSF010000072.1	LN:80200
-@SQ	SN:JAGKSF010000073.1	LN:78000
-@SQ	SN:JAGKSF010000074.1	LN:75567
-@SQ	SN:JAGKSF010000075.1	LN:75000
-@SQ	SN:JAGKSF010000076.1	LN:74713
-@SQ	SN:JAGKSF010000077.1	LN:71348
-@SQ	SN:JAGKSF010000078.1	LN:68971
-@SQ	SN:JAGKSF010000079.1	LN:68281
-@SQ	SN:JAGKSF010000080.1	LN:66000
-@SQ	SN:JAGKSF010000081.1	LN:65976
-@SQ	SN:JAGKSF010000082.1	LN:64815
-@SQ	SN:JAGKSF010000083.1	LN:64516
-@SQ	SN:JAGKSF010000084.1	LN:63341
-@SQ	SN:JAGKSF010000085.1	LN:61742
-@SQ	SN:JAGKSF010000086.1	LN:61383
-@SQ	SN:JAGKSF010000087.1	LN:60561
-@SQ	SN:JAGKSF010000088.1	LN:60217
-@SQ	SN:JAGKSF010000089.1	LN:60180
-@SQ	SN:JAGKSF010000090.1	LN:58315
-@SQ	SN:JAGKSF010000091.1	LN:57000
-@SQ	SN:JAGKSF010000092.1	LN:55190
-@SQ	SN:JAGKSF010000093.1	LN:53653
-@SQ	SN:JAGKSF010000094.1	LN:52012
-@SQ	SN:JAGKSF010000095.1	LN:51792
-@SQ	SN:JAGKSF010000096.1	LN:51653
-@SQ	SN:JAGKSF010000097.1	LN:51293
-@SQ	SN:JAGKSF010000098.1	LN:50000
-@SQ	SN:JAGKSF010000099.1	LN:50000
-@SQ	SN:JAGKSF010000100.1	LN:50000
-@SQ	SN:JAGKSF010000101.1	LN:50000
-@SQ	SN:JAGKSF010000102.1	LN:50000
-@SQ	SN:JAGKSF010000103.1	LN:50000
-@SQ	SN:JAGKSF010000104.1	LN:50000
-@SQ	SN:JAGKSF010000105.1	LN:50000
-@SQ	SN:JAGKSF010000106.1	LN:50000
-@SQ	SN:JAGKSF010000107.1	LN:50000
-@SQ	SN:JAGKSF010000108.1	LN:50000
-@SQ	SN:JAGKSF010000109.1	LN:50000
-@SQ	SN:JAGKSF010000110.1	LN:50000
-@SQ	SN:JAGKSF010000111.1	LN:50000
-@SQ	SN:JAGKSF010000112.1	LN:50000
-@SQ	SN:JAGKSF010000113.1	LN:50000
-@SQ	SN:JAGKSF010000114.1	LN:50000
-@SQ	SN:JAGKSF010000115.1	LN:50000
-@SQ	SN:JAGKSF010000116.1	LN:50000
-@SQ	SN:JAGKSF010000117.1	LN:50000
-@SQ	SN:JAGKSF010000118.1	LN:50000
-@SQ	SN:JAGKSF010000119.1	LN:50000
-@SQ	SN:JAGKSF010000120.1	LN:50000
-@SQ	SN:JAGKSF010000121.1	LN:50000
-@SQ	SN:JAGKSF010000122.1	LN:50000
-@SQ	SN:JAGKSF010000123.1	LN:50000
-@SQ	SN:JAGKSF010000124.1	LN:50000
-@SQ	SN:JAGKSF010000125.1	LN:50000
-@SQ	SN:JAGKSF010000126.1	LN:50000
-@SQ	SN:JAGKSF010000127.1	LN:50000
-@SQ	SN:JAGKSF010000128.1	LN:49129
-@SQ	SN:JAGKSF010000129.1	LN:48442
-@SQ	SN:JAGKSF010000130.1	LN:47896
-@SQ	SN:JAGKSF010000131.1	LN:47403
-@SQ	SN:JAGKSF010000132.1	LN:47339
-@SQ	SN:JAGKSF010000133.1	LN:46864
-@SQ	SN:JAGKSF010000134.1	LN:46543
-@SQ	SN:JAGKSF010000135.1	LN:45855
-@SQ	SN:JAGKSF010000136.1	LN:45510
-@SQ	SN:JAGKSF010000137.1	LN:45080
-@SQ	SN:JAGKSF010000138.1	LN:44380
-@SQ	SN:JAGKSF010000139.1	LN:43550
-@SQ	SN:JAGKSF010000140.1	LN:43257
-@SQ	SN:JAGKSF010000141.1	LN:43219
-@SQ	SN:JAGKSF010000142.1	LN:42636
-@SQ	SN:JAGKSF010000143.1	LN:42561
-@SQ	SN:JAGKSF010000144.1	LN:42484
-@SQ	SN:JAGKSF010000145.1	LN:41914
-@SQ	SN:JAGKSF010000146.1	LN:41787
-@SQ	SN:JAGKSF010000147.1	LN:41355
-@SQ	SN:JAGKSF010000148.1	LN:41101
-@SQ	SN:JAGKSF010000149.1	LN:40622
-@SQ	SN:JAGKSF010000150.1	LN:40564
-@SQ	SN:JAGKSF010000151.1	LN:40140
-@SQ	SN:JAGKSF010000152.1	LN:40035
-@SQ	SN:JAGKSF010000153.1	LN:39916
-@SQ	SN:JAGKSF010000154.1	LN:39758
-@SQ	SN:JAGKSF010000155.1	LN:38861
-@SQ	SN:JAGKSF010000156.1	LN:38857
-@SQ	SN:JAGKSF010000157.1	LN:38601
-@SQ	SN:JAGKSF010000158.1	LN:38387
-@SQ	SN:JAGKSF010000159.1	LN:38297
-@SQ	SN:JAGKSF010000160.1	LN:38038
-@SQ	SN:JAGKSF010000161.1	LN:38000
-@SQ	SN:JAGKSF010000162.1	LN:38000
-@SQ	SN:JAGKSF010000163.1	LN:37992
-@SQ	SN:JAGKSF010000164.1	LN:37948
-@SQ	SN:JAGKSF010000165.1	LN:37797
-@SQ	SN:JAGKSF010000166.1	LN:37652
-@SQ	SN:JAGKSF010000167.1	LN:37304
-@SQ	SN:JAGKSF010000168.1	LN:37213
-@SQ	SN:JAGKSF010000169.1	LN:37187
-@SQ	SN:JAGKSF010000170.1	LN:37009
-@SQ	SN:JAGKSF010000171.1	LN:37000
-@SQ	SN:JAGKSF010000172.1	LN:37000
-@SQ	SN:JAGKSF010000173.1	LN:36756
-@SQ	SN:JAGKSF010000174.1	LN:36496
-@SQ	SN:JAGKSF010000175.1	LN:36021
-@SQ	SN:JAGKSF010000176.1	LN:36000
-@SQ	SN:JAGKSF010000177.1	LN:35411
-@SQ	SN:JAGKSF010000178.1	LN:35209
-@SQ	SN:JAGKSF010000179.1	LN:34931
-@SQ	SN:JAGKSF010000180.1	LN:34767
-@SQ	SN:JAGKSF010000181.1	LN:34707
-@SQ	SN:JAGKSF010000182.1	LN:34682
-@SQ	SN:JAGKSF010000183.1	LN:34489
-@SQ	SN:JAGKSF010000184.1	LN:34008
-@SQ	SN:JAGKSF010000185.1	LN:33976
-@SQ	SN:JAGKSF010000186.1	LN:33889
-@SQ	SN:JAGKSF010000187.1	LN:33606
-@SQ	SN:JAGKSF010000188.1	LN:33220
-@SQ	SN:JAGKSF010000189.1	LN:33141
-@SQ	SN:JAGKSF010000190.1	LN:32942
-@SQ	SN:JAGKSF010000191.1	LN:32936
-@SQ	SN:JAGKSF010000192.1	LN:32663
-@SQ	SN:JAGKSF010000193.1	LN:32229
-@SQ	SN:JAGKSF010000194.1	LN:31892
-@SQ	SN:JAGKSF010000195.1	LN:31872
-@SQ	SN:JAGKSF010000196.1	LN:31484
-@SQ	SN:JAGKSF010000197.1	LN:31381
-@SQ	SN:JAGKSF010000198.1	LN:31226
-@SQ	SN:JAGKSF010000199.1	LN:31166
-@SQ	SN:JAGKSF010000200.1	LN:31008
-@SQ	SN:JAGKSF010000201.1	LN:31001
-@SQ	SN:JAGKSF010000202.1	LN:31000
-@SQ	SN:JAGKSF010000203.1	LN:30984
-@SQ	SN:JAGKSF010000204.1	LN:30969
-@SQ	SN:JAGKSF010000205.1	LN:30798
-@SQ	SN:JAGKSF010000206.1	LN:30699
-@SQ	SN:JAGKSF010000207.1	LN:30515
-@SQ	SN:JAGKSF010000208.1	LN:30381
-@SQ	SN:JAGKSF010000209.1	LN:30213
-@SQ	SN:JAGKSF010000210.1	LN:30124
-@SQ	SN:JAGKSF010000211.1	LN:30000
-@SQ	SN:JAGKSF010000212.1	LN:30000
-@SQ	SN:JAGKSF010000213.1	LN:29845
-@SQ	SN:JAGKSF010000214.1	LN:29782
-@SQ	SN:JAGKSF010000215.1	LN:29560
-@SQ	SN:JAGKSF010000216.1	LN:29278
-@SQ	SN:JAGKSF010000217.1	LN:28932
-@SQ	SN:JAGKSF010000218.1	LN:28911
-@SQ	SN:JAGKSF010000219.1	LN:28910
-@SQ	SN:JAGKSF010000220.1	LN:28896
-@SQ	SN:JAGKSF010000221.1	LN:28777
-@SQ	SN:JAGKSF010000222.1	LN:28709
-@SQ	SN:JAGKSF010000223.1	LN:28668
-@SQ	SN:JAGKSF010000224.1	LN:28374
-@SQ	SN:JAGKSF010000225.1	LN:28314
-@SQ	SN:JAGKSF010000226.1	LN:28254
-@SQ	SN:JAGKSF010000227.1	LN:28213
-@SQ	SN:JAGKSF010000228.1	LN:28044
-@SQ	SN:JAGKSF010000229.1	LN:27541
-@SQ	SN:JAGKSF010000230.1	LN:27515
-@SQ	SN:JAGKSF010000231.1	LN:27507
-@SQ	SN:JAGKSF010000232.1	LN:27397
-@SQ	SN:JAGKSF010000233.1	LN:27247
-@SQ	SN:JAGKSF010000234.1	LN:27226
-@SQ	SN:JAGKSF010000235.1	LN:27129
-@SQ	SN:JAGKSF010000236.1	LN:27127
-@SQ	SN:JAGKSF010000237.1	LN:27000
-@SQ	SN:JAGKSF010000238.1	LN:26981
-@SQ	SN:JAGKSF010000239.1	LN:26949
-@SQ	SN:JAGKSF010000240.1	LN:26701
-@SQ	SN:JAGKSF010000241.1	LN:26313
-@SQ	SN:JAGKSF010000242.1	LN:26270
-@SQ	SN:JAGKSF010000243.1	LN:26181
-@SQ	SN:JAGKSF010000244.1	LN:25950
-@SQ	SN:JAGKSF010000245.1	LN:25943
-@SQ	SN:JAGKSF010000246.1	LN:25794
-@SQ	SN:JAGKSF010000247.1	LN:25598
-@SQ	SN:JAGKSF010000248.1	LN:25026
-@SQ	SN:JAGKSF010000249.1	LN:25000
-@SQ	SN:JAGKSF010000250.1	LN:25000
-@SQ	SN:JAGKSF010000251.1	LN:25000
-@SQ	SN:JAGKSF010000252.1	LN:25000
-@SQ	SN:JAGKSF010000253.1	LN:25000
-@SQ	SN:JAGKSF010000254.1	LN:25000
-@SQ	SN:JAGKSF010000255.1	LN:25000
-@SQ	SN:JAGKSF010000256.1	LN:25000
-@SQ	SN:JAGKSF010000257.1	LN:25000
-@SQ	SN:JAGKSF010000258.1	LN:25000
-@SQ	SN:JAGKSF010000259.1	LN:25000
-@SQ	SN:JAGKSF010000260.1	LN:25000
-@SQ	SN:JAGKSF010000261.1	LN:25000
-@SQ	SN:JAGKSF010000262.1	LN:25000
-@SQ	SN:JAGKSF010000263.1	LN:25000
-@SQ	SN:JAGKSF010000264.1	LN:25000
-@SQ	SN:JAGKSF010000265.1	LN:25000
-@SQ	SN:JAGKSF010000266.1	LN:25000
-@SQ	SN:JAGKSF010000267.1	LN:25000
-@SQ	SN:JAGKSF010000268.1	LN:25000
-@SQ	SN:JAGKSF010000269.1	LN:25000
-@SQ	SN:JAGKSF010000270.1	LN:25000
-@SQ	SN:JAGKSF010000271.1	LN:25000
-@SQ	SN:JAGKSF010000272.1	LN:25000
-@SQ	SN:JAGKSF010000273.1	LN:25000
-@SQ	SN:JAGKSF010000274.1	LN:25000
-@SQ	SN:JAGKSF010000275.1	LN:25000
-@SQ	SN:JAGKSF010000276.1	LN:25000
-@SQ	SN:JAGKSF010000277.1	LN:25000
-@SQ	SN:JAGKSF010000278.1	LN:25000
-@SQ	SN:JAGKSF010000279.1	LN:25000
-@SQ	SN:JAGKSF010000280.1	LN:25000
-@SQ	SN:JAGKSF010000281.1	LN:25000
-@SQ	SN:JAGKSF010000282.1	LN:25000
-@SQ	SN:JAGKSF010000283.1	LN:25000
-@SQ	SN:JAGKSF010000284.1	LN:25000
-@SQ	SN:JAGKSF010000285.1	LN:25000
-@SQ	SN:JAGKSF010000286.1	LN:25000
-@SQ	SN:JAGKSF010000287.1	LN:25000
-@SQ	SN:JAGKSF010000288.1	LN:25000
-@SQ	SN:JAGKSF010000289.1	LN:25000
-@SQ	SN:JAGKSF010000290.1	LN:25000
-@SQ	SN:JAGKSF010000291.1	LN:25000
-@SQ	SN:JAGKSF010000292.1	LN:25000
-@SQ	SN:JAGKSF010000293.1	LN:25000
-@SQ	SN:JAGKSF010000294.1	LN:25000
-@SQ	SN:JAGKSF010000295.1	LN:25000
-@SQ	SN:JAGKSF010000296.1	LN:25000
-@SQ	SN:JAGKSF010000297.1	LN:25000
-@SQ	SN:JAGKSF010000298.1	LN:25000
-@SQ	SN:JAGKSF010000299.1	LN:25000
-@SQ	SN:JAGKSF010000300.1	LN:25000
-@SQ	SN:JAGKSF010000301.1	LN:25000
-@SQ	SN:JAGKSF010000302.1	LN:25000
-@SQ	SN:JAGKSF010000303.1	LN:25000
-@SQ	SN:JAGKSF010000304.1	LN:25000
-@SQ	SN:JAGKSF010000305.1	LN:25000
-@SQ	SN:JAGKSF010000306.1	LN:25000
-@SQ	SN:JAGKSF010000307.1	LN:25000
-@SQ	SN:JAGKSF010000308.1	LN:25000
-@SQ	SN:JAGKSF010000309.1	LN:25000
-@SQ	SN:JAGKSF010000310.1	LN:25000
-@SQ	SN:JAGKSF010000311.1	LN:25000
-@SQ	SN:JAGKSF010000312.1	LN:25000
-@SQ	SN:JAGKSF010000313.1	LN:25000
-@SQ	SN:JAGKSF010000314.1	LN:25000
-@SQ	SN:JAGKSF010000315.1	LN:25000
-@SQ	SN:JAGKSF010000316.1	LN:25000
-@SQ	SN:JAGKSF010000317.1	LN:25000
-@SQ	SN:JAGKSF010000318.1	LN:25000
-@SQ	SN:JAGKSF010000319.1	LN:25000
-@SQ	SN:JAGKSF010000320.1	LN:25000
-@SQ	SN:JAGKSF010000321.1	LN:24586
-@SQ	SN:JAGKSF010000322.1	LN:24475
-@SQ	SN:JAGKSF010000323.1	LN:24436
-@SQ	SN:JAGKSF010000324.1	LN:24403
-@SQ	SN:JAGKSF010000325.1	LN:24268
-@SQ	SN:JAGKSF010000326.1	LN:24160
-@SQ	SN:JAGKSF010000327.1	LN:24003
-@SQ	SN:JAGKSF010000328.1	LN:24000
-@SQ	SN:JAGKSF010000329.1	LN:23971
-@SQ	SN:JAGKSF010000330.1	LN:23961
-@SQ	SN:JAGKSF010000331.1	LN:23894
-@SQ	SN:JAGKSF010000332.1	LN:23856
-@SQ	SN:JAGKSF010000333.1	LN:23713
-@SQ	SN:JAGKSF010000334.1	LN:23657
-@SQ	SN:JAGKSF010000335.1	LN:23498
-@SQ	SN:JAGKSF010000336.1	LN:23085
-@SQ	SN:JAGKSF010000337.1	LN:23075
-@SQ	SN:JAGKSF010000338.1	LN:23000
-@SQ	SN:JAGKSF010000339.1	LN:23000
-@SQ	SN:JAGKSF010000340.1	LN:23000
-@SQ	SN:JAGKSF010000341.1	LN:22894
-@SQ	SN:JAGKSF010000342.1	LN:22816
-@SQ	SN:JAGKSF010000343.1	LN:22691
-@SQ	SN:JAGKSF010000344.1	LN:22677
-@SQ	SN:JAGKSF010000345.1	LN:22655
-@SQ	SN:JAGKSF010000346.1	LN:22635
-@SQ	SN:JAGKSF010000347.1	LN:22567
-@SQ	SN:JAGKSF010000348.1	LN:22548
-@SQ	SN:JAGKSF010000349.1	LN:22516
-@SQ	SN:JAGKSF010000350.1	LN:22484
-@SQ	SN:JAGKSF010000351.1	LN:22411
-@SQ	SN:JAGKSF010000352.1	LN:22409
-@SQ	SN:JAGKSF010000353.1	LN:22283
-@SQ	SN:JAGKSF010000354.1	LN:22245
-@SQ	SN:JAGKSF010000355.1	LN:22244
-@SQ	SN:JAGKSF010000356.1	LN:22238
-@SQ	SN:JAGKSF010000357.1	LN:22127
-@SQ	SN:JAGKSF010000358.1	LN:22068
-@SQ	SN:JAGKSF010000359.1	LN:22037
-@SQ	SN:JAGKSF010000360.1	LN:22000
-@SQ	SN:JAGKSF010000361.1	LN:21975
-@SQ	SN:JAGKSF010000362.1	LN:21908
-@SQ	SN:JAGKSF010000363.1	LN:21869
-@SQ	SN:JAGKSF010000364.1	LN:21808
-@SQ	SN:JAGKSF010000365.1	LN:21656
-@SQ	SN:JAGKSF010000366.1	LN:21652
-@SQ	SN:JAGKSF010000367.1	LN:21640
-@SQ	SN:JAGKSF010000368.1	LN:21587
-@SQ	SN:JAGKSF010000369.1	LN:21547
-@SQ	SN:JAGKSF010000370.1	LN:21373
-@SQ	SN:JAGKSF010000371.1	LN:21373
-@SQ	SN:JAGKSF010000372.1	LN:21251
-@SQ	SN:JAGKSF010000373.1	LN:21207
-@SQ	SN:JAGKSF010000374.1	LN:21164
-@SQ	SN:JAGKSF010000375.1	LN:21040
-@SQ	SN:JAGKSF010000376.1	LN:21032
-@SQ	SN:JAGKSF010000377.1	LN:21000
-@SQ	SN:JAGKSF010000378.1	LN:20407
-@SQ	SN:JAGKSF010000379.1	LN:20330
-@SQ	SN:JAGKSF010000380.1	LN:20311
-@SQ	SN:JAGKSF010000381.1	LN:20132
-@SQ	SN:JAGKSF010000382.1	LN:20058
-@SQ	SN:JAGKSF010000383.1	LN:20000
-@SQ	SN:JAGKSF010000384.1	LN:20000
-@SQ	SN:JAGKSF010000385.1	LN:19922
-@SQ	SN:JAGKSF010000386.1	LN:19873
-@SQ	SN:JAGKSF010000387.1	LN:19756
-@SQ	SN:JAGKSF010000388.1	LN:19695
-@SQ	SN:JAGKSF010000389.1	LN:19619
-@SQ	SN:JAGKSF010000390.1	LN:19581
-@SQ	SN:JAGKSF010000391.1	LN:19541
-@SQ	SN:JAGKSF010000392.1	LN:19379
-@SQ	SN:JAGKSF010000393.1	LN:19361
-@SQ	SN:JAGKSF010000394.1	LN:19317
-@SQ	SN:JAGKSF010000395.1	LN:19110
-@SQ	SN:JAGKSF010000396.1	LN:19045
-@SQ	SN:JAGKSF010000397.1	LN:19000
-@SQ	SN:JAGKSF010000398.1	LN:19000
-@SQ	SN:JAGKSF010000399.1	LN:19000
-@SQ	SN:JAGKSF010000400.1	LN:18999
-@SQ	SN:JAGKSF010000401.1	LN:18948
-@SQ	SN:JAGKSF010000402.1	LN:18914
-@SQ	SN:JAGKSF010000403.1	LN:18912
-@SQ	SN:JAGKSF010000404.1	LN:18671
-@SQ	SN:JAGKSF010000405.1	LN:18629
-@SQ	SN:JAGKSF010000406.1	LN:18556
-@SQ	SN:JAGKSF010000407.1	LN:18475
-@SQ	SN:JAGKSF010000408.1	LN:18462
-@SQ	SN:JAGKSF010000409.1	LN:18236
-@SQ	SN:JAGKSF010000410.1	LN:18167
-@SQ	SN:JAGKSF010000411.1	LN:18129
-@SQ	SN:JAGKSF010000412.1	LN:18075
-@SQ	SN:JAGKSF010000413.1	LN:18000
-@SQ	SN:JAGKSF010000414.1	LN:18000
-@SQ	SN:JAGKSF010000415.1	LN:18000
-@SQ	SN:JAGKSF010000416.1	LN:18000
-@SQ	SN:JAGKSF010000417.1	LN:18000
-@SQ	SN:JAGKSF010000418.1	LN:17974
-@SQ	SN:JAGKSF010000419.1	LN:17924
-@SQ	SN:JAGKSF010000420.1	LN:17870
-@SQ	SN:JAGKSF010000421.1	LN:17771
-@SQ	SN:JAGKSF010000422.1	LN:17656
-@SQ	SN:JAGKSF010000423.1	LN:17591
-@SQ	SN:JAGKSF010000424.1	LN:17549
-@SQ	SN:JAGKSF010000425.1	LN:17549
-@SQ	SN:JAGKSF010000426.1	LN:17533
-@SQ	SN:JAGKSF010000427.1	LN:17522
-@SQ	SN:JAGKSF010000428.1	LN:17516
-@SQ	SN:JAGKSF010000429.1	LN:17378
-@SQ	SN:JAGKSF010000430.1	LN:17344
-@SQ	SN:JAGKSF010000431.1	LN:17266
-@SQ	SN:JAGKSF010000432.1	LN:17195
-@SQ	SN:JAGKSF010000433.1	LN:17194
-@SQ	SN:JAGKSF010000434.1	LN:17120
-@SQ	SN:JAGKSF010000435.1	LN:17090
-@SQ	SN:JAGKSF010000436.1	LN:17075
-@SQ	SN:JAGKSF010000437.1	LN:17015
-@SQ	SN:JAGKSF010000438.1	LN:17000
-@SQ	SN:JAGKSF010000439.1	LN:17000
-@SQ	SN:JAGKSF010000440.1	LN:16959
-@SQ	SN:JAGKSF010000441.1	LN:16932
-@SQ	SN:JAGKSF010000442.1	LN:16729
-@SQ	SN:JAGKSF010000443.1	LN:16525
-@SQ	SN:JAGKSF010000444.1	LN:16491
-@SQ	SN:JAGKSF010000445.1	LN:16479
-@SQ	SN:JAGKSF010000446.1	LN:16414
-@SQ	SN:JAGKSF010000447.1	LN:16385
-@SQ	SN:JAGKSF010000448.1	LN:16352
-@SQ	SN:JAGKSF010000449.1	LN:16339
-@SQ	SN:JAGKSF010000450.1	LN:16233
-@SQ	SN:JAGKSF010000451.1	LN:16177
-@SQ	SN:JAGKSF010000452.1	LN:16166
-@SQ	SN:JAGKSF010000453.1	LN:16146
-@SQ	SN:JAGKSF010000454.1	LN:16103
-@SQ	SN:JAGKSF010000455.1	LN:16093
-@SQ	SN:JAGKSF010000456.1	LN:16054
-@SQ	SN:JAGKSF010000457.1	LN:16045
-@SQ	SN:JAGKSF010000458.1	LN:16000
-@SQ	SN:JAGKSF010000459.1	LN:16000
-@SQ	SN:JAGKSF010000460.1	LN:15959
-@SQ	SN:JAGKSF010000461.1	LN:15930
-@SQ	SN:JAGKSF010000462.1	LN:15867
-@SQ	SN:JAGKSF010000463.1	LN:15837
-@SQ	SN:JAGKSF010000464.1	LN:15790
-@SQ	SN:JAGKSF010000465.1	LN:15773
-@SQ	SN:JAGKSF010000466.1	LN:15731
-@SQ	SN:JAGKSF010000467.1	LN:15596
-@SQ	SN:JAGKSF010000468.1	LN:15448
-@SQ	SN:JAGKSF010000469.1	LN:15430
-@SQ	SN:JAGKSF010000470.1	LN:15419
-@SQ	SN:JAGKSF010000471.1	LN:15406
-@SQ	SN:JAGKSF010000472.1	LN:15365
-@SQ	SN:JAGKSF010000473.1	LN:15177
-@SQ	SN:JAGKSF010000474.1	LN:15135
-@SQ	SN:JAGKSF010000475.1	LN:15082
-@SQ	SN:JAGKSF010000476.1	LN:15057
-@SQ	SN:JAGKSF010000477.1	LN:15017
-@SQ	SN:JAGKSF010000478.1	LN:15003
-@SQ	SN:JAGKSF010000479.1	LN:15000
-@SQ	SN:JAGKSF010000480.1	LN:15000
-@SQ	SN:JAGKSF010000481.1	LN:15000
-@SQ	SN:JAGKSF010000482.1	LN:14980
-@SQ	SN:JAGKSF010000483.1	LN:14963
-@SQ	SN:JAGKSF010000484.1	LN:14961
-@SQ	SN:JAGKSF010000485.1	LN:14850
-@SQ	SN:JAGKSF010000486.1	LN:14812
-@SQ	SN:JAGKSF010000487.1	LN:14778
-@SQ	SN:JAGKSF010000488.1	LN:14769
-@SQ	SN:JAGKSF010000489.1	LN:14760
-@SQ	SN:JAGKSF010000490.1	LN:14755
-@SQ	SN:JAGKSF010000491.1	LN:14749
-@SQ	SN:JAGKSF010000492.1	LN:14700
-@SQ	SN:JAGKSF010000493.1	LN:14700
-@SQ	SN:JAGKSF010000494.1	LN:14694
-@SQ	SN:JAGKSF010000495.1	LN:14692
-@SQ	SN:JAGKSF010000496.1	LN:14658
-@SQ	SN:JAGKSF010000497.1	LN:14568
-@SQ	SN:JAGKSF010000498.1	LN:14547
-@SQ	SN:JAGKSF010000499.1	LN:14525
-@SQ	SN:JAGKSF010000500.1	LN:14497
-@SQ	SN:JAGKSF010000501.1	LN:14489
-@SQ	SN:JAGKSF010000502.1	LN:14483
-@SQ	SN:JAGKSF010000503.1	LN:14453
-@SQ	SN:JAGKSF010000504.1	LN:14437
-@SQ	SN:JAGKSF010000505.1	LN:14394
-@SQ	SN:JAGKSF010000506.1	LN:14367
-@SQ	SN:JAGKSF010000507.1	LN:14360
-@SQ	SN:JAGKSF010000508.1	LN:14330
-@SQ	SN:JAGKSF010000509.1	LN:14299
-@SQ	SN:JAGKSF010000510.1	LN:14293
-@SQ	SN:JAGKSF010000511.1	LN:14272
-@SQ	SN:JAGKSF010000512.1	LN:14269
-@SQ	SN:JAGKSF010000513.1	LN:14202
-@SQ	SN:JAGKSF010000514.1	LN:14199
-@SQ	SN:JAGKSF010000515.1	LN:14172
-@SQ	SN:JAGKSF010000516.1	LN:14122
-@SQ	SN:JAGKSF010000517.1	LN:14042
-@SQ	SN:JAGKSF010000518.1	LN:14031
-@SQ	SN:JAGKSF010000519.1	LN:14020
-@SQ	SN:JAGKSF010000520.1	LN:14013
-@SQ	SN:JAGKSF010000521.1	LN:14009
-@SQ	SN:JAGKSF010000522.1	LN:14000
-@SQ	SN:JAGKSF010000523.1	LN:14000
-@SQ	SN:JAGKSF010000524.1	LN:14000
-@SQ	SN:JAGKSF010000525.1	LN:14000
-@SQ	SN:JAGKSF010000526.1	LN:13983
-@SQ	SN:JAGKSF010000527.1	LN:13967
-@SQ	SN:JAGKSF010000528.1	LN:13896
-@SQ	SN:JAGKSF010000529.1	LN:13871
-@SQ	SN:JAGKSF010000530.1	LN:13852
-@SQ	SN:JAGKSF010000531.1	LN:13825
-@SQ	SN:JAGKSF010000532.1	LN:13777
-@SQ	SN:JAGKSF010000533.1	LN:13733
-@SQ	SN:JAGKSF010000534.1	LN:13701
-@SQ	SN:JAGKSF010000535.1	LN:13666
-@SQ	SN:JAGKSF010000536.1	LN:13665
-@SQ	SN:JAGKSF010000537.1	LN:13643
-@SQ	SN:JAGKSF010000538.1	LN:13581
-@SQ	SN:JAGKSF010000539.1	LN:13560
-@SQ	SN:JAGKSF010000540.1	LN:13499
-@SQ	SN:JAGKSF010000541.1	LN:13496
-@SQ	SN:JAGKSF010000542.1	LN:13474
-@SQ	SN:JAGKSF010000543.1	LN:13465
-@SQ	SN:JAGKSF010000544.1	LN:13456
-@SQ	SN:JAGKSF010000545.1	LN:13451
-@SQ	SN:JAGKSF010000546.1	LN:13405
-@SQ	SN:JAGKSF010000547.1	LN:13401
-@SQ	SN:JAGKSF010000548.1	LN:13400
-@SQ	SN:JAGKSF010000549.1	LN:13348
-@SQ	SN:JAGKSF010000550.1	LN:13309
-@SQ	SN:JAGKSF010000551.1	LN:13300
-@SQ	SN:JAGKSF010000552.1	LN:13285
-@SQ	SN:JAGKSF010000553.1	LN:13265
-@SQ	SN:JAGKSF010000554.1	LN:13223
-@SQ	SN:JAGKSF010000555.1	LN:13222
-@SQ	SN:JAGKSF010000556.1	LN:13210
-@SQ	SN:JAGKSF010000557.1	LN:13196
-@SQ	SN:JAGKSF010000558.1	LN:13172
-@SQ	SN:JAGKSF010000559.1	LN:13165
-@SQ	SN:JAGKSF010000560.1	LN:13151
-@SQ	SN:JAGKSF010000561.1	LN:13148
-@SQ	SN:JAGKSF010000562.1	LN:13126
-@SQ	SN:JAGKSF010000563.1	LN:13120
-@SQ	SN:JAGKSF010000564.1	LN:13101
-@SQ	SN:JAGKSF010000565.1	LN:13093
-@SQ	SN:JAGKSF010000566.1	LN:13043
-@SQ	SN:JAGKSF010000567.1	LN:13000
-@SQ	SN:JAGKSF010000568.1	LN:13000
-@SQ	SN:JAGKSF010000569.1	LN:13000
-@SQ	SN:JAGKSF010000570.1	LN:12992
-@SQ	SN:JAGKSF010000571.1	LN:12967
-@SQ	SN:JAGKSF010000572.1	LN:12952
-@SQ	SN:JAGKSF010000573.1	LN:12920
-@SQ	SN:JAGKSF010000574.1	LN:12902
-@SQ	SN:JAGKSF010000575.1	LN:12898
-@SQ	SN:JAGKSF010000576.1	LN:12875
-@SQ	SN:JAGKSF010000577.1	LN:12874
-@SQ	SN:JAGKSF010000578.1	LN:12852
-@SQ	SN:JAGKSF010000579.1	LN:12829
-@SQ	SN:JAGKSF010000580.1	LN:12809
-@SQ	SN:JAGKSF010000581.1	LN:12808
-@SQ	SN:JAGKSF010000582.1	LN:12801
-@SQ	SN:JAGKSF010000583.1	LN:12742
-@SQ	SN:JAGKSF010000584.1	LN:12733
-@SQ	SN:JAGKSF010000585.1	LN:12731
-@SQ	SN:JAGKSF010000586.1	LN:12692
-@SQ	SN:JAGKSF010000587.1	LN:12675
-@SQ	SN:JAGKSF010000588.1	LN:12632
-@SQ	SN:JAGKSF010000589.1	LN:12618
-@SQ	SN:JAGKSF010000590.1	LN:12582
-@SQ	SN:JAGKSF010000591.1	LN:12577
-@SQ	SN:JAGKSF010000592.1	LN:12572
-@SQ	SN:JAGKSF010000593.1	LN:12519
-@SQ	SN:JAGKSF010000594.1	LN:12461
-@SQ	SN:JAGKSF010000595.1	LN:12458
-@SQ	SN:JAGKSF010000596.1	LN:12419
-@SQ	SN:JAGKSF010000597.1	LN:12366
-@SQ	SN:JAGKSF010000598.1	LN:12361
-@SQ	SN:JAGKSF010000599.1	LN:12356
-@SQ	SN:JAGKSF010000600.1	LN:12347
-@SQ	SN:JAGKSF010000601.1	LN:12319
-@SQ	SN:JAGKSF010000602.1	LN:12314
-@SQ	SN:JAGKSF010000603.1	LN:12253
-@SQ	SN:JAGKSF010000604.1	LN:12218
-@SQ	SN:JAGKSF010000605.1	LN:12214
-@SQ	SN:JAGKSF010000606.1	LN:12209
-@SQ	SN:JAGKSF010000607.1	LN:12155
-@SQ	SN:JAGKSF010000608.1	LN:12145
-@SQ	SN:JAGKSF010000609.1	LN:12131
-@SQ	SN:JAGKSF010000610.1	LN:12096
-@SQ	SN:JAGKSF010000611.1	LN:12017
-@SQ	SN:JAGKSF010000612.1	LN:12000
-@SQ	SN:JAGKSF010000613.1	LN:12000
-@SQ	SN:JAGKSF010000614.1	LN:12000
-@SQ	SN:JAGKSF010000615.1	LN:11992
-@SQ	SN:JAGKSF010000616.1	LN:11944
-@SQ	SN:JAGKSF010000617.1	LN:11911
-@SQ	SN:JAGKSF010000618.1	LN:11911
-@SQ	SN:JAGKSF010000619.1	LN:11907
-@SQ	SN:JAGKSF010000620.1	LN:11875
-@SQ	SN:JAGKSF010000621.1	LN:11866
-@SQ	SN:JAGKSF010000622.1	LN:11824
-@SQ	SN:JAGKSF010000623.1	LN:11813
-@SQ	SN:JAGKSF010000624.1	LN:11779
-@SQ	SN:JAGKSF010000625.1	LN:11742
-@SQ	SN:JAGKSF010000626.1	LN:11730
-@SQ	SN:JAGKSF010000627.1	LN:11722
-@SQ	SN:JAGKSF010000628.1	LN:11709
-@SQ	SN:JAGKSF010000629.1	LN:11666
-@SQ	SN:JAGKSF010000630.1	LN:11664
-@SQ	SN:JAGKSF010000631.1	LN:11652
-@SQ	SN:JAGKSF010000632.1	LN:11643
-@SQ	SN:JAGKSF010000633.1	LN:11592
-@SQ	SN:JAGKSF010000634.1	LN:11580
-@SQ	SN:JAGKSF010000635.1	LN:11567
-@SQ	SN:JAGKSF010000636.1	LN:11552
-@SQ	SN:JAGKSF010000637.1	LN:11543
-@SQ	SN:JAGKSF010000638.1	LN:11543
-@SQ	SN:JAGKSF010000639.1	LN:11539
-@SQ	SN:JAGKSF010000640.1	LN:11533
-@SQ	SN:JAGKSF010000641.1	LN:11501
-@SQ	SN:JAGKSF010000642.1	LN:11469
-@SQ	SN:JAGKSF010000643.1	LN:11434
-@SQ	SN:JAGKSF010000644.1	LN:11428
-@SQ	SN:JAGKSF010000645.1	LN:11427
-@SQ	SN:JAGKSF010000646.1	LN:11416
-@SQ	SN:JAGKSF010000647.1	LN:11405
-@SQ	SN:JAGKSF010000648.1	LN:11384
-@SQ	SN:JAGKSF010000649.1	LN:11358
-@SQ	SN:JAGKSF010000650.1	LN:11341
-@SQ	SN:JAGKSF010000651.1	LN:11322
-@SQ	SN:JAGKSF010000652.1	LN:11317
-@SQ	SN:JAGKSF010000653.1	LN:11316
-@SQ	SN:JAGKSF010000654.1	LN:11274
-@SQ	SN:JAGKSF010000655.1	LN:11264
-@SQ	SN:JAGKSF010000656.1	LN:11255
-@SQ	SN:JAGKSF010000657.1	LN:11240
-@SQ	SN:JAGKSF010000658.1	LN:11222
-@SQ	SN:JAGKSF010000659.1	LN:11189
-@SQ	SN:JAGKSF010000660.1	LN:11175
-@SQ	SN:JAGKSF010000661.1	LN:11147
-@SQ	SN:JAGKSF010000662.1	LN:11111
-@SQ	SN:JAGKSF010000663.1	LN:11108
-@SQ	SN:JAGKSF010000664.1	LN:11045
-@SQ	SN:JAGKSF010000665.1	LN:11019
-@SQ	SN:JAGKSF010000666.1	LN:11000
-@SQ	SN:JAGKSF010000667.1	LN:10998
-@SQ	SN:JAGKSF010000668.1	LN:10991
-@SQ	SN:JAGKSF010000669.1	LN:10974
-@SQ	SN:JAGKSF010000670.1	LN:10929
-@SQ	SN:JAGKSF010000671.1	LN:10915
-@SQ	SN:JAGKSF010000672.1	LN:10870
-@SQ	SN:JAGKSF010000673.1	LN:10836
-@SQ	SN:JAGKSF010000674.1	LN:10833
-@SQ	SN:JAGKSF010000675.1	LN:10753
-@SQ	SN:JAGKSF010000676.1	LN:10735
-@SQ	SN:JAGKSF010000677.1	LN:10730
-@SQ	SN:JAGKSF010000678.1	LN:10725
-@SQ	SN:JAGKSF010000679.1	LN:10716
-@SQ	SN:JAGKSF010000680.1	LN:10706
-@SQ	SN:JAGKSF010000681.1	LN:10692
-@SQ	SN:JAGKSF010000682.1	LN:10691
-@SQ	SN:JAGKSF010000683.1	LN:10679
-@SQ	SN:JAGKSF010000684.1	LN:10667
-@SQ	SN:JAGKSF010000685.1	LN:10656
-@SQ	SN:JAGKSF010000686.1	LN:10621
-@SQ	SN:JAGKSF010000687.1	LN:10617
-@SQ	SN:JAGKSF010000688.1	LN:10596
-@SQ	SN:JAGKSF010000689.1	LN:10569
-@SQ	SN:JAGKSF010000690.1	LN:10541
-@SQ	SN:JAGKSF010000691.1	LN:10512
-@SQ	SN:JAGKSF010000692.1	LN:10484
-@SQ	SN:JAGKSF010000693.1	LN:10476
-@SQ	SN:JAGKSF010000694.1	LN:10468
-@SQ	SN:JAGKSF010000695.1	LN:10461
-@SQ	SN:JAGKSF010000696.1	LN:10442
-@SQ	SN:JAGKSF010000697.1	LN:10401
-@SQ	SN:JAGKSF010000698.1	LN:10354
-@SQ	SN:JAGKSF010000699.1	LN:10351
-@SQ	SN:JAGKSF010000700.1	LN:10326
-@SQ	SN:JAGKSF010000701.1	LN:10321
-@SQ	SN:JAGKSF010000702.1	LN:10316
-@SQ	SN:JAGKSF010000703.1	LN:10227
-@SQ	SN:JAGKSF010000704.1	LN:10142
-@SQ	SN:JAGKSF010000705.1	LN:10135
-@SQ	SN:JAGKSF010000706.1	LN:10134
-@SQ	SN:JAGKSF010000707.1	LN:10134
-@SQ	SN:JAGKSF010000708.1	LN:10132
-@SQ	SN:JAGKSF010000709.1	LN:10118
-@SQ	SN:JAGKSF010000710.1	LN:10118
-@SQ	SN:JAGKSF010000711.1	LN:10106
-@SQ	SN:JAGKSF010000712.1	LN:10089
-@SQ	SN:JAGKSF010000713.1	LN:10069
-@SQ	SN:JAGKSF010000714.1	LN:10047
-@SQ	SN:JAGKSF010000715.1	LN:10041
-@SQ	SN:JAGKSF010000716.1	LN:10031
-@SQ	SN:JAGKSF010000717.1	LN:10028
-@SQ	SN:JAGKSF010000718.1	LN:10000
-@SQ	SN:JAGKSF010000719.1	LN:10000
-@SQ	SN:JAGKSF010000720.1	LN:10000
-@SQ	SN:JAGKSF010000721.1	LN:10000
-@SQ	SN:JAGK[M::main::11.427*2.05] loaded/built the index for 723 target sequence(s)
-[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 723
-[M::mm_idx_stat::11.860*2.01] distinct minimizers: 34731192 (68.00% are singletons); average occurrences: 2.999; average spacing: 5.374; total length: 559749262
-SF010000722.1	LN:10000
-@SQ	SN:JAGKSF010000723.1	LN:10000
-@PG	ID:minimap2	PN:minimap2	VN:2.24-r1122	CL:minimap2 -d resources/genomes/Cx_molestus.fasta.mmi -a --end-bonus 5 --eqx -N 50 -p 0.5 -t 8 resources/genomes/Cx_molestus.fasta
-[M::main] Version: 2.24-r1122
-[M::main] CMD: minimap2 -d resources/genomes/Cx_molestus.fasta.mmi -a --end-bonus 5 --eqx -N 50 -p 0.5 -t 8 resources/genomes/Cx_molestus.fasta
-[M::main] Real time: 11.922 sec; CPU: 23.939 sec; Peak RSS: 3.765 GB
-[M::main::1.502*1.00] loaded/built the index for 723 target sequence(s)
-[M::mm_mapopt_update::2.113*1.00] mid_occ = 724
-[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 723
-[M::mm_idx_stat::2.544*1.00] distinct minimizers: 34731192 (68.00% are singletons); average occurrences: 2.999; average spacing: 5.374; total length: 559749262
-[M::worker_pipeline::569.862*7.92] mapped 17836 sequences
-[M::main] Version: 2.24-r1122
-[M::main] CMD: minimap2 -o results/annotation/liftoff_intermediates/Cx_molestus/reference_all_to_target_all.sam -a --end-bonus 5 --eqx -N 50 -p 0.5 -t 8 resources/genomes/Cx_molestus.fasta.mmi results/annotation/liftoff_intermediates/Cx_molestus/reference_all_genes.fa
-[M::main] Real time: 569.888 sec; CPU: 4511.576 sec; Peak RSS: 9.448 GB
-aligning features
-lifting features
-[Wed Apr  1 20:44:01 2026]
-Finished jobid: 16 (Rule: liftoff)
-7 of 29 steps (24%) done
-Execute 1 jobs...
-
-[Wed Apr  1 20:44:01 2026]
-localrule nucmer_align:
-    input: resources/genomes/Cx_quinquefasciatus.fasta, resources/genomes/Cx_molestus.fasta
-    output: results/synteny/Cx_quinquefasciatus_vs_Cx_molestus.delta, results/synteny/Cx_quinquefasciatus_vs_Cx_molestus.filtered.delta
-    jobid: 5
-    reason: Missing output files: results/synteny/Cx_quinquefasciatus_vs_Cx_molestus.filtered.delta
-    wildcards: ref=Cx_quinquefasciatus, query=Cx_molestus
-    threads: 8
-    resources: tmpdir=/tmp
-Activating conda environment: .snakemake/conda/34f0752168e44947e7fd854fc8cb24d6_
-Select jobs to execute...
-[Wed Apr  1 20:49:43 2026]
-Finished jobid: 31 (Rule: nucmer_align)
-8 of 29 steps (28%) done
-Execute 8 jobs...
-
-[Wed Apr  1 20:49:43 2026]
-localrule extract_proteins:
-    input: resources/genomes/Cx_tarsalis.fasta, results/annotation/Cx_tarsalis_liftoff.gff3
-    output: results/proteins/Cx_tarsalis.fa
-    jobid: 19
-    reason: Missing output files: results/proteins/Cx_tarsalis.fa; Input files updated by another job: results/annotation/Cx_tarsalis_liftoff.gff3
-    wildcards: sample=Cx_tarsalis
-    resources: tmpdir=/tmp
-Activating conda environment: .snakemake/conda/a05c4b815e18ce7109106b42603721b1_
-
-[Wed Apr  1 20:49:43 2026]
-localrule extract_proteins:
-    input: resources/genomes/Cx_quinquefasciatus.fasta, results/annotation/Cx_quinquefasciatus_liftoff.gff3
-    output: results/proteins/Cx_quinquefasciatus.fa
-    jobid: 10
-    reason: Code has changed since last execution
-    wildcards: sample=Cx_quinquefasciatus
-    resources: tmpdir=/tmp
-Activating conda environment: .snakemake/conda/a05c4b815e18ce7109106b42603721b1_
-
-[Wed Apr  1 20:49:43 2026]
-localrule syri:
-    input: results/synteny/Cx_pallens_vs_Cx_molestus.filtered.delta, resources/genomes/Cx_pallens.fasta, resources/genomes/Cx_molestus.fasta
-    output: results/synteny/Cx_pallens_vs_Cx_molestus_syri.out
-    jobid: 22
-    reason: Missing output files: results/synteny/Cx_pallens_vs_Cx_molestus_syri.out; Input files updated by another job: results/synteny/Cx_pallens_vs_Cx_molestus.filtered.delta
-    wildcards: ref=Cx_pallens, query=Cx_molestus
-    resources: tmpdir=/tmp
-Activating conda environment: .snakemake/conda/ce25366e35b5e607661b82d5aa731eca_
-
-[Wed Apr  1 20:49:43 2026]
-localrule extract_proteins:
-    input: resources/genomes/Cx_pipiens.fasta, results/annotation/Cx_pipiens_liftoff.gff3
-    output: results/proteins/Cx_pipiens.fa
-    jobid: 17
-    reason: Missing output files: results/proteins/Cx_pipiens.fa; Input files updated by another job: results/annotation/Cx_pipiens_liftoff.gff3
-    wildcards: sample=Cx_pipiens
-    resources: tmpdir=/tmp
-Activating conda environment: .snakemake/conda/a05c4b815e18ce7109106b42603721b1_
-
-[Wed Apr  1 20:49:43 2026]
-localrule extract_proteins:
-    input: resources/genomes/Cx_molestus.fasta, results/annotation/Cx_molestus_liftoff.gff3
-    output: results/proteins/Cx_molestus.fa
-    jobid: 15
-    reason: Missing output files: results/proteins/Cx_molestus.fa; Input files updated by another job: results/annotation/Cx_molestus_liftoff.gff3
-    wildcards: sample=Cx_molestus
-    resources: tmpdir=/tmp
-Activating conda environment: .snakemake/conda/a05c4b815e18ce7109106b42603721b1_
-
-[Wed Apr  1 20:49:43 2026]
-localrule syri:
-    input: results/synteny/Cx_quinquefasciatus_vs_Cx_pipiens.filtered.delta, resources/genomes/Cx_quinquefasciatus.fasta, resources/genomes/Cx_pipiens.fasta
-    output: results/synteny/Cx_quinquefasciatus_vs_Cx_pipiens_syri.out
-    jobid: 0
-    reason: Missing output files: results/synteny/Cx_quinquefasciatus_vs_Cx_pipiens_syri.out; Input files updated by another job: results/synteny/Cx_quinquefasciatus_vs_Cx_pipiens.filtered.delta
-    wildcards: ref=Cx_quinquefasciatus, query=Cx_pipiens
-    resources: tmpdir=/tmp
-Activating conda environment: .snakemake/conda/ce25366e35b5e607661b82d5aa731eca_
-
-[Wed Apr  1 20:49:43 2026]
-localrule syri:
-    input: results/synteny/Cx_quinquefasciatus_vs_Cx_pallens.filtered.delta, resources/genomes/Cx_quinquefasciatus.fasta, resources/genomes/Cx_pallens.fasta
-    output: results/synteny/Cx_quinquefasciatus_vs_Cx_pallens_syri.out
-    jobid: 26
-    reason: Missing output files: results/synteny/Cx_quinquefasciatus_vs_Cx_pallens_syri.out; Input files updated by another job: results/synteny/Cx_quinquefasciatus_vs_Cx_pallens.filtered.delta
-    wildcards: ref=Cx_quinquefasciatus, query=Cx_pallens
-    resources: tmpdir=/tmp
-Activating conda environment: .snakemake/conda/ce25366e35b5e607661b82d5aa731eca_
-
-[Wed Apr  1 20:49:43 2026]
-localrule syri:
-    input: results/synteny/Cx_pallens_vs_Cx_pipiens.filtered.delta, resources/genomes/Cx_pallens.fasta, resources/genomes/Cx_pipiens.fasta
-    output: results/synteny/Cx_pallens_vs_Cx_pipiens_syri.out
-    jobid: 30
-    reason: Missing output files: results/synteny/Cx_pallens_vs_Cx_pipiens_syri.out; Input files updated by another job: results/synteny/Cx_pallens_vs_Cx_pipiens.filtered.delta
-    wildcards: ref=Cx_pallens, query=Cx_pipiens
-    resources: tmpdir=/tmp
-Activating conda environment: .snakemake/conda/ce25366e35b5e607661b82d5aa731eca_
-Select jobs to execute...
-Running SyRI - ERROR - CIGAR string or .delta file is required for SNPs/indels identification. Exiting
-Waiting at most 5 seconds for missing files:
-results/synteny/Cx_quinquefasciatus_vs_Cx_pipiens_syri.out (missing locally)
-Running SyRI - ERROR - CIGAR string or .delta file is required for SNPs/indels identification. Exiting
-Running SyRI - ERROR - CIGAR string or .delta file is required for SNPs/indels identification. Exiting
-Running SyRI - ERROR - CIGAR string or .delta file is required for SNPs/indels identification. Exiting
-Warning: CDS 201650826-201650826 too short for rna-XM_038255522.1, check your data.
-Warning: CDS 111174613-111174613 too short for rna-XM_038251375.1, check your data.
-Warning: CDS 111189401-111189401 too short for rna-XM_038251376.1, check your data.
-Warning: CDS 106716019-106716021 too short for rna-XM_038264923.1, check your data.
-MissingOutputException in rule syri in file "/home/ubuntu/cx_pipiens_pangenome/workflow/rules/synteny.smk", line 20:
-Job 0 completed successfully, but some output files are missing. Missing files after 5 seconds. This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait:
-results/synteny/Cx_quinquefasciatus_vs_Cx_pipiens_syri.out (missing locally, parent dir contents: Cx_pallens_vs_Cx_molestus.delta, Cx_quinquefasciatus_vs_Cx_pipiens_syri.log, Cx_quinquefasciatus_vs_Cx_molestus.delta, Cx_quinquefasciatus_vs_Cx_pallens_syri.log, Cx_pallens_vs_Cx_molestus.filtered.delta, Cx_pallens_vs_Cx_pipiens_syri.log, Cx_quinquefasciatus_vs_Cx_pipiens.delta, Cx_pallens_vs_Cx_pipiens.delta, Cx_pallens_vs_Cx_pipiens.filtered.delta, Cx_quinquefasciatus_vs_Cx_pallens.delta, Cx_quinquefasciatus_vs_Cx_pallens.filtered.delta, Cx_quinquefasciatus_vs_Cx_pipiens.filtered.delta, Cx_pallens_vs_Cx_molestus_syri.log)
-[Wed Apr  1 20:49:49 2026]
-Finished jobid: 19 (Rule: extract_proteins)
-9 of 29 steps (31%) done
-Waiting at most 5 seconds for missing files:
-results/synteny/Cx_pallens_vs_Cx_pipiens_syri.out (missing locally)
-MissingOutputException in rule syri in file "/home/ubuntu/cx_pipiens_pangenome/workflow/rules/synteny.smk", line 20:
-Job 30  completed successfully, but some output files are missing. Missing files after 5 seconds. This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait:
-results/synteny/Cx_pallens_vs_Cx_pipiens_syri.out (missing locally, parent dir contents: Cx_pallens_vs_Cx_molestus.delta, Cx_quinquefasciatus_vs_Cx_pipiens_syri.log, Cx_quinquefasciatus_vs_Cx_molestus.delta, Cx_quinquefasciatus_vs_Cx_pallens_syri.log, Cx_pallens_vs_Cx_molestus.filtered.delta, Cx_pallens_vs_Cx_pipiens_syri.log, Cx_quinquefasciatus_vs_Cx_pipiens.delta, Cx_pallens_vs_Cx_pipiens.delta, Cx_pallens_vs_Cx_pipiens.filtered.delta, Cx_quinquefasciatus_vs_Cx_pallens.delta, Cx_quinquefasciatus_vs_Cx_pallens.filtered.delta, Cx_quinquefasciatus_vs_Cx_pipiens.filtered.delta, Cx_pallens_vs_Cx_molestus_syri.log)
-Waiting at most 5 seconds for missing files:
-results/synteny/Cx_pallens_vs_Cx_molestus_syri.out (missing locally)
-MissingOutputException in rule syri in file "/home/ubuntu/cx_pipiens_pangenome/workflow/rules/synteny.smk", line 20:
-Job 22  completed successfully, but some output files are missing. Missing files after 5 seconds. This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait:
-results/synteny/Cx_pallens_vs_Cx_molestus_syri.out (missing locally, parent dir contents: Cx_pallens_vs_Cx_molestus.delta, Cx_quinquefasciatus_vs_Cx_pipiens_syri.log, Cx_quinquefasciatus_vs_Cx_molestus.delta, Cx_quinquefasciatus_vs_Cx_pallens_syri.log, Cx_pallens_vs_Cx_molestus.filtered.delta, Cx_pallens_vs_Cx_pipiens_syri.log, Cx_quinquefasciatus_vs_Cx_pipiens.delta, Cx_pallens_vs_Cx_pipiens.delta, Cx_pallens_vs_Cx_pipiens.filtered.delta, Cx_quinquefasciatus_vs_Cx_pallens.delta, Cx_quinquefasciatus_vs_Cx_pallens.filtered.delta, Cx_quinquefasciatus_vs_Cx_pipiens.filtered.delta, Cx_pallens_vs_Cx_molestus_syri.log)
-Waiting at most 5 seconds for missing files:
-results/synteny/Cx_quinquefasciatus_vs_Cx_pallens_syri.out (missing locally)
-MissingOutputException in rule syri in file "/home/ubuntu/cx_pipiens_pangenome/workflow/rules/synteny.smk", line 20:
-Job 26  completed successfully, but some output files are missing. Missing files after 5 seconds. This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait:
-results/synteny/Cx_quinquefasciatus_vs_Cx_pallens_syri.out (missing locally, parent dir contents: Cx_pallens_vs_Cx_molestus.delta, Cx_quinquefasciatus_vs_Cx_pipiens_syri.log, Cx_quinquefasciatus_vs_Cx_molestus.delta, Cx_quinquefasciatus_vs_Cx_pallens_syri.log, Cx_pallens_vs_Cx_molestus.filtered.delta, Cx_pallens_vs_Cx_pipiens_syri.log, Cx_quinquefasciatus_vs_Cx_pipiens.delta, Cx_pallens_vs_Cx_pipiens.delta, Cx_pallens_vs_Cx_pipiens.filtered.delta, Cx_quinquefasciatus_vs_Cx_pallens.delta, Cx_quinquefasciatus_vs_Cx_pallens.filtered.delta, Cx_quinquefasciatus_vs_Cx_pipiens.filtered.delta, Cx_pallens_vs_Cx_molestus_syri.log)
-[Wed Apr  1 20:50:04 2026]
-Finished jobid: 15 (Rule: extract_proteins)
-10 of 29 steps (34%) done
-[Wed Apr  1 20:50:04 2026]
-Finished jobid: 17 (Rule: extract_proteins)
-11 of 29 steps (38%) done
-[Wed Apr  1 20:50:04 2026]
-Finished jobid: 10 (Rule: extract_proteins)
-12 of 29 steps (41%) done
-[Wed Apr  1 20:53:01 2026]
-Finished jobid: 5 (Rule: nucmer_align)
-13 of 29 steps (45%) done
-Shutting down, this might take some time.
-Exiting because a job execution failed. Look below for error messages
-[Wed Apr  1 20:53:01 2026]
-Error in rule syri:
-    message: None
-    jobid: 30
-    input: results/synteny/Cx_pallens_vs_Cx_pipiens.filtered.delta, resources/genomes/Cx_pallens.fasta, resources/genomes/Cx_pipiens.fasta
-    output: results/synteny/Cx_pallens_vs_Cx_pipiens_syri.out
-    conda-env: /home/ubuntu/cx_pipiens_pangenome/.snakemake/conda/ce25366e35b5e607661b82d5aa731eca_
-    shell:
-        
-        syri -c results/synteny/Cx_pallens_vs_Cx_pipiens.filtered.delta -r resources/genomes/Cx_pallens.fasta -q resources/genomes/Cx_pipiens.fasta             -k -F T --nc 3             --dir results/synteny/             --prefix Cx_pallens_vs_Cx_pipiens_ 2>&1 ||             touch results/synteny/Cx_pallens_vs_Cx_pipiens_syri.out
-        
-        (command exited with non-zero exit code)
-[Wed Apr  1 20:53:01 2026]
-Error in rule syri:
-    message: None
-    jobid: 0
-    input: results/synteny/Cx_quinquefasciatus_vs_Cx_pipiens.filtered.delta, resources/genomes/Cx_quinquefasciatus.fasta, resources/genomes/Cx_pipiens.fasta
-    output: results/synteny/Cx_quinquefasciatus_vs_Cx_pipiens_syri.out
-    conda-env: /home/ubuntu/cx_pipiens_pangenome/.snakemake/conda/ce25366e35b5e607661b82d5aa731eca_
-    shell:
-        
-        syri -c results/synteny/Cx_quinquefasciatus_vs_Cx_pipiens.filtered.delta -r resources/genomes/Cx_quinquefasciatus.fasta -q resources/genomes/Cx_pipiens.fasta             -k -F T --nc 3             --dir results/synteny/             --prefix Cx_quinquefasciatus_vs_Cx_pipiens_ 2>&1 ||             touch results/synteny/Cx_quinquefasciatus_vs_Cx_pipiens_syri.out
-        
-        (command exited with non-zero exit code)
-[Wed Apr  1 20:53:01 2026]
-Error in rule syri:
-    message: None
-    jobid: 22
-    input: results/synteny/Cx_pallens_vs_Cx_molestus.filtered.delta, resources/genomes/Cx_pallens.fasta, resources/genomes/Cx_molestus.fasta
-    output: results/synteny/Cx_pallens_vs_Cx_molestus_syri.out
-    conda-env: /home/ubuntu/cx_pipiens_pangenome/.snakemake/conda/ce25366e35b5e607661b82d5aa731eca_
-    shell:
-        
-        syri -c results/synteny/Cx_pallens_vs_Cx_molestus.filtered.delta -r resources/genomes/Cx_pallens.fasta -q resources/genomes/Cx_molestus.fasta             -k -F T --nc 3             --dir results/synteny/             --prefix Cx_pallens_vs_Cx_molestus_ 2>&1 ||             touch results/synteny/Cx_pallens_vs_Cx_molestus_syri.out
-        
-        (command exited with non-zero exit code)
-[Wed Apr  1 20:53:01 2026]
-Error in rule syri:
-    message: None
-    jobid: 26
-    input: results/synteny/Cx_quinquefasciatus_vs_Cx_pallens.filtered.delta, resources/genomes/Cx_quinquefasciatus.fasta, resources/genomes/Cx_pallens.fasta
-    output: results/synteny/Cx_quinquefasciatus_vs_Cx_pallens_syri.out
-    conda-env: /home/ubuntu/cx_pipiens_pangenome/.snakemake/conda/ce25366e35b5e607661b82d5aa731eca_
-    shell:
-        
-        syri -c results/synteny/Cx_quinquefasciatus_vs_Cx_pallens.filtered.delta -r resources/genomes/Cx_quinquefasciatus.fasta -q resources/genomes/Cx_pallens.fasta             -k -F T --nc 3             --dir results/synteny/             --prefix Cx_quinquefasciatus_vs_Cx_pallens_ 2>&1 ||             touch results/synteny/Cx_quinquefasciatus_vs_Cx_pallens_syri.out
-        
-        (command exited with non-zero exit code)
-Complete log(s): /home/ubuntu/cx_pipiens_pangenome/.snakemake/log/2026-04-01T195544.343951.snakemake.log
-WorkflowError:
-At least one job did not complete successfully.
