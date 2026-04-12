@@ -16,34 +16,7 @@ A reproducible Snakemake pipeline for pangenome analysis of the *Culex pipiens* 
 
 ## Pipeline Overview
 
-```
-NCBI GenBank assemblies (.fasta + .gff3)
-        |
-    Liftoff v1.6.3 (annotation transfer)
-        |
-    gffread v0.12.7 (protein extraction)
-        |
-   _____|___________________
-  |           |              |
-OrthoFinder  nucmer       RepeatModeler
-  v2.5.5    MUMmer4         v2.0.7
-  |          v4.0.0           |
-  |           |           RepeatMasker
-  |        delta-filter      v4.1.7
-  |           |
-  |        show-coords
-  |        show-diff
-  |___________|
-  |
-  |--- Partitioning (core/shell/cloud)
-  |--- SCO extraction (8,616 single-copy orthologs)
-  |        |
-  |    MAFFT v7.520 + trimAl v1.4.1
-  |        |
-  |    IQ-TREE v2.2.6 (ML tree, 1000 UFBoot, gCF/sCF)
-  |
-  |--- CAFE5 v5.1.0 (gene family evolution, gamma k=3)
-```
+![Pipeline Flowchart](figures/pipeline_flowchart.png)
 
 | Rule file | Tools | Purpose |
 |-----------|-------|---------|
