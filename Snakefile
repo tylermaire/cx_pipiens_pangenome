@@ -9,22 +9,22 @@ import pandas as pd
 import os
 import shutil
 from itertools import combinations
- 
+
 # -- Load configuration --
 configfile: "config/config.yaml"
- 
+
 # -- Load sample table --
 samples = pd.read_csv(config["samples"], sep="\t", index_col="sample")
 ALL_SAMPLES = list(samples.index)
 INGROUP_SAMPLES = list(samples[samples["is_outgroup"] == False].index)
 OUTGROUP_SAMPLES = list(samples[samples["is_outgroup"] == True].index)
- 
+
 # -- Pairwise combinations for synteny (ingroup only) --
 PAIRS = list(combinations(INGROUP_SAMPLES, 2))
- 
+
 # -- Reference name shortcut --
 REF = config["reference"]["name"]
- 
+
 # -- Include rule modules --
 include: "workflow/rules/download.smk"
 include: "workflow/rules/qc.smk"
@@ -36,7 +36,7 @@ include: "workflow/rules/gene_families.smk"
 include: "workflow/rules/synteny.smk"
 include: "workflow/rules/repeats.smk"
 include: "workflow/rules/figures.smk"
- 
+
 # -- Default target: run the entire pipeline --
 rule all:
     input:
@@ -58,6 +58,13 @@ rule all:
         expand("results/synteny/{a}_vs_{b}_syri.out",
             zip, a=[p[0] for p in PAIRS],
             b=[p[1] for p in PAIRS]),
+        # 3Rb inversion sharing test (Ryazansky et al. 2024)
+        "results/synteny/3Rb_inversion_summary.tsv",
+        "results/synteny/3Rb_inversion_call.txt",
         # Repeats
         expand("results/repeats/{s}/{s}.fasta.tbl",
             s=INGROUP_SAMPLES),
+        # TE proximity to genes (core vs shell vs cloud)
+        "results/repeats/te_gene_proximity_summary.tsv",
+        # Key gene-family copy-number tabulation
+        "results/functional/key_families_wide.tsv",

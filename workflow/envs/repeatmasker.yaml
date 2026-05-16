@@ -3,5 +3,9 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-  - repeatmasker>=4.1
-  - repeatmodeler>=2.0
+  - repeatmasker=4.1.7
+  - repeatmodeler=2.0.7
+  - ltr_retriever
+  - genometools-genometools
+  - perl-bioperl
+  - python>=3.9

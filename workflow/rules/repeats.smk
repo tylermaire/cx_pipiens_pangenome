@@ -34,3 +34,25 @@ rule repeatmasker:
             -dir results/repeats/{wildcards.sample}/ \
             results/repeats/{wildcards.sample}/{wildcards.sample}.fasta
         """
+
+
+# -------------------------------------------------------------------------
+# Gene-to-TE proximity analysis (core vs shell vs cloud)
+# -------------------------------------------------------------------------
+
+rule te_gene_proximity:
+    """For each gene in each ingroup genome, distance to nearest TE;
+    summarise per pangenome compartment."""
+    input:
+        gff_files=expand("results/annotation/{s}_liftoff.gff3", s=INGROUP_SAMPLES),
+        repeatmasker=expand("results/repeats/{s}/{s}.fasta.out", s=INGROUP_SAMPLES),
+        partitions="results/pangenome/partitioned_orthogroups.tsv",
+        orthogroups_tsv="results/orthofinder/output",
+    output:
+        per_gene="results/repeats/te_gene_proximity_per_gene.tsv",
+        summary="results/repeats/te_gene_proximity_summary.tsv",
+    params:
+        samples=INGROUP_SAMPLES,
+        feature="gene",
+    conda: "../envs/phylo.yaml"
+    script: "../scripts/te_gene_proximity.py"
