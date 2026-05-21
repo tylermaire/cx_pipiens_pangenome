@@ -23,7 +23,6 @@ Outputs (via snakemake.output)
                 nearest_te_bp, nearest_te_family
     summary   : per-compartment summary statistics (median, IQR, % within 1 kb)
 """
-from __future__ import annotations
 import sys
 from pathlib import Path
 from collections import defaultdict
@@ -123,13 +122,39 @@ def main() -> None:
     gff_files = [Path(p) for p in snakemake.input.gff_files]        # type: ignore
     rm_files  = [Path(p) for p in snakemake.input.repeatmasker]      # type: ignore
     partitions = pd.read_csv(snakemake.input.partitions, sep="\t")    # type: ignore
-    orthogroups = pd.read_csv(snakemake.input.orthogroups_tsv, sep="\t")  # type: ignore
+    # OrthoFinder writes to Results_<date>/Orthogroups/Orthogroups.tsv;
+    # the rule passes the parent dir so we glob for the actual file.
+    import glob
+    og_dir = snakemake.input.orthogroups_tsv  # type: ignore
+    matches = glob.glob(f"{og_dir}/Results_*/Orthogroups/Orthogroups.tsv")
+    if not matches:
+        sys.exit(f"Could not find Orthogroups.tsv under {og_dir}")
+    orthogroups = pd.read_csv(matches[0], sep="\t")
     samples = list(snakemake.params.samples)                           # type: ignore
     feature = getattr(snakemake.params, "feature", "gene")             # type: ignore
     out_per = Path(snakemake.output.per_gene)                          # type: ignore
     out_sum = Path(snakemake.output.summary)                           # type: ignore
 
-    # gene_id -> (orthogroup_id, compartment)
+    # Build transcript_id -> gene_id map from all GFFs (NCBI-style GFFs put
+    # gene IDs on `gene` features and OrthoFinder uses mRNA IDs from the
+    # protein FASTAs, so we need to translate before joining).
+    transcript_to_gene = {}
+    for gff in gff_files:
+        with open(gff) as fh:
+            for line in fh:
+                if not line or line.startswith("#"):
+                    continue
+                f = line.rstrip("\n").split("\t")
+                if len(f) < 9 or f[2] not in ("mRNA", "transcript"):
+                    continue
+                attrs = dict(kv.split("=", 1) for kv in f[8].split(";") if "=" in kv)
+                tid = attrs.get("ID")
+                parent = attrs.get("Parent")
+                if tid and parent:
+                    transcript_to_gene[tid] = parent
+                    transcript_to_gene[tid.replace(".", "")] = parent
+
+    # gene_id -> (orthogroup_id, compartment, sample)
     gene_meta = {}
     og_to_compartment = dict(zip(partitions["Orthogroup"], partitions["compartment"]))
     for _, row in orthogroups.iterrows():
@@ -142,18 +167,18 @@ def main() -> None:
             if pd.isna(cell) or not str(cell).strip():
                 continue
             for gid in str(cell).split(","):
-                gene_meta[gid.strip()] = (og, comp, sample)
+                gid = gid.strip()
+                real = transcript_to_gene.get(gid, gid)
+                gene_meta[(sample, real)] = (og, comp, sample)
 
     long_rows = []
     for sample, gff, rmf in zip(samples, gff_files, rm_files):
         index = build_te_index(rmf)
         for chrom, gs, ge, gid in parse_gff(gff, feature=feature):
-            meta = gene_meta.get(gid)
+            meta = gene_meta.get((sample, gid))
             if meta is None:
                 continue
-            og, comp, samp = meta
-            if samp != sample:
-                continue
+            og, comp, _ = meta
             d, fam = nearest_te(chrom, gs, ge, index)
             long_rows.append({
                 "sample": sample, "gene": gid, "chrom": chrom,

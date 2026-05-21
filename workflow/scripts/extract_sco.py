@@ -1,6 +1,4 @@
-#!/usr/bin/env python3
-import os, glob
-import pandas as pd
+import glob, os, pandas as pd
 from Bio import SeqIO
 
 of_dir = snakemake.input[0]
@@ -23,36 +21,34 @@ print(f"Found {len(sco_ogs)} single-copy orthogroups across ingroup")
 
 og_membership = pd.read_csv(og_files[0], sep="\t", index_col=0)
 
-all_seqs = {}
+# Per-species sequence dictionary to avoid ID collisions
+per_species_seqs = {}
 for fa_file in glob.glob("results/proteins/*.fa"):
-    for rec in SeqIO.parse(fa_file, "fasta"):
-        all_seqs[rec.id] = rec
-seq_dir_list = glob.glob(os.path.join(of_dir, "**", "WorkingDirectory"), recursive=True)
-if seq_dir_list:
-    for fa_file in glob.glob(os.path.join(seq_dir_list[0], "Species*.fa")):
-        for rec in SeqIO.parse(fa_file, "fasta"):
-            all_seqs[rec.id] = rec
+    sp = os.path.basename(fa_file).replace(".fa", "")
+    per_species_seqs[sp] = {
+        rec.id: str(rec.seq) for rec in SeqIO.parse(fa_file, "fasta")
+    }
+print("Loaded proteomes:", {sp: len(d) for sp, d in per_species_seqs.items()})
 
 written = 0
 for og in sco_ogs:
     if og not in og_membership.index:
         continue
-    outfile = os.path.join(outdir, f"{og}.fa")
-    seqs_written = 0
-    with open(outfile, "w") as f:
-        for sp in ingroup:
-            if sp not in og_membership.columns:
-                continue
-            genes = og_membership.loc[og, sp]
-            if pd.isna(genes):
-                continue
-            gene_list = [g.strip() for g in str(genes).split(",")]
-            for gene_id in gene_list:
-                if gene_id in all_seqs:
-                    f.write(f">{sp}\n{str(all_seqs[gene_id].seq)}\n")
-                    seqs_written += 1
-    if seqs_written == len(ingroup):
+    seqs_for_this_og = {}
+    for sp in ingroup:
+        if sp not in og_membership.columns:
+            continue
+        genes = og_membership.loc[og, sp]
+        if pd.isna(genes):
+            continue
+        gene_id = str(genes).split(",")[0].strip()
+        if sp in per_species_seqs and gene_id in per_species_seqs[sp]:
+            seqs_for_this_og[sp] = per_species_seqs[sp][gene_id]
+    if len(seqs_for_this_og) == len(ingroup):
+        outfile = os.path.join(outdir, f"{og}.fa")
+        with open(outfile, "w") as f:
+            for sp in ingroup:
+                f.write(f">{sp}\n{seqs_for_this_og[sp]}\n")
         written += 1
-    else:
-        os.remove(outfile)
+
 print(f"Wrote {written} complete SCO FASTA files to {outdir}")

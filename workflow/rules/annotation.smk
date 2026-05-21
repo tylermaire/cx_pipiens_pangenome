@@ -14,7 +14,9 @@ rule liftoff:
     shell:
         """
         mkdir -p results/annotation/liftoff_intermediates/{wildcards.sample}
-        liftoff -g {input.gff} {input.target} {input.ref} \
+        cp {input.gff} results/annotation/liftoff_intermediates/{wildcards.sample}/ref.gff3
+        liftoff -g results/annotation/liftoff_intermediates/{wildcards.sample}/ref.gff3 \
+            {input.target} {input.ref} \
             -o {output} -p {threads} -sc {params.sc} -s {params.s} \
             -dir results/annotation/liftoff_intermediates/{wildcards.sample}
         """

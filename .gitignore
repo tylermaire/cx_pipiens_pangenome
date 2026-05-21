@@ -1,50 +1,30 @@
-# Raw data and large results (regenerate with pipeline)
-resources/genomes/
-resources/annotations/
-resources/eggnog_data/
-
-# Large result directories (tracked summaries are in results/pangenome, phylo, cafe)
-results/orthofinder/
-results/annotation/
-results/proteins/
-results/anvio/
-results/repeats/
-results/synteny/
-
-# But track small result summaries
-!results/pangenome/
-!results/pangenome/*.tsv
-!results/phylo/
-!results/phylo/*.treefile
-!results/phylo/*.tree
-!results/cafe/
-!results/cafe/*.tsv
-
-# Log files
-*.log
-
-# Snakemake working files
+# Snakemake state
 .snakemake/
 
-# OS files
-.DS_Store
-Thumbs.db
+# Large result data
+results/busco/
+results/busco_proteins/
+results/eggnog/
+results/quast/
+results/repeats/Cx_*/
+results/orthofinder/
+results/annotation/liftoff_intermediates/
 
-# Python
-__pycache__/
-*.pyc
+# Phylo intermediates
+results/phylo/alignments/
+results/phylo/gene_trees/
+results/phylo/sco_fastas/
+results/phylo/trimmed/
+results/phylo/*.gz
+results/phylo/*.log
 
-# Conda
-*.conda
+# CAFE intermediates
+results/cafe/output/
 
-# R temporary files
-.Rhistory
-.RData
-.Rproj.user/
+# Downloaded references
+busco_downloads/
+resources/
 
-# Planning docs (not for public repo)
-Cx_pipiens_Pangenome_Checklist.docx
-Cx_pipiens_Pangenome_Snakemake_Project_Plan.docx
-
-# Intermediate outputs
-unmapped_features.txt
+# Run logs and backups
+run_*.log
+*.bak

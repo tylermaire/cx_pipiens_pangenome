@@ -47,7 +47,6 @@ snakemake.output.long   : tidy long-format TSV
 snakemake.output.wide   : per-family per-form copy-number matrix:
                           family   Cx_molestus  Cx_pallens  Cx_pipiens  Cx_quinquefasciatus
 """
-from __future__ import annotations
 import re
 import sys
 from pathlib import Path

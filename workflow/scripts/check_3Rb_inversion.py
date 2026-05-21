@@ -41,7 +41,6 @@ Outputs (via snakemake.output)
     flag  : Path  - one-line interpretation:
                     "3Rb shared with: <list>; private to Cx. quinquefasciatus: <list>"
 """
-from __future__ import annotations
 import sys
 from pathlib import Path
 import pandas as pd

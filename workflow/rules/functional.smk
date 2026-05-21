@@ -1,12 +1,11 @@
 rule eggnog_download:
-    """Download eggNOG database (one-time)."""
-    output: directory("resources/eggnog_data/eggnog.db")
+    """Download eggNOG database (one-time). Patches the dead eggnogdb.embl.de
+    URL to the live eggnog5.embl.de mirror before downloading."""
+    output: "resources/eggnog_data/eggnog.db"
     conda: "../envs/eggnog.yaml"
     shell:
-        """
-        mkdir -p resources/eggnog_data
-        download_eggnog_data.py --data_dir resources/eggnog_data/ -y
-        """
+        "bash workflow/scripts/run_eggnog_download.sh"
+
 
 rule eggnog_mapper:
     """Functional annotation with eggNOG-mapper."""
@@ -33,6 +32,7 @@ rule go_enrichment:
         partitions="results/pangenome/partitioned_orthogroups.tsv"
     output:
         enrichment="results/functional/go_enrichment_results.tsv"
+    conda: "../envs/r.yaml"
     script: "../scripts/go_enrichment.R"
 
 

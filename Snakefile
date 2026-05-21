@@ -37,7 +37,7 @@ include: "workflow/rules/synteny.smk"
 include: "workflow/rules/repeats.smk"
 include: "workflow/rules/figures.smk"
 
-# -- Default target: run the entire pipeline --
+# -- Default target: build everything except SyRI (strand-correction needed) --
 rule all:
     input:
         # QC
@@ -50,21 +50,11 @@ rule all:
         "results/pangenome/pangenome_summary.tsv",
         # Functional
         "results/functional/go_enrichment_results.tsv",
-        # Phylogenomics
-        "results/phylo/concord.cf.tree",
-        # Gene families
-        "results/cafe/significant_families.tsv",
-        # Synteny
-        expand("results/synteny/{a}_vs_{b}_syri.out",
-            zip, a=[p[0] for p in PAIRS],
-            b=[p[1] for p in PAIRS]),
-        # 3Rb inversion sharing test (Ryazansky et al. 2024)
-        "results/synteny/3Rb_inversion_summary.tsv",
-        "results/synteny/3Rb_inversion_call.txt",
-        # Repeats
-        expand("results/repeats/{s}/{s}.fasta.tbl",
-            s=INGROUP_SAMPLES),
-        # TE proximity to genes (core vs shell vs cloud)
-        "results/repeats/te_gene_proximity_summary.tsv",
-        # Key gene-family copy-number tabulation
         "results/functional/key_families_wide.tsv",
+        # Phylogenomics (already built)
+        "results/phylo/concord.cf.tree",
+        # Gene families (already rebuilt)
+        "results/cafe/significant_families.tsv",
+        # Repeats - RepeatMasker tables + TE proximity
+        expand("results/repeats/{s}/{s}.fasta.tbl", s=INGROUP_SAMPLES),
+        "results/repeats/te_gene_proximity_summary.tsv",
