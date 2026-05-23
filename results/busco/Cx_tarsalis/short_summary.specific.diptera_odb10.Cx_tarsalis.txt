@@ -1,0 +1,30 @@
+# BUSCO version is: 6.0.0 
+# The lineage dataset is: diptera_odb10 (Creation date: 2024-01-08, number of genomes: 56, number of BUSCOs: 3285)
+# Summarized benchmarking in BUSCO notation for file /home/ubuntu/cx_pipiens_pangenome/resources/genomes/Cx_tarsalis.fasta
+# BUSCO was run in mode: euk_genome_min
+# Gene predictor used: miniprot
+
+	***** Results: *****
+
+	C:79.6%[S:69.7%,D:9.9%],F:5.9%,M:14.5%,n:3285,E:17.9%	   
+	2615	Complete BUSCOs (C)	(of which 468 contain internal stop codons)		   
+	2290	Complete and single-copy BUSCOs (S)	   
+	325	Complete and duplicated BUSCOs (D)	   
+	195	Fragmented BUSCOs (F)			   
+	475	Missing BUSCOs (M)			   
+	3285	Total BUSCO groups searched		   
+
+Assembly Statistics:
+	19994	Number of scaffolds
+	19995	Number of contigs
+	789669425	Total length
+	0.000%	Percent gaps
+	57 kbp	Scaffold N50
+	57 kbp	Contigs N50
+
+
+Dependencies and versions:
+	hmmsearch: 3.4
+	bbtools: None
+	miniprot_index: 0.18-r281
+	miniprot_align: 0.18-r281

@@ -1,0 +1,17 @@
+# BUSCO version is: 6.0.0 
+# The lineage dataset is: diptera_odb10 (Creation date: 2024-01-08, number of genomes: 56, number of BUSCOs: 3285)
+# Summarized benchmarking in BUSCO notation for file /home/ubuntu/cx_pipiens_pangenome/results/proteins/Cx_tarsalis.fa
+# BUSCO was run in mode: proteins
+
+	***** Results: *****
+
+	C:40.3%[S:31.1%,D:9.2%],F:12.2%,M:47.4%,n:3285	   
+	1325	Complete BUSCOs (C)			   
+	1022	Complete and single-copy BUSCOs (S)	   
+	303	Complete and duplicated BUSCOs (D)	   
+	402	Fragmented BUSCOs (F)			   
+	1558	Missing BUSCOs (M)			   
+	3285	Total BUSCO groups searched		   
+
+Dependencies and versions:
+	hmmsearch: 3.4

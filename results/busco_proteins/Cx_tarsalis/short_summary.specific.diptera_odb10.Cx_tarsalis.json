@@ -1,0 +1,64 @@
+{
+    "parameters": {
+        "out_path": "/home/ubuntu/cx_pipiens_pangenome/results/busco_proteins",
+        "cpu": "8",
+        "force": "True",
+        "restart": "False",
+        "quiet": "False",
+        "download_path": "/home/ubuntu/cx_pipiens_pangenome/busco_downloads",
+        "datasets_version": "odb10",
+        "offline": "False",
+        "download_base_url": "https://busco-data.ezlab.org/v5/data/",
+        "auto-lineage": "False",
+        "auto-lineage-prok": "False",
+        "auto-lineage-euk": "False",
+        "use_augustus": "False",
+        "use_miniprot": "False",
+        "use_metaeuk": "False",
+        "skip_bbtools": "False",
+        "batch_mode": "False",
+        "tar": "False",
+        "opt-out-run-stats": "False",
+        "plot_percentages": "False",
+        "in": "/home/ubuntu/cx_pipiens_pangenome/results/proteins/Cx_tarsalis.fa",
+        "out": "Cx_tarsalis",
+        "mode": "proteins",
+        "lineage_dataset": "/home/ubuntu/cx_pipiens_pangenome/busco_downloads/lineages/diptera_odb10",
+        "main_out": "/home/ubuntu/cx_pipiens_pangenome/results/busco_proteins/Cx_tarsalis",
+        "lineage_results_dir": "run_diptera_odb10",
+        "domain": "eukaryota",
+        "orthodb_version": "10.1"
+    },
+    "lineage_dataset": {
+        "name": "diptera_odb10",
+        "creation_date": "2024-01-08",
+        "number_of_buscos": "3285",
+        "number_of_species": "56"
+    },
+    "versions": {
+        "python": [
+            3,
+            12,
+            13,
+            "final",
+            0
+        ],
+        "busco": "6.0.0",
+        "hmmsearch": 3.4
+    },
+    "results": {
+        "one_line_summary": "C:40.3%[S:31.1%,D:9.2%],F:12.2%,M:47.4%,n:3285",
+        "Complete percentage": 40.3,
+        "Complete BUSCOs": 1325,
+        "Single copy percentage": 31.1,
+        "Single copy BUSCOs": 1022,
+        "Multi copy percentage": 9.2,
+        "Multi copy BUSCOs": 303,
+        "Fragmented percentage": 12.2,
+        "Fragmented BUSCOs": 402,
+        "Missing percentage": 47.4,
+        "Missing BUSCOs": 1558,
+        "n_markers": 3285,
+        "domain": "eukaryota"
+    }
+}
