@@ -1,5 +1,5 @@
 #NEXUS
 [ See results/phylo/concord.cf.stat for branch annotation meanings. This file is best viewed in FigTree. ]
 begin trees;
-  tree tree_1 = (Cx_molestus:0.0325211144,(Cx_pallens:0.0235752531,Cx_quinquefasciatus:0.0689133184):0.0141848637[&gCF="59.27",gCF/gDF1/gDF2/gDFP="59.27/18.26/22.47/0",gCF_N="4263",gCF_N/gDF1_N/gDF2_N/gDFP_N="4263/1313/1616/0",gDF1="18.26",gDF1_N="1313",gDF2="22.47",gDF2_N="1616",gDFP="0",gDFP_N="0",gN="7192",label="100",sCF="45.43",sCF/sDF1/sDF2="45.43/28.53/26.03",sCF_N="32115",sCF_N/sDF1_N/sDF2_N="32115/20169/18402",sDF1="28.53",sDF1_N="20169",sDF2="26.03",sDF2_N="18402",sN="70686"],Cx_pipiens:0.0339780211);
+  tree tree_1 = (Cx_molestus:0.0375627553,(Cx_pallens:0.0265507480,Cx_quinquefasciatus:0.0739638445):0.0148113525[&gCF="58.91",gCF/gDF1/gDF2/gDFP="58.91/18.18/22.9/0",gCF_N="3985",gCF_N/gDF1_N/gDF2_N/gDFP_N="3985/1230/1549/0",gDF1="18.18",gDF1_N="1230",gDF2="22.9",gDF2_N="1549",gDFP="0",gDFP_N="0",gN="6764",label="100",sCF="45.09",sCF/sDF1/sDF2="45.09/28.41/26.5",sCF_N="30991",sCF_N/sDF1_N/sDF2_N="30991/19525/18214",sDF1="28.41",sDF1_N="19525",sDF2="26.5",sDF2_N="18214",sN="68730"],Cx_pipiens:0.0373777641);
 end;

@@ -28,3 +28,23 @@ resources/
 # Run logs and backups
 run_*.log
 *.bak
+
+# More large pipeline intermediates (added after a 645 MB push attempt)
+results/repeats/repeatmodeler_workdir/
+results/annotation/liftoff_intermediates/
+results/orthofinder/output/
+results/phylo/alignments/
+results/phylo/trimmed/
+results/phylo/gene_trees/
+results/phylo/sco_fastas/
+results/phylo/*.ckp.gz
+results/phylo/*.model.gz
+results/phylo/concat_tree.log
+results/phylo/concord.log
+results/phylo/*.iqtree
+results/phylo/*.bionj
+results/phylo/*.splits.nex
+results/phylo/*.best_scheme*
+results/cafe/output/
+unmapped_features.txt
+*.log
