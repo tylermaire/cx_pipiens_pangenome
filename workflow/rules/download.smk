@@ -8,7 +8,18 @@ rule download_genome:
     conda: "../envs/datasets.yaml"
     shell:
         """
-        # Download
+        if [ "{wildcards.sample}" = "Cx_tarsalis" ]; then
+            # The CtarK1 assembly (Main et al. 2021) is hosted on OSF, not NCBI.
+            # The original NCBI accession GCA_016859205.1 was reassigned to a
+            # Fusarium oxysporum genome — do NOT use the datasets CLI for tarsalis.
+            curl -L -o /tmp/{wildcards.sample}.fa.gz   https://osf.io/download/3dgxa/
+            curl -L -o /tmp/{wildcards.sample}.gff3.gz https://osf.io/download/rj97c/
+            gunzip -c /tmp/{wildcards.sample}.fa.gz   > {output.fasta}
+            gunzip -c /tmp/{wildcards.sample}.gff3.gz > {output.gff}
+            rm /tmp/{wildcards.sample}.fa.gz /tmp/{wildcards.sample}.gff3.gz
+            exit 0
+        fi
+        # Default path: NCBI Datasets CLI
         datasets download genome accession {params.accession} \
             --include genome,gff3 --filename {wildcards.sample}.zip
 
