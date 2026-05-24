@@ -49,5 +49,7 @@ repeatmasker:
   species: culex
  
 # -- Compute resources --
-threads: 8
-memory_gb: 32
+# For c7i.24xlarge (96 vCPU, 192 GB RAM) — use most cores per rule and let
+# Snakemake fan out jobs across the rest.
+threads: 32
+memory_gb: 128
