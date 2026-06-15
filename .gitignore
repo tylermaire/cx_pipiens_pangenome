@@ -48,3 +48,25 @@ results/phylo/*.best_scheme*
 results/cafe/output/
 unmapped_features.txt
 *.log
+
+# Large archived result bundles (multi-GB; do not commit)
+results_*.tar.gz
+*.tar.gz
+
+# docx editing scratch folders and temporary office lock files
+unpacked/
+unpacked2/
+unpacked3/
+unpacked_clean/
+unpacked_clean_0/
+unpacked_clean_1/
+~$*
+
+# Editor / build scratch
+__pycache__/
+*.pyc
+*.new
+*_tmp.*
+
+# Regenerated-data backups (kept locally, not in repo)
+*.STALE_backup.tsv

@@ -1,0 +1,107 @@
+digraph pipeline {
+  graph [rankdir=TB, splines=ortho, nodesep=0.45, ranksep=0.55, fontname="Helvetica", bgcolor="white", pad=0.3];
+  node  [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=11, margin="0.18,0.10", penwidth=2];
+  edge  [color="#555555", penwidth=1.4, arrowsize=0.8];
+
+  // ---- palette ----
+  // input grey, annotation blue, orthology green, phylogenomics(legend pink/crimson outline) -> use green family; synteny purple, repeat orange/red, gene-family-evolution gold, visualization magenta
+
+  // INPUT
+  ncbi [label=<<b>NCBI GenBank genome assemblies</b><br/><font point-size="10">Cx. quinquefasciatus (ref) + Cx. pallens + Cx. molestus + Cx. pipiens + Cx. tarsalis (outgroup)</font><br/><font point-size="9" color="#555555">Files: .fasta (x5) + Cx_quinquefasciatus.gff3</font>>,
+        fillcolor="#ECECEC", color="#7A7A7A"];
+
+  // ANNOTATION (blue)
+  liftoff [label=<<b>Liftoff v1.6.3</b><br/><font point-size="10">Reference-guided annotation transfer (identity 0.90, coverage 0.50)</font><br/><font point-size="9" color="#33567A">IN: Cx_quinquefasciatus.gff3 + {sample}.fasta (x4 targets)<br/>OUT: {sample}_liftoff.gff3 (x4 transferred annotations)</font>>,
+        fillcolor="#DCE9F5", color="#2E5A86"];
+  gffread [label=<<b>gffread v0.12.7</b><br/><font point-size="10">Extract protein-coding sequences from annotated genomes</font><br/><font point-size="9" color="#33567A">IN: {sample}.fasta + {sample}_liftoff.gff3 (x5 incl. reference)<br/>OUT: proteins/{sample}.fa (protein FASTA, x5)</font>>,
+        fillcolor="#DCE9F5", color="#2E5A86"];
+
+  // ORTHOLOGY (green)
+  ortho [label=<<b>OrthoFinder v2.5.5</b><br/><font point-size="10">Orthology inference via DIAMOND all-vs-all BLAST; MCL clustering, DLCpar reconciliation</font><br/><font point-size="9" color="#2E6B43">IN: proteins/{sample}.fa (x5: 4 ingroup + 1 outgroup)<br/>OUT: Orthogroups.GeneCount.tsv, Orthogroups.tsv, Species_Tree/</font>>,
+        fillcolor="#DCF0E2", color="#2E7D46"];
+  partition [label=<<b>Partitioning</b><br/><font point-size="10">Core / shell / cloud</font><br/><font point-size="9" color="#2E6B43">IN: Orthogroups.GeneCount.tsv<br/>OUT: pangenome_summary.tsv,<br/>partitioned_orthogroups.tsv</font>>,
+        fillcolor="#DCF0E2", color="#2E7D46"];
+  sco [label=<<b>SCO extraction</b><br/><font point-size="10">8,067 single-copy genes</font><br/><font point-size="9" color="#2E6B43">IN: Single_Copy_Orthologue_Sequences/ (1 fa per OG)<br/>OUT: sco_fastas/ (1 fa per OG, x8,067)</font>>,
+        fillcolor="#DCF0E2", color="#2E7D46"];
+
+  // PHYLOGENOMICS (light green, crimson outline per legend)
+  mafft [label=<<b>MAFFT v7.520 + trimAl v1.4.1</b><br/><font point-size="10">Align (--auto) + trim (-automated1) per SCO</font><br/><font point-size="9" color="#2E6B43">IN: {OG_id}.fa (x8,067 protein FASTAs)<br/>OUT: {OG_id}_trimmed.fa (x8,067 trimmed alignments)</font>>,
+        fillcolor="#E7F5EA", color="#2E7D46"];
+  iqtree [label=<<b>IQ-TREE v2.2.6</b><br/><font point-size="10">Concatenated ML tree (ModelFinder Plus)<br/>1,000 ultrafast bootstrap, gCF + sCF concordance</font><br/><font point-size="9" color="#2E6B43">IN: supermatrix.phy (concat. alignment), gene trees<br/>OUT: concat_tree.treefile, concord.cf.tree</font>>,
+        fillcolor="#E7F5EA", color="#2E7D46"];
+
+  // GENE FAMILY EVOLUTION (gold)
+  cafeprep [label=<<b>CAFE5 input prep</b><br/><font point-size="10">Filter families &gt;100 copies</font><br/><font point-size="9" color="#8A6D1F">IN: Orthogroups.GeneCount.tsv, concat_tree.treefile<br/>OUT: gene_counts_filtered.tsv, ultrametric_tree.nwk</font>>,
+        fillcolor="#FBF0D5", color="#B8902E"];
+  cafe [label=<<b>CAFE5 v5.1.0</b><br/><font point-size="10">Gene family evolution (gamma, k=3)<br/>&#955; = 0.105, &#945; = 0.167</font><br/><font point-size="9" color="#8A6D1F">IN: gene_counts_filtered.tsv, ultrametric_tree.nwk<br/>OUT: significant_families.tsv (617 at p&lt;0.05)</font>>,
+        fillcolor="#FBF0D5", color="#B8902E"];
+
+  // SYNTENY + ANI (purple) -- corrected to skani + minimap2
+  skani [label=<<b>skani v0.2</b><br/><font point-size="10">Whole-genome ANI (sketch: compression 125, k 15)<br/>3 chromosome-scale scaffolds per assembly</font><br/><font point-size="9" color="#4A3B8A">IN: {sample}.fasta (x5)<br/>OUT: ani_matrix.tsv (skani, primary)</font>>,
+        fillcolor="#E6E2F5", color="#5A4AAE"];
+  minimap [label=<<b>minimap2 (asm5 / asm20)</b><br/><font point-size="10">Alignment-based ANI cross-check<br/>length-weighted mean % identity</font><br/><font point-size="9" color="#4A3B8A">IN: {sample}.fasta / Liftoff CDS alignments<br/>OUT: ani_matrix_alignment_based.tsv</font>>,
+        fillcolor="#E6E2F5", color="#5A4AAE"];
+  synteny [label=<<b>Synteny from Liftoff anchors</b><br/><font point-size="10">Shared gene-ID anchors (14,755&#8211;16,953 per pair)<br/>local-slope collinearity; inversions &#8805; 100 kb</font><br/><font point-size="9" color="#4A3B8A">IN: {sample}_liftoff.gff3 (x4 ingroup)<br/>OUT: synteny_summary.tsv, synteny_dotplots/</font>>,
+        fillcolor="#E6E2F5", color="#5A4AAE"];
+
+  // REPEAT (orange/red)
+  rmodeler [label=<<b>RepeatModeler v2.0.7</b><br/><font point-size="10">De novo repeat library construction (LTRStruct)<br/>16 threads, ~32 hours runtime</font><br/><font point-size="9" color="#9A4A2E">IN: Cx_quinquefasciatus.fasta (reference genome, 573 Mb)<br/>OUT: custom_repeat_lib.fa (consensus TE family library)</font>>,
+        fillcolor="#FBE4DA", color="#B85A2E"];
+  rmasker [label=<<b>RepeatMasker v4.1.7</b><br/><font point-size="10">TE annotation (-gff -xsmall -a, 8 threads per genome)<br/>Run independently on each of 4 ingroup genomes</font><br/><font point-size="9" color="#9A4A2E">IN: {sample}.fasta + custom_repeat_lib.fa (x4 genomes)<br/>OUT: {sample}.fasta.tbl (x4), {sample}.fasta.out (x4)</font>>,
+        fillcolor="#FBE4DA", color="#B85A2E"];
+
+  // VISUALIZATION (magenta)
+  viz [label=<<b>Visualization and figure generation</b>>, shape=plaintext, style="", fontsize=14, fillcolor="white"];
+  rfig [label=<<b>R v4.3 / ggplot2 / patchwork</b><br/><font point-size="10">Publication composite figures (Figs 1&#8211;9)</font><br/><font point-size="9" color="#8A2E5A">IN: pangenome_summary.tsv, concat_tree.treefile,<br/>significant_families.tsv, synteny_summary.tsv, .tbl<br/>OUT: Figure_1&#8211;9 (300 dpi, Okabe&#8211;Ito palette)</font>>,
+        fillcolor="#F7DDEB", color="#B83A7A"];
+  anvio [label=<<b>anvi'o v9</b><br/><font point-size="10">Interactive pangenome visualization (Fig 8)</font><br/><font point-size="9" color="#8A2E5A">IN: {sample}.fasta (x4), _liftoff.gff3 (x4) via external gene calls<br/>DIAMOND all-vs-all (minbit 0.5, MCL inflation 10)<br/>OUT: CxPipiens-PAN.db (16,673 gene clusters)<br/>CxPipiens.svg (circular pangenome display)</font>>,
+        fillcolor="#F7DDEB", color="#B83A7A"];
+
+  // ---- edges ----
+  ncbi -> liftoff -> gffread;
+  gffread -> ortho;
+  gffread -> skani;
+  gffread -> rmodeler;
+  ortho -> partition;
+  ortho -> sco;
+  ortho -> cafeprep;
+  sco -> mafft -> iqtree;
+  cafeprep -> cafe;
+  iqtree -> cafeprep [style=dashed, label=<<font point-size="8">ultrametric tree</font>>, color="#999999"];
+  skani -> minimap -> synteny;
+  rmodeler -> rmasker;
+
+  // converge to visualization
+  iqtree -> viz [style=invis];
+  partition -> viz [style=invis];
+  cafe -> viz [style=invis];
+  synteny -> viz [style=invis];
+  rmasker -> viz [style=invis];
+  viz -> rfig;
+  viz -> anvio;
+
+  // rank hints
+  {rank=same; partition; sco; cafeprep;}
+  {rank=same; skani; ortho; rmodeler;}
+  {rank=same; rfig; anvio;}
+
+  // ---- LEGEND ----
+  subgraph cluster_legend {
+    label="Legend"; fontname="Helvetica-Bold"; fontsize=12; style="rounded,dashed"; color="#999999"; margin=10;
+    node [shape=box, style="rounded,filled", fontsize=10, width=0.3, height=0.3, fixedsize=false];
+    L_in   [label="Input data", fillcolor="#ECECEC", color="#7A7A7A"];
+    L_ann  [label="Annotation", fillcolor="#DCE9F5", color="#2E5A86"];
+    L_orth [label="Orthology", fillcolor="#DCF0E2", color="#2E7D46"];
+    L_phy  [label="Phylogenomics", fillcolor="#E7F5EA", color="#2E7D46"];
+    L_syn  [label="Synteny / ANI", fillcolor="#E6E2F5", color="#5A4AAE"];
+    L_rep  [label="Repeat analysis", fillcolor="#FBE4DA", color="#B85A2E"];
+    L_gfe  [label="Gene family evolution", fillcolor="#FBF0D5", color="#B8902E"];
+    L_viz  [label="Visualization", fillcolor="#F7DDEB", color="#B83A7A"];
+    L_in -> L_ann -> L_orth -> L_phy [style=invis];
+    L_syn -> L_rep -> L_gfe -> L_viz [style=invis];
+    {rank=same; L_in; L_ann; L_orth; L_phy;}
+    {rank=same; L_syn; L_rep; L_gfe; L_viz;}
+  }
+  rfig -> L_in [style=invis];
+
+}
