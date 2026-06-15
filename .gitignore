@@ -70,3 +70,20 @@ __pycache__/
 
 # Regenerated-data backups (kept locally, not in repo)
 *.STALE_backup.tsv
+
+# Interim / versioned manuscript drafts (only the final IBMB .docx is tracked)
+Paper_clean*.docx
+Paper_clean.md
+Paper_corrected.docx
+Paper_original.docx
+paper.md
+Cx_pipiens_Pangenome_Checklist.docx
+Cx_pipiens_Pangenome_Snakemake_Project_Plan.docx
+Culex pipiens Complex Pangenome Analysis*.docx
+
+# Large regenerable intermediates (annotation transfer, proteins, anvi'o raw, big SVG)
+results/annotation/*.gff3
+results/proteins/
+anvio_data/
+figures/Figure_9_anvio_pangenome.svg
+results/repeats/custom_repeat_lib.fa

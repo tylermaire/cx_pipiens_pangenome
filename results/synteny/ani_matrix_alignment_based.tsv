@@ -1,0 +1,11 @@
+# Alignment-length-weighted percent identity (closer to paper's reported metric).
+# 3 pairs vs Cx_quinquefasciatus: from Liftoff/minimap2 SAM CIGARs covering ~60-75 Mb of CDS.
+# Other 3 pairs: partial chr1 (first ~2 Mb) minimap2 asm20 alignment, computed live in this analysis.
+# Both methods are alignment-based; values are not directly comparable due to different region coverage,
+# but all are within 95-97% range.
+sample	Cx_molestus	Cx_pallens	Cx_pipiens	Cx_quinquefasciatus	Cx_tarsalis
+Cx_molestus	100.0000	95.9221	96.5665	95.5996	NA
+Cx_pallens	95.9221	100.0000	95.8280	96.2975	NA
+Cx_pipiens	96.5665	95.8280	100.0000	95.0939	NA
+Cx_quinquefasciatus	95.5996	96.2975	95.0939	100.0000	NA
+Cx_tarsalis	NA	NA	NA	NA	NA
