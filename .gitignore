@@ -92,3 +92,17 @@ results/repeats/custom_repeat_lib.fa
 ~$*
 ~WRL*.tmp
 *.tmp
+
+# Manuscript drafts and working files (keep only the final PDF in the repo)
+Culex pipiens Pangenome Analysis draft*.docx
+*_IBMB.docx
+Editorial_Review*.md
+bioRxiv_Submission_Checklist.md
+README_DELIVERABLES.md
+changes_log.md
+paper.md
+paper_audit.md
+references_verified.md
+git_commit_push.*
+git_cleanup.ps1
+.~lock.*#
