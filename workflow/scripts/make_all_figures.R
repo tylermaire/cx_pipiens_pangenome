@@ -165,7 +165,8 @@ fig1_assembly_quality <- function() {
     scale_x_continuous(expand = c(0, 0), limits = c(0, 100.5),
                        breaks = c(0, 25, 50, 75, 100)) +
     scale_y_discrete(labels = function(x) parse(text = paste0("italic('", species_pretty[x], "')"))) +
-    labs(title = "(a) Protein-mode BUSCO completeness", x = "BUSCO (% of 3,285 diptera_odb10 markers)", y = NULL,
+    labs(title = "(a) Protein-mode BUSCO completeness",
+         x = expression("BUSCO (% of 3,285 " * italic("diptera_odb10") * " markers)"), y = NULL,
          fill = NULL) +
     theme_pub() +
     theme(legend.position = "bottom",

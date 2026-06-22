@@ -87,3 +87,8 @@ results/proteins/
 anvio_data/
 figures/Figure_9_anvio_pangenome.svg
 results/repeats/custom_repeat_lib.fa
+
+# Word/Office temp + lock files
+~$*
+~WRL*.tmp
+*.tmp
