@@ -30,13 +30,18 @@ rule extract_proteins:
     input:
         fasta="resources/genomes/{sample}.fasta",
         gff="results/annotation/{sample}_liftoff.gff3"
-    output: "results/proteins/{sample}.fa"
+    output:
+        fa="results/proteins/{sample}.fa",
+        report="results/proteins/{sample}_isoform_report.tsv"
     conda: "../envs/gffread.yaml"
     shell:
         """
-        gffread {input.gff} -g {input.fasta} -y {output}.tmp
-        sed 's/\\.//g' {output}.tmp > {output}
-        rm {output}.tmp
+        gffread {input.gff} -g {input.fasta} -y {output.fa}.tmp
+        python workflow/scripts/longest_isoform.py \
+            --gff {input.gff} --fasta {output.fa}.tmp \
+            --out {output.fa} --report {output.report} \
+            --strip-periods
+        rm {output.fa}.tmp
         """
 
 rule busco_proteins:

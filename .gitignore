@@ -106,3 +106,10 @@ references_verified.md
 git_commit_push.*
 git_cleanup.ps1
 .~lock.*#
+results_v2_baseline/
+logs_*.txt
+results/validation/index/
+results/validation/paf/
+*.mpi
+.snakemake_timestamp
+results/validation/queries/queries.fna

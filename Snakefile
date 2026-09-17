@@ -36,6 +36,7 @@ include: "workflow/rules/gene_families.smk"
 include: "workflow/rules/synteny.smk"
 include: "workflow/rules/repeats.smk"
 include: "workflow/rules/figures.smk"
+include: "workflow/rules/validation.smk"
 
 # -- Default target: build everything except SyRI (strand-correction needed) --
 rule all:

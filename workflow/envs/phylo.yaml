@@ -10,3 +10,4 @@ dependencies:
   - trimal>=1.4
   - iqtree>=2.2
   - fasttree
+  - scipy
