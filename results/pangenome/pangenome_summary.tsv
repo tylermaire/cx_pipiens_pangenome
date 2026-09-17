@@ -1,9 +1,9 @@
 compartment	n_orthogroups	total_genes_ingroup
-core	11284	74960
-shell	3726	15481
-cloud	871	2380
-outgroup_only	687	0
-cloud_Cx_molestus_specific	297	912
-cloud_Cx_pallens_specific	203	546
-cloud_Cx_pipiens_specific	245	645
-cloud_Cx_quinquefasciatus_specific	126	277
+core	10368	47507
+shell	3001	8481
+cloud	479	526
+outgroup_only	38	0
+cloud_Cx_molestus_specific	148	155
+cloud_Cx_pallens_specific	101	110
+cloud_Cx_pipiens_specific	141	152
+cloud_Cx_quinquefasciatus_specific	89	109
