@@ -112,3 +112,4 @@ results/validation/index/
 results/validation/paf/
 *.mpi
 .snakemake_timestamp
+results/validation/queries/queries.fna
