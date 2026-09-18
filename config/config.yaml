@@ -13,7 +13,11 @@ reference:
 # -- Outgroup for tree rooting --
 outgroup:
   name: Cx_tarsalis
-  accession: GCA_016859205.1
+  # GCA_016859205.1 was reassigned to a Fusarium oxysporum genome. The real
+  # CtarK1 assembly (Main et al. 2021) is fetched from OSF by download.smk;
+  # the old accession is kept only to document the reassignment.
+  accession: OSF:mdwqx
+  superseded_accession: GCA_016859205.1
  
 # -- BUSCO parameters --
 busco:
