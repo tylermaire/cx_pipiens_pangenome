@@ -39,4 +39,5 @@ rule parse_cafe_results:
         summary="results/cafe/branch_summary.tsv"
     params:
         pvalue=config["cafe"]["pvalue_threshold"]
+    conda: "../envs/phylo.yaml"
     script: "../scripts/parse_cafe.py"
