@@ -16,6 +16,16 @@ configfile: "config/config.yaml"
 # -- Load sample table --
 samples = pd.read_csv(config["samples"], sep="\t", index_col="sample")
 ALL_SAMPLES = list(samples.index)
+
+# Tools that take a thread count as an argument (IQ-TREE in particular) abort
+# rather than scale down when asked for more threads than the machine has.
+# Cap the configured value so a run on a smaller box degrades instead of dying.
+import os as _os
+_avail = _os.cpu_count() or 1
+if config["threads"] > _avail:
+    print(f"WARNING: config threads={config['threads']} exceeds {_avail} "
+          f"available cores; capping to {_avail}")
+    config["threads"] = _avail
 INGROUP_SAMPLES = list(samples[samples["is_outgroup"] == False].index)
 OUTGROUP_SAMPLES = list(samples[samples["is_outgroup"] == True].index)
 
