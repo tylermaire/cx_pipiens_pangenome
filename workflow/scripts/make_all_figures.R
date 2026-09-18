@@ -342,11 +342,21 @@ fig4_cafe <- function() {
   lambda <- as.numeric(sub("Lambda: ", "", grep("^Lambda:", res_lines, value = TRUE)))
   alpha  <- as.numeric(sub("Alpha: ",  "", grep("^Alpha:",  res_lines, value = TRUE)))
   n_sig <- length(readLines(file.path(res_dir, "cafe", "significant_families.tsv"))) - 1
+  # Read the per-branch binomial results rather than asserting a fixed p value.
+  # Expansion bias is not uniform across lineages in every dataset, so a
+  # hardcoded caption can contradict the bars it sits above.
+  branch <- fread(file.path(res_dir, "cafe", "branch_summary.tsv"))
+  pmax_branch <- max(branch$binomial_p, na.rm = TRUE)
+  binom_txt <- if (pmax_branch < 1e-16) {
+    "binomial p<2x10^-16 each branch"
+  } else {
+    sprintf("binomial p up to %.2g across branches", pmax_branch)
+  }
   # Use plotmath expression — Windows R can't render lambda/alpha/superscripts via Unicode
   subtitle_expr <- bquote(.(n_sig) ~ "significant families (p<0.05);  " *
                           lambda == .(sprintf("%.4f", lambda)) ~ "," ~
                           alpha == .(sprintf("%.3f", alpha)) *
-                          ";  binomial p<2x10^-16 each branch")
+                          ";  " * .(binom_txt))
 
   p <- ggplot(long, aes(x = species, y = n, fill = type)) +
     geom_bar(stat = "identity", position = position_dodge(width = 0.78),

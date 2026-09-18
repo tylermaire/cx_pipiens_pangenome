@@ -20,10 +20,15 @@ rule cafe5:
     conda: "../envs/cafe.yaml"
     shell:
         """
+        # No silent fallback: a gamma failure (usually memory) must stop
+        # the run rather than quietly producing Base-model results that
+        # are not comparable to anything else.
         cafe5 -i {input.counts} -t {input.tree} \
-            -p -k {params.k} -o {output} || \
-        cafe5 -i {input.counts} -t {input.tree} \
-            -o {output}
+            -p -k {params.k} -o {output}
+        test -s {output}/Gamma_family_results.txt || {{
+            echo "ERROR: CAFE5 gamma model produced no results" >&2
+            exit 1
+        }}
         """
 
 rule parse_cafe_results:
@@ -34,4 +39,5 @@ rule parse_cafe_results:
         summary="results/cafe/branch_summary.tsv"
     params:
         pvalue=config["cafe"]["pvalue_threshold"]
+    conda: "../envs/phylo.yaml"
     script: "../scripts/parse_cafe.py"

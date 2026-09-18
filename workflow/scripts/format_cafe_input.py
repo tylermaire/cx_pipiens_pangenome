@@ -15,7 +15,10 @@ filtered = filtered[filtered.sum(axis=1) > 0]
 print(f"Total orthogroups: {len(gene_counts)}")
 print(f"After filtering: {len(filtered)}")
 cafe_table = filtered.copy()
-cafe_table.insert(0, "Desc", "n/a")
+# CAFE5 reports families by their Desc field. Writing "n/a" here makes
+# every significant family anonymous in Gamma_family_results.txt, so the
+# orthogroup id goes in Desc and is repeated in the index.
+cafe_table.insert(0, "Desc", cafe_table.index)
 cafe_table.index.name = "Family ID"
 cafe_table.to_csv(snakemake.output.counts, sep="\t")
 
@@ -48,6 +51,11 @@ print(f"Bipartition: {inner_pair} | {outer_pair}")
 
 # Build a rooted ultrametric tree where both clades are equal depth (1.5):
 # (((A,B):0.5):1.0,((C,D):0.5):1.0); with leaf branches of 1.0 each
+# NOTE: these branch lengths are assumed, not estimated. CAFE requires an
+# ultrametric tree and the ML tree is unrooted with unequal branch
+# lengths, so every tip is given unit length and the root placed at the
+# bipartition midpoint. Consequences: lambda has no time units, and
+# per-branch expansion counts are not weighted by actual divergence.
 ultrametric = (
     f"(({inner_pair[0]}:1.0,{inner_pair[1]}:1.0):0.5,"
     f"({outer_pair[0]}:1.0,{outer_pair[1]}:1.0):0.5);"
