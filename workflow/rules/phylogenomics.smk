@@ -43,13 +43,15 @@ rule concat_and_tree:
         NTRIM=$(ls results/phylo/trimmed/*.trim 2>/dev/null | wc -l)
         echo "Trimmed alignments after filtering: $NTRIM"
 
-        for trim in results/phylo/trimmed/*.trim; do
-            og=$(basename $trim .trim)
-            if [ ! -f results/phylo/gene_trees/$og.treefile ]; then
-                iqtree -s $trim -m MFP -bb 1000 -nt 1 \
-                    --prefix results/phylo/gene_trees/$og -quiet 2>/dev/null || true
-            fi
-        done
+        # One tree per locus, {threads} at a time. Each is tiny (4 taxa) so
+        # parallelism comes from running many at once rather than threading
+        # each one. Sequentially this step took ~3 h for 9,000 loci.
+        ls results/phylo/trimmed/*.trim | \
+        xargs -P {threads} -I TRIMFILE sh -c '
+            og=$(basename TRIMFILE .trim)
+            iqtree -s TRIMFILE -m MFP -bb 1000 -nt 1 \
+                --prefix results/phylo/gene_trees/$og -quiet 2>/dev/null || true
+        '
 
         cat results/phylo/gene_trees/*.treefile > results/phylo/all_gene_trees.nwk 2>/dev/null || true
 
