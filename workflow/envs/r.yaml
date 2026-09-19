@@ -1,7 +1,20 @@
-name: r
+name: r-figures
 channels:
   - conda-forge
   - bioconda
 dependencies:
   - r-base>=4.3
   - r-data.table
+  - r-ggplot2
+  - r-dplyr
+  - r-tidyr
+  - r-patchwork
+  - r-scales
+  - r-jsonlite
+  - r-ggrepel
+  - r-ggforce
+  - r-gridextra
+  - r-rcolorbrewer
+  - r-ape
+  - bioconductor-ggtree
+  - bioconductor-treeio
