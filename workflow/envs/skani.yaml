@@ -1,0 +1,7 @@
+name: skani
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - skani>=0.2
+  - python>=3.9

@@ -17,6 +17,21 @@ rule filter_chromosomes:
 # between assemblies, which otherwise makes collinear blocks read as
 # whole-chromosome inversions.
 
+rule skani_ani:
+    """Pairwise whole-genome ANI. Previously produced by hand; two versions
+    existed in the repository disagreeing by 0.2-0.3% per cell with no record
+    of the parameters used, so this rule replaces both."""
+    input:
+        genomes=expand("resources/genomes/{s}.fasta", s=ALL_SAMPLES)
+    output:
+        matrix="results/synteny/ani_matrix.tsv",
+        long="results/synteny/ani_pairs.tsv"
+    params:
+        samples=ALL_SAMPLES,
+        extra=["-s", "80"]     # report down to 80% ANI; see script header
+    conda: "../envs/skani.yaml"
+    script: "../scripts/skani_matrix.py"
+
 rule synteny_minimap2:
     """Whole-chromosome alignment for a real (not partial) identity estimate."""
     input:
