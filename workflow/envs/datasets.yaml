@@ -3,3 +3,5 @@ channels:
   - conda-forge
 dependencies:
   - ncbi-datasets-cli>=16.0
+  - unzip
+  - curl
