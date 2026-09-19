@@ -71,3 +71,5 @@ rule all:
         "results/repeats/te_gene_proximity_summary.tsv",
         "results/validation/absence_summary.tsv",
         "results/cafe/transfer_bias_summary.tsv",
+        "results/synteny/synteny_summary.tsv",
+        "figures/Figure_1_assembly_quality.png",
