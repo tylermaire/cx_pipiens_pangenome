@@ -70,3 +70,4 @@ rule all:
         expand("results/repeats/{s}/{s}.fasta.tbl", s=INGROUP_SAMPLES),
         "results/repeats/te_gene_proximity_summary.tsv",
         "results/validation/absence_summary.tsv",
+        "results/cafe/transfer_bias_summary.tsv",

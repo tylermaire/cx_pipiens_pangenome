@@ -41,3 +41,24 @@ rule parse_cafe_results:
         pvalue=config["cafe"]["pvalue_threshold"]
     conda: "../envs/phylo.yaml"
     script: "../scripts/parse_cafe.py"
+
+rule cafe_transfer_bias:
+    """Control: is the CAFE per-lineage result separable from Liftoff bias?
+
+    Gene models outside the reference are transferred copies, and transfer
+    loses copies in proportion to family size. This rule measures that and
+    reports whether the families CAFE calls significant are the same families
+    that lose copies, so the confound is quantified rather than assumed."""
+    input:
+        counts="results/cafe/gene_counts_filtered.tsv",
+        sig="results/cafe/significant_families.tsv",
+        branch="results/cafe/branch_summary.tsv"
+    output:
+        summary="results/cafe/transfer_bias_summary.tsv",
+        bins="results/cafe/transfer_bias_by_copy_number.tsv",
+        lineage="results/cafe/transfer_bias_by_lineage.tsv"
+    params:
+        reference=config["reference"]["name"],
+        ingroup=INGROUP_SAMPLES
+    conda: "../envs/phylo.yaml"
+    script: "../scripts/cafe_transfer_bias.py"
