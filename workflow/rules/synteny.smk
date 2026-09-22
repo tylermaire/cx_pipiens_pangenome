@@ -39,6 +39,11 @@ rule synteny_minimap2:
         query="results/synteny/genomes/{query}.chromosomes.fasta"
     output: "results/synteny/paf/{ref}_vs_{query}.paf"
     threads: config["threads"]
+    # asm20 on 550 Mb chromosome sets peaks near 150 GB, so these must not
+    # run concurrently: Snakemake schedules by cores alone unless told
+    # otherwise, and three at once exceeds any single machine here.
+    resources:
+        mem_mb=160000
     conda: "../envs/minimap2.yaml"
     shell:
         "mkdir -p results/synteny/paf && "

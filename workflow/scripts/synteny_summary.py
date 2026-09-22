@@ -95,18 +95,40 @@ def pair_chromosomes(ga, gb, tops_a, tops_b):
 
 
 def parse_paf(path):
-    """(total aligned bp on the query, length-weighted percent identity)."""
+    """(total aligned bp on the query, length-weighted percent identity).
+
+    Identity comes from minimap2's divergence tag, weighted by alignment
+    length: de:f: (gap-compressed) when present, else dv:f: (approximate),
+    which is what minimap2 writes without base-level alignment. The obvious alternative,
+    nmatch/blocklen from columns 10 and 11, is not identity for long-range
+    asm20 alignments: block length counts gap positions, so a 94%-identical
+    pair reads as roughly 70%.
+
+    Falls back to nmatch/blocklen only when no de: tag is present, in which
+    case the value is flagged by the caller.
+    """
     nmatch = blocklen = span = 0
+    div_sum = div_w = 0.0
     with open(path) as fh:
         for line in fh:
             f = line.rstrip("\n").split("\t")
             if len(f) < 11:
                 continue
-            span += int(f[3]) - int(f[2])
+            alen = int(f[3]) - int(f[2])
+            span += alen
             nmatch += int(f[9])
             blocklen += int(f[10])
-    ident = 100.0 * nmatch / blocklen if blocklen else float("nan")
-    return span, ident
+            for tag in f[12:]:
+                if tag.startswith("de:f:") or tag.startswith("dv:f:"):
+                    try:
+                        div_sum += float(tag.split(":")[2]) * alen
+                        div_w += alen
+                    except ValueError:
+                        pass
+                    break
+    if div_w:
+        return span, 100.0 * (1.0 - div_sum / div_w)
+    return span, 100.0 * nmatch / blocklen if blocklen else float("nan")
 
 
 def read_ani(path, samples):
