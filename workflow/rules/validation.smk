@@ -12,8 +12,11 @@ independent probes and the target genome's own annotation.
              stricter, degrades faster with distance)
   context    whether the hit lands on annotated ground, and if so whether that
              gene was assigned to a different orthogroup
+  gene ID    whether the target carries a model of the same reference gene
+             under another orthogroup. Liftoff keeps reference IDs, so this
+             is checked first and overrides the probes
 
-Only absences that neither probe can find are treated as real.
+Only 'absent' and 'paralog_only' calls support a real absence.
 """
 
 # Matches how partition_pangenome.py splits ingroup from outgroup.
@@ -76,7 +79,8 @@ rule classify_absence:
         of="results/orthofinder/output",
         prot_pafs=expand("results/validation/paf/prot_vs_{t}.paf", t=INGROUP),
         dna_pafs=expand("results/validation/paf/dna_vs_{t}.paf", t=INGROUP),
-        gffs=expand("results/annotation/{s}_liftoff.gff3", s=INGROUP)
+        gffs=expand("results/annotation/{s}_liftoff.gff3", s=INGROUP),
+        proteins=expand("results/proteins/{s}.fa", s=INGROUP)
     output:
         calls="results/validation/absence_calls.tsv",
         summary="results/validation/absence_summary.tsv"
