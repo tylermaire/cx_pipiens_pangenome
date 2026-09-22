@@ -33,3 +33,21 @@ rule partition_pangenome:
         table="results/pangenome/partitioned_orthogroups.tsv",
         summary="results/pangenome/pangenome_summary.tsv"
     script: "../scripts/partition_pangenome.py"
+
+rule cloud_composition:
+    """What cloud orthogroups are made of: outgroup genes, and whether the
+    same gene (Liftoff keeps reference IDs) carries a model in another
+    ingroup genome under a different orthogroup."""
+    input:
+        table="results/pangenome/partitioned_orthogroups.tsv",
+        of="results/orthofinder/output",
+        gffs=expand("results/annotation/{s}_liftoff.gff3", s=INGROUP_SAMPLES),
+        proteins=expand("results/proteins/{s}.fa", s=INGROUP_SAMPLES)
+    output:
+        per_og="results/pangenome/cloud_composition.tsv",
+        summary="results/pangenome/cloud_composition_summary.tsv"
+    params:
+        ingroup=INGROUP_SAMPLES,
+        reference=REF
+    conda: "../envs/phylo.yaml"
+    script: "../scripts/cloud_composition.py"
