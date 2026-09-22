@@ -59,6 +59,7 @@ rule all:
         expand("results/busco_proteins/{s}", s=ALL_SAMPLES),
         # Pangenome
         "results/pangenome/pangenome_summary.tsv",
+        "results/pangenome/cloud_composition_summary.tsv",
         # Functional
         "results/functional/go_enrichment_results.tsv",
         "results/functional/key_families_wide.tsv",
