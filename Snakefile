@@ -61,7 +61,6 @@ rule all:
         "results/pangenome/pangenome_summary.tsv",
         "results/pangenome/cloud_composition_summary.tsv",
         # Functional
-        "results/functional/go_enrichment_results.tsv",
         "results/functional/key_families_wide.tsv",
         # Phylogenomics (already built)
         "results/phylo/concord.cf.tree",
