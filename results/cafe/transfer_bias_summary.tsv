@@ -2,16 +2,25 @@ metric	value
 n_families	13885
 n_significant	333
 reference	Cx_quinquefasciatus
+n_families_single_copy	11302
+n_families_multi_copy	1350
+n_families_zero_ref_copy	1233
+n_significant_single_copy	14
+n_significant_multi_copy	247
+n_significant_zero_ref_copy	72
 retention_single_copy	0.922
 retention_multi_copy	0.7269
 pct_significant_single_copy	0.124
 pct_significant_multi_copy	18.296
-mean_deficit_significant	1.001
-mean_deficit_not_significant	0.057
-mannwhitney_p_ref_copies	2.4e-117
-mannwhitney_p_deficit	7.98e-77
-odds_ratio_multicopy_significant	32.416
-fisher_p	4.7e-182
+pct_significant_zero_ref_copy	5.839
+odds_ratio_multi_vs_single_copy	180.555
+risk_ratio_multi_vs_single_copy	147.703
+fisher_p_two_sided	5.67e-228
+mean_deficit_significant	1.7356
+mean_deficit_not_significant	0.119
+mannwhitney_p_ref_copies_two_sided	< 1e-300
+mannwhitney_p_deficit_two_sided	1.86e-231
 per_lineage_pearson_r	0.9939
 per_lineage_p	0.00612
 n_lineages	4
+per_lineage_counts_scope	all families (Gamma_clade_results)
