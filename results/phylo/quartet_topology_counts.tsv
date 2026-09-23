@@ -1,0 +1,4 @@
+split	role	n_gene_trees	pct	iqtree_label
+Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus	species_tree	4510	58.99	gCF
+Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens	major_discordant	1752	22.91	gDF2
+Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus	minor_discordant	1384	18.1	gDF1
