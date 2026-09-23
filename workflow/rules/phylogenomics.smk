@@ -84,3 +84,22 @@ rule quartet_asymmetry:
         trimmed_dir="results/phylo/trimmed"
     conda: "../envs/phylo.yaml"
     script: "../scripts/quartet_asymmetry.py"
+
+rule divergence_diagnostics:
+    """Separate the typical locus from long branch outliers: gene tree branch
+    length distributions against the concatenated tree, pairwise protein
+    identity across SCO alignments, and an accounting of loci without trees."""
+    input:
+        tree="results/phylo/concat_tree.treefile",
+        concord="results/phylo/concord.cf.tree",
+        sco="results/phylo/sco_fastas"
+    output:
+        branch_lengths="results/phylo/branch_length_summary.tsv",
+        pairwise="results/phylo/sco_pairwise_identity.tsv",
+        loci="results/phylo/locus_accounting.tsv"
+    params:
+        gene_trees="results/phylo/all_gene_trees.nwk",
+        trimmed_dir="results/phylo/trimmed",
+        sco_dir="results/phylo/sco_fastas"
+    conda: "../envs/phylo.yaml"
+    script: "../scripts/divergence_diagnostics.py"

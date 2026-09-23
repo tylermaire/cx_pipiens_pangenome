@@ -65,6 +65,8 @@ rule all:
         # Phylogenomics (already built)
         "results/phylo/concord.cf.tree",
         "results/phylo/quartet_asymmetry_by_support.tsv",
+        "results/phylo/branch_length_summary.tsv",
+        "results/annotation/transfer_quality.tsv",
         # Gene families (already rebuilt)
         "results/cafe/significant_families.tsv",
         # Repeats - RepeatMasker tables + TE proximity
