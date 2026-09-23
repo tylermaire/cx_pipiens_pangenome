@@ -1,0 +1,64 @@
+{
+    "parameters": {
+        "out_path": "/home/ubuntu/pangenome/results/busco_proteins",
+        "cpu": "32",
+        "force": "True",
+        "restart": "False",
+        "quiet": "False",
+        "download_path": "/home/ubuntu/pangenome/busco_downloads",
+        "datasets_version": "odb10",
+        "offline": "False",
+        "download_base_url": "https://busco-data.ezlab.org/v5/data/",
+        "auto-lineage": "False",
+        "auto-lineage-prok": "False",
+        "auto-lineage-euk": "False",
+        "use_augustus": "False",
+        "use_miniprot": "False",
+        "use_metaeuk": "False",
+        "skip_bbtools": "False",
+        "batch_mode": "False",
+        "tar": "False",
+        "opt-out-run-stats": "False",
+        "plot_percentages": "False",
+        "in": "/home/ubuntu/pangenome/results/proteins/Cx_pallens.fa",
+        "out": "Cx_pallens",
+        "mode": "proteins",
+        "lineage_dataset": "/home/ubuntu/pangenome/busco_downloads/lineages/diptera_odb10",
+        "main_out": "/home/ubuntu/pangenome/results/busco_proteins/Cx_pallens",
+        "lineage_results_dir": "run_diptera_odb10",
+        "domain": "eukaryota",
+        "orthodb_version": "10.1"
+    },
+    "lineage_dataset": {
+        "name": "diptera_odb10",
+        "creation_date": "2024-01-08",
+        "number_of_buscos": "3285",
+        "number_of_species": "56"
+    },
+    "versions": {
+        "python": [
+            3,
+            12,
+            14,
+            "final",
+            0
+        ],
+        "busco": "6.1.0",
+        "hmmsearch": 3.4
+    },
+    "results": {
+        "one_line_summary": "C:80.6%[S:79.6%,D:1.0%],F:3.4%,M:16.0%,n:3285",
+        "Complete percentage": 80.6,
+        "Complete BUSCOs": 2647,
+        "Single copy percentage": 79.6,
+        "Single copy BUSCOs": 2614,
+        "Multi copy percentage": 1.0,
+        "Multi copy BUSCOs": 33,
+        "Fragmented percentage": 3.4,
+        "Fragmented BUSCOs": 112,
+        "Missing percentage": 16.0,
+        "Missing BUSCOs": 526,
+        "n_markers": 3285,
+        "domain": "eukaryota"
+    }
+}

@@ -1,2 +1,7 @@
-note
-See significant_families.tsv
+taxon	node_label	increase	decrease	total	ratio_inc_dec	binomial_p
+	<6>	141	0	141		7.174648137343064e-43
+Cx_pallens	Cx_pallens<1>	69	1028	1097	0.0671	4.93697803398183e-220
+Cx_quinquefasciatus	Cx_quinquefasciatus<2>	587	589	1176	0.9966	0.976738159363163
+	<7>	45	0	45		5.684341886080802e-14
+Cx_molestus	Cx_molestus<3>	141	1129	1270	0.1249	7.974674507924435e-192
+Cx_pipiens	Cx_pipiens<4>	191	749	940	0.255	1.1107036271492301e-78

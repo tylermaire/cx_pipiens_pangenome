@@ -1,0 +1,17 @@
+metric	value
+n_families	13885
+n_significant	333
+reference	Cx_quinquefasciatus
+retention_single_copy	0.922
+retention_multi_copy	0.7269
+pct_significant_single_copy	0.124
+pct_significant_multi_copy	18.296
+mean_deficit_significant	1.001
+mean_deficit_not_significant	0.057
+mannwhitney_p_ref_copies	2.4e-117
+mannwhitney_p_deficit	7.98e-77
+odds_ratio_multicopy_significant	32.416
+fisher_p	4.7e-182
+per_lineage_pearson_r	0.9939
+per_lineage_p	0.00612
+n_lineages	4
