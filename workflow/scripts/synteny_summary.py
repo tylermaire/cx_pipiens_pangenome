@@ -30,6 +30,15 @@ reference coordinates, counted after orientation normalisation.
 
 Alignment identity comes from minimap2 PAF when supplied: length-weighted
 identity over all alignment blocks, not a partial-chromosome proxy.
+
+Every inversion row also carries the homologous chromosome (named from the
+reference assembly's chromosome sequences in natural order, chr1 to chr3),
+its position as a fraction of the anchored span of that chromosome, and its
+first and last anchor gene. Because Liftoff gives every genome the reference
+gene IDs, inversions from different genome pairs can be compared by gene
+content: two inversions that share at least half their anchor genes (Jaccard
+>= 0.5) are joined into one recurrence cluster, which is how the claim that
+large inversions recur across pairs is tested.
 """
 
 import bisect
@@ -148,9 +157,13 @@ def read_ani(path, samples):
     return out
 
 
-def analyse_pair(a, b, genes, n_chrom, min_span, min_genes):
-    """Anchors, orientation, collinearity and inversions for one genome pair."""
+def analyse_pair(a, b, genes, n_chrom, min_span, min_genes, homolog=None):
+    """Anchors, orientation, collinearity and inversions for one genome pair.
+
+    homolog maps (sample, seqid) to a chromosome name shared by all genomes.
+    """
     ga, gb = genes[a], genes[b]
+    homolog = homolog or {}
     mapping = pair_chromosomes(ga, gb,
                                top_seqids(ga, n_chrom), top_seqids(gb, n_chrom))
 
@@ -164,11 +177,13 @@ def analyse_pair(a, b, genes, n_chrom, min_span, min_genes):
                 continue
             loc_b = gb.get(g)
             if loc_b and loc_b[0] == sb:
-                anchors.append((pos_a, loc_b[1]))
+                anchors.append((pos_a, loc_b[1], g))
         if len(anchors) < 3:
             continue
         anchors.sort()
-        q = [y for _, y in anchors]
+        q = [y for _, y, _ in anchors]
+        lo_a, hi_a = anchors[0][0], anchors[-1][0]
+        extent = max(hi_a - lo_a, 1.0)
 
         # Orientation: whichever direction supports the longer monotone run.
         inc = lis_length(q)
@@ -176,8 +191,8 @@ def analyse_pair(a, b, genes, n_chrom, min_span, min_genes):
         flipped = dec > inc
         if flipped:
             qmax = max(q)
-            anchors = [(x, qmax - y) for x, y in anchors]
-            q = [y for _, y in anchors]
+            anchors = [(x, qmax - y, g) for x, y, g in anchors]
+            q = [y for _, y, _ in anchors]
         orientations.append({
             "sample1": a, "sample2": b, "seqid1": sa, "seqid2": sb,
             "n_anchors": len(anchors), "lis_forward": inc, "lis_reverse": dec,
@@ -198,13 +213,78 @@ def analyse_pair(a, b, genes, n_chrom, min_span, min_genes):
                 if span >= min_span:
                     inversions.append({
                         "sample1": a, "sample2": b, "seqid": sa,
+                        "chromosome": homolog.get((a, sa), ""),
                         "start_bp": int(anchors[i][0]), "end_bp": int(anchors[j][0]),
                         "span_bp": int(span), "n_genes": j - i + 1,
+                        "rel_start": round((anchors[i][0] - lo_a) / extent, 3),
+                        "rel_end": round((anchors[j][0] - lo_a) / extent, 3),
+                        "first_gene": anchors[i][2], "last_gene": anchors[j][2],
+                        "genes": [g for _, _, g in anchors[i:j + 1]],
                     })
             i = j + 1 if j > i else i + 1
 
     pct = 100.0 * n_collinear_total / n_anchor_total if n_anchor_total else float("nan")
     return n_anchor_total, pct, inversions, orientations
+
+
+def homolog_names(genes, samples, reference, n_chrom):
+    """{(sample, seqid): 'chrN'}: reference chromosomes named chr1..chrN in
+    natural order of their sequence IDs, other genomes by shared gene content."""
+    def natural(x):
+        return [int(t) if t.isdigit() else t for t in re.split(r"(\d+)", x)]
+    ref_tops = sorted(top_seqids(genes[reference], n_chrom), key=natural)
+    ref_name = {sq: f"chr{i + 1}" for i, sq in enumerate(ref_tops)}
+    out = {(reference, sq): name for sq, name in ref_name.items()}
+    for s in samples:
+        if s == reference:
+            continue
+        mapping = pair_chromosomes(genes[s], genes[reference],
+                                   top_seqids(genes[s], n_chrom), ref_tops)
+        for sq, (ref_sq, _n) in mapping.items():
+            out[(s, sq)] = ref_name[ref_sq]
+    return out
+
+
+def recurrence_clusters(inversions, min_jaccard=0.5):
+    """Join inversions from different genome pairs that share at least
+    min_jaccard of their anchor genes. Returns a cluster id per inversion."""
+    parent = list(range(len(inversions)))
+
+    def find(i):
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]
+            i = parent[i]
+        return i
+
+    sets = [set(d["genes"]) for d in inversions]
+    for i, j in itertools.combinations(range(len(inversions)), 2):
+        a, b = inversions[i], inversions[j]
+        if (a["sample1"], a["sample2"]) == (b["sample1"], b["sample2"]):
+            continue
+        inter = len(sets[i] & sets[j])
+        if inter and inter / len(sets[i] | sets[j]) >= min_jaccard:
+            parent[find(i)] = find(j)
+    roots = {}
+    return [roots.setdefault(find(i), len(roots) + 1) for i in range(len(inversions))]
+
+
+def recurrence_table(inversions, clusters, large_span):
+    by = collections.defaultdict(list)
+    for d, c in zip(inversions, clusters):
+        by[c].append(d)
+    rows = []
+    for c, members in sorted(by.items()):
+        pairs = sorted({f"{d['sample1']}_vs_{d['sample2']}" for d in members})
+        rows.append({
+            "cluster": c, "n_inversions": len(members), "n_pairs": len(pairs),
+            "chromosomes": ",".join(sorted({d["chromosome"] for d in members})),
+            "max_span_bp": max(d["span_bp"] for d in members),
+            "any_at_least_large_span": any(d["span_bp"] >= large_span for d in members),
+            "pairs": ";".join(pairs),
+            "members": ";".join(f"{d['sample1']}_vs_{d['sample2']}:{d['seqid']}:"
+                                f"{d['start_bp']}-{d['end_bp']}" for d in members),
+        })
+    return rows
 
 
 def main():
@@ -225,11 +305,14 @@ def main():
     paf_by_pair = {os.path.basename(p).replace(".paf", ""): p
                    for p in getattr(snakemake.input, "pafs", [])}
     ani = read_ani(getattr(snakemake.input, "ani", None), samples)
+    reference = getattr(snakemake.params, "reference", samples[0])
+    large_span = int(getattr(snakemake.params, "large_span", 1_000_000))
+    homolog = homolog_names(genes, samples, reference, n_chrom)
 
     rows, all_inv, all_or = [], [], []
     for a, b in itertools.combinations(samples, 2):
         n_anchors, pct, inv, orients = analyse_pair(
-            a, b, genes, n_chrom, min_span, min_genes)
+            a, b, genes, n_chrom, min_span, min_genes, homolog)
         all_inv.extend(inv)
         all_or.extend(orients)
 
@@ -272,9 +355,25 @@ def main():
     write_tsv(snakemake.output.orientation, all_or,
               ["sample1", "sample2", "seqid1", "seqid2", "n_anchors",
                "lis_forward", "lis_reverse", "orientation"])
+    clusters = recurrence_clusters(all_inv)
+    cluster_size = collections.Counter(clusters)
+    for d, c in zip(all_inv, clusters):
+        d["recurrence_cluster"] = c
+        d["n_pairs_in_cluster"] = len({(x["sample1"], x["sample2"])
+                                       for x, k in zip(all_inv, clusters) if k == c})
     write_tsv(snakemake.output.inversions, all_inv,
-              ["sample1", "sample2", "seqid", "start_bp", "end_bp",
-               "span_bp", "n_genes"])
+              ["sample1", "sample2", "seqid", "chromosome", "start_bp", "end_bp",
+               "span_bp", "n_genes", "rel_start", "rel_end", "first_gene",
+               "last_gene", "recurrence_cluster", "n_pairs_in_cluster"])
+    rec = recurrence_table(all_inv, clusters, large_span)
+    write_tsv(snakemake.output.recurrence, rec,
+              ["cluster", "n_inversions", "n_pairs", "chromosomes", "max_span_bp",
+               "any_at_least_large_span", "pairs", "members"])
+    large = [d for d in all_inv if d["span_bp"] >= large_span]
+    large_recurrent = sum(1 for d in large if d["n_pairs_in_cluster"] > 1)
+    print(f"\n{len(all_inv)} inversions, {len(large)} of at least {large_span:,} bp; "
+          f"{large_recurrent} of those recur in another pair "
+          f"({sum(1 for c, n in cluster_size.items() if n > 1)} multi member clusters)")
 
     n_rev_total = sum(1 for o in all_or if o["orientation"] == "reverse")
     print(f"\n{n_rev_total}/{len(all_or)} chromosome pairs required orientation "

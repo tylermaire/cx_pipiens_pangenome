@@ -61,11 +61,14 @@ rule synteny_summary:
     output:
         summary="results/synteny/synteny_summary.tsv",
         orientation="results/synteny/chromosome_orientation.tsv",
-        inversions="results/synteny/inversions_detail.tsv"
+        inversions="results/synteny/inversions_detail.tsv",
+        recurrence="results/synteny/inversion_recurrence.tsv"
     params:
         samples=INGROUP_SAMPLES,
+        reference=REF,
         n_chrom=3,
         min_span=100_000,
-        min_genes=3
+        min_genes=3,
+        large_span=1_000_000
     conda: "../envs/phylo.yaml"
     script: "../scripts/synteny_summary.py"
