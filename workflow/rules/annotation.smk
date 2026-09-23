@@ -7,7 +7,7 @@ rule liftoff:
         gff=f"resources/annotations/{REF}.gff3"
     output: "results/annotation/{sample}_liftoff.gff3"
     params:
-        sc=config["liftoff"]["coverage_threshold"],
+        sc=config["liftoff"]["copy_identity"],
         s=config["liftoff"]["identity_threshold"]
     threads: config["threads"]
     conda: "../envs/liftoff.yaml"

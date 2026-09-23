@@ -32,7 +32,7 @@ rule manuscript_values:
         tools=MANUSCRIPT_TOOLS,
         parameters={
             "liftoff -s (min child feature identity)": config["liftoff"]["identity_threshold"],
-            "liftoff -sc (copy identity; inert without -copies)": config["liftoff"]["coverage_threshold"],
+            "liftoff -sc (copy identity; inert without -copies)": config["liftoff"]["copy_identity"],
             "liftoff -copies / -polish": "not used",
             "orthofinder": f"-M {config['orthofinder']['method']} -S {config['orthofinder']['search']} -a 4",
             "iqtree species tree": f"-p per locus partitions -m {config['iqtree']['model']} -bb {config['iqtree']['bootstrap']}",
