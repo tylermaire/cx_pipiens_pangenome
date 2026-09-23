@@ -236,7 +236,8 @@ def write_tsv(rows, path):
         return
     keys = list(dict.fromkeys(k for r in rows for k in r))
     with open(path, "w", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=keys, delimiter="\t", extrasaction="ignore")
+        w = csv.DictWriter(fh, fieldnames=keys, delimiter="\t", extrasaction="ignore",
+                           lineterminator="\n")
         w.writeheader()
         for r in rows:
             w.writerow({k: (f"{v:.3e}" if k == "binomial_p" and isinstance(v, float)

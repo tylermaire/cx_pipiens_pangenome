@@ -166,7 +166,7 @@ def by_compartment(sample, kept, flags, where):
 def write(rows, path):
     keys = list(dict.fromkeys(k for r in rows for k in r))
     with open(path, "w", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=keys, delimiter="\t")
+        w = csv.DictWriter(fh, fieldnames=keys, delimiter="\t", lineterminator="\n")
         w.writeheader()
         w.writerows(rows)
 

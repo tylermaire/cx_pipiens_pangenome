@@ -339,7 +339,7 @@ def main():
     versions_from_outputs()
     parameters(dict(sm.params.parameters))
     with open(sm.output[0], "w", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=["section", "item", "sample", "value", "source"],
+        w = csv.DictWriter(fh, lineterminator="\n", fieldnames=["section", "item", "sample", "value", "source"],
                            delimiter="\t")
         w.writeheader()
         w.writerows(ROWS)
