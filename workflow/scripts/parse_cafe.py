@@ -19,6 +19,12 @@ Outputs:
 
 The binomial test replaces a hardcoded "p<2e-16 each branch" caption. That
 claim is not true of every dataset and must be read from the data.
+
+Internal nodes appear in Gamma_clade_results.txt only as "<6>", "<7>". They are
+named here by the taxa below them (for example "Cx_pallens+Cx_quinquefasciatus"),
+read from the node IDs in Gamma_asr.tre, so the table can be published as it
+stands. The per branch increase and decrease counts cover ALL families, not
+only the significant ones.
 """
 
 import os
@@ -64,6 +70,65 @@ sig = sig.rename(columns={idcol: "orthogroup"})
 sig.to_csv(snakemake.output.significant, sep="\t", index=False)
 print(f"Significant (p < {pvalue_threshold}): {len(sig)} of {len(fam)} families")
 
+# ---- node names from the reconstructed tree -------------------------------
+def node_leaves(newick):
+    """{node id: sorted leaf names below it} from one CAFE5 asr tree.
+
+    Labels look like Cx_pallens<1>*_26 for leaves and <6>*_24 for internal
+    nodes: optional name, <id>, optional '*', '_count'.
+    """
+    label = re.compile(r"([A-Za-z0-9_.]*?)<(\d+)>")
+    out, stack, i = {}, [], 0
+    while i < len(newick):
+        ch = newick[i]
+        if ch == "(":
+            stack.append([])
+            i += 1
+        elif ch == ")":
+            leaves = stack.pop()
+            m = label.match(newick, i + 1)
+            if m:
+                out[int(m.group(2))] = sorted(leaves)
+                i = m.end()
+            else:
+                i += 1
+            if stack:
+                stack[-1].extend(leaves)
+        elif ch.isalnum() or ch == "_" or ch == "<":
+            m = label.match(newick, i)
+            if m and m.group(1):
+                out[int(m.group(2))] = [m.group(1)]
+                if stack:
+                    stack[-1].append(m.group(1))
+                i = m.end()
+            else:
+                i += 1
+        else:
+            i += 1
+    return out
+
+
+def internal_names(asr_file):
+    """{'<6>': 'Cx_pallens+Cx_quinquefasciatus', ...}; empty if unreadable."""
+    if not os.path.exists(asr_file):
+        return {}
+    with open(asr_file) as fh:
+        for line in fh:
+            if line.strip().upper().startswith("TREE"):
+                tree = line.split("=", 1)[1].strip()
+                leaves = node_leaves(tree)
+                n_leaves = max(len(v) for v in leaves.values()) if leaves else 0
+                names = {}
+                for nid, below in leaves.items():
+                    if len(below) > 1:
+                        names[f"<{nid}>"] = ("root" if len(below) == n_leaves
+                                             else "+".join(below))
+                return names
+    return {}
+
+
+asr_names = internal_names(os.path.join(cafe_dir, "Gamma_asr.tre"))
+
 # ---- per-branch expansion and contraction ---------------------------------
 clade = pd.read_csv(clade_file, sep="\t")
 clade.columns = [c.lstrip("#").strip() for c in clade.columns]
@@ -72,6 +137,9 @@ rows = []
 for r in clade.itertuples(index=False):
     raw = str(getattr(r, "Taxon_ID", getattr(r, clade.columns[0], "")))
     name = re.sub(r"<\d+>$", "", raw)
+    if not name:
+        # internal node: name it by the taxa below it, never leave it blank
+        name = asr_names.get(raw, f"node{raw.strip('<>')}")
     inc, dec = int(r.Increase), int(r.Decrease)
     total = inc + dec
     ratio = inc / dec if dec else float("nan")
