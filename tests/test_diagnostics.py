@@ -44,11 +44,44 @@ def main():
     assert ac["share_below_0.95"] == 0.5          # OG1: 4 of 5 shared columns
     assert invariant == {"OG2"} and few == {"OG1", "OG2"}
 
-    raw = {"t1": "MKLV.", "t2": "MK.LV.", "t3": "KLV.", "t4": "MKLV", "t5": "MAA."}
-    r = tq.assess(raw, ["t1", "t2", "t3", "t4", "t9"])
-    assert r["n_models"] == 4 and r["n_internal_stop"] == 1
-    assert r["n_no_start_met"] == 1 and r["n_no_terminal_stop"] == 1
-    assert r["n_complete"] == 1 and r["pct_complete"] == 25.0
+    import tempfile as _t
+    with _t.TemporaryDirectory() as tmp:
+        gff = os.path.join(tmp, "M.gff3")
+        with open(gff, "w") as fh:
+            fh.write("##gff-version 3\n")
+            for tid, attrs in (("rna-1.1", "valid_ORF=True;matches_ref_protein=True"),
+                               ("rna-2.1", "valid_ORF=False;inframe_stop_codon=True;matches_ref_protein=False"),
+                               ("rna-3.1", "valid_ORF=False;missing_start_codon=True;missing_stop_codon=True"),
+                               ("rna-4.1", "valid_ORF=True")):
+                fh.write(f"c1\tLiftoff\tmRNA\t1\t9\t.\t+\t.\tID={tid};Parent=g;{attrs}\n")
+        refgff = os.path.join(tmp, "Q.gff3")
+        with open(refgff, "w") as fh:
+            for tid, attrs in (("rna-1.1", "gbkey=mRNA"),
+                               ("rna-2.1", "exception=unclassified transcription discrepancy"),
+                               ("rna-3.1", "partial=true;start_range=.,1"),
+                               ("rna-4.1", "gbkey=mRNA")):
+                fh.write(f"c1\tGnomon\tmRNA\t1\t9\t.\t+\t.\tID={tid};Parent=g;{attrs}\n")
+        flags = tq.liftoff_flags(gff)
+        ref_flags = tq.liftoff_flags(refgff)
+    kept = ["rna-11", "rna-21", "rna-31", "rna-41"]
+    assert flags["rna-21"]["inframe_stop_codon"] == "True"
+    row = tq.summarise_sample("M", kept, flags, False, ref_flags)
+    assert row["n_invalid_orf"] == 2 and row["pct_invalid_orf"] == 50.0
+    assert row["n_inframe_stop"] == 1 and row["n_missing_start"] == 1
+    assert row["n_mismatch_ref_protein"] == 1 and row["liftoff_flags"] == "yes"
+    # both broken transfers come from reference models that are not clean ORFs
+    assert row["n_ref_model_not_clean"] == 2 and row["n_clean_ref_models"] == 2
+    assert row["n_invalid_orf_clean_ref"] == 0 and row["pct_invalid_orf_clean_ref"] == 0.0
+    ref = tq.summarise_sample("Q", kept, ref_flags, True, ref_flags)
+    assert ref["liftoff_flags"].startswith("no (reference") and ref["pct_invalid_orf"] == ""
+    assert ref["n_ref_model_not_clean"] == 2 and ref["pct_invalid_orf_clean_ref"] == ""
+    where = {("M", "rna-11"): "core", ("M", "rna-21"): "cloud", ("M", "rna-31"): "cloud"}
+    comp = {r["compartment"]: r for r in tq.by_compartment("M", kept, flags, where)}
+    assert comp["cloud"]["pct_invalid_orf"] == 100.0 and comp["core"]["n_invalid_orf"] == 0
+    assert comp["unassigned"]["n_models"] == 1 and "shell" not in comp
+    where[("M", "rna-41")] = "outgroup_only"
+    comp = {r["compartment"]: r for r in tq.by_compartment("M", kept, flags, where)}
+    assert comp["outgroup_only"]["n_models"] == 1 and "unassigned" not in comp
     print("diagnostics: all tests passed")
 
 

@@ -15,6 +15,7 @@ Keep the inputs and params below in step with workflow/rules/*.smk.
 Steps, in default order:
   absence     classify_absence.py          (rule classify_absence)
   cloud       cloud_composition.py         (rule cloud_composition)
+  transfer    transfer_quality.py          (rule transfer_quality)
   quartet     quartet_asymmetry.py         (rule quartet_asymmetry)
   divergence  divergence_diagnostics.py    (rule divergence_diagnostics)
   cafe        parse_cafe.py, then cafe_transfer_bias.py
@@ -35,7 +36,8 @@ import time
 from types import SimpleNamespace
 
 SCRIPTS = os.path.join("workflow", "scripts")
-STEPS = ["absence", "cloud", "quartet", "divergence", "cafe", "synteny", "values"]
+STEPS = ["absence", "cloud", "transfer", "quartet", "divergence", "cafe", "synteny",
+         "values"]
 
 
 def read_config(path="config/config.yaml"):
@@ -107,6 +109,17 @@ def step_cloud(cfg, all_s, ingroup, ref):
         params={"ingroup": ingroup, "reference": ref},
         output={"per_og": "results/pangenome/cloud_composition.tsv",
                 "summary": "results/pangenome/cloud_composition_summary.tsv"})
+
+
+def step_transfer(cfg, all_s, ingroup, ref):
+    run("transfer_quality.py",
+        input={"gffs": [f"results/annotation/{s}_liftoff.gff3" for s in all_s],
+               "proteins": [f"results/proteins/{s}.fa" for s in all_s],
+               "table": "results/pangenome/partitioned_orthogroups.tsv",
+               "of": "results/orthofinder/output"},
+        params={"samples": all_s, "reference": ref},
+        output={"summary": "results/annotation/transfer_quality.tsv",
+                "by_compartment": "results/annotation/transfer_quality_by_compartment.tsv"})
 
 
 def step_quartet(cfg, all_s, ingroup, ref):

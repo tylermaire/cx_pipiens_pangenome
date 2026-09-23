@@ -58,27 +58,24 @@ rule busco_proteins:
         """
 
 rule transfer_quality:
-    """Broken protein models among those kept for analysis: internal stop
-    codons, missing start methionine, missing terminal stop. A transfer that
-    shifts the reading frame shows up here and nowhere else, because
-    extract_proteins strips the stop symbols."""
+    """Broken transferred models among those kept for analysis, read from
+    Liftoff's own ORF checks in the GFF (valid_ORF, missing start or stop,
+    in frame stop, matches_ref_protein), overall and by pangenome
+    compartment. Liftoff runs without -polish and extract_proteins strips
+    stop symbols, so these models are otherwise invisible downstream.
+    RefSeq models that are partial or carry an exception (a corrected indel
+    in the reference assembly) are counted apart, because their transfers
+    fail the check whatever the target genome holds."""
     input:
-        gff="results/annotation/{sample}_liftoff.gff3",
-        fasta="resources/genomes/{sample}.fasta",
-        kept="results/proteins/{sample}.fa"
-    output: "results/annotation/{sample}_transfer_quality.tsv"
-    conda: "../envs/gffread.yaml"
-    shell:
-        """
-        gffread {input.gff} -g {input.fasta} -y {output}.raw.faa
-        python workflow/scripts/transfer_quality.py --raw {output}.raw.faa \
-            --kept {input.kept} --sample {wildcards.sample} --out {output}
-        rm -f {output}.raw.faa
-        """
-
-rule transfer_quality_summary:
-    input: expand("results/annotation/{s}_transfer_quality.tsv", s=ALL_SAMPLES)
-    output: "results/annotation/transfer_quality.tsv"
-    shell:
-        "head -n 1 {input[0]} > {output} && "
-        "for f in {input}; do tail -n +2 $f >> {output}; done"
+        gffs=expand("results/annotation/{s}_liftoff.gff3", s=ALL_SAMPLES),
+        proteins=expand("results/proteins/{s}.fa", s=ALL_SAMPLES),
+        table="results/pangenome/partitioned_orthogroups.tsv",
+        of="results/orthofinder/output"
+    output:
+        summary="results/annotation/transfer_quality.tsv",
+        by_compartment="results/annotation/transfer_quality_by_compartment.tsv"
+    params:
+        samples=ALL_SAMPLES,
+        reference=REF
+    conda: "../envs/phylo.yaml"
+    script: "../scripts/transfer_quality.py"
