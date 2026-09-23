@@ -43,6 +43,20 @@ def read_tsv(path):
     return list(csv.DictReader(lines, delimiter="\t"))
 
 
+def flatten(section, path, rows):
+    """Add every cell of a table, labelled by its first column, or by the
+    first two when the first alone is not unique (pairwise tables)."""
+    if not rows:
+        return
+    keys = list(rows[0])
+    firsts = [str(r[keys[0]]) for r in rows]
+    n_key = 1 if len(set(firsts)) == len(firsts) or len(keys) < 3 else 2
+    for r in rows:
+        label = " vs ".join(str(r[k]) for k in keys[:n_key])
+        for k in keys[n_key:]:
+            add(section, f"{label} | {k}", r[k], path)
+
+
 def count_fasta(path):
     if not os.path.exists(path):
         return None
@@ -85,8 +99,9 @@ def busco(samples):
             v = d.get("versions", {})
             add("busco", f"{mode} busco_version", v.get("busco"), hits[0], s)
             add("busco", f"{mode} lineage", d.get("lineage_dataset", {}).get("name"), hits[0], s)
-            add("busco", f"{mode} gene_predictor",
-                d.get("parameters", {}).get("gene_predictor"), hits[0], s)
+            if mode == "genome":
+                add("busco", f"{mode} gene_predictor",
+                    d.get("parameters", {}).get("gene_predictor"), hits[0], s)
 
 
 def proteins(samples):
@@ -179,11 +194,7 @@ def phylogeny():
         if rows is None:
             add(section, "table", None, path)
             continue
-        for r in rows:
-            keys = list(r)
-            label = " ".join(str(r[k]) for k in keys[:1])
-            for k in keys[1:]:
-                add(section, f"{label} | {k}", r[k], path)
+        flatten(section, path, rows)
 
 
 # ---------------------------------------------------------------- CAFE
@@ -208,11 +219,7 @@ def cafe():
         if rows is None:
             add(section, "table", None, path)
             continue
-        for r in rows:
-            keys = list(r)
-            label = str(r[keys[0]])
-            for k in keys[1:]:
-                add(section, f"{label} | {k}", r[k], path)
+        flatten(section, path, rows)
 
 
 # ---------------------------------------------------------------- ANI, synteny, TE
@@ -224,11 +231,7 @@ def ani_synteny_te(ingroup):
         if rows is None:
             add(section, "table", None, path)
             continue
-        for r in rows:
-            keys = list(r)
-            label = str(r[keys[0]])
-            for k in keys[1:]:
-                add(section, f"{label} | {k}", r[k], path)
+        flatten(section, path, rows)
     inv = read_tsv("results/synteny/inversions_detail.tsv")
     if inv:
         spans = [int(r["span_bp"]) for r in inv]
@@ -262,9 +265,44 @@ def tools(names):
         m = re.match(r"(.+?)-(\d[^-]*)-[^-]+\.json$", base)
         if m and m.group(1) in names:
             found.setdefault(m.group(1), set()).add(m.group(2))
+    if not glob.glob(".snakemake/conda/*/conda-meta"):
+        add("tools", "conda environments", "not present; see tools_observed",
+            ".snakemake/conda/*/conda-meta")
+        return
     for n in names:
         add("tools", n, ",".join(sorted(found[n])) if n in found else None,
             ".snakemake/conda/*/conda-meta")
+
+
+def versions_from_outputs():
+    """Versions and command lines the outputs themselves record. These are
+    what ran, whatever the conda environment files ask for."""
+    def first_match(paths, pattern, flags=0):
+        for path in paths:
+            if not os.path.exists(path):
+                continue
+            with open(path, errors="replace") as fh:
+                head = fh.read(200_000)
+            m = re.search(pattern, head, flags)
+            if m:
+                return m.group(1).strip(), path
+        return None, (paths[0] if paths else "")
+
+    checks = [
+        ("iqtree", ["results/phylo/concat_tree.iqtree"], r"IQ-TREE (?:multicore version )?(\d[\w.\-]*)"),
+        ("orthofinder", sorted(glob.glob("results/orthofinder/output/*/Log.txt")),
+         r"OrthoFinder version (\d[\w.\-]*)"),
+        ("liftoff", sorted(glob.glob("results/annotation/*_liftoff.gff3")), r"# Liftoff v(\d[\w.\-]*)"),
+        ("liftoff command", sorted(glob.glob("results/annotation/*_liftoff.gff3")),
+         r"^# \S*liftoff (.+)$"),
+        ("repeatmasker", sorted(glob.glob("results/repeats/*/*.tbl")),
+         r"RepeatMasker version (\S+)"),
+        ("rmblastn", sorted(glob.glob("results/repeats/*/*.tbl")), r"rmblastn version (\S+)"),
+        ("skani command", ["results/synteny/ani_pairs.tsv"], r"^# (skani .+)$"),
+    ]
+    for name, paths, pattern in checks:
+        value, source = first_match(paths, pattern, re.M)
+        add("tools_observed", name, value, source)
 
 
 def parameters(params):
@@ -286,6 +324,7 @@ def main():
     cafe()
     ani_synteny_te(ingroup)
     tools(list(sm.params.tools))
+    versions_from_outputs()
     parameters(dict(sm.params.parameters))
     with open(sm.output[0], "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=["section", "item", "sample", "value", "source"],
