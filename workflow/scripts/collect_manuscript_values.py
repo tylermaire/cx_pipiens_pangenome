@@ -114,9 +114,21 @@ def proteins(samples):
         add("annotation", "transfer quality", None, path)
     else:
         for r in rows:
-            for k in ("pct_internal_stop", "pct_no_start_met", "pct_no_terminal_stop",
-                      "pct_complete"):
+            for k in ("n_kept_models", "liftoff_flags", "n_invalid_orf", "pct_invalid_orf",
+                      "pct_inframe_stop", "pct_missing_start", "pct_missing_stop",
+                      "pct_mismatch_ref_protein", "n_ref_model_not_clean",
+                      "pct_invalid_orf_clean_ref"):
+                if r.get(k) == "":      # Liftoff flags do not apply to the reference
+                    continue
                 add("annotation", k, r.get(k), path, r.get("sample", ""))
+    path = "results/annotation/transfer_quality_by_compartment.tsv"
+    rows = read_tsv(path)
+    if rows is None:
+        add("annotation", "transfer quality by compartment", None, path)
+    else:
+        for r in rows:
+            add("annotation", f"{r['compartment']} pct_invalid_orf",
+                r.get("pct_invalid_orf"), path, r.get("sample", ""))
 
 
 # ---------------------------------------------------------------- pangenome
