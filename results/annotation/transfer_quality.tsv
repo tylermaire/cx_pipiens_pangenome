@@ -1,0 +1,6 @@
+sample	n_kept_models	n_in_gff	liftoff_flags	n_invalid_orf	pct_invalid_orf	n_inframe_stop	pct_inframe_stop	n_missing_start	pct_missing_start	n_missing_stop	pct_missing_stop	n_mismatch_ref_protein	pct_mismatch_ref_protein	n_ref_model_not_clean	n_clean_ref_models	n_invalid_orf_clean_ref	pct_invalid_orf_clean_ref
+Cx_quinquefasciatus	15094	15094	no (reference annotation)											872			
+Cx_pallens	14106	14106	yes	4241	30.07	287	2.03	1474	10.45	2480	17.58	12326	87.38	774	13332	3565	26.74
+Cx_molestus	14126	14126	yes	4842	34.28	302	2.14	1827	12.93	2712	19.2	12746	90.23	796	13330	4141	31.07
+Cx_pipiens	14489	14489	yes	4768	32.91	340	2.35	1647	11.37	2777	19.17	13231	91.32	820	13669	4042	29.57
+Cx_tarsalis	11865	11865	yes	8958	75.5	223	1.88	4948	41.7	3781	31.87	11772	99.22	736	11129	8258	74.2
