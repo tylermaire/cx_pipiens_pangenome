@@ -25,8 +25,15 @@ busco:
   mode: genome
  
 # -- Liftoff annotation transfer --
+# Liftoff runs WITHOUT -copies and WITHOUT -polish, and with default
+# alignment coverage (-a 0.5). The two values below are passed as:
+#   -s  identity_threshold    child features (exons, CDS) must align at
+#                             >= this sequence identity for a gene to map
+#   -sc copy_identity         identity for extra copies; has no effect
+#                             unless -copies is given, so it is inert here
+# (copy_identity was previously named coverage_threshold, which it is not.)
 liftoff:
-  coverage_threshold: 0.95
+  copy_identity: 0.95
   identity_threshold: 0.90
  
 # -- OrthoFinder --
