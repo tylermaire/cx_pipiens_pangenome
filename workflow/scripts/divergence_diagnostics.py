@@ -153,12 +153,19 @@ def run(concat_tree, gene_trees, trimmed_dir, sco_dir, out_branch, out_pair, out
     pair_rows, invariant = pairwise_table(trim)
     write(pair_rows, out_pair)
 
+    phylo_dir = os.path.dirname(gene_trees)
     tree_ids = {os.path.basename(p).rsplit(".", 1)[0]
-                for p in glob.glob(os.path.join(os.path.dirname(gene_trees),
-                                                "gene_trees", "*.treefile"))}
+                for p in glob.glob(os.path.join(phylo_dir, "gene_trees", "*.treefile"))}
+    listing = os.path.join(phylo_dir, "gene_tree_ids.txt")
+    if not tree_ids and os.path.exists(listing):
+        # patch runs ship a listing instead of the 70,000 IQ-TREE files
+        tree_ids = {line.strip().rsplit(".", 1)[0] for line in open(listing) if line.strip()}
     trimmed_ids = {os.path.basename(p).rsplit(".", 1)[0] for p in trim}
     no_tree = trimmed_ids - tree_ids if tree_ids else set()
     n_sco = len(glob.glob(os.path.join(sco_dir, "*.fa"))) if sco_dir else 0
+    sco_listing = os.path.join(phylo_dir, "sco_fasta_ids.txt")
+    if not n_sco and os.path.exists(sco_listing):
+        n_sco = sum(1 for line in open(sco_listing) if line.strip().endswith(".fa"))
     loci = [
         {"measure": "sco_fastas", "value": n_sco},
         {"measure": "trimmed_alignments_kept", "value": len(trim)},
