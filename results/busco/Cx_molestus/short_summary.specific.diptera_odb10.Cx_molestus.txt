@@ -1,0 +1,30 @@
+# BUSCO version is: 6.1.0 
+# The lineage dataset is: diptera_odb10 (Creation date: 2024-01-08, number of genomes: 56, number of BUSCOs: 3285)
+# Summarized benchmarking in BUSCO notation for file /home/ubuntu/pangenome/resources/genomes/Cx_molestus.fasta
+# BUSCO was run in mode: euk_genome_min
+# Gene predictor used: miniprot
+
+	***** Results: *****
+
+	C:95.2%[S:90.7%,D:4.4%],F:0.7%,M:4.1%,n:3285,E:18.7%	   
+	3127	Complete BUSCOs (C)	(of which 585 contain internal stop codons)		   
+	2981	Complete and single-copy BUSCOs (S)	   
+	146	Complete and duplicated BUSCOs (D)	   
+	23	Fragmented BUSCOs (F)			   
+	135	Missing BUSCOs (M)			   
+	3285	Total BUSCO groups searched		   
+
+Assembly Statistics:
+	723	Number of scaffolds
+	3426	Number of contigs
+	559749262	Total length
+	0.048%	Percent gaps
+	200 Mbp	Scaffold N50
+	369 kbp	Contigs N50
+
+
+Dependencies and versions:
+	hmmsearch: 3.4
+	bbtools: None
+	miniprot_index: 0.18-r281
+	miniprot_align: 0.18-r281

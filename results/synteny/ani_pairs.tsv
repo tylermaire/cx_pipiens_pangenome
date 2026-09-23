@@ -1,0 +1,12 @@
+# skani dist -s 80
+sample1	sample2	ani	align_fraction_query	align_fraction_ref
+Cx_quinquefasciatus	Cx_pallens	94.22	24.1600	24.4600
+Cx_quinquefasciatus	Cx_molestus	93.19	18.9300	19.3800
+Cx_quinquefasciatus	Cx_pipiens	92.80	17.4200	18.7300
+Cx_quinquefasciatus	Cx_tarsalis	NA		
+Cx_pallens	Cx_molestus	93.55	20.6200	20.8600
+Cx_pallens	Cx_pipiens	93.33	20.6300	21.9100
+Cx_pallens	Cx_tarsalis	NA		
+Cx_molestus	Cx_pipiens	94.35	27.3900	28.7500
+Cx_molestus	Cx_tarsalis	NA		
+Cx_pipiens	Cx_tarsalis	NA		

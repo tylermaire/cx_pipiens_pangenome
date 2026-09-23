@@ -113,3 +113,7 @@ results/validation/paf/
 *.mpi
 .snakemake_timestamp
 results/validation/queries/queries.fna
+
+# Synteny intermediates (whole chromosome PAFs and filtered genomes)
+results/synteny/paf/
+results/synteny/genomes/

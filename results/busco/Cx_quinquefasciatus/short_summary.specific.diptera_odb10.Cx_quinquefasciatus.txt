@@ -1,0 +1,30 @@
+# BUSCO version is: 6.1.0 
+# The lineage dataset is: diptera_odb10 (Creation date: 2024-01-08, number of genomes: 56, number of BUSCOs: 3285)
+# Summarized benchmarking in BUSCO notation for file /home/ubuntu/pangenome/resources/genomes/Cx_quinquefasciatus.fasta
+# BUSCO was run in mode: euk_genome_min
+# Gene predictor used: miniprot
+
+	***** Results: *****
+
+	C:95.9%[S:94.9%,D:1.0%],F:0.4%,M:3.7%,n:3285,E:19.2%	   
+	3149	Complete BUSCOs (C)	(of which 605 contain internal stop codons)		   
+	3116	Complete and single-copy BUSCOs (S)	   
+	33	Complete and duplicated BUSCOs (D)	   
+	13	Fragmented BUSCOs (F)			   
+	123	Missing BUSCOs (M)			   
+	3285	Total BUSCO groups searched		   
+
+Assembly Statistics:
+	57	Number of scaffolds
+	4009	Number of contigs
+	573230032	Total length
+	4.565%	Percent gaps
+	201 Mbp	Scaffold N50
+	2 Mbp	Contigs N50
+
+
+Dependencies and versions:
+	hmmsearch: 3.4
+	bbtools: None
+	miniprot_index: 0.18-r281
+	miniprot_align: 0.18-r281
