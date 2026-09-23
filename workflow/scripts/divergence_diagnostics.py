@@ -18,7 +18,8 @@ Outputs:
                    alignments (columns where both have a residue), median,
                    mean, 5th percentile and share of loci below 95%
   loci             SCO FASTAs, trimmed alignments kept, gene trees built, and
-                   how many alignments without a tree are invariant
+                   how many alignments without a tree are invariant or have
+                   fewer than four distinct sequences (IQ-TREE needs four)
 
 Snakemake provides:
     input.tree, input.concord
@@ -111,13 +112,17 @@ def pair_identity(a, b):
 
 def pairwise_table(aln_paths):
     per_pair = {}
-    invariant = set()
+    invariant, few_distinct = set(), set()
     for path in aln_paths:
         seqs = read_alignment(path)
         if len(seqs) < 2:
             continue
-        if len(set(seqs.values())) == 1:
-            invariant.add(os.path.basename(path).rsplit(".", 1)[0])
+        locus = os.path.basename(path).rsplit(".", 1)[0]
+        n_distinct = len(set(seqs.values()))
+        if n_distinct == 1:
+            invariant.add(locus)
+        if n_distinct < 4:
+            few_distinct.add(locus)
         for a, b in itertools.combinations(sorted(seqs), 2):
             ident = pair_identity(seqs[a], seqs[b])
             if ident is not None:
@@ -131,7 +136,7 @@ def pairwise_table(aln_paths):
             "p05_identity": round(quantile(vals, 0.05), 5),
             "share_below_0.95": round(sum(v < 0.95 for v in vals) / len(vals), 4),
         })
-    return rows, invariant
+    return rows, invariant, few_distinct
 
 
 def write(rows, path):
@@ -150,7 +155,7 @@ def run(concat_tree, gene_trees, trimmed_dir, sco_dir, out_branch, out_pair, out
     write(branch_rows, out_branch)
 
     trim = sorted(glob.glob(os.path.join(trimmed_dir, "*.trim")))
-    pair_rows, invariant = pairwise_table(trim)
+    pair_rows, invariant, few_distinct = pairwise_table(trim)
     write(pair_rows, out_pair)
 
     phylo_dir = os.path.dirname(gene_trees)
@@ -173,7 +178,10 @@ def run(concat_tree, gene_trees, trimmed_dir, sco_dir, out_branch, out_pair, out
         {"measure": "trimmed_without_gene_tree", "value": len(no_tree) if tree_ids else ""},
         {"measure": "trimmed_without_gene_tree_invariant",
          "value": len(no_tree & invariant) if tree_ids else ""},
+        {"measure": "trimmed_without_gene_tree_fewer_than_4_distinct",
+         "value": len(no_tree & few_distinct) if tree_ids else ""},
         {"measure": "trimmed_invariant_total", "value": len(invariant)},
+        {"measure": "trimmed_fewer_than_4_distinct_total", "value": len(few_distinct)},
     ]
     write(loci, out_loci)
 

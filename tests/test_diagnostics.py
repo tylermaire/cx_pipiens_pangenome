@@ -36,13 +36,13 @@ def main():
             fh.write(">A\nMKLV-A\n>B\nMKLVQA\n>C\nMRLVQA\n")
         with open(os.path.join(tmp, "OG2.trim"), "w") as fh:
             fh.write(">A\nMKK\n>B\nMKK\n>C\nMKK\n")
-        pair_rows, invariant = dd.pairwise_table(sorted(
+        pair_rows, invariant, few = dd.pairwise_table(sorted(
             os.path.join(tmp, f) for f in os.listdir(tmp)))
     ab = next(r for r in pair_rows if (r["taxon_a"], r["taxon_b"]) == ("A", "B"))
     assert ab["n_loci"] == 2 and ab["median_identity"] == 1.0
     ac = next(r for r in pair_rows if (r["taxon_a"], r["taxon_b"]) == ("A", "C"))
     assert ac["share_below_0.95"] == 0.5          # OG1: 4 of 5 shared columns
-    assert invariant == {"OG2"}
+    assert invariant == {"OG2"} and few == {"OG1", "OG2"}
 
     raw = {"t1": "MKLV.", "t2": "MK.LV.", "t3": "KLV.", "t4": "MKLV", "t5": "MAA."}
     r = tq.assess(raw, ["t1", "t2", "t3", "t4", "t9"])
