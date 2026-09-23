@@ -105,7 +105,9 @@ def step_absence(cfg, all_s, ingroup, ref):
 def step_cloud(cfg, all_s, ingroup, ref):
     run("cloud_composition.py",
         input={"table": "results/pangenome/partitioned_orthogroups.tsv",
-               "of": "results/orthofinder/output"},
+               "of": "results/orthofinder/output",
+               "gffs": [f"results/annotation/{s}_liftoff.gff3" for s in ingroup],
+               "proteins": [f"results/proteins/{s}.fa" for s in ingroup]},
         params={"ingroup": ingroup, "reference": ref},
         output={"per_og": "results/pangenome/cloud_composition.tsv",
                 "summary": "results/pangenome/cloud_composition_summary.tsv"})
