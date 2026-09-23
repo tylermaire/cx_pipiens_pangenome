@@ -1,118 +1,295 @@
 #!/usr/bin/env python3
 """
-quartet_asymmetry.py - test whether the two discordant gene-tree topologies
-occur at equal frequency.
+quartet_asymmetry.py - which discordant gene tree topology is in excess, and
+does the excess survive filtering on gene tree support and a site level count.
 
 Why this test
 -------------
-Under incomplete lineage sorting alone, the two topologies that disagree with
-the species tree are expected in EQUAL frequency. A significant excess of one
-over the other is the signal that introgression, not ILS alone, is producing
-the discordance. This is the quartet-count analogue of the ABBA/BABA test.
+With four taxa there is one internal branch and three possible unrooted
+topologies. Under incomplete lineage sorting alone the two topologies that
+disagree with the species tree are expected in EQUAL frequency. A significant
+excess of one is evidence that something beyond ILS (introgression, or a
+systematic error) produces part of the discordance. It is the quartet count
+analogue of the ABBA/BABA test.
 
-Runs on files already in the repository; nothing needs recomputing:
-    results/phylo/all_gene_trees.nwk
+What an unrooted quartet cannot tell you: the excess topology pairs two taxa on
+each side, so gene flow between either pair produces it. It detects departure
+from ILS; it does not say which lineages exchanged genes.
+
+Outputs
+-------
+  topology_counts   the three splits with counts, their role (species tree,
+                    major and minor discordant) and, when concord.cf.stat is
+                    given, which of IQ-TREE's gDF1 and gDF2 each one is
+  by_support        the binomial test repeated on gene trees whose internal
+                    branch has ultrafast bootstrap support at or above
+                    0, 50, 70, 80, 90 and 95. Estimation error is concentrated
+                    in poorly supported trees, so an excess that holds or grows
+                    with support is not a product of noisy gene trees
+  site_patterns     parsimony informative sites (two states, two taxa each) in
+                    the trimmed alignments, counted per split, with the same
+                    binomial test on the two discordant splits
 
 Usage
 -----
-    python quartet_asymmetry.py \
-        --trees results/phylo/all_gene_trees.nwk \
-        --sister Cx_pallens,Cx_quinquefasciatus
+Inside the workflow this runs as a Snakemake script. Standalone:
+
+    python quartet_asymmetry.py --trees results/phylo/all_gene_trees.nwk \\
+        --species-tree results/phylo/concat_tree.treefile \\
+        [--cf-stat results/phylo/concord.cf.stat] \\
+        [--alignments results/phylo/trimmed] [--outdir results/phylo]
 """
 
 import argparse
 import collections
+import glob
+import os
 import re
 import sys
 
 try:
     from scipy.stats import binomtest
 except ImportError:
-    binomtest = None
+    sys.exit("scipy required for the exact binomial test")
+
+SUPPORT_THRESHOLDS = [0, 50, 70, 80, 90, 95]
+GAP_CHARS = set("-X?*.BZJUO")
+CHERRY = re.compile(r"\(([A-Za-z][A-Za-z0-9_.]*)(?::[0-9.eE+-]+)?,"
+                    r"([A-Za-z][A-Za-z0-9_.]*)(?::[0-9.eE+-]+)?\)"
+                    r"([0-9.]+)?(?:/[^:),;]*)?")
+TAXON = re.compile(r"[(,]([A-Za-z][A-Za-z0-9_.]*)")
 
 
-def parse_cherry(newick):
-    """Return the frozenset of the first two-taxon clade in a 4-taxon tree."""
-    t = re.sub(r":[0-9eE.+-]+", "", newick)      # branch lengths
-    t = re.sub(r"\)[0-9.]+", ")", t)             # support values
-    m = re.findall(r"\(([A-Za-z0-9_.-]+),([A-Za-z0-9_.-]+)\)", t)
+def parse_tree(newick):
+    """(taxa, cherry pair, internal branch support) for a four taxon tree."""
+    taxa = frozenset(TAXON.findall(newick))
+    m = CHERRY.search(newick)
     if not m:
-        return None
-    pair = frozenset(m[0])
-    return pair if len(pair) == 2 else None
+        return taxa, None, None
+    pair = frozenset(m.group(1, 2))
+    support = float(m.group(3)) if m.group(3) else None
+    return taxa, (pair if len(pair) == 2 else None), support
 
 
 def canonical(pair, taxa):
-    """A split is the same whichever side you name it from; pick one name."""
+    """A split is the same whichever side names it; use the side holding the
+    alphabetically first taxon."""
     other = frozenset(taxa - pair)
-    return min([pair, other], key=lambda s: sorted(s)[0])
+    return pair if min(taxa) in pair else other
 
 
-def main():
-    ap = argparse.ArgumentParser(description=__doc__,
-                                 formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--trees", required=True, help="newick gene trees, one per line")
-    ap.add_argument("--sister", required=True,
-                    help="comma-separated sister pair in the species tree")
-    args = ap.parse_args()
+def label(split, taxa):
+    a = "+".join(sorted(split))
+    b = "+".join(sorted(taxa - split))
+    return f"{a} | {b}"
 
-    sister = frozenset(args.sister.split(","))
-    if len(sister) != 2:
-        sys.exit("--sister needs exactly two comma-separated names")
 
-    counts, unparsed = collections.Counter(), 0
-    taxa = set()
-    for line in open(args.trees):
+def binom(n1, n2):
+    if n1 + n2 == 0:
+        return float("nan"), float("nan"), float("nan")
+    r = binomtest(n1, n1 + n2, 0.5)
+    ci = r.proportion_ci(0.95)
+    return r.pvalue, round(ci.low, 4), round(ci.high, 4)
+
+
+def read_gene_trees(path):
+    trees, taxa = [], set()
+    for line in open(path):
         line = line.strip()
         if not line:
             continue
-        pair = parse_cherry(line)
+        t, pair, sup = parse_tree(line)
         if pair is None:
-            unparsed += 1
             continue
-        taxa |= set(re.findall(r"[A-Za-z][A-Za-z0-9_.-]*", re.sub(r":[0-9eE.+-]+", "", line)))
-        counts[pair] += 1
+        taxa |= t
+        trees.append((pair, sup))
+    return trees, frozenset(taxa)
 
+
+def read_cf_stat(path):
+    """{'gDF1_N': int, 'gDF2_N': int, ...} from IQ-TREE's concord.cf.stat."""
+    header, row = None, None
+    for line in open(path):
+        if line.startswith("#") or not line.strip():
+            continue
+        f = line.rstrip("\n").split("\t")
+        if header is None:
+            header = f
+        else:
+            row = f
+            break
+    if not header or not row:
+        return {}
+    return dict(zip(header, row))
+
+
+def site_patterns(aln_dir, taxa):
+    """Count parsimony informative site patterns per split over *.trim files."""
+    order = sorted(taxa)
+    counts = collections.Counter()
+    n_files = n_sites = 0
+    for path in sorted(glob.glob(os.path.join(aln_dir, "*.trim"))):
+        seqs, name = {}, None
+        for line in open(path):
+            line = line.strip()
+            if line.startswith(">"):
+                name = line[1:].split()[0]
+                seqs[name] = []
+            elif name:
+                seqs[name].append(line)
+        seqs = {k: "".join(v).upper() for k, v in seqs.items()}
+        if set(seqs) != set(order):
+            continue
+        n_files += 1
+        cols = zip(*(seqs[t] for t in order))
+        for col in cols:
+            n_sites += 1
+            if any(c in GAP_CHARS for c in col):
+                continue
+            states = collections.Counter(col)
+            if len(states) != 2 or sorted(states.values()) != [2, 2]:
+                continue
+            first = col[0]
+            pair = frozenset(t for t, c in zip(order, col) if c == first)
+            counts[canonical(pair, taxa)] += 1
+    return counts, n_files, n_sites
+
+
+def analyse(trees, taxa, sister, cf=None, site_counts=None):
+    """Return (topology rows, support rows, site rows) as lists of dicts."""
     if len(taxa) != 4:
-        sys.exit(f"expected 4 taxa, found {len(taxa)}: {sorted(taxa)}")
+        raise SystemExit(f"expected 4 taxa, found {len(taxa)}: {sorted(taxa)}")
+    conc = canonical(frozenset(sister), taxa)
+    splits = [conc] + sorted({canonical(frozenset(p), taxa) for p in
+                              [frozenset(x) for x in _pairs(taxa)]} - {conc},
+                             key=lambda s: label(s, taxa))
 
-    splits = collections.Counter()
-    for pair, n in counts.items():
-        splits[canonical(pair, taxa)] += n
-    total = sum(splits.values())
+    counts = collections.Counter(canonical(p, taxa) for p, _ in trees)
+    disc = sorted(splits[1:], key=lambda s: -counts[s])
+    major, minor = disc
+    total = sum(counts.values())
 
-    def label(key):
-        a = "+".join(sorted(key))
-        b = "+".join(sorted(taxa - key))
-        return f"({a}) | ({b})"
+    cf_label = {}
+    if cf:
+        g1, g2 = int(float(cf.get("gDF1_N", -1))), int(float(cf.get("gDF2_N", -1)))
+        for s in disc:
+            if counts[s] == g1 and counts[s] != g2:
+                cf_label[s] = "gDF1"
+            elif counts[s] == g2 and counts[s] != g1:
+                cf_label[s] = "gDF2"
 
-    print(f"gene trees: {total} parsed, {unparsed} unparsed\n")
-    print("topology frequencies")
-    for key, n in splits.most_common():
-        tag = "  <- species tree" if key == canonical(sister, taxa) else ""
-        print(f"  {label(key):55s} {n:6d}  {100*n/total:6.2f}%{tag}")
+    topo = []
+    for s, role in [(conc, "species_tree"), (major, "major_discordant"),
+                    (minor, "minor_discordant")]:
+        topo.append({"split": label(s, taxa), "role": role, "n_gene_trees": counts[s],
+                     "pct": round(100.0 * counts[s] / total, 2) if total else 0.0,
+                     "iqtree_label": cf_label.get(s, "gCF" if s == conc else "")})
 
-    conc = canonical(sister, taxa)
-    disc = sorted(((k, v) for k, v in splits.items() if k != conc),
-                  key=lambda kv: -kv[1])
-    (k1, n1), (k2, n2) = disc
-    d = (n1 - n2) / (n1 + n2)
+    support_rows = []
+    for thr in SUPPORT_THRESHOLDS:
+        sub = collections.Counter(canonical(p, taxa) for p, sup in trees
+                                  if thr == 0 or (sup is not None and sup >= thr))
+        n = sum(sub.values())
+        n1, n2 = sub[major], sub[minor]
+        p, lo, hi = binom(n1, n2)
+        support_rows.append({
+            "min_ufboot": thr, "n_gene_trees": n, "n_concordant": sub[conc],
+            "pct_concordant": round(100.0 * sub[conc] / n, 2) if n else float("nan"),
+            "major_split": label(major, taxa), "n_major": n1,
+            "minor_split": label(minor, taxa), "n_minor": n2,
+            "major_share_of_discordant": round(n1 / (n1 + n2), 4) if n1 + n2 else float("nan"),
+            "binomial_p": p, "ci95_low": lo, "ci95_high": hi})
 
-    print("\nsymmetry test on the two discordant topologies")
-    print(f"  major discordant  {label(k1):55s} {n1}")
-    print(f"  minor discordant  {label(k2):55s} {n2}")
-    print(f"  asymmetry (n1-n2)/(n1+n2) = {d:.4f}")
-    if binomtest is not None:
-        r = binomtest(n1, n1 + n2, 0.5)
-        ci = r.proportion_ci(0.95)
-        print(f"  exact binomial: n = {n1+n2}, p = {r.pvalue:.3e}, "
-              f"95% CI {ci.low:.4f} to {ci.high:.4f}")
-        print("\n  Equal frequencies are the ILS expectation. Rejecting equality is "
-              "evidence\n  for introgression, but an unrooted quartet cannot say which "
-              "pair exchanged\n  genes: the excess topology groups two non-sister pairs "
-              "at once.")
-    else:
-        print("  install scipy for the exact binomial test")
+    site_rows = []
+    if site_counts is not None:
+        n_all = sum(site_counts.values())
+        s1, s2 = site_counts[major], site_counts[minor]
+        p, lo, hi = binom(s1, s2)
+        for s, role in [(conc, "species_tree"), (major, "major_discordant_gene_trees"),
+                        (minor, "minor_discordant_gene_trees")]:
+            site_rows.append({"split": label(s, taxa), "role": role,
+                              "n_informative_sites": site_counts[s],
+                              "pct": round(100.0 * site_counts[s] / n_all, 2) if n_all else 0.0})
+        site_rows.append({"split": "discordant sites: gene tree major vs minor",
+                          "role": "binomial_test", "n_informative_sites": s1 + s2,
+                          "pct": round(100.0 * s1 / (s1 + s2), 2) if s1 + s2 else float("nan"),
+                          "binomial_p": p, "ci95_low": lo, "ci95_high": hi})
+    return topo, support_rows, site_rows
+
+
+def _pairs(taxa):
+    t = sorted(taxa)
+    return [(t[0], t[1]), (t[0], t[2]), (t[0], t[3])]
+
+
+def sister_from_species_tree(path):
+    _, pair, _ = parse_tree(open(path).read().strip())
+    if pair is None:
+        raise SystemExit(f"could not read a cherry from {path}")
+    return sorted(pair)
+
+
+def write_tsv(rows, path):
+    import csv
+    if not rows:
+        open(path, "w").close()
+        return
+    keys = list(dict.fromkeys(k for r in rows for k in r))
+    with open(path, "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=keys, delimiter="\t", extrasaction="ignore")
+        w.writeheader()
+        for r in rows:
+            w.writerow({k: (f"{v:.3e}" if k == "binomial_p" and isinstance(v, float)
+                            else v) for k, v in r.items()})
+
+
+def run(gene_trees, species_tree, cf_stat, aln_dir, out_topo, out_support, out_sites):
+    trees, taxa = read_gene_trees(gene_trees)
+    sister = sister_from_species_tree(species_tree)
+    cf = read_cf_stat(cf_stat) if cf_stat and os.path.exists(cf_stat) else None
+    site_counts = None
+    if aln_dir and os.path.isdir(aln_dir):
+        site_counts, n_files, n_sites = site_patterns(aln_dir, taxa)
+        print(f"site patterns: {sum(site_counts.values())} informative of {n_sites} "
+              f"columns in {n_files} alignments")
+    topo, support, sites = analyse(trees, taxa, sister, cf, site_counts)
+    write_tsv(topo, out_topo)
+    write_tsv(support, out_support)
+    if out_sites:
+        write_tsv(sites, out_sites)
+
+    print(f"gene trees: {len(trees)}; species tree split: {label(frozenset(sister), taxa)}\n")
+    for r in topo:
+        print(f"  {r['split']:55s} {r['n_gene_trees']:6d} {r['pct']:6.2f}%  "
+              f"{r['role']} {r['iqtree_label']}")
+    print("\nby internal branch support")
+    for r in support:
+        print(f"  UFBoot>={r['min_ufboot']:3d}  n={r['n_gene_trees']:5d}  "
+              f"major {r['n_major']:5d}  minor {r['n_minor']:5d}  "
+              f"share {r['major_share_of_discordant']}  p={r['binomial_p']:.2e}")
+    for r in sites:
+        print(f"  sites  {r['split']:55s} {r['n_informative_sites']}")
+
+
+def main():
+    if "snakemake" in globals():
+        sm = globals()["snakemake"]
+        run(sm.params.gene_trees, sm.input.tree, sm.params.cf_stat,
+            sm.params.trimmed_dir, sm.output.topology, sm.output.support,
+            sm.output.sites)
+        return
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--trees", required=True, help="newick gene trees, one per line")
+    ap.add_argument("--species-tree", required=True, help="concatenated ML tree")
+    ap.add_argument("--cf-stat", help="IQ-TREE concord.cf.stat, to label gDF1 and gDF2")
+    ap.add_argument("--alignments", help="directory of trimmed *.trim alignments")
+    ap.add_argument("--outdir", default=".")
+    a = ap.parse_args()
+    run(a.trees, a.species_tree, a.cf_stat, a.alignments,
+        os.path.join(a.outdir, "quartet_topology_counts.tsv"),
+        os.path.join(a.outdir, "quartet_asymmetry_by_support.tsv"),
+        os.path.join(a.outdir, "quartet_site_patterns.tsv"))
 
 
 if __name__ == "__main__":
