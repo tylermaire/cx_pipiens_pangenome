@@ -47,6 +47,7 @@ include: "workflow/rules/synteny.smk"
 include: "workflow/rules/repeats.smk"
 include: "workflow/rules/figures.smk"
 include: "workflow/rules/validation.smk"
+include: "workflow/rules/report.smk"
 
 # -- Default target: build everything except SyRI (strand-correction needed) --
 rule all:
@@ -67,6 +68,7 @@ rule all:
         "results/phylo/quartet_asymmetry_by_support.tsv",
         "results/phylo/branch_length_summary.tsv",
         "results/annotation/transfer_quality.tsv",
+        "results/manuscript_values.tsv",
         # Gene families (already rebuilt)
         "results/cafe/significant_families.tsv",
         # Repeats - RepeatMasker tables + TE proximity
