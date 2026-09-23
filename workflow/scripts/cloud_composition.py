@@ -151,9 +151,11 @@ def main():
     reference = snakemake.params.reference
     table = pd.read_csv(snakemake.input.table, sep="\t", index_col=0)
     members = load_members(snakemake.input.of)
-    tx_to_gene = {f: transcript_to_gene(f"results/annotation/{f}_liftoff.gff3")
-                  for f in ingroup}
-    coding = {f: fasta_ids(f"results/proteins/{f}.fa") for f in ingroup}
+    gffs = {os.path.basename(p).replace("_liftoff.gff3", ""): p
+            for p in snakemake.input.gffs}
+    prots = {os.path.basename(p)[:-3]: p for p in snakemake.input.proteins}
+    tx_to_gene = {f: transcript_to_gene(gffs[f]) for f in ingroup}
+    coding = {f: fasta_ids(prots[f]) for f in ingroup}
 
     per_og = compose(table, members, tx_to_gene, coding, ingroup, reference)
     per_og.to_csv(snakemake.output.per_og, sep="\t", index=False)
