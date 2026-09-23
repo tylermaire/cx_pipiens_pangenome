@@ -24,18 +24,6 @@ rule eggnog_mapper:
             --cpu {threads} --override
         """
 
-rule go_enrichment:
-    """GO enrichment analysis: core vs shell vs cloud."""
-    input:
-        annotations=expand("results/eggnog/{s}.emapper.annotations",
-            s=INGROUP_SAMPLES),
-        partitions="results/pangenome/partitioned_orthogroups.tsv"
-    output:
-        enrichment="results/functional/go_enrichment_results.tsv"
-    conda: "../envs/r.yaml"
-    script: "../scripts/go_enrichment.R"
-
-
 # -------------------------------------------------------------------------
 # Key gene families (P450, GST, CCE, OR, GR, IR, OBP, CSP, immune)
 # -------------------------------------------------------------------------
