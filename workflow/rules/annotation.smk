@@ -56,3 +56,29 @@ rule busco_proteins:
             -m proteins -c {threads} \
             --out_path results/busco_proteins/ --force
         """
+
+rule transfer_quality:
+    """Broken protein models among those kept for analysis: internal stop
+    codons, missing start methionine, missing terminal stop. A transfer that
+    shifts the reading frame shows up here and nowhere else, because
+    extract_proteins strips the stop symbols."""
+    input:
+        gff="results/annotation/{sample}_liftoff.gff3",
+        fasta="resources/genomes/{sample}.fasta",
+        kept="results/proteins/{sample}.fa"
+    output: "results/annotation/{sample}_transfer_quality.tsv"
+    conda: "../envs/gffread.yaml"
+    shell:
+        """
+        gffread {input.gff} -g {input.fasta} -y {output}.raw.faa
+        python workflow/scripts/transfer_quality.py --raw {output}.raw.faa \
+            --kept {input.kept} --sample {wildcards.sample} --out {output}
+        rm -f {output}.raw.faa
+        """
+
+rule transfer_quality_summary:
+    input: expand("results/annotation/{s}_transfer_quality.tsv", s=ALL_SAMPLES)
+    output: "results/annotation/transfer_quality.tsv"
+    shell:
+        "head -n 1 {input[0]} > {output} && "
+        "for f in {input}; do tail -n +2 $f >> {output}; done"
