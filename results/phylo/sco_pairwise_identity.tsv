@@ -1,0 +1,7 @@
+taxon_a	taxon_b	n_loci	median_identity	mean_identity	p05_identity	share_below_0.95
+Cx_molestus	Cx_pallens	9087	0.98837	0.95178	0.71674	0.1518
+Cx_molestus	Cx_pipiens	9090	0.99059	0.95503	0.71871	0.1262
+Cx_molestus	Cx_quinquefasciatus	9096	0.98633	0.94627	0.66699	0.1882
+Cx_pallens	Cx_pipiens	9094	0.98765	0.95304	0.75428	0.1541
+Cx_pallens	Cx_quinquefasciatus	9096	0.99061	0.95366	0.69378	0.1442
+Cx_pipiens	Cx_quinquefasciatus	9098	0.98469	0.9459	0.67806	0.1971

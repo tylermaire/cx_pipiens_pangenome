@@ -1,0 +1,6 @@
+branch	concat_tree	n_gene_trees	gene_tree_median	gene_tree_mean	gene_tree_p90	share_above_0.1	share_minimum
+Cx_molestus	0.04106	7646	0.00409	0.05601	0.02601	0.0403	0.2214
+Cx_pallens	0.03278	7646	0.00328	0.04226	0.02334	0.0336	0.2652
+Cx_pipiens	0.0382	7646	0.0054	0.0495	0.02908	0.037	0.1699
+Cx_quinquefasciatus	0.05618	7646	0.00617	0.07405	0.04438	0.0585	0.1728
+internal	0.01342	7646	0.00515	0.05197	0.03658	0.0509	0.1652
