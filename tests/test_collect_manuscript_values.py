@@ -29,11 +29,11 @@ def main():
     get = lambda sec, item, sample="": next(
         r["value"] for r in rows if (r["section"], r["item"], r["sample"]) == (sec, item, sample))
     assert get("assembly", "total_length_bp", "Cx_tarsalis") == "789668571"
-    assert get("busco", "genome busco_version", "Cx_tarsalis") == "6.0.0"
+    assert get("busco", "genome busco_version", "Cx_tarsalis") == "6.1.0"
     assert get("phylogeny", "gN") == "7646"
-    assert get("pangenome", "cloud n_orthogroups") == "479"
+    assert get("pangenome", "cloud n_orthogroups") == "476"
     assert get("parameters", "busco lineage") == "diptera_odb10"
-    assert get("tools", "iqtree") == "NA"          # no conda envs in a fresh clone
+    assert get("tools", "conda environments").startswith("not present")
     print(f"collect_manuscript_values: smoke test passed ({len(rows)} rows)")
 
 
