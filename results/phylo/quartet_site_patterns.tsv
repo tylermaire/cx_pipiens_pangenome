@@ -1,0 +1,5 @@
+split	role	n_informative_sites	pct	binomial_p	ci95_low	ci95_high
+Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus	species_tree	37944	47.6			
+Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens	major_discordant_gene_trees	20466	25.67			
+Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus	minor_discordant_gene_trees	21304	26.73			
+discordant sites: gene tree major vs minor	binomial_test	41770	49.0	4.213e-05	0.4852	0.4948
