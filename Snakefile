@@ -64,6 +64,7 @@ rule all:
         "results/functional/key_families_wide.tsv",
         # Phylogenomics (already built)
         "results/phylo/concord.cf.tree",
+        "results/phylo/quartet_asymmetry_by_support.tsv",
         # Gene families (already rebuilt)
         "results/cafe/significant_families.tsv",
         # Repeats - RepeatMasker tables + TE proximity

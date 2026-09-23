@@ -65,3 +65,22 @@ rule concat_and_tree:
             --scf 100 --prefix results/phylo/concord -quiet -nt {threads} || \
             cp results/phylo/concat_tree.treefile {output.concord}
         """
+
+rule quartet_asymmetry:
+    """Which discordant gene tree topology is in excess, whether the excess
+    holds on well supported gene trees, and a site pattern count per split.
+    Reads the gene trees, cf.stat and trimmed alignments that concat_and_tree
+    leaves beside its declared outputs."""
+    input:
+        tree="results/phylo/concat_tree.treefile",
+        concord="results/phylo/concord.cf.tree"
+    output:
+        topology="results/phylo/quartet_topology_counts.tsv",
+        support="results/phylo/quartet_asymmetry_by_support.tsv",
+        sites="results/phylo/quartet_site_patterns.tsv"
+    params:
+        gene_trees="results/phylo/all_gene_trees.nwk",
+        cf_stat="results/phylo/concord.cf.stat",
+        trimmed_dir="results/phylo/trimmed"
+    conda: "../envs/phylo.yaml"
+    script: "../scripts/quartet_asymmetry.py"
