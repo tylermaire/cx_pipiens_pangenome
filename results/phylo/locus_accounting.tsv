@@ -1,0 +1,9 @@
+measure	value
+sco_fastas	9142
+trimmed_alignments_kept	9098
+gene_trees_in_all_gene_trees	7646
+trimmed_without_gene_tree	1452
+trimmed_without_gene_tree_invariant	752
+trimmed_without_gene_tree_fewer_than_4_distinct	1452
+trimmed_invariant_total	752
+trimmed_fewer_than_4_distinct_total	3070
