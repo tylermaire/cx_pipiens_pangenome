@@ -1,0 +1,6 @@
+form	n_cloud_orthogroups	with_outgroup_gene	single_ingroup_gene	same_gene_elsewhere	same_gene_in_reference	no_counterpart	pct_same_gene_elsewhere
+Cx_quinquefasciatus	88	77	74	76	0	12	86.4
+Cx_pallens	99	95	91	99	99	0	100.0
+Cx_molestus	148	143	141	148	148	0	100.0
+Cx_pipiens	141	134	131	141	141	0	100.0
+total	476	449	437	464	388	12	97.5
