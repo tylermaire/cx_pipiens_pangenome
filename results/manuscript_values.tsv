@@ -104,7 +104,66 @@ annotation	proteins_one_per_gene	Cx_pallens	14106	results/proteins/Cx_pallens.fa
 annotation	proteins_one_per_gene	Cx_molestus	14126	results/proteins/Cx_molestus.fa
 annotation	proteins_one_per_gene	Cx_pipiens	14489	results/proteins/Cx_pipiens.fa
 annotation	proteins_one_per_gene	Cx_tarsalis	11865	results/proteins/Cx_tarsalis.fa
-annotation	transfer quality		NA	results/annotation/transfer_quality.tsv
+annotation	n_kept_models	Cx_quinquefasciatus	15094	results/annotation/transfer_quality.tsv
+annotation	liftoff_flags	Cx_quinquefasciatus	no (reference annotation)	results/annotation/transfer_quality.tsv
+annotation	n_ref_model_not_clean	Cx_quinquefasciatus	872	results/annotation/transfer_quality.tsv
+annotation	n_kept_models	Cx_pallens	14106	results/annotation/transfer_quality.tsv
+annotation	liftoff_flags	Cx_pallens	yes	results/annotation/transfer_quality.tsv
+annotation	n_invalid_orf	Cx_pallens	4241	results/annotation/transfer_quality.tsv
+annotation	pct_invalid_orf	Cx_pallens	30.07	results/annotation/transfer_quality.tsv
+annotation	pct_inframe_stop	Cx_pallens	2.03	results/annotation/transfer_quality.tsv
+annotation	pct_missing_start	Cx_pallens	10.45	results/annotation/transfer_quality.tsv
+annotation	pct_missing_stop	Cx_pallens	17.58	results/annotation/transfer_quality.tsv
+annotation	pct_mismatch_ref_protein	Cx_pallens	87.38	results/annotation/transfer_quality.tsv
+annotation	n_ref_model_not_clean	Cx_pallens	774	results/annotation/transfer_quality.tsv
+annotation	pct_invalid_orf_clean_ref	Cx_pallens	26.74	results/annotation/transfer_quality.tsv
+annotation	n_kept_models	Cx_molestus	14126	results/annotation/transfer_quality.tsv
+annotation	liftoff_flags	Cx_molestus	yes	results/annotation/transfer_quality.tsv
+annotation	n_invalid_orf	Cx_molestus	4842	results/annotation/transfer_quality.tsv
+annotation	pct_invalid_orf	Cx_molestus	34.28	results/annotation/transfer_quality.tsv
+annotation	pct_inframe_stop	Cx_molestus	2.14	results/annotation/transfer_quality.tsv
+annotation	pct_missing_start	Cx_molestus	12.93	results/annotation/transfer_quality.tsv
+annotation	pct_missing_stop	Cx_molestus	19.2	results/annotation/transfer_quality.tsv
+annotation	pct_mismatch_ref_protein	Cx_molestus	90.23	results/annotation/transfer_quality.tsv
+annotation	n_ref_model_not_clean	Cx_molestus	796	results/annotation/transfer_quality.tsv
+annotation	pct_invalid_orf_clean_ref	Cx_molestus	31.07	results/annotation/transfer_quality.tsv
+annotation	n_kept_models	Cx_pipiens	14489	results/annotation/transfer_quality.tsv
+annotation	liftoff_flags	Cx_pipiens	yes	results/annotation/transfer_quality.tsv
+annotation	n_invalid_orf	Cx_pipiens	4768	results/annotation/transfer_quality.tsv
+annotation	pct_invalid_orf	Cx_pipiens	32.91	results/annotation/transfer_quality.tsv
+annotation	pct_inframe_stop	Cx_pipiens	2.35	results/annotation/transfer_quality.tsv
+annotation	pct_missing_start	Cx_pipiens	11.37	results/annotation/transfer_quality.tsv
+annotation	pct_missing_stop	Cx_pipiens	19.17	results/annotation/transfer_quality.tsv
+annotation	pct_mismatch_ref_protein	Cx_pipiens	91.32	results/annotation/transfer_quality.tsv
+annotation	n_ref_model_not_clean	Cx_pipiens	820	results/annotation/transfer_quality.tsv
+annotation	pct_invalid_orf_clean_ref	Cx_pipiens	29.57	results/annotation/transfer_quality.tsv
+annotation	n_kept_models	Cx_tarsalis	11865	results/annotation/transfer_quality.tsv
+annotation	liftoff_flags	Cx_tarsalis	yes	results/annotation/transfer_quality.tsv
+annotation	n_invalid_orf	Cx_tarsalis	8958	results/annotation/transfer_quality.tsv
+annotation	pct_invalid_orf	Cx_tarsalis	75.5	results/annotation/transfer_quality.tsv
+annotation	pct_inframe_stop	Cx_tarsalis	1.88	results/annotation/transfer_quality.tsv
+annotation	pct_missing_start	Cx_tarsalis	41.7	results/annotation/transfer_quality.tsv
+annotation	pct_missing_stop	Cx_tarsalis	31.87	results/annotation/transfer_quality.tsv
+annotation	pct_mismatch_ref_protein	Cx_tarsalis	99.22	results/annotation/transfer_quality.tsv
+annotation	n_ref_model_not_clean	Cx_tarsalis	736	results/annotation/transfer_quality.tsv
+annotation	pct_invalid_orf_clean_ref	Cx_tarsalis	74.2	results/annotation/transfer_quality.tsv
+annotation	core pct_invalid_orf	Cx_pallens	23.84	results/annotation/transfer_quality_by_compartment.tsv
+annotation	shell pct_invalid_orf	Cx_pallens	51.01	results/annotation/transfer_quality_by_compartment.tsv
+annotation	cloud pct_invalid_orf	Cx_pallens	100.0	results/annotation/transfer_quality_by_compartment.tsv
+annotation	unassigned pct_invalid_orf	Cx_pallens	99.13	results/annotation/transfer_quality_by_compartment.tsv
+annotation	core pct_invalid_orf	Cx_molestus	27.26	results/annotation/transfer_quality_by_compartment.tsv
+annotation	shell pct_invalid_orf	Cx_molestus	57.41	results/annotation/transfer_quality_by_compartment.tsv
+annotation	cloud pct_invalid_orf	Cx_molestus	99.35	results/annotation/transfer_quality_by_compartment.tsv
+annotation	unassigned pct_invalid_orf	Cx_molestus	98.01	results/annotation/transfer_quality_by_compartment.tsv
+annotation	core pct_invalid_orf	Cx_pipiens	26.42	results/annotation/transfer_quality_by_compartment.tsv
+annotation	shell pct_invalid_orf	Cx_pipiens	52.34	results/annotation/transfer_quality_by_compartment.tsv
+annotation	cloud pct_invalid_orf	Cx_pipiens	93.42	results/annotation/transfer_quality_by_compartment.tsv
+annotation	unassigned pct_invalid_orf	Cx_pipiens	98.08	results/annotation/transfer_quality_by_compartment.tsv
+annotation	core pct_invalid_orf	Cx_tarsalis	66.48	results/annotation/transfer_quality_by_compartment.tsv
+annotation	shell pct_invalid_orf	Cx_tarsalis	79.73	results/annotation/transfer_quality_by_compartment.tsv
+annotation	cloud pct_invalid_orf	Cx_tarsalis	95.53	results/annotation/transfer_quality_by_compartment.tsv
+annotation	outgroup_only pct_invalid_orf	Cx_tarsalis	96.47	results/annotation/transfer_quality_by_compartment.tsv
+annotation	unassigned pct_invalid_orf	Cx_tarsalis	99.42	results/annotation/transfer_quality_by_compartment.tsv
 pangenome	core n_orthogroups		10371	results/pangenome/pangenome_summary.tsv
 pangenome	core genes_ingroup		47530	results/pangenome/pangenome_summary.tsv
 pangenome	shell n_orthogroups		3000	results/pangenome/pangenome_summary.tsv
