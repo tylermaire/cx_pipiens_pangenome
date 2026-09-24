@@ -39,13 +39,15 @@ Outputs
                     reports how much of the site total the top 1% of loci hold,
                     and how many of those loci, against the rest, contain a
                     transferred model without a valid ORF
-  robustness        the gene tree test on subsets that remove the two obvious
+  robustness        the gene tree test on subsets that remove the obvious
                     sources of spurious discordance: gene trees whose internal
                     branch sits at IQ-TREE's minimum length (no substitution
                     supports any resolution, so the topology is arbitrary),
-                    and loci with a broken gene model (a transferred model
-                    without a valid ORF, or any model whose reference source is
-                    partial or carries a RefSeq sequence exception)
+                    gene trees with a terminal branch longer than 0.1 (the
+                    trees most exposed to long branch attraction), and loci
+                    with a broken gene model (a transferred model without a
+                    valid ORF, or any model whose reference source is partial
+                    or carries a RefSeq sequence exception)
 
 Usage
 -----
@@ -146,6 +148,16 @@ def read_gene_trees(path):
     return trees, frozenset(taxa)
 
 
+LEAF_LENGTH = re.compile(r"[(,]([A-Za-z][A-Za-z0-9_.]*):([0-9.eE+-]+)")
+LONG_BRANCH = 0.1              # as divergence_diagnostics.py
+
+
+def longest_terminal(newick):
+    """Longest terminal branch of a gene tree, or None."""
+    lengths = [float(x) for _, x in LEAF_LENGTH.findall(newick)]
+    return max(lengths) if lengths else None
+
+
 def tree_loci(gene_trees):
     """Locus names in the order of all_gene_trees.nwk: the sorted
     gene_trees/*.treefile names, or the shipped gene_tree_ids.txt listing."""
@@ -159,7 +171,8 @@ def tree_loci(gene_trees):
 
 
 def read_gene_trees_by_locus(path, loci):
-    """[(locus, pair, support, internal length)] for trees with a cherry."""
+    """[(locus, pair, support, internal length, longest terminal branch)]
+    for trees with a cherry."""
     lines = [line.strip() for line in open(path) if line.strip()]
     if len(lines) != len(loci):
         raise SystemExit(f"{len(lines)} gene trees but {len(loci)} locus names")
@@ -167,7 +180,7 @@ def read_gene_trees_by_locus(path, loci):
     for locus, line in zip(loci, lines):
         _, pair, sup = parse_tree(line)
         if pair is not None:
-            out.append((locus, pair, sup, internal_length(line)))
+            out.append((locus, pair, sup, internal_length(line), longest_terminal(line)))
     return out
 
 
@@ -435,12 +448,20 @@ def robustness_rows(by_locus, taxa, splits, intact=None):
     def resolved(t):
         return t[3] is not None and t[3] > MIN_BRANCH
 
+    def long_tip(t):
+        return len(t) > 4 and t[4] is not None and t[4] > LONG_BRANCH
+
     rows = [subset_row("all gene trees", [t[1] for t in by_locus], taxa, splits),
             subset_row("internal branch above the minimum length",
                        [t[1] for t in by_locus if resolved(t)], taxa, splits),
             subset_row("internal branch at the minimum length",
                        [t[1] for t in by_locus if t[3] is not None and not resolved(t)],
-                       taxa, splits)]
+                       taxa, splits),
+            subset_row("no terminal branch longer than 0.1",
+                       [t[1] for t in by_locus if len(t) > 4 and t[4] is not None
+                        and not long_tip(t)], taxa, splits),
+            subset_row("a terminal branch longer than 0.1",
+                       [t[1] for t in by_locus if long_tip(t)], taxa, splits)]
     if intact:
         good = [t for t in by_locus if intact.get(t[0]) is True]
         bad = [t for t in by_locus if intact.get(t[0]) is False]

@@ -294,8 +294,14 @@ def recurrence_table(inversions, clusters, large_span):
     rows = []
     for c, members in sorted(by.items()):
         pairs = sorted({f"{d['sample1']}_vs_{d['sample2']}" for d in members})
+        shared = set.intersection(*({d["sample1"], d["sample2"]} for d in members))
         rows.append({
             "cluster": c, "n_inversions": len(members), "n_pairs": len(pairs),
+            # with two or more pairs, the genome in every one of them; a cluster
+            # in every pair that includes one genome marks a rearrangement in,
+            # or an assembly error of, that genome
+            "genome_in_every_pair": (shared.pop() if len(shared) == 1 else "none")
+                                    if len(pairs) > 1 else "",
             "chromosomes": ",".join(sorted({d["chromosome"] for d in members})),
             "max_span_bp": max(d["span_bp"] for d in members),
             "any_at_least_large_span": any(d["span_bp"] >= large_span for d in members),
@@ -392,7 +398,7 @@ def main():
     rec = recurrence_table(all_inv, clusters, large_span)
     write_tsv(snakemake.output.recurrence, rec,
               ["cluster", "n_inversions", "n_pairs", "chromosomes", "max_span_bp",
-               "any_at_least_large_span", "pairs", "members"])
+               "genome_in_every_pair", "any_at_least_large_span", "pairs", "members"])
     large = [d for d in all_inv if d["span_bp"] >= large_span]
     large_recurrent = sum(1 for d in large if d["n_pairs_in_cluster"] > 1)
     print(f"\n{len(all_inv)} inversions, {len(large)} of at least {large_span:,} bp; "
