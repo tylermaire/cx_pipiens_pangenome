@@ -369,6 +369,12 @@ quartet_sites	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens vs top_loc
 quartet_sites	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus vs top_loci_minor_discordant_gene_trees | n_informative_sites		14215	results/phylo/quartet_site_patterns.tsv
 quartet_sites	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus vs top_loci_minor_discordant_gene_trees | pct		38.33	results/phylo/quartet_site_patterns.tsv
 quartet_sites	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus vs top_loci_minor_discordant_gene_trees | n_loci		91	results/phylo/quartet_site_patterns.tsv
+quartet_sites	discordant sites outside the top 1% of loci: gene tree major vs minor vs binomial_test | n_informative_sites		16716	results/phylo/quartet_site_patterns.tsv
+quartet_sites	discordant sites outside the top 1% of loci: gene tree major vs minor vs binomial_test | pct		57.59	results/phylo/quartet_site_patterns.tsv
+quartet_sites	discordant sites outside the top 1% of loci: gene tree major vs minor vs binomial_test | binomial_p		4.712e-86	results/phylo/quartet_site_patterns.tsv
+quartet_sites	discordant sites outside the top 1% of loci: gene tree major vs minor vs binomial_test | ci95_low		0.5684	results/phylo/quartet_site_patterns.tsv
+quartet_sites	discordant sites outside the top 1% of loci: gene tree major vs minor vs binomial_test | ci95_high		0.5834	results/phylo/quartet_site_patterns.tsv
+quartet_sites	discordant sites outside the top 1% of loci: gene tree major vs minor vs binomial_test | n_loci		9003	results/phylo/quartet_site_patterns.tsv
 branch_lengths	Cx_molestus | concat_tree		0.04106	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_molestus | n_gene_trees		7646	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_molestus | gene_tree_median		0.00409	results/phylo/branch_length_summary.tsv
