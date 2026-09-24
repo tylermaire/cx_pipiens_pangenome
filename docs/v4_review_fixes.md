@@ -15,16 +15,17 @@ Snakemake workflow still produces the same outputs from scratch.
 | Absence validation checks whether the target genome holds a model of the query's own gene (Liftoff keeps reference IDs) before it trusts protein identity; `check_paralogy.py` removed | `classify_absence.py` | `results/validation/absence_calls.tsv`, `absence_summary.tsv` |
 | Cloud composition: outgroup genes, single gene orthogroups, same gene clustered elsewhere | new rule `cloud_composition` | `results/pangenome/cloud_composition*.tsv` |
 | GO enrichment rule removed (it wrote a placeholder, never an enrichment) | `functional.smk` | `results/functional/go_enrichment_results.tsv` removed |
-| Excess discordant topology named, tested at UFBoot thresholds, and compared with site patterns | new rule `quartet_asymmetry` | `results/phylo/quartet_*.tsv` |
+| Excess discordant topology named, tested at UFBoot thresholds, on resolved gene trees and on loci with four intact gene models, and compared with site patterns (summed, one vote per locus, without the 1% of loci richest in informative sites) | new rule `quartet_asymmetry` | `results/phylo/quartet_*.tsv`, including `quartet_robustness.tsv` |
 | Branch lengths per locus, pairwise SCO identity, locus accounting | new rule `divergence_diagnostics` | `results/phylo/branch_length_summary.tsv`, `sco_pairwise_identity.tsv`, `locus_accounting.tsv` |
 | Transferred model quality read from Liftoff's own ORF flags, with the RefSeq baseline and a split by compartment | rule `transfer_quality` (replaces two gffread rules) | `results/annotation/transfer_quality.tsv`, `transfer_quality_by_compartment.tsv` |
-| Inversions labelled by homologous chromosome, position and anchor genes; recurrence across pairs | `synteny_summary.py` | `results/synteny/inversions_detail.tsv`, new `inversion_recurrence.tsv` |
-| Zero reference copy bin, strict single vs multi copy Fisher test with risk ratio, two sided tests | `cafe_transfer_bias.py` | `results/cafe/transfer_bias_*.tsv` |
+| Inversions labelled by homologous chromosome, position and anchor genes; recurrence across pairs; shared genes on a non homologous chromosome counted | `synteny_summary.py` | `results/synteny/inversions_detail.tsv`, new `inversion_recurrence.tsv`, `synteny_summary.tsv` |
+| Only the families CAFE tested (it drops families absent from one side of the root); zero reference copy bin; one against two or more reference copies Fisher test with risk ratio; two sided tests | `cafe_transfer_bias.py` | `results/cafe/transfer_bias_*.tsv` |
 | CAFE internal nodes named by the taxa below them | `parse_cafe.py` | `results/cafe/branch_summary.tsv` |
 | Liftoff config key renamed to `copy_identity` (values unchanged; `-sc` is inert without `-copies`) | `config.yaml` | none |
 | Every number the text cites, with its source file, plus tool versions read from the outputs | new rule `manuscript_values` | `results/manuscript_values.tsv` |
 | Tracked results synced with the V4 run; June leftovers removed | | `results/` |
 | Result tables written with LF line endings | four scripts | none (content unchanged) |
+| Manuscript figures, Tables 1 to 4 and Supp. Tables S1 to S11 built from `results/` | new `make_revision_figures.py`, `make_manuscript_tables.py`, `make_supplement.py` (the last replaces `make_tables.py`) | `figures/revision/`, `tables/` (not tracked) |
 
 Tests for every changed script are in `tests/` (`python3 tests/test_<name>.py`).
 
@@ -70,20 +71,30 @@ Inputs the steps read from the V4 run:
   unassigned 98 to 99%. *Cx. tarsalis*: 75.5%.
 * Quartets: the excess discordant topology is gDF2 (molestus + quinquefasciatus
   | pallens + pipiens), 1,752 vs 1,384 gene trees (55.9% of discordant,
-  p = 5.3e-11), rising to 67.9% at UFBoot 95. Parsimony informative sites lean
-  the other way (21,304 vs 20,466, p = 4.2e-5).
+  p = 5.3e-11), rising to 67.9% at UFBoot 95. It holds on the 6,383 gene
+  trees with a resolved internal branch (58.6%, 1,346 vs 952; the 1,263
+  unresolved trees split 425/406/432) and on loci with four intact models
+  (57.2%, 1,066 vs 797; 81.6% at UFBoot 95, 155 vs 35). Summed parsimony
+  informative sites lean the other way (21,304 vs 20,466, p = 4.2e-5), but
+  the 91 loci richest in such sites hold 46.5% of them and 90 of the 91 hold
+  a model that is not intact (34.2% of other loci); one vote per locus gives
+  60.2% for gDF2 (1,093 vs 722), and without those 91 loci sites give 57.6%.
 * Divergence: per locus median terminal branches 0.0033 to 0.0062 against 0.033
   to 0.056 in the concatenated tree; median pairwise SCO identity 98.5 to
   99.1%. 7,646 of 9,098 trimmed loci have gene trees; all 1,452 without one
   have fewer than four distinct sequences.
-* CAFE transfer bias: 14 of 11,302 single copy families (0.12%) are significant
-  against 247 of 1,350 multi copy families (18.3%); 72 of 1,233 zero reference
-  copy families (5.8%). Both internal branches show only increases (141 and 45).
+* CAFE transfer bias: CAFE tested 12,908 of the 13,885 families (it drops
+  families absent from one side of the root). 14 of 11,012 one copy families
+  (0.13%) are significant against 247 of 1,318 with two or more copies
+  (18.7%; OR 181, RR 147); 72 of 578 zero reference copy families (12.5%).
+  Both internal branches show only increases (141 and 45).
 * Synteny: 536 inversions form 392 clusters; 95 recur in two or three pairs,
   and 93 of those share one genome across every pair they appear in (molestus
   49, pallens 23, quinquefasciatus 19, pipiens 2), so each looks like a
   rearrangement in, or an assembly error of, that one genome. Nine recurrent
   clusters span 1 Mb or more (pallens 4, quinquefasciatus 3, molestus 2).
+  10.0 to 13.4% of shared genes on the chromosome scale sequences sit on a
+  non homologous chromosome in one of the two genomes.
 
 ## Still open
 
