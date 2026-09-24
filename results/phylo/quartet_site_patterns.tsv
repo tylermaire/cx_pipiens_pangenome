@@ -13,3 +13,4 @@ top 1% of loci by informative sites	concentration	37085	46.52				91
 Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus	top_loci_species_tree	12031	32.44				91	
 Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens	top_loci_major_discordant_gene_trees	10839	29.23				91	
 Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus	top_loci_minor_discordant_gene_trees	14215	38.33				91	
+discordant sites outside the top 1% of loci: gene tree major vs minor	binomial_test	16716	57.59	4.712e-86	0.5684	0.5834	9003	
