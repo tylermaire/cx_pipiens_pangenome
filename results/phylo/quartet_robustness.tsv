@@ -2,6 +2,8 @@ subset	n_gene_trees	n_concordant	pct_concordant	n_major	n_minor	major_share_of_d
 all gene trees	7646	4510	58.99	1752	1384	0.5587	5.348e-11	0.5411	0.5762
 internal branch above the minimum length	6383	4085	64.0	1346	952	0.5857	2.068e-16	0.5653	0.606
 internal branch at the minimum length	1263	425	33.65	406	432	0.4845	3.878e-01	0.4502	0.5189
+no terminal branch longer than 0.1	6563	4000	60.95	1458	1105	0.5689	3.314e-12	0.5494	0.5881
+a terminal branch longer than 0.1	1083	510	47.09	294	279	0.5131	5.587e-01	0.4713	0.5547
 loci with four intact models	4799	2936	61.18	1066	797	0.5722	4.984e-10	0.5494	0.5948
 loci with four intact models, internal branch above the minimum length	3897	2649	67.98	767	481	0.6146	5.377e-16	0.5869	0.6417
 loci with four intact models, UFBoot >= 95	1501	1311	87.34	155	35	0.8158	3.205e-19	0.7532	0.8682
