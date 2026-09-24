@@ -331,30 +331,44 @@ quartet_support	95 | major_share_of_discordant		0.6791	results/phylo/quartet_asy
 quartet_support	95 | binomial_p		3.982e-16	results/phylo/quartet_asymmetry_by_support.tsv
 quartet_support	95 | ci95_low		0.6367	results/phylo/quartet_asymmetry_by_support.tsv
 quartet_support	95 | ci95_high		0.7194	results/phylo/quartet_asymmetry_by_support.tsv
-quartet_sites	Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus | role		species_tree	results/phylo/quartet_site_patterns.tsv
-quartet_sites	Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus | n_informative_sites		37944	results/phylo/quartet_site_patterns.tsv
-quartet_sites	Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus | pct		47.6	results/phylo/quartet_site_patterns.tsv
-quartet_sites	Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus | binomial_p			results/phylo/quartet_site_patterns.tsv
-quartet_sites	Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus | ci95_low			results/phylo/quartet_site_patterns.tsv
-quartet_sites	Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus | ci95_high			results/phylo/quartet_site_patterns.tsv
-quartet_sites	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens | role		major_discordant_gene_trees	results/phylo/quartet_site_patterns.tsv
-quartet_sites	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens | n_informative_sites		20466	results/phylo/quartet_site_patterns.tsv
-quartet_sites	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens | pct		25.67	results/phylo/quartet_site_patterns.tsv
-quartet_sites	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens | binomial_p			results/phylo/quartet_site_patterns.tsv
-quartet_sites	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens | ci95_low			results/phylo/quartet_site_patterns.tsv
-quartet_sites	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens | ci95_high			results/phylo/quartet_site_patterns.tsv
-quartet_sites	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus | role		minor_discordant_gene_trees	results/phylo/quartet_site_patterns.tsv
-quartet_sites	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus | n_informative_sites		21304	results/phylo/quartet_site_patterns.tsv
-quartet_sites	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus | pct		26.73	results/phylo/quartet_site_patterns.tsv
-quartet_sites	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus | binomial_p			results/phylo/quartet_site_patterns.tsv
-quartet_sites	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus | ci95_low			results/phylo/quartet_site_patterns.tsv
-quartet_sites	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus | ci95_high			results/phylo/quartet_site_patterns.tsv
-quartet_sites	discordant sites: gene tree major vs minor | role		binomial_test	results/phylo/quartet_site_patterns.tsv
-quartet_sites	discordant sites: gene tree major vs minor | n_informative_sites		41770	results/phylo/quartet_site_patterns.tsv
-quartet_sites	discordant sites: gene tree major vs minor | pct		49.0	results/phylo/quartet_site_patterns.tsv
-quartet_sites	discordant sites: gene tree major vs minor | binomial_p		4.213e-05	results/phylo/quartet_site_patterns.tsv
-quartet_sites	discordant sites: gene tree major vs minor | ci95_low		0.4852	results/phylo/quartet_site_patterns.tsv
-quartet_sites	discordant sites: gene tree major vs minor | ci95_high		0.4948	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus vs species_tree | n_informative_sites		37944	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus vs species_tree | pct		47.6	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens vs major_discordant_gene_trees | n_informative_sites		20466	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens vs major_discordant_gene_trees | pct		25.67	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus vs minor_discordant_gene_trees | n_informative_sites		21304	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus vs minor_discordant_gene_trees | pct		26.73	results/phylo/quartet_site_patterns.tsv
+quartet_sites	discordant sites: gene tree major vs minor vs binomial_test | n_informative_sites		41770	results/phylo/quartet_site_patterns.tsv
+quartet_sites	discordant sites: gene tree major vs minor vs binomial_test | pct		49.0	results/phylo/quartet_site_patterns.tsv
+quartet_sites	discordant sites: gene tree major vs minor vs binomial_test | binomial_p		4.213e-05	results/phylo/quartet_site_patterns.tsv
+quartet_sites	discordant sites: gene tree major vs minor vs binomial_test | ci95_low		0.4852	results/phylo/quartet_site_patterns.tsv
+quartet_sites	discordant sites: gene tree major vs minor vs binomial_test | ci95_high		0.4948	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus vs locus_majority_species_tree | pct		67.82	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus vs locus_majority_species_tree | n_loci		3826	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens vs locus_majority_major_discordant_gene_trees | pct		19.38	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens vs locus_majority_major_discordant_gene_trees | n_loci		1093	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus vs locus_majority_minor_discordant_gene_trees | pct		12.8	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus vs locus_majority_minor_discordant_gene_trees | n_loci		722	results/phylo/quartet_site_patterns.tsv
+quartet_sites	locus majority: gene tree major vs minor vs binomial_test | pct		60.22	results/phylo/quartet_site_patterns.tsv
+quartet_sites	locus majority: gene tree major vs minor vs binomial_test | binomial_p		2.908e-18	results/phylo/quartet_site_patterns.tsv
+quartet_sites	locus majority: gene tree major vs minor vs binomial_test | ci95_low		0.5793	results/phylo/quartet_site_patterns.tsv
+quartet_sites	locus majority: gene tree major vs minor vs binomial_test | ci95_high		0.6248	results/phylo/quartet_site_patterns.tsv
+quartet_sites	locus majority: gene tree major vs minor vs binomial_test | n_loci		1815	results/phylo/quartet_site_patterns.tsv
+quartet_sites	loci without a majority split vs locus_majority_undecided | n_loci		3453	results/phylo/quartet_site_patterns.tsv
+quartet_sites	loci without a majority split vs locus_majority_undecided | n_loci_no_informative_sites		2924	results/phylo/quartet_site_patterns.tsv
+quartet_sites	informative sites per locus vs median | n_informative_sites		2.0	results/phylo/quartet_site_patterns.tsv
+quartet_sites	informative sites per locus vs median | n_loci		9094	results/phylo/quartet_site_patterns.tsv
+quartet_sites	top 1% of loci by informative sites vs concentration | n_informative_sites		37085	results/phylo/quartet_site_patterns.tsv
+quartet_sites	top 1% of loci by informative sites vs concentration | pct		46.52	results/phylo/quartet_site_patterns.tsv
+quartet_sites	top 1% of loci by informative sites vs concentration | n_loci		91	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus vs top_loci_species_tree | n_informative_sites		12031	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus vs top_loci_species_tree | pct		32.44	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus vs top_loci_species_tree | n_loci		91	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens vs top_loci_major_discordant_gene_trees | n_informative_sites		10839	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens vs top_loci_major_discordant_gene_trees | pct		29.23	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens vs top_loci_major_discordant_gene_trees | n_loci		91	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus vs top_loci_minor_discordant_gene_trees | n_informative_sites		14215	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus vs top_loci_minor_discordant_gene_trees | pct		38.33	results/phylo/quartet_site_patterns.tsv
+quartet_sites	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus vs top_loci_minor_discordant_gene_trees | n_loci		91	results/phylo/quartet_site_patterns.tsv
 branch_lengths	Cx_molestus | concat_tree		0.04106	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_molestus | n_gene_trees		7646	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_molestus | gene_tree_median		0.00409	results/phylo/branch_length_summary.tsv
@@ -436,7 +450,6 @@ cafe_branches	Cx_pallens+Cx_quinquefasciatus | node_label		<6>	results/cafe/bran
 cafe_branches	Cx_pallens+Cx_quinquefasciatus | increase		141	results/cafe/branch_summary.tsv
 cafe_branches	Cx_pallens+Cx_quinquefasciatus | decrease		0	results/cafe/branch_summary.tsv
 cafe_branches	Cx_pallens+Cx_quinquefasciatus | total		141	results/cafe/branch_summary.tsv
-cafe_branches	Cx_pallens+Cx_quinquefasciatus | ratio_inc_dec			results/cafe/branch_summary.tsv
 cafe_branches	Cx_pallens+Cx_quinquefasciatus | binomial_p		7.174648137343064e-43	results/cafe/branch_summary.tsv
 cafe_branches	Cx_pallens | node_label		Cx_pallens<1>	results/cafe/branch_summary.tsv
 cafe_branches	Cx_pallens | increase		69	results/cafe/branch_summary.tsv
@@ -454,7 +467,6 @@ cafe_branches	Cx_molestus+Cx_pipiens | node_label		<7>	results/cafe/branch_summa
 cafe_branches	Cx_molestus+Cx_pipiens | increase		45	results/cafe/branch_summary.tsv
 cafe_branches	Cx_molestus+Cx_pipiens | decrease		0	results/cafe/branch_summary.tsv
 cafe_branches	Cx_molestus+Cx_pipiens | total		45	results/cafe/branch_summary.tsv
-cafe_branches	Cx_molestus+Cx_pipiens | ratio_inc_dec			results/cafe/branch_summary.tsv
 cafe_branches	Cx_molestus+Cx_pipiens | binomial_p		5.684341886080802e-14	results/cafe/branch_summary.tsv
 cafe_branches	Cx_molestus | node_label		Cx_molestus<3>	results/cafe/branch_summary.tsv
 cafe_branches	Cx_molestus | increase		141	results/cafe/branch_summary.tsv
@@ -495,7 +507,6 @@ transfer_bias	n_lineages | value		4	results/cafe/transfer_bias_summary.tsv
 transfer_bias	per_lineage_counts_scope | value		all families (Gamma_clade_results)	results/cafe/transfer_bias_summary.tsv
 transfer_bias_bins	0 | n_families		1233	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	0 | mean_lifted_copies		0.6667	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	0 | mean_retention			results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	0 | mean_deficit		-0.6667	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	0 | n_significant		72	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	0 | pct_significant		5.839	results/cafe/transfer_bias_by_copy_number.tsv
@@ -539,8 +550,6 @@ ani	Cx_quinquefasciatus vs Cx_pipiens | ani		92.80	results/synteny/ani_pairs.tsv
 ani	Cx_quinquefasciatus vs Cx_pipiens | align_fraction_query		17.4200	results/synteny/ani_pairs.tsv
 ani	Cx_quinquefasciatus vs Cx_pipiens | align_fraction_ref		18.7300	results/synteny/ani_pairs.tsv
 ani	Cx_quinquefasciatus vs Cx_tarsalis | ani		NA	results/synteny/ani_pairs.tsv
-ani	Cx_quinquefasciatus vs Cx_tarsalis | align_fraction_query			results/synteny/ani_pairs.tsv
-ani	Cx_quinquefasciatus vs Cx_tarsalis | align_fraction_ref			results/synteny/ani_pairs.tsv
 ani	Cx_pallens vs Cx_molestus | ani		93.55	results/synteny/ani_pairs.tsv
 ani	Cx_pallens vs Cx_molestus | align_fraction_query		20.6200	results/synteny/ani_pairs.tsv
 ani	Cx_pallens vs Cx_molestus | align_fraction_ref		20.8600	results/synteny/ani_pairs.tsv
@@ -548,17 +557,11 @@ ani	Cx_pallens vs Cx_pipiens | ani		93.33	results/synteny/ani_pairs.tsv
 ani	Cx_pallens vs Cx_pipiens | align_fraction_query		20.6300	results/synteny/ani_pairs.tsv
 ani	Cx_pallens vs Cx_pipiens | align_fraction_ref		21.9100	results/synteny/ani_pairs.tsv
 ani	Cx_pallens vs Cx_tarsalis | ani		NA	results/synteny/ani_pairs.tsv
-ani	Cx_pallens vs Cx_tarsalis | align_fraction_query			results/synteny/ani_pairs.tsv
-ani	Cx_pallens vs Cx_tarsalis | align_fraction_ref			results/synteny/ani_pairs.tsv
 ani	Cx_molestus vs Cx_pipiens | ani		94.35	results/synteny/ani_pairs.tsv
 ani	Cx_molestus vs Cx_pipiens | align_fraction_query		27.3900	results/synteny/ani_pairs.tsv
 ani	Cx_molestus vs Cx_pipiens | align_fraction_ref		28.7500	results/synteny/ani_pairs.tsv
 ani	Cx_molestus vs Cx_tarsalis | ani		NA	results/synteny/ani_pairs.tsv
-ani	Cx_molestus vs Cx_tarsalis | align_fraction_query			results/synteny/ani_pairs.tsv
-ani	Cx_molestus vs Cx_tarsalis | align_fraction_ref			results/synteny/ani_pairs.tsv
 ani	Cx_pipiens vs Cx_tarsalis | ani		NA	results/synteny/ani_pairs.tsv
-ani	Cx_pipiens vs Cx_tarsalis | align_fraction_query			results/synteny/ani_pairs.tsv
-ani	Cx_pipiens vs Cx_tarsalis | align_fraction_ref			results/synteny/ani_pairs.tsv
 synteny	Cx_quinquefasciatus_vs_Cx_pallens | sample1		Cx_quinquefasciatus	results/synteny/synteny_summary.tsv
 synteny	Cx_quinquefasciatus_vs_Cx_pallens | sample2		Cx_pallens	results/synteny/synteny_summary.tsv
 synteny	Cx_quinquefasciatus_vs_Cx_pallens | n_shared_genes_chr1_3		14210	results/synteny/synteny_summary.tsv
