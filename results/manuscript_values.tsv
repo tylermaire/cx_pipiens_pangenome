@@ -571,6 +571,9 @@ ani	Cx_pipiens vs Cx_tarsalis | ani		NA	results/synteny/ani_pairs.tsv
 synteny	Cx_quinquefasciatus_vs_Cx_pallens | sample1		Cx_quinquefasciatus	results/synteny/synteny_summary.tsv
 synteny	Cx_quinquefasciatus_vs_Cx_pallens | sample2		Cx_pallens	results/synteny/synteny_summary.tsv
 synteny	Cx_quinquefasciatus_vs_Cx_pallens | n_shared_genes_chr1_3		14210	results/synteny/synteny_summary.tsv
+synteny	Cx_quinquefasciatus_vs_Cx_pallens | n_shared_genes_top_sequences		16160	results/synteny/synteny_summary.tsv
+synteny	Cx_quinquefasciatus_vs_Cx_pallens | n_shared_genes_other_chromosome		1950	results/synteny/synteny_summary.tsv
+synteny	Cx_quinquefasciatus_vs_Cx_pallens | pct_shared_genes_other_chromosome		12.07	results/synteny/synteny_summary.tsv
 synteny	Cx_quinquefasciatus_vs_Cx_pallens | pct_collinear_anchors		85.38	results/synteny/synteny_summary.tsv
 synteny	Cx_quinquefasciatus_vs_Cx_pallens | n_chrom_pairs_reverse_oriented		3	results/synteny/synteny_summary.tsv
 synteny	Cx_quinquefasciatus_vs_Cx_pallens | n_inversions_intra_chr		77	results/synteny/synteny_summary.tsv
@@ -583,6 +586,9 @@ synteny	Cx_quinquefasciatus_vs_Cx_pallens | aln_identity_source		minimap2 asm20,
 synteny	Cx_quinquefasciatus_vs_Cx_molestus | sample1		Cx_quinquefasciatus	results/synteny/synteny_summary.tsv
 synteny	Cx_quinquefasciatus_vs_Cx_molestus | sample2		Cx_molestus	results/synteny/synteny_summary.tsv
 synteny	Cx_quinquefasciatus_vs_Cx_molestus | n_shared_genes_chr1_3		13762	results/synteny/synteny_summary.tsv
+synteny	Cx_quinquefasciatus_vs_Cx_molestus | n_shared_genes_top_sequences		15897	results/synteny/synteny_summary.tsv
+synteny	Cx_quinquefasciatus_vs_Cx_molestus | n_shared_genes_other_chromosome		2135	results/synteny/synteny_summary.tsv
+synteny	Cx_quinquefasciatus_vs_Cx_molestus | pct_shared_genes_other_chromosome		13.43	results/synteny/synteny_summary.tsv
 synteny	Cx_quinquefasciatus_vs_Cx_molestus | pct_collinear_anchors		83.81	results/synteny/synteny_summary.tsv
 synteny	Cx_quinquefasciatus_vs_Cx_molestus | n_chrom_pairs_reverse_oriented		1	results/synteny/synteny_summary.tsv
 synteny	Cx_quinquefasciatus_vs_Cx_molestus | n_inversions_intra_chr		112	results/synteny/synteny_summary.tsv
@@ -595,6 +601,9 @@ synteny	Cx_quinquefasciatus_vs_Cx_molestus | aln_identity_source		minimap2 asm20
 synteny	Cx_quinquefasciatus_vs_Cx_pipiens | sample1		Cx_quinquefasciatus	results/synteny/synteny_summary.tsv
 synteny	Cx_quinquefasciatus_vs_Cx_pipiens | sample2		Cx_pipiens	results/synteny/synteny_summary.tsv
 synteny	Cx_quinquefasciatus_vs_Cx_pipiens | n_shared_genes_chr1_3		15257	results/synteny/synteny_summary.tsv
+synteny	Cx_quinquefasciatus_vs_Cx_pipiens | n_shared_genes_top_sequences		16955	results/synteny/synteny_summary.tsv
+synteny	Cx_quinquefasciatus_vs_Cx_pipiens | n_shared_genes_other_chromosome		1698	results/synteny/synteny_summary.tsv
+synteny	Cx_quinquefasciatus_vs_Cx_pipiens | pct_shared_genes_other_chromosome		10.01	results/synteny/synteny_summary.tsv
 synteny	Cx_quinquefasciatus_vs_Cx_pipiens | pct_collinear_anchors		88.08	results/synteny/synteny_summary.tsv
 synteny	Cx_quinquefasciatus_vs_Cx_pipiens | n_chrom_pairs_reverse_oriented		2	results/synteny/synteny_summary.tsv
 synteny	Cx_quinquefasciatus_vs_Cx_pipiens | n_inversions_intra_chr		49	results/synteny/synteny_summary.tsv
@@ -607,6 +616,9 @@ synteny	Cx_quinquefasciatus_vs_Cx_pipiens | aln_identity_source		minimap2 asm20,
 synteny	Cx_pallens_vs_Cx_molestus | sample1		Cx_pallens	results/synteny/synteny_summary.tsv
 synteny	Cx_pallens_vs_Cx_molestus | sample2		Cx_molestus	results/synteny/synteny_summary.tsv
 synteny	Cx_pallens_vs_Cx_molestus | n_shared_genes_chr1_3		12808	results/synteny/synteny_summary.tsv
+synteny	Cx_pallens_vs_Cx_molestus | n_shared_genes_top_sequences		14753	results/synteny/synteny_summary.tsv
+synteny	Cx_pallens_vs_Cx_molestus | n_shared_genes_other_chromosome		1945	results/synteny/synteny_summary.tsv
+synteny	Cx_pallens_vs_Cx_molestus | pct_shared_genes_other_chromosome		13.18	results/synteny/synteny_summary.tsv
 synteny	Cx_pallens_vs_Cx_molestus | pct_collinear_anchors		83.06	results/synteny/synteny_summary.tsv
 synteny	Cx_pallens_vs_Cx_molestus | n_chrom_pairs_reverse_oriented		2	results/synteny/synteny_summary.tsv
 synteny	Cx_pallens_vs_Cx_molestus | n_inversions_intra_chr		129	results/synteny/synteny_summary.tsv
@@ -619,6 +631,9 @@ synteny	Cx_pallens_vs_Cx_molestus | aln_identity_source		minimap2 asm20, chromos
 synteny	Cx_pallens_vs_Cx_pipiens | sample1		Cx_pallens	results/synteny/synteny_summary.tsv
 synteny	Cx_pallens_vs_Cx_pipiens | sample2		Cx_pipiens	results/synteny/synteny_summary.tsv
 synteny	Cx_pallens_vs_Cx_pipiens | n_shared_genes_chr1_3		13882	results/synteny/synteny_summary.tsv
+synteny	Cx_pallens_vs_Cx_pipiens | n_shared_genes_top_sequences		15683	results/synteny/synteny_summary.tsv
+synteny	Cx_pallens_vs_Cx_pipiens | n_shared_genes_other_chromosome		1801	results/synteny/synteny_summary.tsv
+synteny	Cx_pallens_vs_Cx_pipiens | pct_shared_genes_other_chromosome		11.48	results/synteny/synteny_summary.tsv
 synteny	Cx_pallens_vs_Cx_pipiens | pct_collinear_anchors		87.81	results/synteny/synteny_summary.tsv
 synteny	Cx_pallens_vs_Cx_pipiens | n_chrom_pairs_reverse_oriented		1	results/synteny/synteny_summary.tsv
 synteny	Cx_pallens_vs_Cx_pipiens | n_inversions_intra_chr		60	results/synteny/synteny_summary.tsv
@@ -631,6 +646,9 @@ synteny	Cx_pallens_vs_Cx_pipiens | aln_identity_source		minimap2 asm20, chromoso
 synteny	Cx_molestus_vs_Cx_pipiens | sample1		Cx_molestus	results/synteny/synteny_summary.tsv
 synteny	Cx_molestus_vs_Cx_pipiens | sample2		Cx_pipiens	results/synteny/synteny_summary.tsv
 synteny	Cx_molestus_vs_Cx_pipiens | n_shared_genes_chr1_3		13555	results/synteny/synteny_summary.tsv
+synteny	Cx_molestus_vs_Cx_pipiens | n_shared_genes_top_sequences		15517	results/synteny/synteny_summary.tsv
+synteny	Cx_molestus_vs_Cx_pipiens | n_shared_genes_other_chromosome		1962	results/synteny/synteny_summary.tsv
+synteny	Cx_molestus_vs_Cx_pipiens | pct_shared_genes_other_chromosome		12.64	results/synteny/synteny_summary.tsv
 synteny	Cx_molestus_vs_Cx_pipiens | pct_collinear_anchors		85.39	results/synteny/synteny_summary.tsv
 synteny	Cx_molestus_vs_Cx_pipiens | n_chrom_pairs_reverse_oriented		3	results/synteny/synteny_summary.tsv
 synteny	Cx_molestus_vs_Cx_pipiens | n_inversions_intra_chr		109	results/synteny/synteny_summary.tsv
