@@ -1,16 +1,18 @@
-split	role	n_informative_sites	pct	binomial_p	ci95_low	ci95_high	n_loci	n_loci_no_informative_sites
-Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus	species_tree	37944	47.6					
-Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens	major_discordant_gene_trees	20466	25.67					
-Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus	minor_discordant_gene_trees	21304	26.73					
-discordant sites: gene tree major vs minor	binomial_test	41770	49.0	4.213e-05	0.4852	0.4948		
-Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus	locus_majority_species_tree		67.82				3826	
-Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens	locus_majority_major_discordant_gene_trees		19.38				1093	
-Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus	locus_majority_minor_discordant_gene_trees		12.8				722	
-locus majority: gene tree major vs minor	binomial_test		60.22	2.908e-18	0.5793	0.6248	1815	
-loci without a majority split	locus_majority_undecided						3453	2924
-informative sites per locus	median	2.0					9094	
-top 1% of loci by informative sites	concentration	37085	46.52				91	
-Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus	top_loci_species_tree	12031	32.44				91	
-Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens	top_loci_major_discordant_gene_trees	10839	29.23				91	
-Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus	top_loci_minor_discordant_gene_trees	14215	38.33				91	
-discordant sites outside the top 1% of loci: gene tree major vs minor	binomial_test	16716	57.59	4.712e-86	0.5684	0.5834	9003	
+split	role	n_informative_sites	pct	binomial_p	ci95_low	ci95_high	n_loci	n_loci_no_informative_sites	n_loci_not_intact
+Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus	species_tree	37944	47.6						
+Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens	major_discordant_gene_trees	20466	25.67						
+Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus	minor_discordant_gene_trees	21304	26.73						
+discordant sites: gene tree major vs minor	binomial_test	41770	49.0	4.213e-05	0.4852	0.4948			
+Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus	locus_majority_species_tree		67.82				3826		
+Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens	locus_majority_major_discordant_gene_trees		19.38				1093		
+Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus	locus_majority_minor_discordant_gene_trees		12.8				722		
+locus majority: gene tree major vs minor	binomial_test		60.22	2.908e-18	0.5793	0.6248	1815		
+loci without a majority split	locus_majority_undecided						3453	2924	
+informative sites per locus	median	2.0					9094		
+top 1% of loci by informative sites	concentration	37085	46.52				91		
+Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus	top_loci_species_tree	12031	32.44				91		
+Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens	top_loci_major_discordant_gene_trees	10839	29.23				91		
+Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus	top_loci_minor_discordant_gene_trees	14215	38.33				91		
+discordant sites outside the top 1% of loci: gene tree major vs minor	binomial_test	16716	57.59	4.712e-86	0.5684	0.5834	9003		
+top 1% of loci by informative sites	loci_with_a_model_not_intact		98.9				91		90
+loci outside the top 1%	loci_with_a_model_not_intact		34.22				9003		3081

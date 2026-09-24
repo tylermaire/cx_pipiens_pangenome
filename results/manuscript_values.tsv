@@ -375,6 +375,75 @@ quartet_sites	discordant sites outside the top 1% of loci: gene tree major vs mi
 quartet_sites	discordant sites outside the top 1% of loci: gene tree major vs minor vs binomial_test | ci95_low		0.5684	results/phylo/quartet_site_patterns.tsv
 quartet_sites	discordant sites outside the top 1% of loci: gene tree major vs minor vs binomial_test | ci95_high		0.5834	results/phylo/quartet_site_patterns.tsv
 quartet_sites	discordant sites outside the top 1% of loci: gene tree major vs minor vs binomial_test | n_loci		9003	results/phylo/quartet_site_patterns.tsv
+quartet_sites	top 1% of loci by informative sites vs loci_with_a_model_not_intact | pct		98.9	results/phylo/quartet_site_patterns.tsv
+quartet_sites	top 1% of loci by informative sites vs loci_with_a_model_not_intact | n_loci		91	results/phylo/quartet_site_patterns.tsv
+quartet_sites	top 1% of loci by informative sites vs loci_with_a_model_not_intact | n_loci_not_intact		90	results/phylo/quartet_site_patterns.tsv
+quartet_sites	loci outside the top 1% vs loci_with_a_model_not_intact | pct		34.22	results/phylo/quartet_site_patterns.tsv
+quartet_sites	loci outside the top 1% vs loci_with_a_model_not_intact | n_loci		9003	results/phylo/quartet_site_patterns.tsv
+quartet_sites	loci outside the top 1% vs loci_with_a_model_not_intact | n_loci_not_intact		3081	results/phylo/quartet_site_patterns.tsv
+quartet_robustness	all gene trees | n_gene_trees		7646	results/phylo/quartet_robustness.tsv
+quartet_robustness	all gene trees | n_concordant		4510	results/phylo/quartet_robustness.tsv
+quartet_robustness	all gene trees | pct_concordant		58.99	results/phylo/quartet_robustness.tsv
+quartet_robustness	all gene trees | n_major		1752	results/phylo/quartet_robustness.tsv
+quartet_robustness	all gene trees | n_minor		1384	results/phylo/quartet_robustness.tsv
+quartet_robustness	all gene trees | major_share_of_discordant		0.5587	results/phylo/quartet_robustness.tsv
+quartet_robustness	all gene trees | binomial_p		5.348e-11	results/phylo/quartet_robustness.tsv
+quartet_robustness	all gene trees | ci95_low		0.5411	results/phylo/quartet_robustness.tsv
+quartet_robustness	all gene trees | ci95_high		0.5762	results/phylo/quartet_robustness.tsv
+quartet_robustness	internal branch above the minimum length | n_gene_trees		6383	results/phylo/quartet_robustness.tsv
+quartet_robustness	internal branch above the minimum length | n_concordant		4085	results/phylo/quartet_robustness.tsv
+quartet_robustness	internal branch above the minimum length | pct_concordant		64.0	results/phylo/quartet_robustness.tsv
+quartet_robustness	internal branch above the minimum length | n_major		1346	results/phylo/quartet_robustness.tsv
+quartet_robustness	internal branch above the minimum length | n_minor		952	results/phylo/quartet_robustness.tsv
+quartet_robustness	internal branch above the minimum length | major_share_of_discordant		0.5857	results/phylo/quartet_robustness.tsv
+quartet_robustness	internal branch above the minimum length | binomial_p		2.068e-16	results/phylo/quartet_robustness.tsv
+quartet_robustness	internal branch above the minimum length | ci95_low		0.5653	results/phylo/quartet_robustness.tsv
+quartet_robustness	internal branch above the minimum length | ci95_high		0.606	results/phylo/quartet_robustness.tsv
+quartet_robustness	internal branch at the minimum length | n_gene_trees		1263	results/phylo/quartet_robustness.tsv
+quartet_robustness	internal branch at the minimum length | n_concordant		425	results/phylo/quartet_robustness.tsv
+quartet_robustness	internal branch at the minimum length | pct_concordant		33.65	results/phylo/quartet_robustness.tsv
+quartet_robustness	internal branch at the minimum length | n_major		406	results/phylo/quartet_robustness.tsv
+quartet_robustness	internal branch at the minimum length | n_minor		432	results/phylo/quartet_robustness.tsv
+quartet_robustness	internal branch at the minimum length | major_share_of_discordant		0.4845	results/phylo/quartet_robustness.tsv
+quartet_robustness	internal branch at the minimum length | binomial_p		3.878e-01	results/phylo/quartet_robustness.tsv
+quartet_robustness	internal branch at the minimum length | ci95_low		0.4502	results/phylo/quartet_robustness.tsv
+quartet_robustness	internal branch at the minimum length | ci95_high		0.5189	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models | n_gene_trees		4799	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models | n_concordant		2936	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models | pct_concordant		61.18	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models | n_major		1066	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models | n_minor		797	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models | major_share_of_discordant		0.5722	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models | binomial_p		4.984e-10	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models | ci95_low		0.5494	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models | ci95_high		0.5948	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models, internal branch above the minimum length | n_gene_trees		3897	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models, internal branch above the minimum length | n_concordant		2649	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models, internal branch above the minimum length | pct_concordant		67.98	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models, internal branch above the minimum length | n_major		767	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models, internal branch above the minimum length | n_minor		481	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models, internal branch above the minimum length | major_share_of_discordant		0.6146	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models, internal branch above the minimum length | binomial_p		5.377e-16	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models, internal branch above the minimum length | ci95_low		0.5869	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models, internal branch above the minimum length | ci95_high		0.6417	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models, UFBoot >= 95 | n_gene_trees		1501	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models, UFBoot >= 95 | n_concordant		1311	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models, UFBoot >= 95 | pct_concordant		87.34	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models, UFBoot >= 95 | n_major		155	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models, UFBoot >= 95 | n_minor		35	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models, UFBoot >= 95 | major_share_of_discordant		0.8158	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models, UFBoot >= 95 | binomial_p		3.205e-19	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models, UFBoot >= 95 | ci95_low		0.7532	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with four intact models, UFBoot >= 95 | ci95_high		0.8682	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with a model that is not intact | n_gene_trees		2847	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with a model that is not intact | n_concordant		1574	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with a model that is not intact | pct_concordant		55.29	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with a model that is not intact | n_major		686	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with a model that is not intact | n_minor		587	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with a model that is not intact | major_share_of_discordant		0.5389	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with a model that is not intact | binomial_p		5.998e-03	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with a model that is not intact | ci95_low		0.511	results/phylo/quartet_robustness.tsv
+quartet_robustness	loci with a model that is not intact | ci95_high		0.5665	results/phylo/quartet_robustness.tsv
 branch_lengths	Cx_molestus | concat_tree		0.04106	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_molestus | n_gene_trees		7646	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_molestus | gene_tree_median		0.00409	results/phylo/branch_length_summary.tsv
@@ -486,66 +555,88 @@ cafe_branches	Cx_pipiens | decrease		749	results/cafe/branch_summary.tsv
 cafe_branches	Cx_pipiens | total		940	results/cafe/branch_summary.tsv
 cafe_branches	Cx_pipiens | ratio_inc_dec		0.255	results/cafe/branch_summary.tsv
 cafe_branches	Cx_pipiens | binomial_p		1.1107036271492301e-78	results/cafe/branch_summary.tsv
-transfer_bias	n_families | value		13885	results/cafe/transfer_bias_summary.tsv
+transfer_bias	n_families | value		12908	results/cafe/transfer_bias_summary.tsv
+transfer_bias	n_families_in_counts | value		13885	results/cafe/transfer_bias_summary.tsv
+transfer_bias	n_families_not_tested | value		977	results/cafe/transfer_bias_summary.tsv
 transfer_bias	n_significant | value		333	results/cafe/transfer_bias_summary.tsv
 transfer_bias	reference | value		Cx_quinquefasciatus	results/cafe/transfer_bias_summary.tsv
-transfer_bias	n_families_single_copy | value		11302	results/cafe/transfer_bias_summary.tsv
-transfer_bias	n_families_multi_copy | value		1350	results/cafe/transfer_bias_summary.tsv
-transfer_bias	n_families_zero_ref_copy | value		1233	results/cafe/transfer_bias_summary.tsv
+transfer_bias	n_families_single_copy | value		11012	results/cafe/transfer_bias_summary.tsv
+transfer_bias	n_families_multi_copy | value		1318	results/cafe/transfer_bias_summary.tsv
+transfer_bias	n_families_zero_ref_copy | value		578	results/cafe/transfer_bias_summary.tsv
 transfer_bias	n_significant_single_copy | value		14	results/cafe/transfer_bias_summary.tsv
 transfer_bias	n_significant_multi_copy | value		247	results/cafe/transfer_bias_summary.tsv
 transfer_bias	n_significant_zero_ref_copy | value		72	results/cafe/transfer_bias_summary.tsv
-transfer_bias	retention_single_copy | value		0.922	results/cafe/transfer_bias_summary.tsv
-transfer_bias	retention_multi_copy | value		0.7269	results/cafe/transfer_bias_summary.tsv
-transfer_bias	pct_significant_single_copy | value		0.124	results/cafe/transfer_bias_summary.tsv
-transfer_bias	pct_significant_multi_copy | value		18.296	results/cafe/transfer_bias_summary.tsv
-transfer_bias	pct_significant_zero_ref_copy | value		5.839	results/cafe/transfer_bias_summary.tsv
-transfer_bias	odds_ratio_multi_vs_single_copy | value		180.555	results/cafe/transfer_bias_summary.tsv
-transfer_bias	risk_ratio_multi_vs_single_copy | value		147.703	results/cafe/transfer_bias_summary.tsv
-transfer_bias	fisher_p_two_sided | value		5.67e-228	results/cafe/transfer_bias_summary.tsv
+transfer_bias	retention_single_copy | value		0.9397	results/cafe/transfer_bias_summary.tsv
+transfer_bias	retention_multi_copy | value		0.742	results/cafe/transfer_bias_summary.tsv
+transfer_bias	pct_significant_single_copy | value		0.127	results/cafe/transfer_bias_summary.tsv
+transfer_bias	pct_significant_multi_copy | value		18.741	results/cafe/transfer_bias_summary.tsv
+transfer_bias	pct_significant_zero_ref_copy | value		12.457	results/cafe/transfer_bias_summary.tsv
+transfer_bias	odds_ratio_multi_vs_single_copy | value		181.173	results/cafe/transfer_bias_summary.tsv
+transfer_bias	risk_ratio_multi_vs_single_copy | value		147.408	results/cafe/transfer_bias_summary.tsv
+transfer_bias	fisher_p_two_sided | value		5.06e-228	results/cafe/transfer_bias_summary.tsv
 transfer_bias	mean_deficit_significant | value		1.7356	results/cafe/transfer_bias_summary.tsv
-transfer_bias	mean_deficit_not_significant | value		0.119	results/cafe/transfer_bias_summary.tsv
+transfer_bias	mean_deficit_not_significant | value		0.0971	results/cafe/transfer_bias_summary.tsv
 transfer_bias	mannwhitney_p_ref_copies_two_sided | value		< 1e-300	results/cafe/transfer_bias_summary.tsv
-transfer_bias	mannwhitney_p_deficit_two_sided | value		1.86e-231	results/cafe/transfer_bias_summary.tsv
-transfer_bias	per_lineage_pearson_r | value		0.9939	results/cafe/transfer_bias_summary.tsv
-transfer_bias	per_lineage_p | value		0.00612	results/cafe/transfer_bias_summary.tsv
+transfer_bias	mannwhitney_p_deficit_two_sided | value		3.42e-250	results/cafe/transfer_bias_summary.tsv
+transfer_bias	per_lineage_pearson_r | value		0.9917	results/cafe/transfer_bias_summary.tsv
+transfer_bias	per_lineage_p | value		0.00833	results/cafe/transfer_bias_summary.tsv
 transfer_bias	n_lineages | value		4	results/cafe/transfer_bias_summary.tsv
 transfer_bias	per_lineage_counts_scope | value		all families (Gamma_clade_results)	results/cafe/transfer_bias_summary.tsv
-transfer_bias_bins	0 | n_families		1233	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	0 | mean_lifted_copies		0.6667	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	0 | mean_deficit		-0.6667	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	0 | n_families		578	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	0 | mean_lifted_copies		0.9135	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	0 | mean_deficit		-0.9135	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	0 | n_significant		72	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	0 | pct_significant		5.839	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	1 | n_families		11302	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	1 | mean_lifted_copies		0.922	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	1 | mean_retention		0.922	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	1 | mean_deficit		0.078	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	0 | pct_significant		12.457	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	1 | n_families		11012	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	1 | mean_lifted_copies		0.9397	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	1 | mean_retention		0.9397	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	1 | mean_deficit		0.0603	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	1 | n_significant		14	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	1 | pct_significant		0.124	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	2 | n_families		906	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	2 | mean_lifted_copies		1.4919	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	2 | mean_retention		0.746	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	2 | mean_deficit		0.5081	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	1 | pct_significant		0.127	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	2 | n_families		885	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	2 | mean_lifted_copies		1.5228	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	2 | mean_retention		0.7614	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	2 | mean_deficit		0.4772	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	2 | n_significant		118	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	2 | pct_significant		13.024	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	3-5 | n_families		381	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	3-5 | mean_lifted_copies		2.4418	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	3-5 | mean_retention		0.6986	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	3-5 | mean_deficit		1.0437	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	2 | pct_significant		13.333	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	3-5 | n_families		374	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	3-5 | mean_lifted_copies		2.4786	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	3-5 | mean_retention		0.7089	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	3-5 | mean_deficit		1.008	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	3-5 | n_significant		100	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	3-5 | pct_significant		26.247	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	6-10 | n_families		55	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	6-10 | mean_lifted_copies		4.4485	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	6-10 | mean_retention		0.6212	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	6-10 | mean_deficit		2.697	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	3-5 | pct_significant		26.738	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	6-10 | n_families		51	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	6-10 | mean_lifted_copies		4.7647	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	6-10 | mean_retention		0.6652	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	6-10 | mean_deficit		2.3922	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	6-10 | n_significant		23	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	6-10 | pct_significant		41.818	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	6-10 | pct_significant		45.098	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	11+ | n_families		8	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	11+ | mean_lifted_copies		10.5417	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	11+ | mean_retention		0.6381	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	11+ | mean_deficit		4.9583	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	11+ | n_significant		6	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	11+ | pct_significant		75.0	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_lineage	Cx_quinquefasciatus | total_copies		14575	results/cafe/transfer_bias_by_lineage.tsv
+transfer_bias_lineage	Cx_quinquefasciatus | copy_deficit_vs_reference		0	results/cafe/transfer_bias_by_lineage.tsv
+transfer_bias_lineage	Cx_quinquefasciatus | increase		587	results/cafe/transfer_bias_by_lineage.tsv
+transfer_bias_lineage	Cx_quinquefasciatus | decrease		589	results/cafe/transfer_bias_by_lineage.tsv
+transfer_bias_lineage	Cx_quinquefasciatus | net_contraction		2	results/cafe/transfer_bias_by_lineage.tsv
+transfer_bias_lineage	Cx_pipiens | total_copies		13741	results/cafe/transfer_bias_by_lineage.tsv
+transfer_bias_lineage	Cx_pipiens | copy_deficit_vs_reference		834	results/cafe/transfer_bias_by_lineage.tsv
+transfer_bias_lineage	Cx_pipiens | increase		191	results/cafe/transfer_bias_by_lineage.tsv
+transfer_bias_lineage	Cx_pipiens | decrease		749	results/cafe/transfer_bias_by_lineage.tsv
+transfer_bias_lineage	Cx_pipiens | net_contraction		558	results/cafe/transfer_bias_by_lineage.tsv
+transfer_bias_lineage	Cx_pallens | total_copies		13410	results/cafe/transfer_bias_by_lineage.tsv
+transfer_bias_lineage	Cx_pallens | copy_deficit_vs_reference		1165	results/cafe/transfer_bias_by_lineage.tsv
+transfer_bias_lineage	Cx_pallens | increase		69	results/cafe/transfer_bias_by_lineage.tsv
+transfer_bias_lineage	Cx_pallens | decrease		1028	results/cafe/transfer_bias_by_lineage.tsv
+transfer_bias_lineage	Cx_pallens | net_contraction		959	results/cafe/transfer_bias_by_lineage.tsv
+transfer_bias_lineage	Cx_molestus | total_copies		13284	results/cafe/transfer_bias_by_lineage.tsv
+transfer_bias_lineage	Cx_molestus | copy_deficit_vs_reference		1291	results/cafe/transfer_bias_by_lineage.tsv
+transfer_bias_lineage	Cx_molestus | increase		141	results/cafe/transfer_bias_by_lineage.tsv
+transfer_bias_lineage	Cx_molestus | decrease		1129	results/cafe/transfer_bias_by_lineage.tsv
+transfer_bias_lineage	Cx_molestus | net_contraction		988	results/cafe/transfer_bias_by_lineage.tsv
 ani	Cx_quinquefasciatus vs Cx_pallens | ani		94.22	results/synteny/ani_pairs.tsv
 ani	Cx_quinquefasciatus vs Cx_pallens | align_fraction_query		24.1600	results/synteny/ani_pairs.tsv
 ani	Cx_quinquefasciatus vs Cx_pallens | align_fraction_ref		24.4600	results/synteny/ani_pairs.tsv
