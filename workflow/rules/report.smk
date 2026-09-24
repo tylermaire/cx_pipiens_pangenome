@@ -14,6 +14,7 @@ rule manuscript_values:
         "results/validation/absence_summary.tsv",
         "results/phylo/concord.cf.tree",
         "results/phylo/quartet_asymmetry_by_support.tsv",
+        "results/phylo/quartet_robustness.tsv",
         "results/phylo/branch_length_summary.tsv",
         "results/cafe/transfer_bias_summary.tsv",
         "results/synteny/synteny_summary.tsv",

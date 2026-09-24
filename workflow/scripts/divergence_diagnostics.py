@@ -12,8 +12,9 @@ the typical locus from the outliers.
 Outputs:
   branch_lengths   per taxon: branch in the concatenated tree, and across the
                    per locus gene trees the median, mean, 90th percentile,
-                   share above 0.1 and share at IQ-TREE's minimum (identical
-                   sequences); the internal branch likewise
+                   share above 0.1 and share at IQ-TREE's minimum (no
+                   substitution inferred on the branch); the internal branch
+                   likewise
   pairwise         per pair of taxa: protein identity over the trimmed SCO
                    alignments (columns where both have a residue), median,
                    mean, 5th percentile and share of loci below 95%

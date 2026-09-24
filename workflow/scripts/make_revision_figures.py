@@ -331,8 +331,13 @@ def figure2(dpi):
     a2 = int(role["minor_discordant_gene_trees"]["n_informative_sites"])
     t1 = int(role["top_loci_major_discordant_gene_trees"]["n_informative_sites"])
     t2 = int(role["top_loci_minor_discordant_gene_trees"]["n_informative_sites"])
+    robust = {r["subset"]: r for r in read_tsv("results/phylo/quartet_robustness.tsv")}
+    res = robust["internal branch above the minimum length"]
+    ok = robust["loci with four intact models"]
     measures = [
         ("Gene trees", int(s0["n_major"]), int(s0["n_minor"])),
+        ("Gene trees, resolved", int(res["n_major"]), int(res["n_minor"])),
+        ("Gene trees, intact models", int(ok["n_major"]), int(ok["n_minor"])),
         ("Gene trees, UFBoot \u2265 95", int(s95["n_major"]), int(s95["n_minor"])),
         ("Loci (site majority)", int(role["locus_majority_major_discordant_gene_trees"]["n_loci"]),
          int(role["locus_majority_minor_discordant_gene_trees"]["n_loci"])),
@@ -353,7 +358,7 @@ def figure2(dpi):
     ax.set_xlim(0.45, 0.80)
     ax.set_xticks([0.45, 0.5, 0.55, 0.6, 0.65, 0.7])
     ax.set_xlabel("Share with mol + qui | pal + pip")
-    ax.set_title("(d) Weighting loci equally or by sites")
+    ax.set_title("(d) Excess by subset and measure")
     clean(ax, "x")
     save(fig, "Figure_2_phylogeny", dpi)
 

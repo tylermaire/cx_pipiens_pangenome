@@ -52,7 +52,8 @@ rule cafe_transfer_bias:
     input:
         counts="results/cafe/gene_counts_filtered.tsv",
         sig="results/cafe/significant_families.tsv",
-        branch="results/cafe/branch_summary.tsv"
+        branch="results/cafe/branch_summary.tsv",
+        cafe_dir="results/cafe/output"
     output:
         summary="results/cafe/transfer_bias_summary.tsv",
         bins="results/cafe/transfer_bias_by_copy_number.tsv",

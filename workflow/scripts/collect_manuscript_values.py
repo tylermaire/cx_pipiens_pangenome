@@ -201,6 +201,7 @@ def phylogeny():
     for path, section in (("results/phylo/quartet_topology_counts.tsv", "quartet"),
                           ("results/phylo/quartet_asymmetry_by_support.tsv", "quartet_support"),
                           ("results/phylo/quartet_site_patterns.tsv", "quartet_sites"),
+                          ("results/phylo/quartet_robustness.tsv", "quartet_robustness"),
                           ("results/phylo/branch_length_summary.tsv", "branch_lengths"),
                           ("results/phylo/sco_pairwise_identity.tsv", "sco_identity"),
                           ("results/phylo/locus_accounting.tsv", "loci")):
@@ -228,7 +229,8 @@ def cafe():
         "results/cafe/significant_families.tsv")
     for path, section in (("results/cafe/branch_summary.tsv", "cafe_branches"),
                           ("results/cafe/transfer_bias_summary.tsv", "transfer_bias"),
-                          ("results/cafe/transfer_bias_by_copy_number.tsv", "transfer_bias_bins")):
+                          ("results/cafe/transfer_bias_by_copy_number.tsv", "transfer_bias_bins"),
+                          ("results/cafe/transfer_bias_by_lineage.tsv", "transfer_bias_lineage")):
         rows = read_tsv(path)
         if rows is None:
             add(section, "table", None, path)
