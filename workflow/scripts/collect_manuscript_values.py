@@ -54,6 +54,8 @@ def flatten(section, path, rows):
     for r in rows:
         label = " vs ".join(str(r[k]) for k in keys[:n_key])
         for k in keys[n_key:]:
+            if r[k] == "":          # sparse tables leave inapplicable cells blank
+                continue
             add(section, f"{label} | {k}", r[k], path)
 
 

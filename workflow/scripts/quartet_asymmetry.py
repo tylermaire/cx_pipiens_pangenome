@@ -28,7 +28,15 @@ Outputs
                     with support is not a product of noisy gene trees
   site_patterns     parsimony informative sites (two states, two taxa each) in
                     the trimmed alignments, counted per split, with the same
-                    binomial test on the two discordant splits
+                    binomial test on the two discordant splits. Summed site
+                    counts weight each locus by its number of informative
+                    sites, so a few loci with hundreds of such sites (often
+                    misaligned or misannotated) can outweigh thousands of
+                    typical loci. The table therefore also gives each locus
+                    one vote (the split with the most informative sites in
+                    that locus, ties and loci without such sites set aside),
+                    with the binomial test on the two discordant splits, and
+                    reports how much of the site total the top 1% of loci hold
 
 Usage
 -----
@@ -123,8 +131,9 @@ def read_cf_stat(path):
     return dict(zip(header, row))
 
 
-def site_patterns(aln_dir, taxa):
-    """Count parsimony informative site patterns per split over *.trim files."""
+def site_patterns(aln_dir, taxa, per_locus=None):
+    """Count parsimony informative site patterns per split over *.trim files.
+    If per_locus is a list, one Counter per alignment is appended to it."""
     order = sorted(taxa)
     counts = collections.Counter()
     n_files = n_sites = 0
@@ -141,6 +150,7 @@ def site_patterns(aln_dir, taxa):
         if set(seqs) != set(order):
             continue
         n_files += 1
+        local = collections.Counter()
         cols = zip(*(seqs[t] for t in order))
         for col in cols:
             n_sites += 1
@@ -151,11 +161,63 @@ def site_patterns(aln_dir, taxa):
                 continue
             first = col[0]
             pair = frozenset(t for t, c in zip(order, col) if c == first)
-            counts[canonical(pair, taxa)] += 1
+            local[canonical(pair, taxa)] += 1
+        counts.update(local)
+        if per_locus is not None:
+            per_locus.append(local)
     return counts, n_files, n_sites
 
 
-def analyse(trees, taxa, sister, cf=None, site_counts=None):
+def per_locus_rows(per_locus, splits, roles, taxa, top_share=0.01):
+    """Rows giving each locus one vote, and the site share of the top loci."""
+    conc, major, minor = splits
+    votes = collections.Counter()
+    for loc in per_locus:
+        best = max(loc[s] for s in splits)
+        if best == 0:
+            votes["none"] += 1
+            continue
+        winners = [s for s in splits if loc[s] == best]
+        votes[winners[0] if len(winners) == 1 else "tie"] += 1
+    decided = sum(votes[s] for s in splits)
+    rows = []
+    for s, role in zip(splits, roles):
+        rows.append({"split": label(s, taxa), "role": f"locus_majority_{role}",
+                     "n_loci": votes[s],
+                     "pct": round(100.0 * votes[s] / decided, 2) if decided else 0.0})
+    m1, m2 = votes[major], votes[minor]
+    p, lo, hi = binom(m1, m2)
+    rows.append({"split": "locus majority: gene tree major vs minor", "role": "binomial_test",
+                 "n_loci": m1 + m2,
+                 "pct": round(100.0 * m1 / (m1 + m2), 2) if m1 + m2 else float("nan"),
+                 "binomial_p": p, "ci95_low": lo, "ci95_high": hi})
+    rows.append({"split": "loci without a majority split", "role": "locus_majority_undecided",
+                 "n_loci": votes["tie"] + votes["none"],
+                 "n_loci_no_informative_sites": votes["none"]})
+
+    totals = sorted((sum(loc[s] for s in splits) for loc in per_locus), reverse=True)
+    all_sites = sum(totals)
+    k = max(1, round(top_share * len(per_locus)))
+    ranked = sorted(per_locus, key=lambda loc: -sum(loc[s] for s in splits))[:k]
+    top = collections.Counter()
+    for loc in ranked:
+        top.update({s: loc[s] for s in splits})
+    top_sum = sum(top.values())
+    median = (totals[len(totals) // 2] if len(totals) % 2 else
+              (totals[len(totals) // 2 - 1] + totals[len(totals) // 2]) / 2) if totals else 0
+    rows.append({"split": "informative sites per locus", "role": "median",
+                 "n_loci": len(per_locus), "n_informative_sites": median})
+    rows.append({"split": f"top {round(100 * top_share)}% of loci by informative sites",
+                 "role": "concentration", "n_loci": k, "n_informative_sites": top_sum,
+                 "pct": round(100.0 * top_sum / all_sites, 2) if all_sites else 0.0})
+    for s, role in zip(splits, roles):
+        rows.append({"split": label(s, taxa), "role": f"top_loci_{role}",
+                     "n_loci": k, "n_informative_sites": top[s],
+                     "pct": round(100.0 * top[s] / top_sum, 2) if top_sum else 0.0})
+    return rows
+
+
+def analyse(trees, taxa, sister, cf=None, site_counts=None, per_locus=None):
     """Return (topology rows, support rows, site rows) as lists of dicts."""
     if len(taxa) != 4:
         raise SystemExit(f"expected 4 taxa, found {len(taxa)}: {sorted(taxa)}")
@@ -214,6 +276,11 @@ def analyse(trees, taxa, sister, cf=None, site_counts=None):
                           "role": "binomial_test", "n_informative_sites": s1 + s2,
                           "pct": round(100.0 * s1 / (s1 + s2), 2) if s1 + s2 else float("nan"),
                           "binomial_p": p, "ci95_low": lo, "ci95_high": hi})
+        if per_locus:
+            site_rows.extend(per_locus_rows(
+                per_locus, [conc, major, minor],
+                ["species_tree", "major_discordant_gene_trees", "minor_discordant_gene_trees"],
+                taxa))
     return topo, support_rows, site_rows
 
 
@@ -248,12 +315,12 @@ def run(gene_trees, species_tree, cf_stat, aln_dir, out_topo, out_support, out_s
     trees, taxa = read_gene_trees(gene_trees)
     sister = sister_from_species_tree(species_tree)
     cf = read_cf_stat(cf_stat) if cf_stat and os.path.exists(cf_stat) else None
-    site_counts = None
+    site_counts, per_locus = None, []
     if aln_dir and os.path.isdir(aln_dir):
-        site_counts, n_files, n_sites = site_patterns(aln_dir, taxa)
+        site_counts, n_files, n_sites = site_patterns(aln_dir, taxa, per_locus)
         print(f"site patterns: {sum(site_counts.values())} informative of {n_sites} "
               f"columns in {n_files} alignments")
-    topo, support, sites = analyse(trees, taxa, sister, cf, site_counts)
+    topo, support, sites = analyse(trees, taxa, sister, cf, site_counts, per_locus)
     write_tsv(topo, out_topo)
     write_tsv(support, out_support)
     if out_sites:
@@ -269,7 +336,8 @@ def run(gene_trees, species_tree, cf_stat, aln_dir, out_topo, out_support, out_s
               f"major {r['n_major']:5d}  minor {r['n_minor']:5d}  "
               f"share {r['major_share_of_discordant']}  p={r['binomial_p']:.2e}")
     for r in sites:
-        print(f"  sites  {r['split']:55s} {r['n_informative_sites']}")
+        print(f"  sites  {r['split']:55s} {r['role']:40s} loci {r.get('n_loci', '')!s:>6} "
+              f"sites {r.get('n_informative_sites', '')!s:>7} pct {r.get('pct', '')}")
 
 
 def main():

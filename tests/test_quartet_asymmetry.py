@@ -47,6 +47,32 @@ def main():
     assert counts[frozenset("AC")] == 1       # col 2: K L K L
     assert counts[frozenset("AD")] == 1       # col 3: L K K L
     assert sum(counts.values()) == 4          # col 4 has three of a kind, col 6 a gap
+
+    # one vote per locus: OG1 votes A+B, OG2 votes A+C, OG3 ties, OG4 has no
+    # informative sites; the top 1% (one locus) is OG1 with 4 of 9 sites
+    with tempfile.TemporaryDirectory() as tmp:
+        files = {"OG1": ">A\nKKLMW-\n>B\nKLKMWK\n>C\nRKKMRK\n>D\nRLLQRK\n",
+                 "OG2": ">A\nKKK\n>B\nLLL\n>C\nKKK\n>D\nLLL\n",
+                 "OG3": ">A\nLK\n>B\nKL\n>C\nKK\n>D\nLL\n",
+                 "OG4": ">A\nKK\n>B\nKK\n>C\nKK\n>D\nKK\n"}
+        for name, text in files.items():
+            with open(os.path.join(tmp, f"{name}.trim"), "w") as fh:
+                fh.write(text)
+        per_locus = []
+        counts, n_files, _ = qa.site_patterns(tmp, TAXA, per_locus)
+    assert n_files == 4 and len(per_locus) == 4
+    _, _, sites = qa.analyse(trees, TAXA, ["A", "B"], cf, counts, per_locus)
+    by_role = {r["role"]: r for r in sites}
+    assert by_role["locus_majority_species_tree"]["n_loci"] == 1
+    assert by_role["locus_majority_major_discordant_gene_trees"]["n_loci"] == 1
+    assert by_role["locus_majority_minor_discordant_gene_trees"]["n_loci"] == 0
+    assert by_role["locus_majority_undecided"]["n_loci"] == 2
+    assert by_role["locus_majority_undecided"]["n_loci_no_informative_sites"] == 1
+    assert by_role["median"]["n_informative_sites"] == 2.5
+    assert by_role["concentration"]["n_loci"] == 1
+    assert by_role["concentration"]["n_informative_sites"] == 4
+    assert by_role["concentration"]["pct"] == round(100 * 4 / 9, 2)
+    assert by_role["top_loci_species_tree"]["n_informative_sites"] == 2
     print("quartet_asymmetry: all tests passed")
 
 
