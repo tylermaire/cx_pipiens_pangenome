@@ -285,6 +285,12 @@ def summarise(calls):
             (sub["match_basis"] == "same_gene_id").sum())
         row["clustered_elsewhere_overlap_identity"] = int(
             (sub["match_basis"] == "overlap_identity").sum())
+        same = sub[sub["match_basis"] == "same_gene_id"]
+        # the target's model of the same gene sits in another orthogroup or in
+        # none; how similar it is to the query shows how often one is broken
+        row["same_gene_id_unassigned"] = int((same["other_orthogroup"] == "unassigned").sum())
+        row["same_gene_id_median_protein_identity"] = (
+            round(float(same["best_protein_identity"].median()), 3) if len(same) else "")
         row["pct_supported"] = round(100.0 * sub["call"].isin(SUPPORTED).mean(), 1)
         row["pct_artifact"] = round(100.0 * sub["call"].isin(ARTIFACT).mean(), 1)
         row["pct_weak"] = round(100.0 * (sub["call"] == "weak").mean(), 1)

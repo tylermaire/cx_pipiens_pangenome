@@ -27,8 +27,9 @@ def main():
     rows, n = dd.branch_table(concat, genes)
     by = {r["branch"]: r for r in rows}
     assert n == 3 and by["A"]["concat_tree"] == 0.04
-    assert by["A"]["gene_tree_median"] == 0.004 and by["A"]["share_above_0.1"] == round(1 / 3, 4)
-    assert by["D"]["share_minimum"] == round(1 / 3, 4)
+    assert by["A"]["gene_tree_median"] == 0.004 and by["A"]["share_above_0.1"] == round(1 / 3, 5)
+    assert by["A"]["n_above_0.1"] == 1
+    assert by["D"]["share_minimum"] == round(1 / 3, 5) and by["D"]["n_minimum"] == 1
     assert by["internal"]["concat_tree"] == 0.013 and by["internal"]["n_gene_trees"] == 3
 
     with tempfile.TemporaryDirectory() as tmp:

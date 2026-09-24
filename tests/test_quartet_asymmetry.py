@@ -83,9 +83,10 @@ def main():
     assert qa.internal_length("(A:0.01,(B:0.02,C:0.03)33:0.0000010000,D:0.05);") <= qa.MIN_BRANCH
 
     # robustness: loci L1 to L6; L5 has an unresolved internal branch, L6 a broken model
-    by_locus = [("L1", frozenset("AB"), 100, 0.01), ("L2", frozenset("AC"), 99, 0.02),
-                ("L3", frozenset("AC"), 96, 0.01), ("L4", frozenset("AD"), 97, 0.01),
-                ("L5", frozenset("AD"), 30, 1e-6), ("L6", frozenset("AC"), 99, 0.01)]
+    by_locus = [("L1", frozenset("AB"), 100, 0.01, 0.05), ("L2", frozenset("AC"), 99, 0.02, 0.3),
+                ("L3", frozenset("AC"), 96, 0.01, 0.05), ("L4", frozenset("AD"), 97, 0.01, 0.05),
+                ("L5", frozenset("AD"), 30, 1e-6, 0.05), ("L6", frozenset("AC"), 99, 0.01, 0.05)]
+    assert qa.longest_terminal("(A:0.01,(B:0.02,C:0.3)97:0.004,D:0.05);") == 0.3
     intact = {"L1": True, "L2": True, "L3": True, "L4": True, "L5": True, "L6": False}
     splits = (qa.canonical(frozenset("AB"), TAXA), qa.canonical(frozenset("AC"), TAXA),
               qa.canonical(frozenset("AD"), TAXA))
@@ -99,6 +100,8 @@ def main():
     assert (r["n_gene_trees"], r["n_major"], r["n_minor"]) == (5, 2, 2)
     assert rows["loci with four intact models, UFBoot >= 95"]["n_gene_trees"] == 4
     assert rows["loci with a model that is not intact"]["n_major"] == 1
+    assert rows["a terminal branch longer than 0.1"]["n_gene_trees"] == 1
+    assert rows["no terminal branch longer than 0.1"]["n_gene_trees"] == 5
 
     # intact loci: reference R, transferred T1 to T3; OG2 has a transferred model
     # without a valid ORF, OG3 a partial reference source, OG4 is not single copy

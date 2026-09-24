@@ -83,8 +83,10 @@ def branch_table(concat_newick, gene_tree_lines):
             "gene_tree_median": round(statistics.median(vals), 5) if vals else "",
             "gene_tree_mean": round(statistics.mean(vals), 5) if vals else "",
             "gene_tree_p90": round(quantile(vals, 0.9), 5) if vals else "",
-            "share_above_0.1": round(sum(x > LONG_BRANCH for x in vals) / len(vals), 4) if vals else "",
-            "share_minimum": round(sum(x <= MIN_BRANCH for x in vals) / len(vals), 4) if vals else "",
+            "n_above_0.1": sum(x > LONG_BRANCH for x in vals) if vals else "",
+            "share_above_0.1": round(sum(x > LONG_BRANCH for x in vals) / len(vals), 5) if vals else "",
+            "n_minimum": sum(x <= MIN_BRANCH for x in vals) if vals else "",
+            "share_minimum": round(sum(x <= MIN_BRANCH for x in vals) / len(vals), 5) if vals else "",
         })
     return rows, n
 
