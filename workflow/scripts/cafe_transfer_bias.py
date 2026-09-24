@@ -24,7 +24,7 @@ Three measurements:
                tests on reference copy number and on transfer deficit (families
                with at least one reference copy), and a two sided Fisher test
                with odds ratio and risk ratio for multi-copy (2 or more
-               reference copies) against strictly single-copy families.
+               reference copies) against families with one reference copy.
 
   zero copy    families with no reference copy get their own bin. Every
                transferred model comes from a reference gene, so these families
@@ -40,14 +40,22 @@ Three measurements:
                come from Gamma_clade_results and cover ALL families, not only
                the significant ones.
 
+Only families CAFE tested are analysed. CAFE drops families absent from every
+species on one side of the root (every cloud orthogroup, and shell
+orthogroups confined to one pair of forms), so they have no p value; counting
+them as non significant, as an earlier version did, inflated the denominators.
+
 Snakemake provides:
     input.counts   results/cafe/gene_counts_filtered.tsv
     input.sig      results/cafe/significant_families.tsv
     input.branch   results/cafe/branch_summary.tsv
+    input.cafe_dir results/cafe/output (Gamma_family_results.txt lists the
+                   families CAFE tested)
     params.reference, params.ingroup
     output.summary, output.bins, output.lineage
 """
 
+import os
 import sys
 
 import numpy as np
@@ -89,6 +97,20 @@ def main():
     if anon:
         sys.exit(f"{anon}/{len(sig_ids)} significant families have no identifier; "
                  f"format_cafe_input.py must write the orthogroup id into Desc.")
+
+    n_in_counts = len(d)
+    cafe_dir = getattr(snakemake.input, "cafe_dir", None)
+    if cafe_dir:
+        fam = os.path.join(cafe_dir, "Gamma_family_results.txt")
+        tested = {line.split("\t")[0].strip() for line in open(fam)
+                  if line.strip() and not line.startswith("#")}
+        untested_sig = sig_ids - tested
+        if untested_sig:
+            sys.exit(f"{len(untested_sig)} significant families are missing from {fam}")
+        d = d[d["orthogroup"].astype(str).isin(tested)].copy()
+    else:
+        print("WARNING: no CAFE output directory given; every family in the counts "
+              "table is treated as tested", file=sys.stderr)
 
     d["ref_copies"] = d[ref]
     d["mean_lifted"] = d[lifted].mean(axis=1)
@@ -154,6 +176,8 @@ def main():
 
     summary = {
         "n_families": len(d),
+        "n_families_in_counts": n_in_counts,
+        "n_families_not_tested": n_in_counts - len(d),
         "n_significant": int(d.is_sig.sum()),
         "reference": ref,
         "n_families_single_copy": int(single.sum()),
@@ -183,7 +207,8 @@ def main():
     pd.DataFrame([summary]).T.reset_index().to_csv(
         snakemake.output.summary, sep="\t", index=False, header=["metric", "value"])
 
-    print(f"families {len(d)}, significant {d.is_sig.sum()}, reference {ref}\n")
+    print(f"families tested by CAFE {len(d)} of {n_in_counts}, significant "
+          f"{d.is_sig.sum()}, reference {ref}\n")
     print(bins_df.to_string(index=False))
     print(f"\nsignificance rate: single-copy {summary['pct_significant_single_copy']}%"
           f"  multi-copy {summary['pct_significant_multi_copy']}%"

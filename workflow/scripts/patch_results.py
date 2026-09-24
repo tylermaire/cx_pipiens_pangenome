@@ -127,13 +127,17 @@ def step_transfer(cfg, all_s, ingroup, ref):
 def step_quartet(cfg, all_s, ingroup, ref):
     run("quartet_asymmetry.py",
         input={"tree": "results/phylo/concat_tree.treefile",
-               "concord": "results/phylo/concord.cf.tree"},
+               "concord": "results/phylo/concord.cf.tree",
+               "of": "results/orthofinder/output",
+               "gffs": [f"results/annotation/{s}_liftoff.gff3" for s in ingroup]},
         params={"gene_trees": "results/phylo/all_gene_trees.nwk",
                 "cf_stat": "results/phylo/concord.cf.stat",
-                "trimmed_dir": "results/phylo/trimmed"},
+                "trimmed_dir": "results/phylo/trimmed",
+                "reference": ref},
         output={"topology": "results/phylo/quartet_topology_counts.tsv",
                 "support": "results/phylo/quartet_asymmetry_by_support.tsv",
-                "sites": "results/phylo/quartet_site_patterns.tsv"})
+                "sites": "results/phylo/quartet_site_patterns.tsv",
+                "robustness": "results/phylo/quartet_robustness.tsv"})
 
 
 def step_divergence(cfg, all_s, ingroup, ref):
@@ -158,7 +162,8 @@ def step_cafe(cfg, all_s, ingroup, ref):
     run("cafe_transfer_bias.py",
         input={"counts": "results/cafe/gene_counts_filtered.tsv",
                "sig": "results/cafe/significant_families.tsv",
-               "branch": "results/cafe/branch_summary.tsv"},
+               "branch": "results/cafe/branch_summary.tsv",
+               "cafe_dir": "results/cafe/output"},
         params={"reference": ref, "ingroup": ingroup},
         output={"summary": "results/cafe/transfer_bias_summary.tsv",
                 "bins": "results/cafe/transfer_bias_by_copy_number.tsv",

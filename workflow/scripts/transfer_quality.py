@@ -20,9 +20,10 @@ The reference annotation carries no Liftoff flags. Its row counts the kept
 RefSeq models that are not a clean ORF on the reference genome themselves
 (partial=true, or an exception such as "unclassified transcription
 discrepancy", where RefSeq corrected an indel in the assembly). A transferred
-copy of such a model fails Liftoff's check whatever the target genome holds, so
-each transferred row also gives the invalid ORF share among models whose
-reference model is clean.
+copy of such a model usually fails Liftoff's check (87 to 89% of them in the
+V4 ingroup genomes; the rest pass where the target sequence supplies a clean
+ORF), so each transferred row also gives the invalid ORF share among models
+whose reference model is clean.
 
 Snakemake provides:
     input.gffs, input.proteins, input.table, input.of

@@ -1,4 +1,5 @@
 """Tests for workflow/scripts/quartet_asymmetry.py (run: python3 tests/test_quartet_asymmetry.py)."""
+import collections
 import importlib.util
 import os
 import sys
@@ -76,6 +77,63 @@ def main():
     # outside the top locus: OG2 gives A+C 3 sites, OG3 gives A+C 1 and A+D 1
     rest = next(r for r in sites if r["split"].startswith("discordant sites outside"))
     assert rest["n_informative_sites"] == 5 and rest["pct"] == 80.0
+
+    # internal branch length follows the cherry
+    assert qa.internal_length("(A:0.01,(B:0.02,C:0.03)97:0.004,D:0.05);") == 0.004
+    assert qa.internal_length("(A:0.01,(B:0.02,C:0.03)33:0.0000010000,D:0.05);") <= qa.MIN_BRANCH
+
+    # robustness: loci L1 to L6; L5 has an unresolved internal branch, L6 a broken model
+    by_locus = [("L1", frozenset("AB"), 100, 0.01), ("L2", frozenset("AC"), 99, 0.02),
+                ("L3", frozenset("AC"), 96, 0.01), ("L4", frozenset("AD"), 97, 0.01),
+                ("L5", frozenset("AD"), 30, 1e-6), ("L6", frozenset("AC"), 99, 0.01)]
+    intact = {"L1": True, "L2": True, "L3": True, "L4": True, "L5": True, "L6": False}
+    splits = (qa.canonical(frozenset("AB"), TAXA), qa.canonical(frozenset("AC"), TAXA),
+              qa.canonical(frozenset("AD"), TAXA))
+    rows = {r["subset"]: r for r in qa.robustness_rows(by_locus, TAXA, splits, intact)}
+    r = rows["all gene trees"]
+    assert (r["n_gene_trees"], r["n_concordant"], r["n_major"], r["n_minor"]) == (6, 1, 3, 2)
+    r = rows["internal branch above the minimum length"]
+    assert (r["n_gene_trees"], r["n_major"], r["n_minor"]) == (5, 3, 1)
+    assert rows["internal branch at the minimum length"]["n_minor"] == 1
+    r = rows["loci with four intact models"]
+    assert (r["n_gene_trees"], r["n_major"], r["n_minor"]) == (5, 2, 2)
+    assert rows["loci with four intact models, UFBoot >= 95"]["n_gene_trees"] == 4
+    assert rows["loci with a model that is not intact"]["n_major"] == 1
+
+    # intact loci: reference R, transferred T1 to T3; OG2 has a transferred model
+    # without a valid ORF, OG3 a partial reference source, OG4 is not single copy
+    with tempfile.TemporaryDirectory() as tmp:
+        of = os.path.join(tmp, "Results_X", "Orthogroups")
+        os.makedirs(of)
+        with open(os.path.join(of, "Orthogroups.tsv"), "w") as fh:
+            fh.write("Orthogroup\tR\tT1\tT2\tT3\n"
+                     "OG1\trna-a1\trna-a1\trna-a1\trna-a1\n"
+                     "OG2\trna-b1\trna-b1\trna-b1\trna-b1\n"
+                     "OG3\trna-c1\trna-c1\trna-c1\trna-c1\n"
+                     "OG4\trna-d1, rna-e1\trna-d1\trna-d1\trna-d1\n")
+        gffs = {}
+        for form in ("R", "T1", "T2", "T3"):
+            path = os.path.join(tmp, f"{form}_liftoff.gff3")
+            with open(path, "w") as fh:
+                for tid in ("a.1", "b.1", "c.1", "d.1"):
+                    attrs = f"ID=rna-{tid};Parent=gene-{tid[0]}"
+                    if form == "R" and tid == "c.1":
+                        attrs += ";partial=true"
+                    if form != "R":
+                        valid = "False" if (form == "T2" and tid == "b.1") else "True"
+                        attrs += f";valid_ORF={valid}"
+                    fh.write(f"chr1\tx\tmRNA\t1\t100\t.\t+\t.\t{attrs}\n")
+            gffs[form] = path
+        got = qa.intact_loci(tmp, gffs, "R")
+    assert got == {"OG1": True, "OG2": False, "OG3": False}, got
+
+    # locus quality: the top locus by informative sites is the broken one
+    per_locus = [collections.Counter({splits[0]: 9}), collections.Counter({splits[1]: 1}),
+                 collections.Counter({splits[2]: 1})]
+    rows = qa.locus_quality_rows(per_locus, ["OG2", "OG1", "OG3"], splits,
+                                 {"OG1": True, "OG2": False, "OG3": False}, top_share=0.34)
+    assert (rows[0]["n_loci"], rows[0]["n_loci_not_intact"]) == (1, 1)
+    assert (rows[1]["n_loci"], rows[1]["n_loci_not_intact"]) == (2, 1)
     print("quartet_asymmetry: all tests passed")
 
 
