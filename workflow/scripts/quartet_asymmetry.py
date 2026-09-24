@@ -214,6 +214,19 @@ def per_locus_rows(per_locus, splits, roles, taxa, top_share=0.01):
         rows.append({"split": label(s, taxa), "role": f"top_loci_{role}",
                      "n_loci": k, "n_informative_sites": top[s],
                      "pct": round(100.0 * top[s] / top_sum, 2) if top_sum else 0.0})
+    # the summed site test again, without the top loci
+    rest = collections.Counter()
+    for loc in per_locus:
+        rest.update({s: loc[s] for s in splits})
+    rest.subtract(top)
+    r1, r2 = rest[major], rest[minor]
+    p, lo, hi = binom(r1, r2)
+    rows.append({"split": f"discordant sites outside the top {round(100 * top_share)}% of loci: "
+                          "gene tree major vs minor",
+                 "role": "binomial_test", "n_loci": len(per_locus) - k,
+                 "n_informative_sites": r1 + r2,
+                 "pct": round(100.0 * r1 / (r1 + r2), 2) if r1 + r2 else float("nan"),
+                 "binomial_p": p, "ci95_low": lo, "ci95_high": hi})
     return rows
 
 

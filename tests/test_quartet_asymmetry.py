@@ -73,6 +73,9 @@ def main():
     assert by_role["concentration"]["n_informative_sites"] == 4
     assert by_role["concentration"]["pct"] == round(100 * 4 / 9, 2)
     assert by_role["top_loci_species_tree"]["n_informative_sites"] == 2
+    # outside the top locus: OG2 gives A+C 3 sites, OG3 gives A+C 1 and A+D 1
+    rest = next(r for r in sites if r["split"].startswith("discordant sites outside"))
+    assert rest["n_informative_sites"] == 5 and rest["pct"] == 80.0
     print("quartet_asymmetry: all tests passed")
 
 
