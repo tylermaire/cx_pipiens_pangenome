@@ -59,8 +59,9 @@ Inputs the steps read from the V4 run:
 ## Patched V4 results
 
 * Absence validation: 93.8% of the 1,428 cloud absence events are annotation
-  artifacts (1,300 of them the query's own gene clustered in another
-  orthogroup), 3.4% are supported. Shell: 76.5% artifacts, 9.7% supported.
+  artifacts (1,300 of them the query's own gene held by the target in another
+  orthogroup or, 51 times, in none; median protein identity between the two
+  models 0.21), 3.4% are supported. Shell: 76.5% artifacts, 9.7% supported.
 * Cloud: 464 of 476 cloud orthogroups (97.5%) hold a gene whose namesake (same
   gene ID) in another form sits in a different orthogroup; 449 contain a
   *Cx. tarsalis* gene.
@@ -74,7 +75,9 @@ Inputs the steps read from the V4 run:
   p = 5.3e-11), rising to 67.9% at UFBoot 95. It holds on the 6,383 gene
   trees with a resolved internal branch (58.6%, 1,346 vs 952; the 1,263
   unresolved trees split 425/406/432) and on loci with four intact models
-  (57.2%, 1,066 vs 797; 81.6% at UFBoot 95, 155 vs 35). Summed parsimony
+  (57.2%, 1,066 vs 797; 81.6% at UFBoot 95, 155 vs 35). The 1,083 gene trees
+  with a terminal branch over 0.1 show no excess (294 vs 279), so long branch
+  attraction is an unlikely source. Summed parsimony
   informative sites lean the other way (21,304 vs 20,466, p = 4.2e-5), but
   the 91 loci richest in such sites hold 46.5% of them and 90 of the 91 hold
   a model that is not intact (34.2% of other loci); one vote per locus gives
@@ -90,8 +93,10 @@ Inputs the steps read from the V4 run:
   Both internal branches show only increases (141 and 45).
 * Synteny: 536 inversions form 392 clusters; 95 recur in two or three pairs,
   and 93 of those share one genome across every pair they appear in (molestus
-  49, pallens 23, quinquefasciatus 19, pipiens 2), so each looks like a
-  rearrangement in, or an assembly error of, that one genome. Nine recurrent
+  49, pallens 23, quinquefasciatus 19, pipiens 2). The clean signature is a
+  cluster in all three pairs that include one genome: 47 clusters, molestus 31,
+  pallens 11, quinquefasciatus 5, pipiens none, the order of contig N50
+  (0.37, 0.79, 2.88 and 3.26 Mb). Nine recurrent
   clusters span 1 Mb or more (pallens 4, quinquefasciatus 3, molestus 2).
   10.0 to 13.4% of shared genes on the chromosome scale sequences sit on a
   non homologous chromosome in one of the two genomes.

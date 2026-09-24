@@ -439,6 +439,9 @@ def s5():
                ("clustered_elsewhere", "Clustered elsewhere", "int"),
                ("clustered_elsewhere_same_gene_id", "of which same gene identifier", "int"),
                ("clustered_elsewhere_overlap_identity", "of which near identical model", "int"),
+               ("same_gene_id_unassigned", "Same gene identifier, target model in no orthogroup", "int"),
+               ("same_gene_id_median_protein_identity",
+                "Same gene identifier, median protein identity to the query", "f3"),
                ("unannotated_locus", "Unannotated locus", "int"), ("weak", "Weak", "int"),
                ("pct_supported", "Supported (%)", "pct1"), ("pct_artifact", "Artifact (%)", "pct1"),
                ("pct_weak", "Weak (%)", "pct1")], summ),
@@ -470,7 +473,8 @@ def s5():
             "model), clustered elsewhere, basis near identical model (it overlaps a model with at "
             "least 0.90 protein identity to the query) or paralog only (it overlaps only less "
             "similar models). Protein identity is the number of identical residues over the length "
-            "of the shorter protein after global alignment. "
+            "of the shorter protein after global alignment, or 0 when the shorter protein is less "
+            "than 30% of the length of the longer. "
             "Supported absences are absent and paralog only events; artifacts are clustered "
             "elsewhere and unannotated locus events. Protein identity to the query is given for "
             "clustered elsewhere and paralog only calls.",
@@ -617,7 +621,9 @@ def s6():
             "discordant split, and the confidence interval is for that share (0 to 1 scale). "
             "(f) The gene tree test on all gene trees; on gene trees whose internal branch is "
             "longer than IQ-TREE's minimum length (resolved), and on the rest, which have no "
-            "substitution supporting any resolution; and on loci whose four gene models are "
+            "substitution supporting any resolution; on gene trees without and with a terminal "
+            "branch longer than 0.1, the trees most exposed to long branch attraction; and on "
+            "loci whose four gene models are "
             "intact (reference model neither partial nor with a RefSeq exception, and a valid ORF "
             "for each transferred model), and on the rest. Part (e) also gives how many of the "
             "top 1% of loci, and of the other loci, hold a gene model that is not intact.",
@@ -651,8 +657,10 @@ def s7():
                ("n_gene_trees", "Gene trees", "int"), ("gene_tree_median", "Gene trees, median", "f5"),
                ("gene_tree_mean", "Gene trees, mean", "f5"),
                ("gene_tree_p90", "Gene trees, 90th percentile", "f5"),
-               ("share_above_0.1", "Share of gene trees above 0.1", "f4"),
-               ("share_minimum", "Share of gene trees at the minimum length", "f4")], bl),
+               ("n_above_0.1", "Gene trees with the branch above 0.1", "int"),
+               ("share_above_0.1", "Share of gene trees above 0.1", "f5"),
+               ("n_minimum", "Gene trees with the branch at the minimum length", "int"),
+               ("share_minimum", "Share of gene trees at the minimum length", "f5")], bl),
         Block("(b) Pairwise protein identity over the trimmed single copy alignments",
               [("taxon_a", "Form", "text"), ("taxon_b", "Form", "text"),
                ("n_loci", "Loci", "int"), ("median_identity", "Median identity", "f5"),
@@ -813,14 +821,8 @@ def s9():
         r["sample1"], r["sample2"] = FORM[r["sample1"]], FORM[r["sample2"]]
     rec = tsv("results/synteny/inversion_recurrence.tsv")
     for r in rec:
-        pairs = [p.split("_vs_") for p in r["pairs"].split(";")]
-        common = set(pairs[0])
-        for p in pairs[1:]:
-            common &= set(p)
-        if len(pairs) < 2:
-            r["common"] = ""
-        else:
-            r["common"] = FORM[common.pop()] if len(common) == 1 else "none"
+        g = r["genome_in_every_pair"]
+        r["common"] = FORM.get(g, g)
         r["pairs"] = "; ".join(pair_name(p) for p in r["pairs"].split(";"))
         r["members"] = "; ".join(pair_name(m.split(":", 1)[0]) + ": " + m.split(":", 1)[1]
                                  for m in r["members"].split(";"))
@@ -875,7 +877,9 @@ def s9():
             "sequence of the first assembly and their relative positions along it (0 to 1). (d) "
             "Recurrence clusters: inversions from different pairs joined by single linkage when their "
             "anchor gene sets have a Jaccard index of at least 0.5; for clusters found in two or more pairs, "
-            "the assembly present in every pair, or none. Chromosomes are numbered after "
+            "the assembly present in every pair, or none. A cluster found in all three pairs that "
+            "include one assembly is the pattern expected for a rearrangement in, or an assembly "
+            "error of, that assembly. Chromosomes are numbered after "
             "Cx. quinquefasciatus.",
             "results/synteny/synteny_summary.tsv; results/synteny/chromosome_orientation.tsv; "
             "results/synteny/inversions_detail.tsv; results/synteny/inversion_recurrence.tsv",
