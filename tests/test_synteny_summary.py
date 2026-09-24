@@ -57,6 +57,12 @@ def main():
     assert clusters[0] == clusters[1], "the shared inversion must form one cluster"
     rows = ss.recurrence_table(all_inv, clusters, 1_000_000)
     assert len(rows) == 1 and rows[0]["n_pairs"] == 2 and rows[0]["any_at_least_large_span"]
+
+    # a gene placed on the non-homologous chromosome is counted apart
+    assert ss.count_other_chromosome(genes["R"], genes["A"], 2) == (40, 0)
+    moved = dict(genes["A"])
+    moved["a3"] = ("A2", 50 * 200_000)
+    assert ss.count_other_chromosome(genes["R"], moved, 2) == (40, 1)
     print("synteny_summary: all tests passed")
 
 

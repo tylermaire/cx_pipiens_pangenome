@@ -103,6 +103,25 @@ def pair_chromosomes(ga, gb, tops_a, tops_b):
     return mapping
 
 
+def count_other_chromosome(ga, gb, n_chrom):
+    """(shared genes on the top sequences of both genomes, how many of them
+    sit on a non-homologous chromosome in b). These anchors are left out of
+    the collinearity and inversion counts, so the share is reported apart."""
+    tops_a, tops_b = top_seqids(ga, n_chrom), top_seqids(gb, n_chrom)
+    mapping = pair_chromosomes(ga, gb, tops_a, tops_b)
+    shared = other = 0
+    for g, (sa, _pos) in ga.items():
+        if sa not in mapping:
+            continue
+        loc = gb.get(g)
+        if not loc or loc[0] not in tops_b:
+            continue
+        shared += 1
+        if loc[0] != mapping[sa][0]:
+            other += 1
+    return shared, other
+
+
 def parse_paf(path):
     """(total aligned bp on the query, length-weighted percent identity).
 
@@ -328,10 +347,15 @@ def main():
             f"{d['seqid']}:{d['start_bp']/1e6:.2f}-{d['end_bp']/1e6:.2f}Mb({d['n_genes']}genes)"
             for d in sorted(inv, key=lambda d: -d["span_bp"])[:3]) or "none"
         n_rev = sum(1 for o in orients if o["orientation"] == "reverse")
+        n_shared, n_other = count_other_chromosome(genes[a], genes[b], n_chrom)
 
         rows.append({
             "pair": f"{a}_vs_{b}", "sample1": a, "sample2": b,
             "n_shared_genes_chr1_3": n_anchors,
+            "n_shared_genes_top_sequences": n_shared,
+            "n_shared_genes_other_chromosome": n_other,
+            "pct_shared_genes_other_chromosome":
+                round(100.0 * n_other / n_shared, 2) if n_shared else "",
             "pct_collinear_anchors": round(pct, 2),
             "n_chrom_pairs_reverse_oriented": n_rev,
             "n_inversions_intra_chr": len(inv),
