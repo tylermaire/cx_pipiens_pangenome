@@ -97,7 +97,7 @@ def main():
                    "Scaffold N50 (Mb)", "Contig N50 (Mb)", "In three chromosomes (%)",
                    "Complete BUSCO, genome (%)", "Repeats masked (%)"],
         "rows": rows,
-        "widths": [1850, 2150, 700, 1000, 850, 750, 1250, 1000, 950],
+        "widths": [1750, 2500, 650, 950, 850, 700, 1150, 1000, 900],
         "notes": ["Size, sequences and scaffold N50 from QUAST 5.3.0 (all sequences counted); "
                   "contig N50 as reported by BUSCO, which splits scaffolds at gaps. BUSCO 6.1.0 "
                   "with the diptera_odb10 dataset (3,285 genes), genome mode with miniprot. "
