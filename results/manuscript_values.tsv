@@ -223,6 +223,8 @@ absence	cloud unannotated_locus		29	results/validation/absence_summary.tsv
 absence	cloud weak		40	results/validation/absence_summary.tsv
 absence	cloud clustered_elsewhere_same_gene_id		1300	results/validation/absence_summary.tsv
 absence	cloud clustered_elsewhere_overlap_identity		10	results/validation/absence_summary.tsv
+absence	cloud same_gene_id_unassigned		51	results/validation/absence_summary.tsv
+absence	cloud same_gene_id_median_protein_identity		0.208	results/validation/absence_summary.tsv
 absence	cloud pct_supported		3.4	results/validation/absence_summary.tsv
 absence	cloud pct_artifact		93.8	results/validation/absence_summary.tsv
 absence	cloud pct_weak		2.8	results/validation/absence_summary.tsv
@@ -234,6 +236,8 @@ absence	shell unannotated_locus		124	results/validation/absence_summary.tsv
 absence	shell weak		562	results/validation/absence_summary.tsv
 absence	shell clustered_elsewhere_same_gene_id		2973	results/validation/absence_summary.tsv
 absence	shell clustered_elsewhere_overlap_identity		16	results/validation/absence_summary.tsv
+absence	shell same_gene_id_unassigned		814	results/validation/absence_summary.tsv
+absence	shell same_gene_id_median_protein_identity		0.205	results/validation/absence_summary.tsv
 absence	shell pct_supported		9.7	results/validation/absence_summary.tsv
 absence	shell pct_artifact		76.5	results/validation/absence_summary.tsv
 absence	shell pct_weak		13.8	results/validation/absence_summary.tsv
@@ -408,6 +412,24 @@ quartet_robustness	internal branch at the minimum length | major_share_of_discor
 quartet_robustness	internal branch at the minimum length | binomial_p		3.878e-01	results/phylo/quartet_robustness.tsv
 quartet_robustness	internal branch at the minimum length | ci95_low		0.4502	results/phylo/quartet_robustness.tsv
 quartet_robustness	internal branch at the minimum length | ci95_high		0.5189	results/phylo/quartet_robustness.tsv
+quartet_robustness	no terminal branch longer than 0.1 | n_gene_trees		6563	results/phylo/quartet_robustness.tsv
+quartet_robustness	no terminal branch longer than 0.1 | n_concordant		4000	results/phylo/quartet_robustness.tsv
+quartet_robustness	no terminal branch longer than 0.1 | pct_concordant		60.95	results/phylo/quartet_robustness.tsv
+quartet_robustness	no terminal branch longer than 0.1 | n_major		1458	results/phylo/quartet_robustness.tsv
+quartet_robustness	no terminal branch longer than 0.1 | n_minor		1105	results/phylo/quartet_robustness.tsv
+quartet_robustness	no terminal branch longer than 0.1 | major_share_of_discordant		0.5689	results/phylo/quartet_robustness.tsv
+quartet_robustness	no terminal branch longer than 0.1 | binomial_p		3.314e-12	results/phylo/quartet_robustness.tsv
+quartet_robustness	no terminal branch longer than 0.1 | ci95_low		0.5494	results/phylo/quartet_robustness.tsv
+quartet_robustness	no terminal branch longer than 0.1 | ci95_high		0.5881	results/phylo/quartet_robustness.tsv
+quartet_robustness	a terminal branch longer than 0.1 | n_gene_trees		1083	results/phylo/quartet_robustness.tsv
+quartet_robustness	a terminal branch longer than 0.1 | n_concordant		510	results/phylo/quartet_robustness.tsv
+quartet_robustness	a terminal branch longer than 0.1 | pct_concordant		47.09	results/phylo/quartet_robustness.tsv
+quartet_robustness	a terminal branch longer than 0.1 | n_major		294	results/phylo/quartet_robustness.tsv
+quartet_robustness	a terminal branch longer than 0.1 | n_minor		279	results/phylo/quartet_robustness.tsv
+quartet_robustness	a terminal branch longer than 0.1 | major_share_of_discordant		0.5131	results/phylo/quartet_robustness.tsv
+quartet_robustness	a terminal branch longer than 0.1 | binomial_p		5.587e-01	results/phylo/quartet_robustness.tsv
+quartet_robustness	a terminal branch longer than 0.1 | ci95_low		0.4713	results/phylo/quartet_robustness.tsv
+quartet_robustness	a terminal branch longer than 0.1 | ci95_high		0.5547	results/phylo/quartet_robustness.tsv
 quartet_robustness	loci with four intact models | n_gene_trees		4799	results/phylo/quartet_robustness.tsv
 quartet_robustness	loci with four intact models | n_concordant		2936	results/phylo/quartet_robustness.tsv
 quartet_robustness	loci with four intact models | pct_concordant		61.18	results/phylo/quartet_robustness.tsv
@@ -449,36 +471,46 @@ branch_lengths	Cx_molestus | n_gene_trees		7646	results/phylo/branch_length_summ
 branch_lengths	Cx_molestus | gene_tree_median		0.00409	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_molestus | gene_tree_mean		0.05601	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_molestus | gene_tree_p90		0.02601	results/phylo/branch_length_summary.tsv
-branch_lengths	Cx_molestus | share_above_0.1		0.0403	results/phylo/branch_length_summary.tsv
-branch_lengths	Cx_molestus | share_minimum		0.2214	results/phylo/branch_length_summary.tsv
+branch_lengths	Cx_molestus | n_above_0.1		308	results/phylo/branch_length_summary.tsv
+branch_lengths	Cx_molestus | share_above_0.1		0.04028	results/phylo/branch_length_summary.tsv
+branch_lengths	Cx_molestus | n_minimum		1693	results/phylo/branch_length_summary.tsv
+branch_lengths	Cx_molestus | share_minimum		0.22142	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_pallens | concat_tree		0.03278	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_pallens | n_gene_trees		7646	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_pallens | gene_tree_median		0.00328	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_pallens | gene_tree_mean		0.04226	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_pallens | gene_tree_p90		0.02334	results/phylo/branch_length_summary.tsv
-branch_lengths	Cx_pallens | share_above_0.1		0.0336	results/phylo/branch_length_summary.tsv
-branch_lengths	Cx_pallens | share_minimum		0.2652	results/phylo/branch_length_summary.tsv
+branch_lengths	Cx_pallens | n_above_0.1		257	results/phylo/branch_length_summary.tsv
+branch_lengths	Cx_pallens | share_above_0.1		0.03361	results/phylo/branch_length_summary.tsv
+branch_lengths	Cx_pallens | n_minimum		2028	results/phylo/branch_length_summary.tsv
+branch_lengths	Cx_pallens | share_minimum		0.26524	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_pipiens | concat_tree		0.0382	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_pipiens | n_gene_trees		7646	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_pipiens | gene_tree_median		0.0054	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_pipiens | gene_tree_mean		0.0495	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_pipiens | gene_tree_p90		0.02908	results/phylo/branch_length_summary.tsv
-branch_lengths	Cx_pipiens | share_above_0.1		0.037	results/phylo/branch_length_summary.tsv
-branch_lengths	Cx_pipiens | share_minimum		0.1699	results/phylo/branch_length_summary.tsv
+branch_lengths	Cx_pipiens | n_above_0.1		283	results/phylo/branch_length_summary.tsv
+branch_lengths	Cx_pipiens | share_above_0.1		0.03701	results/phylo/branch_length_summary.tsv
+branch_lengths	Cx_pipiens | n_minimum		1299	results/phylo/branch_length_summary.tsv
+branch_lengths	Cx_pipiens | share_minimum		0.16989	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_quinquefasciatus | concat_tree		0.05618	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_quinquefasciatus | n_gene_trees		7646	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_quinquefasciatus | gene_tree_median		0.00617	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_quinquefasciatus | gene_tree_mean		0.07405	results/phylo/branch_length_summary.tsv
 branch_lengths	Cx_quinquefasciatus | gene_tree_p90		0.04438	results/phylo/branch_length_summary.tsv
-branch_lengths	Cx_quinquefasciatus | share_above_0.1		0.0585	results/phylo/branch_length_summary.tsv
-branch_lengths	Cx_quinquefasciatus | share_minimum		0.1728	results/phylo/branch_length_summary.tsv
+branch_lengths	Cx_quinquefasciatus | n_above_0.1		447	results/phylo/branch_length_summary.tsv
+branch_lengths	Cx_quinquefasciatus | share_above_0.1		0.05846	results/phylo/branch_length_summary.tsv
+branch_lengths	Cx_quinquefasciatus | n_minimum		1321	results/phylo/branch_length_summary.tsv
+branch_lengths	Cx_quinquefasciatus | share_minimum		0.17277	results/phylo/branch_length_summary.tsv
 branch_lengths	internal | concat_tree		0.01342	results/phylo/branch_length_summary.tsv
 branch_lengths	internal | n_gene_trees		7646	results/phylo/branch_length_summary.tsv
 branch_lengths	internal | gene_tree_median		0.00515	results/phylo/branch_length_summary.tsv
 branch_lengths	internal | gene_tree_mean		0.05197	results/phylo/branch_length_summary.tsv
 branch_lengths	internal | gene_tree_p90		0.03658	results/phylo/branch_length_summary.tsv
-branch_lengths	internal | share_above_0.1		0.0509	results/phylo/branch_length_summary.tsv
-branch_lengths	internal | share_minimum		0.1652	results/phylo/branch_length_summary.tsv
+branch_lengths	internal | n_above_0.1		389	results/phylo/branch_length_summary.tsv
+branch_lengths	internal | share_above_0.1		0.05088	results/phylo/branch_length_summary.tsv
+branch_lengths	internal | n_minimum		1263	results/phylo/branch_length_summary.tsv
+branch_lengths	internal | share_minimum		0.16518	results/phylo/branch_length_summary.tsv
 sco_identity	Cx_molestus vs Cx_pallens | n_loci		9087	results/phylo/sco_pairwise_identity.tsv
 sco_identity	Cx_molestus vs Cx_pallens | median_identity		0.98837	results/phylo/sco_pairwise_identity.tsv
 sco_identity	Cx_molestus vs Cx_pallens | mean_identity		0.95178	results/phylo/sco_pairwise_identity.tsv
@@ -753,6 +785,7 @@ inversion_recurrence	1 | n_inversions		3	results/synteny/inversion_recurrence.ts
 inversion_recurrence	1 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	1 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	1 | max_span_bp		477479	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	1 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	1 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	1 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens;Cx_quinquefasciatus_vs_Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	1 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051862.1:8960193-9437673;Cx_pallens_vs_Cx_molestus:NC_068938.1:214417624-214787771;Cx_pallens_vs_Cx_pipiens:NC_068938.1:214417624-214605264	results/synteny/inversion_recurrence.tsv
@@ -767,6 +800,7 @@ inversion_recurrence	3 | n_inversions		2	results/synteny/inversion_recurrence.ts
 inversion_recurrence	3 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	3 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	3 | max_span_bp		370096	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	3 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	3 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	3 | pairs		Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	3 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051862.1:27702505-28072601;Cx_pallens_vs_Cx_molestus:NC_068938.1:163827681-163985207	results/synteny/inversion_recurrence.tsv
@@ -774,6 +808,7 @@ inversion_recurrence	4 | n_inversions		3	results/synteny/inversion_recurrence.ts
 inversion_recurrence	4 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	4 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	4 | max_span_bp		122974	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	4 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	4 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	4 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens;Cx_quinquefasciatus_vs_Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	4 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051862.1:31418051-31541025;Cx_pallens_vs_Cx_molestus:NC_068938.1:192275597-192393700;Cx_pallens_vs_Cx_pipiens:NC_068938.1:192275597-192393700	results/synteny/inversion_recurrence.tsv
@@ -788,6 +823,7 @@ inversion_recurrence	6 | n_inversions		2	results/synteny/inversion_recurrence.ts
 inversion_recurrence	6 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	6 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	6 | max_span_bp		125476	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	6 | genome_in_every_pair		Cx_quinquefasciatus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	6 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	6 | pairs		Cx_quinquefasciatus_vs_Cx_pallens;Cx_quinquefasciatus_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	6 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051862.1:47622216-47741376;Cx_quinquefasciatus_vs_Cx_pipiens:NC_051862.1:47615899-47741376	results/synteny/inversion_recurrence.tsv
@@ -809,6 +845,7 @@ inversion_recurrence	9 | n_inversions		3	results/synteny/inversion_recurrence.ts
 inversion_recurrence	9 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	9 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	9 | max_span_bp		395589	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	9 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	9 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	9 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens;Cx_quinquefasciatus_vs_Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	9 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051862.1:58508340-58767425;Cx_pallens_vs_Cx_molestus:NC_068938.1:162458703-162721365;Cx_pallens_vs_Cx_pipiens:NC_068938.1:162458703-162854292	results/synteny/inversion_recurrence.tsv
@@ -823,6 +860,7 @@ inversion_recurrence	11 | n_inversions		3	results/synteny/inversion_recurrence.t
 inversion_recurrence	11 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	11 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	11 | max_span_bp		366568	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	11 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	11 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	11 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens;Cx_quinquefasciatus_vs_Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	11 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051862.1:62627758-62755675;Cx_pallens_vs_Cx_molestus:NC_068938.1:158005250-158371818;Cx_pallens_vs_Cx_pipiens:NC_068938.1:158005250-158371818	results/synteny/inversion_recurrence.tsv
@@ -914,6 +952,7 @@ inversion_recurrence	24 | n_inversions		2	results/synteny/inversion_recurrence.t
 inversion_recurrence	24 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	24 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	24 | max_span_bp		161568	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	24 | genome_in_every_pair		Cx_quinquefasciatus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	24 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	24 | pairs		Cx_quinquefasciatus_vs_Cx_pallens;Cx_quinquefasciatus_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	24 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051862.1:209608010-209769578;Cx_quinquefasciatus_vs_Cx_pipiens:NC_051862.1:209592838-209701593	results/synteny/inversion_recurrence.tsv
@@ -921,6 +960,7 @@ inversion_recurrence	25 | n_inversions		2	results/synteny/inversion_recurrence.t
 inversion_recurrence	25 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	25 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	25 | max_span_bp		113938	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	25 | genome_in_every_pair		Cx_quinquefasciatus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	25 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	25 | pairs		Cx_quinquefasciatus_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	25 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051862.1:211533447-211647385;Cx_quinquefasciatus_vs_Cx_molestus:NC_051862.1:211533447-211647385	results/synteny/inversion_recurrence.tsv
@@ -942,6 +982,7 @@ inversion_recurrence	28 | n_inversions		2	results/synteny/inversion_recurrence.t
 inversion_recurrence	28 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	28 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	28 | max_span_bp		127757	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	28 | genome_in_every_pair		Cx_quinquefasciatus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	28 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	28 | pairs		Cx_quinquefasciatus_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	28 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051863.1:59006210-59133967;Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:59006210-59133967	results/synteny/inversion_recurrence.tsv
@@ -1005,6 +1046,7 @@ inversion_recurrence	37 | n_inversions		2	results/synteny/inversion_recurrence.t
 inversion_recurrence	37 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	37 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	37 | max_span_bp		179703	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	37 | genome_in_every_pair		Cx_quinquefasciatus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	37 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	37 | pairs		Cx_quinquefasciatus_vs_Cx_pallens;Cx_quinquefasciatus_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	37 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051863.1:182822731-183002434;Cx_quinquefasciatus_vs_Cx_pipiens:NC_051863.1:182822731-182999401	results/synteny/inversion_recurrence.tsv
@@ -1012,6 +1054,7 @@ inversion_recurrence	38 | n_inversions		3	results/synteny/inversion_recurrence.t
 inversion_recurrence	38 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	38 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	38 | max_span_bp		286570	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	38 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	38 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	38 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens;Cx_quinquefasciatus_vs_Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	38 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051861.1:16621291-16907861;Cx_pallens_vs_Cx_molestus:NC_068937.1:121788914-122032218;Cx_pallens_vs_Cx_pipiens:NC_068937.1:121788914-122032218	results/synteny/inversion_recurrence.tsv
@@ -1019,6 +1062,7 @@ inversion_recurrence	39 | n_inversions		3	results/synteny/inversion_recurrence.t
 inversion_recurrence	39 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	39 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	39 | max_span_bp		169190	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	39 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	39 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	39 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens;Cx_quinquefasciatus_vs_Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	39 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051861.1:28098348-28267539;Cx_pallens_vs_Cx_molestus:NC_068937.1:90635264-90776003;Cx_pallens_vs_Cx_pipiens:NC_068937.1:90635264-90771677	results/synteny/inversion_recurrence.tsv
@@ -1026,6 +1070,7 @@ inversion_recurrence	40 | n_inversions		3	results/synteny/inversion_recurrence.t
 inversion_recurrence	40 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	40 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	40 | max_span_bp		139309	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	40 | genome_in_every_pair		none	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	40 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	40 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_quinquefasciatus_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	40 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051861.1:29004716-29141675;Cx_quinquefasciatus_vs_Cx_molestus:NC_051861.1:29004716-29141675;Cx_molestus_vs_Cx_pipiens:CM044968.1:39829305-39968614	results/synteny/inversion_recurrence.tsv
@@ -1040,6 +1085,7 @@ inversion_recurrence	42 | n_inversions		3	results/synteny/inversion_recurrence.t
 inversion_recurrence	42 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	42 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	42 | max_span_bp		1075681	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	42 | genome_in_every_pair		Cx_quinquefasciatus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	42 | any_at_least_large_span		True	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	42 | pairs		Cx_quinquefasciatus_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_pallens;Cx_quinquefasciatus_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	42 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051861.1:29828253-30865272;Cx_quinquefasciatus_vs_Cx_molestus:NC_051861.1:30543825-31619506;Cx_quinquefasciatus_vs_Cx_pipiens:NC_051861.1:30543825-31619506	results/synteny/inversion_recurrence.tsv
@@ -1054,6 +1100,7 @@ inversion_recurrence	44 | n_inversions		2	results/synteny/inversion_recurrence.t
 inversion_recurrence	44 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	44 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	44 | max_span_bp		127325	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	44 | genome_in_every_pair		Cx_quinquefasciatus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	44 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	44 | pairs		Cx_quinquefasciatus_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	44 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051861.1:31718804-31842378;Cx_quinquefasciatus_vs_Cx_molestus:NC_051861.1:31725327-31852652	results/synteny/inversion_recurrence.tsv
@@ -1061,6 +1108,7 @@ inversion_recurrence	45 | n_inversions		3	results/synteny/inversion_recurrence.t
 inversion_recurrence	45 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	45 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	45 | max_span_bp		771919	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	45 | genome_in_every_pair		Cx_quinquefasciatus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	45 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	45 | pairs		Cx_quinquefasciatus_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_pallens;Cx_quinquefasciatus_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	45 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051861.1:31854510-32599801;Cx_quinquefasciatus_vs_Cx_molestus:NC_051861.1:31878299-32510140;Cx_quinquefasciatus_vs_Cx_pipiens:NC_051861.1:31854510-32626429	results/synteny/inversion_recurrence.tsv
@@ -1068,6 +1116,7 @@ inversion_recurrence	46 | n_inversions		3	results/synteny/inversion_recurrence.t
 inversion_recurrence	46 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	46 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	46 | max_span_bp		799993	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	46 | genome_in_every_pair		Cx_quinquefasciatus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	46 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	46 | pairs		Cx_quinquefasciatus_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_pallens;Cx_quinquefasciatus_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	46 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051861.1:32613049-33413042;Cx_quinquefasciatus_vs_Cx_molestus:NC_051861.1:32613049-33304561;Cx_quinquefasciatus_vs_Cx_pipiens:NC_051861.1:32709495-33304561	results/synteny/inversion_recurrence.tsv
@@ -1082,6 +1131,7 @@ inversion_recurrence	48 | n_inversions		3	results/synteny/inversion_recurrence.t
 inversion_recurrence	48 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	48 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	48 | max_span_bp		1421135	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	48 | genome_in_every_pair		Cx_quinquefasciatus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	48 | any_at_least_large_span		True	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	48 | pairs		Cx_quinquefasciatus_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_pallens;Cx_quinquefasciatus_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	48 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051861.1:33715596-33991185;Cx_quinquefasciatus_vs_Cx_molestus:NC_051861.1:33596433-33991185;Cx_quinquefasciatus_vs_Cx_pipiens:NC_051861.1:33596433-35017568	results/synteny/inversion_recurrence.tsv
@@ -1089,6 +1139,7 @@ inversion_recurrence	49 | n_inversions		2	results/synteny/inversion_recurrence.t
 inversion_recurrence	49 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	49 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	49 | max_span_bp		740360	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	49 | genome_in_every_pair		Cx_quinquefasciatus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	49 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	49 | pairs		Cx_quinquefasciatus_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	49 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051861.1:34277208-35017568;Cx_quinquefasciatus_vs_Cx_molestus:NC_051861.1:34799277-34954048	results/synteny/inversion_recurrence.tsv
@@ -1096,6 +1147,7 @@ inversion_recurrence	50 | n_inversions		3	results/synteny/inversion_recurrence.t
 inversion_recurrence	50 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	50 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	50 | max_span_bp		218274	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	50 | genome_in_every_pair		Cx_quinquefasciatus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	50 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	50 | pairs		Cx_quinquefasciatus_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_pallens;Cx_quinquefasciatus_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	50 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051861.1:35050808-35258742;Cx_quinquefasciatus_vs_Cx_molestus:NC_051861.1:35041960-35260235;Cx_quinquefasciatus_vs_Cx_pipiens:NC_051861.1:35041960-35258742	results/synteny/inversion_recurrence.tsv
@@ -1103,6 +1155,7 @@ inversion_recurrence	51 | n_inversions		2	results/synteny/inversion_recurrence.t
 inversion_recurrence	51 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	51 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	51 | max_span_bp		1457410	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	51 | genome_in_every_pair		Cx_quinquefasciatus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	51 | any_at_least_large_span		True	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	51 | pairs		Cx_quinquefasciatus_vs_Cx_pallens;Cx_quinquefasciatus_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	51 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051861.1:35260235-36717645;Cx_quinquefasciatus_vs_Cx_pipiens:NC_051861.1:35260235-36055180	results/synteny/inversion_recurrence.tsv
@@ -1131,6 +1184,7 @@ inversion_recurrence	55 | n_inversions		3	results/synteny/inversion_recurrence.t
 inversion_recurrence	55 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	55 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	55 | max_span_bp		474925	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	55 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	55 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	55 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens;Cx_quinquefasciatus_vs_Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	55 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051861.1:41467541-41942466;Cx_pallens_vs_Cx_molestus:NC_068937.1:103631488-104031452;Cx_pallens_vs_Cx_pipiens:NC_068937.1:103631488-104031452	results/synteny/inversion_recurrence.tsv
@@ -1138,6 +1192,7 @@ inversion_recurrence	56 | n_inversions		3	results/synteny/inversion_recurrence.t
 inversion_recurrence	56 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	56 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	56 | max_span_bp		1494413	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	56 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	56 | any_at_least_large_span		True	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	56 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens;Cx_quinquefasciatus_vs_Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	56 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051861.1:42047558-43541971;Cx_pallens_vs_Cx_molestus:NC_068937.1:104870963-105562082;Cx_pallens_vs_Cx_pipiens:NC_068937.1:104271592-105573157	results/synteny/inversion_recurrence.tsv
@@ -1145,6 +1200,7 @@ inversion_recurrence	57 | n_inversions		3	results/synteny/inversion_recurrence.t
 inversion_recurrence	57 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	57 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	57 | max_span_bp		468467	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	57 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	57 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	57 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens;Cx_quinquefasciatus_vs_Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	57 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051861.1:43574478-43752759;Cx_pallens_vs_Cx_molestus:NC_068937.1:105573157-106041625;Cx_pallens_vs_Cx_pipiens:NC_068937.1:105598183-105819784	results/synteny/inversion_recurrence.tsv
@@ -1166,6 +1222,7 @@ inversion_recurrence	60 | n_inversions		3	results/synteny/inversion_recurrence.t
 inversion_recurrence	60 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	60 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	60 | max_span_bp		1660442	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	60 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	60 | any_at_least_large_span		True	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	60 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens;Cx_quinquefasciatus_vs_Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	60 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051861.1:44529957-45445266;Cx_pallens_vs_Cx_molestus:NC_068937.1:106181270-107445133;Cx_pallens_vs_Cx_pipiens:NC_068937.1:106107520-107767962	results/synteny/inversion_recurrence.tsv
@@ -1201,6 +1258,7 @@ inversion_recurrence	65 | n_inversions		3	results/synteny/inversion_recurrence.t
 inversion_recurrence	65 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	65 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	65 | max_span_bp		1054735	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	65 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	65 | any_at_least_large_span		True	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	65 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens;Cx_quinquefasciatus_vs_Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	65 | members		Cx_quinquefasciatus_vs_Cx_pallens:NC_051861.1:48226319-49281054;Cx_pallens_vs_Cx_molestus:NC_068937.1:109859790-110581566;Cx_pallens_vs_Cx_pipiens:NC_068937.1:109597941-110037275	results/synteny/inversion_recurrence.tsv
@@ -1292,6 +1350,7 @@ inversion_recurrence	78 | n_inversions		3	results/synteny/inversion_recurrence.t
 inversion_recurrence	78 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	78 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	78 | max_span_bp		252742	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	78 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	78 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	78 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	78 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051862.1:12156264-12368797;Cx_pallens_vs_Cx_molestus:NC_068938.1:211473101-211679834;Cx_molestus_vs_Cx_pipiens:CM044969.1:15625912-15878654	results/synteny/inversion_recurrence.tsv
@@ -1299,6 +1358,7 @@ inversion_recurrence	79 | n_inversions		3	results/synteny/inversion_recurrence.t
 inversion_recurrence	79 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	79 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	79 | max_span_bp		737861	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	79 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	79 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	79 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	79 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051862.1:37049479-37787340;Cx_pallens_vs_Cx_molestus:NC_068938.1:185636958-186315888;Cx_molestus_vs_Cx_pipiens:CM044969.1:36635527-37250228	results/synteny/inversion_recurrence.tsv
@@ -1306,6 +1366,7 @@ inversion_recurrence	80 | n_inversions		2	results/synteny/inversion_recurrence.t
 inversion_recurrence	80 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	80 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	80 | max_span_bp		578675	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	80 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	80 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	80 | pairs		Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	80 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051862.1:45632570-45789921;Cx_pallens_vs_Cx_molestus:NC_068938.1:176953062-177531737	results/synteny/inversion_recurrence.tsv
@@ -1320,6 +1381,7 @@ inversion_recurrence	82 | n_inversions		3	results/synteny/inversion_recurrence.t
 inversion_recurrence	82 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	82 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	82 | max_span_bp		264479	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	82 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	82 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	82 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	82 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051862.1:47796870-48032255;Cx_pallens_vs_Cx_molestus:NC_068938.1:175101180-175365660;Cx_molestus_vs_Cx_pipiens:CM044969.1:46732158-46928465	results/synteny/inversion_recurrence.tsv
@@ -1334,6 +1396,7 @@ inversion_recurrence	84 | n_inversions		2	results/synteny/inversion_recurrence.t
 inversion_recurrence	84 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	84 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	84 | max_span_bp		199035	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	84 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	84 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	84 | pairs		Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	84 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051862.1:49478271-49677306;Cx_pallens_vs_Cx_molestus:NC_068938.1:173532106-173715954	results/synteny/inversion_recurrence.tsv
@@ -1341,6 +1404,7 @@ inversion_recurrence	85 | n_inversions		3	results/synteny/inversion_recurrence.t
 inversion_recurrence	85 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	85 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	85 | max_span_bp		398044	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	85 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	85 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	85 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	85 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051862.1:54820020-54998893;Cx_pallens_vs_Cx_molestus:NC_068938.1:167856143-168052398;Cx_molestus_vs_Cx_pipiens:CM044969.1:53910240-54308284	results/synteny/inversion_recurrence.tsv
@@ -1348,6 +1412,7 @@ inversion_recurrence	86 | n_inversions		2	results/synteny/inversion_recurrence.t
 inversion_recurrence	86 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	86 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	86 | max_span_bp		140043	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	86 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	86 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	86 | pairs		Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	86 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051862.1:68685600-68811664;Cx_pallens_vs_Cx_molestus:NC_068938.1:151730289-151870332	results/synteny/inversion_recurrence.tsv
@@ -1355,6 +1420,7 @@ inversion_recurrence	87 | n_inversions		3	results/synteny/inversion_recurrence.t
 inversion_recurrence	87 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	87 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	87 | max_span_bp		153760	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	87 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	87 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	87 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	87 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051862.1:81789299-81916445;Cx_pallens_vs_Cx_molestus:NC_068938.1:137701489-137804388;Cx_molestus_vs_Cx_pipiens:CM044969.1:79336566-79490326	results/synteny/inversion_recurrence.tsv
@@ -1362,6 +1428,7 @@ inversion_recurrence	88 | n_inversions		2	results/synteny/inversion_recurrence.t
 inversion_recurrence	88 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	88 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	88 | max_span_bp		167619	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	88 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	88 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	88 | pairs		Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	88 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051862.1:86803704-86971323;Cx_pallens_vs_Cx_molestus:NC_068938.1:132573778-132701548	results/synteny/inversion_recurrence.tsv
@@ -1432,6 +1499,7 @@ inversion_recurrence	98 | n_inversions		2	results/synteny/inversion_recurrence.t
 inversion_recurrence	98 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	98 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	98 | max_span_bp		628472	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	98 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	98 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	98 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	98 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051862.1:124641270-124977486;Cx_molestus_vs_Cx_pipiens:CM044969.1:108852461-109480934	results/synteny/inversion_recurrence.tsv
@@ -1446,6 +1514,7 @@ inversion_recurrence	100 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	100 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	100 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	100 | max_span_bp		260269	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	100 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	100 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	100 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	100 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051862.1:138647552-138750520;Cx_pallens_vs_Cx_molestus:NC_068938.1:94091816-94218047;Cx_molestus_vs_Cx_pipiens:CM044969.1:120954483-121214752	results/synteny/inversion_recurrence.tsv
@@ -1453,6 +1522,7 @@ inversion_recurrence	101 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	101 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	101 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	101 | max_span_bp		159756	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	101 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	101 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	101 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	101 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051862.1:138795437-138955194;Cx_pallens_vs_Cx_molestus:NC_068938.1:93922911-94046289;Cx_molestus_vs_Cx_pipiens:CM044969.1:123430706-123568329	results/synteny/inversion_recurrence.tsv
@@ -1467,6 +1537,7 @@ inversion_recurrence	103 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	103 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	103 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	103 | max_span_bp		406428	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	103 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	103 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	103 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	103 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051862.1:160378351-160496205;Cx_pallens_vs_Cx_molestus:NC_068938.1:70490660-70607966;Cx_molestus_vs_Cx_pipiens:CM044969.1:145497091-145903519	results/synteny/inversion_recurrence.tsv
@@ -1481,6 +1552,7 @@ inversion_recurrence	105 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	105 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	105 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	105 | max_span_bp		474954	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	105 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	105 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	105 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	105 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051862.1:171303478-171543111;Cx_pallens_vs_Cx_molestus:NC_068938.1:57985768-58460722;Cx_molestus_vs_Cx_pipiens:CM044969.1:156538107-156871903	results/synteny/inversion_recurrence.tsv
@@ -1488,6 +1560,7 @@ inversion_recurrence	106 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	106 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	106 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	106 | max_span_bp		254376	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	106 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	106 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	106 | pairs		Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	106 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051862.1:189472070-189726446;Cx_pallens_vs_Cx_molestus:NC_068938.1:37197212-37448202	results/synteny/inversion_recurrence.tsv
@@ -1495,6 +1568,7 @@ inversion_recurrence	107 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	107 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	107 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	107 | max_span_bp		651038	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	107 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	107 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	107 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	107 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051862.1:192003535-192163314;Cx_pallens_vs_Cx_molestus:NC_068938.1:34480670-34649931;Cx_molestus_vs_Cx_pipiens:CM044969.1:178035190-178686228	results/synteny/inversion_recurrence.tsv
@@ -1502,6 +1576,7 @@ inversion_recurrence	108 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	108 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	108 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	108 | max_span_bp		651032	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	108 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	108 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	108 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	108 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051862.1:200258607-200909640;Cx_pallens_vs_Cx_molestus:NC_068938.1:25248020-25877659;Cx_molestus_vs_Cx_pipiens:CM044969.1:185514942-185863429	results/synteny/inversion_recurrence.tsv
@@ -1516,6 +1591,7 @@ inversion_recurrence	110 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	110 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	110 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	110 | max_span_bp		316977	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	110 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	110 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	110 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	110 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051862.1:215991046-216284735;Cx_pallens_vs_Cx_molestus:NC_068938.1:9070197-9387175;Cx_molestus_vs_Cx_pipiens:CM044969.1:202877548-203083219	results/synteny/inversion_recurrence.tsv
@@ -1523,6 +1599,7 @@ inversion_recurrence	111 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	111 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	111 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	111 | max_span_bp		223302	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	111 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	111 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	111 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	111 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:4283288-4460784;Cx_pallens_vs_Cx_molestus:NC_068939.1:181826729-182050031;Cx_molestus_vs_Cx_pipiens:CM044970.1:10963565-11136251	results/synteny/inversion_recurrence.tsv
@@ -1537,6 +1614,7 @@ inversion_recurrence	113 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	113 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	113 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	113 | max_span_bp		146825	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	113 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	113 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	113 | pairs		Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	113 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:34133453-34280278;Cx_pallens_vs_Cx_molestus:NC_068939.1:153359239-153476342	results/synteny/inversion_recurrence.tsv
@@ -1544,6 +1622,7 @@ inversion_recurrence	114 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	114 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	114 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	114 | max_span_bp		145235	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	114 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	114 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	114 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	114 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:46440459-46559769;Cx_pallens_vs_Cx_molestus:NC_068939.1:139919324-140048181;Cx_molestus_vs_Cx_pipiens:CM044970.1:154725882-154871118	results/synteny/inversion_recurrence.tsv
@@ -1551,6 +1630,7 @@ inversion_recurrence	115 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	115 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	115 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	115 | max_span_bp		486467	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	115 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	115 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	115 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	115 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:54106721-54447729;Cx_pallens_vs_Cx_molestus:NC_068939.1:132240694-132727161;Cx_molestus_vs_Cx_pipiens:CM044970.1:157268250-157479377	results/synteny/inversion_recurrence.tsv
@@ -1572,6 +1652,7 @@ inversion_recurrence	118 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	118 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	118 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	118 | max_span_bp		214404	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	118 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	118 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	118 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	118 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:74525999-74701493;Cx_pallens_vs_Cx_molestus:NC_068939.1:111752668-111967072;Cx_molestus_vs_Cx_pipiens:CM044970.1:127663946-127824039	results/synteny/inversion_recurrence.tsv
@@ -1579,6 +1660,7 @@ inversion_recurrence	119 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	119 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	119 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	119 | max_span_bp		531931	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	119 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	119 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	119 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	119 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:74711418-75200396;Cx_pallens_vs_Cx_molestus:NC_068939.1:111157679-111689610;Cx_molestus_vs_Cx_pipiens:CM044970.1:127830861-128327895	results/synteny/inversion_recurrence.tsv
@@ -1586,6 +1668,7 @@ inversion_recurrence	120 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	120 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	120 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	120 | max_span_bp		386646	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	120 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	120 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	120 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	120 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:75201899-75505585;Cx_molestus_vs_Cx_pipiens:CM044970.1:128342132-128728779	results/synteny/inversion_recurrence.tsv
@@ -1614,6 +1697,7 @@ inversion_recurrence	124 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	124 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	124 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	124 | max_span_bp		287915	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	124 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	124 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	124 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	124 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:87066034-87280752;Cx_molestus_vs_Cx_pipiens:CM044970.1:116643605-116931520	results/synteny/inversion_recurrence.tsv
@@ -1705,6 +1789,7 @@ inversion_recurrence	137 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	137 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	137 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	137 | max_span_bp		314474	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	137 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	137 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	137 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	137 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:116876581-117191055;Cx_pallens_vs_Cx_molestus:NC_068939.1:89048107-89349730;Cx_molestus_vs_Cx_pipiens:CM044970.1:85149409-85399024	results/synteny/inversion_recurrence.tsv
@@ -1712,6 +1797,7 @@ inversion_recurrence	138 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	138 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	138 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	138 | max_span_bp		201657	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	138 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	138 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	138 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	138 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:120377030-120578688;Cx_pallens_vs_Cx_molestus:NC_068939.1:85391763-85548896;Cx_molestus_vs_Cx_pipiens:CM044970.1:81058959-81194700	results/synteny/inversion_recurrence.tsv
@@ -1719,6 +1805,7 @@ inversion_recurrence	139 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	139 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	139 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	139 | max_span_bp		366642	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	139 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	139 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	139 | pairs		Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	139 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:121080510-121414512;Cx_pallens_vs_Cx_molestus:NC_068939.1:84440090-84806732	results/synteny/inversion_recurrence.tsv
@@ -1733,6 +1820,7 @@ inversion_recurrence	141 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	141 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	141 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	141 | max_span_bp		316571	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	141 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	141 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	141 | pairs		Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	141 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:123457683-123774254;Cx_pallens_vs_Cx_molestus:NC_068939.1:82145434-82274480	results/synteny/inversion_recurrence.tsv
@@ -1740,6 +1828,7 @@ inversion_recurrence	142 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	142 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	142 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	142 | max_span_bp		540882	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	142 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	142 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	142 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	142 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:132116980-132561044;Cx_pallens_vs_Cx_molestus:NC_068939.1:72557117-73097999;Cx_molestus_vs_Cx_pipiens:CM044970.1:68589690-68971448	results/synteny/inversion_recurrence.tsv
@@ -1747,6 +1836,7 @@ inversion_recurrence	143 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	143 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	143 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	143 | max_span_bp		1159595	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	143 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	143 | any_at_least_large_span		True	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	143 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	143 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:132743247-133902842;Cx_pallens_vs_Cx_molestus:NC_068939.1:71340636-71700580;Cx_molestus_vs_Cx_pipiens:CM044970.1:67590491-67979138	results/synteny/inversion_recurrence.tsv
@@ -1754,6 +1844,7 @@ inversion_recurrence	144 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	144 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	144 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	144 | max_span_bp		283154	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	144 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	144 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	144 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	144 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:134024865-134173749;Cx_pallens_vs_Cx_molestus:NC_068939.1:70972949-71236327;Cx_molestus_vs_Cx_pipiens:CM044970.1:68080965-68364119	results/synteny/inversion_recurrence.tsv
@@ -1768,6 +1859,7 @@ inversion_recurrence	146 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	146 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	146 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	146 | max_span_bp		245992	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	146 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	146 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	146 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	146 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:134527930-134717731;Cx_pallens_vs_Cx_molestus:NC_068939.1:70560638-70674716;Cx_molestus_vs_Cx_pipiens:CM044970.1:200589421-200835413	results/synteny/inversion_recurrence.tsv
@@ -1775,6 +1867,7 @@ inversion_recurrence	147 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	147 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	147 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	147 | max_span_bp		276932	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	147 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	147 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	147 | pairs		Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	147 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:134723148-135000080;Cx_pallens_vs_Cx_molestus:NC_068939.1:70300804-70552326	results/synteny/inversion_recurrence.tsv
@@ -1782,6 +1875,7 @@ inversion_recurrence	148 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	148 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	148 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	148 | max_span_bp		244958	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	148 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	148 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	148 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	148 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:140970175-141142175;Cx_pallens_vs_Cx_molestus:NC_068939.1:64011183-64194871;Cx_molestus_vs_Cx_pipiens:CM044970.1:60233085-60478043	results/synteny/inversion_recurrence.tsv
@@ -1789,6 +1883,7 @@ inversion_recurrence	149 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	149 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	149 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	149 | max_span_bp		215637	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	149 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	149 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	149 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	149 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:147898962-148114599;Cx_molestus_vs_Cx_pipiens:CM044970.1:29917916-30019942	results/synteny/inversion_recurrence.tsv
@@ -1796,6 +1891,7 @@ inversion_recurrence	150 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	150 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	150 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	150 | max_span_bp		185128	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	150 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	150 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	150 | pairs		Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	150 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:157873654-158058782;Cx_pallens_vs_Cx_molestus:NC_068939.1:44318453-44490755	results/synteny/inversion_recurrence.tsv
@@ -1810,6 +1906,7 @@ inversion_recurrence	152 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	152 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	152 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	152 | max_span_bp		552452	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	152 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	152 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	152 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	152 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:158661417-158817792;Cx_pallens_vs_Cx_molestus:NC_068939.1:43614013-44117296;Cx_molestus_vs_Cx_pipiens:CM044970.1:41048048-41600501	results/synteny/inversion_recurrence.tsv
@@ -1817,6 +1914,7 @@ inversion_recurrence	153 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	153 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	153 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	153 | max_span_bp		226188	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	153 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	153 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	153 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	153 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051863.1:174943348-175169536;Cx_pallens_vs_Cx_molestus:NC_068939.1:26739549-26940977;Cx_molestus_vs_Cx_pipiens:CM044970.1:7949122-8156254	results/synteny/inversion_recurrence.tsv
@@ -1831,6 +1929,7 @@ inversion_recurrence	155 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	155 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	155 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	155 | max_span_bp		425562	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	155 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	155 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	155 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	155 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051861.1:2031468-2457030;Cx_pallens_vs_Cx_molestus:NC_068937.1:136803376-137158711;Cx_molestus_vs_Cx_pipiens:CM044968.1:3431353-3610340	results/synteny/inversion_recurrence.tsv
@@ -1838,6 +1937,7 @@ inversion_recurrence	156 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	156 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	156 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	156 | max_span_bp		473880	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	156 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	156 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	156 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	156 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051861.1:26706769-27180649;Cx_pallens_vs_Cx_molestus:NC_068937.1:111596942-112003450;Cx_molestus_vs_Cx_pipiens:CM044968.1:27435547-27892236	results/synteny/inversion_recurrence.tsv
@@ -1845,6 +1945,7 @@ inversion_recurrence	157 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	157 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	157 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	157 | max_span_bp		318803	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	157 | genome_in_every_pair		Cx_quinquefasciatus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	157 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	157 | pairs		Cx_quinquefasciatus_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	157 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051861.1:29402581-29686351;Cx_quinquefasciatus_vs_Cx_pipiens:NC_051861.1:29408043-29726847	results/synteny/inversion_recurrence.tsv
@@ -1852,6 +1953,7 @@ inversion_recurrence	158 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	158 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	158 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	158 | max_span_bp		402370	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	158 | genome_in_every_pair		Cx_quinquefasciatus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	158 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	158 | pairs		Cx_quinquefasciatus_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	158 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051861.1:29686848-29818807;Cx_quinquefasciatus_vs_Cx_pipiens:NC_051861.1:29741701-30144072	results/synteny/inversion_recurrence.tsv
@@ -1859,6 +1961,7 @@ inversion_recurrence	159 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	159 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	159 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	159 | max_span_bp		653324	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	159 | genome_in_every_pair		Cx_quinquefasciatus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	159 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	159 | pairs		Cx_quinquefasciatus_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	159 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051861.1:29869672-30522997;Cx_quinquefasciatus_vs_Cx_pipiens:NC_051861.1:30168071-30522997	results/synteny/inversion_recurrence.tsv
@@ -1866,6 +1969,7 @@ inversion_recurrence	160 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	160 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	160 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	160 | max_span_bp		247568	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	160 | genome_in_every_pair		Cx_quinquefasciatus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	160 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	160 | pairs		Cx_quinquefasciatus_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	160 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051861.1:33353290-33553133;Cx_quinquefasciatus_vs_Cx_pipiens:NC_051861.1:33305565-33553133	results/synteny/inversion_recurrence.tsv
@@ -1894,6 +1998,7 @@ inversion_recurrence	164 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	164 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	164 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	164 | max_span_bp		824758	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	164 | genome_in_every_pair		Cx_quinquefasciatus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	164 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	164 | pairs		Cx_quinquefasciatus_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	164 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051861.1:36654321-37319234;Cx_quinquefasciatus_vs_Cx_pipiens:NC_051861.1:36434912-37259671	results/synteny/inversion_recurrence.tsv
@@ -1901,6 +2006,7 @@ inversion_recurrence	165 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	165 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	165 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	165 | max_span_bp		913002	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	165 | genome_in_every_pair		Cx_quinquefasciatus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	165 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	165 | pairs		Cx_quinquefasciatus_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	165 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051861.1:37415968-38181234;Cx_quinquefasciatus_vs_Cx_pipiens:NC_051861.1:37266816-38179818	results/synteny/inversion_recurrence.tsv
@@ -1922,6 +2028,7 @@ inversion_recurrence	168 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	168 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	168 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	168 | max_span_bp		1240277	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	168 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	168 | any_at_least_large_span		True	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	168 | pairs		Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	168 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051861.1:50771764-51538807;Cx_pallens_vs_Cx_molestus:NC_068937.1:87132035-88372312	results/synteny/inversion_recurrence.tsv
@@ -1929,6 +2036,7 @@ inversion_recurrence	169 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	169 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	169 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	169 | max_span_bp		382950	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	169 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	169 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	169 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	169 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051861.1:53672431-54055381;Cx_pallens_vs_Cx_molestus:NC_068937.1:85283918-85603746;Cx_molestus_vs_Cx_pipiens:CM044968.1:55323313-55487383	results/synteny/inversion_recurrence.tsv
@@ -1985,6 +2093,7 @@ inversion_recurrence	177 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	177 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	177 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	177 | max_span_bp		401635	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	177 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	177 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	177 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	177 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051861.1:77809505-78137887;Cx_pallens_vs_Cx_molestus:NC_068937.1:55738173-56074633;Cx_molestus_vs_Cx_pipiens:CM044968.1:64221640-64623275	results/synteny/inversion_recurrence.tsv
@@ -1999,6 +2108,7 @@ inversion_recurrence	179 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	179 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	179 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	179 | max_span_bp		585115	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	179 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	179 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	179 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	179 | members		Cx_quinquefasciatus_vs_Cx_molestus:NC_051861.1:87782030-88181673;Cx_pallens_vs_Cx_molestus:NC_068937.1:45228232-45813347;Cx_molestus_vs_Cx_pipiens:CM044968.1:73815736-74340839	results/synteny/inversion_recurrence.tsv
@@ -2181,6 +2291,7 @@ inversion_recurrence	205 | n_inversions		3	results/synteny/inversion_recurrence.
 inversion_recurrence	205 | n_pairs		3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	205 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	205 | max_span_bp		517340	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	205 | genome_in_every_pair		none	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	205 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	205 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus;Cx_quinquefasciatus_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	205 | members		Cx_quinquefasciatus_vs_Cx_pipiens:NC_051861.1:39448811-39966151;Cx_pallens_vs_Cx_molestus:NC_068937.1:101586689-101817736;Cx_molestus_vs_Cx_pipiens:CM044968.1:29698017-29911806	results/synteny/inversion_recurrence.tsv
@@ -2237,6 +2348,7 @@ inversion_recurrence	213 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	213 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	213 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	213 | max_span_bp		235426	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	213 | genome_in_every_pair		Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	213 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	213 | pairs		Cx_pallens_vs_Cx_pipiens;Cx_quinquefasciatus_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	213 | members		Cx_quinquefasciatus_vs_Cx_pipiens:NC_051861.1:107518558-107753984;Cx_pallens_vs_Cx_pipiens:NC_068937.1:25793949-26015664	results/synteny/inversion_recurrence.tsv
@@ -2328,6 +2440,7 @@ inversion_recurrence	226 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	226 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	226 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	226 | max_span_bp		206851	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	226 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	226 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	226 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	226 | members		Cx_pallens_vs_Cx_molestus:NC_068938.1:121714446-121921298;Cx_pallens_vs_Cx_pipiens:NC_068938.1:121717033-121921298	results/synteny/inversion_recurrence.tsv
@@ -2342,6 +2455,7 @@ inversion_recurrence	228 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	228 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	228 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	228 | max_span_bp		257644	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	228 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	228 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	228 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	228 | members		Cx_pallens_vs_Cx_molestus:NC_068938.1:148884607-149134278;Cx_molestus_vs_Cx_pipiens:CM044969.1:69825713-70083357	results/synteny/inversion_recurrence.tsv
@@ -2349,6 +2463,7 @@ inversion_recurrence	229 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	229 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	229 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	229 | max_span_bp		620012	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	229 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	229 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	229 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	229 | members		Cx_pallens_vs_Cx_molestus:NC_068938.1:156688858-157308871;Cx_pallens_vs_Cx_pipiens:NC_068938.1:157063944-157308871	results/synteny/inversion_recurrence.tsv
@@ -2377,6 +2492,7 @@ inversion_recurrence	233 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	233 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	233 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	233 | max_span_bp		688254	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	233 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	233 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	233 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	233 | members		Cx_pallens_vs_Cx_molestus:NC_068938.1:163464246-163625929;Cx_pallens_vs_Cx_pipiens:NC_068938.1:162937674-163625929	results/synteny/inversion_recurrence.tsv
@@ -2412,6 +2528,7 @@ inversion_recurrence	238 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	238 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	238 | chromosomes		chr2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	238 | max_span_bp		204407	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	238 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	238 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	238 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	238 | members		Cx_pallens_vs_Cx_molestus:NC_068938.1:206780897-206985305;Cx_pallens_vs_Cx_pipiens:NC_068938.1:206780897-206985305	results/synteny/inversion_recurrence.tsv
@@ -2454,6 +2571,7 @@ inversion_recurrence	244 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	244 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	244 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	244 | max_span_bp		812388	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	244 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	244 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	244 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	244 | members		Cx_pallens_vs_Cx_molestus:NC_068939.1:71711526-72523914;Cx_molestus_vs_Cx_pipiens:CM044970.1:66910216-67586163	results/synteny/inversion_recurrence.tsv
@@ -2517,6 +2635,7 @@ inversion_recurrence	253 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	253 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	253 | chromosomes		chr3	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	253 | max_span_bp		548194	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	253 | genome_in_every_pair		Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	253 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	253 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_molestus	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	253 | members		Cx_pallens_vs_Cx_molestus:NC_068939.1:146271367-146606944;Cx_molestus_vs_Cx_pipiens:CM044970.1:160907033-161455228	results/synteny/inversion_recurrence.tsv
@@ -2580,6 +2699,7 @@ inversion_recurrence	262 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	262 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	262 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	262 | max_span_bp		1170728	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	262 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	262 | any_at_least_large_span		True	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	262 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	262 | members		Cx_pallens_vs_Cx_molestus:NC_068937.1:62365834-63417956;Cx_pallens_vs_Cx_pipiens:NC_068937.1:62247227-63417956	results/synteny/inversion_recurrence.tsv
@@ -2692,6 +2812,7 @@ inversion_recurrence	278 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	278 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	278 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	278 | max_span_bp		487145	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	278 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	278 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	278 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	278 | members		Cx_pallens_vs_Cx_molestus:NC_068937.1:101958397-102322770;Cx_pallens_vs_Cx_pipiens:NC_068937.1:101958397-102445542	results/synteny/inversion_recurrence.tsv
@@ -2699,6 +2820,7 @@ inversion_recurrence	279 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	279 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	279 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	279 | max_span_bp		735416	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	279 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	279 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	279 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	279 | members		Cx_pallens_vs_Cx_molestus:NC_068937.1:102462119-103197536;Cx_pallens_vs_Cx_pipiens:NC_068937.1:102614825-103132225	results/synteny/inversion_recurrence.tsv
@@ -2706,6 +2828,7 @@ inversion_recurrence	280 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	280 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	280 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	280 | max_span_bp		251092	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	280 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	280 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	280 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	280 | members		Cx_pallens_vs_Cx_molestus:NC_068937.1:103347764-103598856;Cx_pallens_vs_Cx_pipiens:NC_068937.1:103347764-103598856	results/synteny/inversion_recurrence.tsv
@@ -2727,6 +2850,7 @@ inversion_recurrence	283 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	283 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	283 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	283 | max_span_bp		527588	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	283 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	283 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	283 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	283 | members		Cx_pallens_vs_Cx_molestus:NC_068937.1:108141570-108669158;Cx_pallens_vs_Cx_pipiens:NC_068937.1:108141570-108669158	results/synteny/inversion_recurrence.tsv
@@ -2734,6 +2858,7 @@ inversion_recurrence	284 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	284 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	284 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	284 | max_span_bp		372442	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	284 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	284 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	284 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	284 | members		Cx_pallens_vs_Cx_molestus:NC_068937.1:108935642-109308084;Cx_pallens_vs_Cx_pipiens:NC_068937.1:108967487-109285766	results/synteny/inversion_recurrence.tsv
@@ -2741,6 +2866,7 @@ inversion_recurrence	285 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	285 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	285 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	285 | max_span_bp		235308	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	285 | genome_in_every_pair		Cx_pallens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	285 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	285 | pairs		Cx_pallens_vs_Cx_molestus;Cx_pallens_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	285 | members		Cx_pallens_vs_Cx_molestus:NC_068937.1:109384768-109548463;Cx_pallens_vs_Cx_pipiens:NC_068937.1:109301174-109536482	results/synteny/inversion_recurrence.tsv
@@ -3014,6 +3140,7 @@ inversion_recurrence	324 | n_inversions		2	results/synteny/inversion_recurrence.
 inversion_recurrence	324 | n_pairs		2	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	324 | chromosomes		chr1	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	324 | max_span_bp		503633	results/synteny/inversion_recurrence.tsv
+inversion_recurrence	324 | genome_in_every_pair		Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	324 | any_at_least_large_span		False	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	324 | pairs		Cx_molestus_vs_Cx_pipiens;Cx_pallens_vs_Cx_pipiens	results/synteny/inversion_recurrence.tsv
 inversion_recurrence	324 | members		Cx_pallens_vs_Cx_pipiens:NC_068937.1:127216479-127436157;Cx_molestus_vs_Cx_pipiens:CM044968.1:13293022-13796655	results/synteny/inversion_recurrence.tsv
