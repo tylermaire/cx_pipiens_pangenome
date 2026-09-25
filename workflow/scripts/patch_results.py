@@ -20,7 +20,14 @@ Steps, in default order:
   divergence  divergence_diagnostics.py    (rule divergence_diagnostics)
   cafe        parse_cafe.py, then cafe_transfer_bias.py
   synteny     synteny_summary.py           (rule synteny_summary)
+  rooted      rooted_summary.py            (rule rooted_summary, V5)
+  dstat       d_statistics.py              (rule d_statistics, V5)
   values      collect_manuscript_values.py (rule manuscript_values)
+
+The rooted and dstat steps need what rooted_tree and rooted_alignments left
+in results/phylo/rooted/: the tree files, rooted_concord.cf.stat and
+.cf.branch, the gene trees and their ids, sco5_loci.tsv, the accounting
+tables, and alignments/trimmed and alignments/codon.
 
 Usage, from the repository root with results/ holding the run:
     python workflow/scripts/patch_results.py
@@ -37,7 +44,7 @@ from types import SimpleNamespace
 
 SCRIPTS = os.path.join("workflow", "scripts")
 STEPS = ["absence", "cloud", "transfer", "quartet", "divergence", "cafe", "synteny",
-         "values"]
+         "rooted", "dstat", "values"]
 
 
 def read_config(path="config/config.yaml"):
@@ -46,19 +53,30 @@ def read_config(path="config/config.yaml"):
         return yaml.safe_load(open(path))
     except ImportError:
         pass
-    # minimal reader for this file's two level layout
-    cfg, section = {}, None
+    # minimal reader for this file's two level layout, with lists of
+    # flow sequences under a key (dstat tests: - [a, b, c])
+    cfg, section, last = {}, None, None
     for raw in open(path):
         line = raw.split("#", 1)[0].rstrip()
         if not line.strip():
             continue
-        key, _, val = line.strip().partition(":")
+        item = line.strip()
+        if item.startswith("- ") and section and last:
+            value = item[2:].strip()
+            if value.startswith("[") and value.endswith("]"):
+                value = [v.strip() for v in value[1:-1].split(",") if v.strip()]
+            if not isinstance(cfg[section].get(last), list):
+                cfg[section][last] = []
+            cfg[section][last].append(value)
+            continue
+        key, _, val = item.partition(":")
         val = val.strip()
         if not raw.startswith(" "):
-            section = key
+            section, last = key, None
             cfg[key] = _scalar(val) if val else {}
         elif isinstance(cfg.get(section), dict):
             cfg[section][key] = _scalar(val)
+            last = key
     return cfg
 
 
@@ -76,6 +94,12 @@ def samples(path="config/samples.tsv"):
     all_s = [r["sample"] for r in rows]
     ingroup = [r["sample"] for r in rows if r["is_outgroup"].strip().lower() == "false"]
     return all_s, ingroup
+
+
+def sample_column(column, value, path="config/samples.tsv"):
+    """Samples whose column (annotation, source, is_outgroup) has value."""
+    rows = list(csv.DictReader(open(path), delimiter="\t"))
+    return [r["sample"] for r in rows if (r.get(column) or "").strip().lower() == value]
 
 
 def run(script, **sections):
@@ -119,7 +143,8 @@ def step_transfer(cfg, all_s, ingroup, ref):
                "proteins": [f"results/proteins/{s}.fa" for s in all_s],
                "table": "results/pangenome/partitioned_orthogroups.tsv",
                "of": "results/orthofinder/output"},
-        params={"samples": all_s, "reference": ref},
+        params={"samples": all_s, "reference": ref,
+                "native": sample_column("annotation", "native")},
         output={"summary": "results/annotation/transfer_quality.tsv",
                 "by_compartment": "results/annotation/transfer_quality_by_compartment.tsv"})
 
@@ -184,7 +209,40 @@ def step_synteny(cfg, all_s, ingroup, ref):
                 "recurrence": "results/synteny/inversion_recurrence.tsv"})
 
 
+def step_rooted(cfg, all_s, ingroup, ref):
+    og = sample_column("is_outgroup", "true")[0]
+    d = "results/phylo/rooted"
+    run("rooted_summary.py",
+        input={"tree": f"{d}/rooted_tree.treefile", "concord": f"{d}/rooted_concord.cf.tree",
+               "gene_trees": f"{d}/rooted_gene_trees.nwk", "ids": f"{d}/rooted_gene_tree_ids.txt",
+               "aln": f"{d}/alignments", "accounting": f"{d}/sco5_accounting.tsv",
+               "alignments": f"{d}/alignment_summary.tsv"},
+        params={"outgroup": og, "ingroup": ingroup, "trimmed": f"{d}/alignments/trimmed",
+                "cf_stat": f"{d}/rooted_concord.cf.stat",
+                "cf_branch": f"{d}/rooted_concord.cf.branch"},
+        output={"summary": f"{d}/rooted_summary.tsv",
+                "topologies": f"{d}/rooted_topology_counts.tsv"})
+
+
+def step_dstat(cfg, all_s, ingroup, ref):
+    og = sample_column("is_outgroup", "true")[0]
+    d = "results/phylo/rooted"
+    dstat = cfg.get("dstat") or {}
+    tests = dstat.get("tests") if isinstance(dstat.get("tests"), list) else []
+    os.makedirs("results/phylo/dstat", exist_ok=True)
+    run("d_statistics.py",
+        input={"aln": f"{d}/alignments", "tree": f"{d}/rooted_tree.treefile",
+               "loci": f"{d}/sco5_loci.tsv", "of": "results/orthofinder/output",
+               "gffs": [f"results/annotation/{s}_liftoff.gff3" for s in ingroup]},
+        params={"outgroup": og, "ingroup": ingroup, "reference": ref,
+                "codon": f"{d}/alignments/codon", "tests": tests,
+                "block_size": int(dstat.get("block_size") or 5000000)},
+        output={"table": "results/phylo/dstat/d_statistics.tsv",
+                "per_locus": "results/phylo/dstat/d_statistics_per_locus.tsv"})
+
+
 def step_values(cfg, all_s, ingroup, ref):
+    og = sample_column("is_outgroup", "true")[0]
     params = {
         "samples": all_s, "ingroup": ingroup, "reference": ref,
         "tools": ["liftoff", "gffread", "orthofinder", "diamond", "mafft", "trimal",
@@ -198,7 +256,10 @@ def step_values(cfg, all_s, ingroup, ref):
             "iqtree species tree": f"-p per locus partitions -m {cfg['iqtree']['model']} -bb {cfg['iqtree']['bootstrap']}",
             "iqtree gene trees": "-m MFP -bb 1000, one per trimmed SCO",
             "concordance": "--gcf all_gene_trees.nwk --scf 100",
-            "cafe": f"-p -k {cfg['cafe']['n_gamma_categories']}; ML topology rooted between the sister pairs, unit tip lengths (assumed, not estimated)",
+            "cafe": f"-p -k {cfg['cafe']['n_gamma_categories']}; ingroup counts; species tree rooted with {og}; branch lengths assumed (tips 1, root branches 0.5 when the root falls between the two pairs)",
+            "outgroup": f"{og} {cfg['outgroup']['accession']} ({cfg['outgroup']['assembly']}), own Ensembl gene set",
+            "rooted tree": f"five taxon single copy loci; MAFFT --auto, trimAl -automated1, alignments of at least 50 columns; iqtree -p per locus partitions -m {cfg['iqtree']['model']} -bb {cfg['iqtree']['bootstrap']} -o {og}; --gcf and --scf 100",
+            "D statistics": f"codon alignments (trimAl columns of the protein alignment); sites with A, C, G or T in all five taxa; weighted block jackknife over {int((cfg.get('dstat') or {}).get('block_size') or 5000000) // 1000000} Mb windows of the reference assembly",
             "busco lineage": cfg["busco"]["lineage"],
             "minimap2 synteny": "-x asm20 --secondary=no on the three longest sequences",
             "synteny inversions": "runs of >= 3 anchors spanning >= 100 kb after orientation normalisation",
