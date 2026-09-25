@@ -123,3 +123,16 @@ figures/revision/
 
 # Manuscript tables built from results/
 tables/
+
+# V5 outgroup analyses: large intermediates (the summary tables, trees and
+# D statistics in results/phylo/rooted and results/phylo/dstat are tracked)
+results/cds/
+results/phylo/rooted/sco5/
+results/phylo/rooted/alignments/
+results/phylo/rooted/gene_trees/
+results/phylo/rooted/*.ckp.gz
+results/phylo/rooted/*.model.gz
+results/phylo/rooted/*.iqtree
+results/phylo/rooted/*.bionj
+results/phylo/rooted/*.splits.nex
+results/phylo/rooted/*.mldist

@@ -12,7 +12,11 @@ gene_counts = pd.read_csv(gc_files[0], sep="\t", index_col=0)
 if "Total" in gene_counts.columns:
     gene_counts = gene_counts.drop(columns=["Total"])
 
-ingroup = [c for c in gene_counts.columns if "tarsalis" not in c.lower()]
+# single copy over the ingroup forms only; the outgroup may have any number
+ingroup = list(snakemake.params.ingroup)
+missing = [c for c in ingroup if c not in gene_counts.columns]
+if missing:
+    raise SystemExit(f"ingroup samples missing from the OrthoFinder counts: {missing}")
 sco_mask = True
 for sp in ingroup:
     sco_mask = sco_mask & (gene_counts[sp] == 1)

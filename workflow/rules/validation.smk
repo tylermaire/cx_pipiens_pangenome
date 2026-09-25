@@ -19,8 +19,8 @@ independent probes and the target genome's own annotation.
 Only 'absent' and 'paralog_only' calls support a real absence.
 """
 
-# Matches how partition_pangenome.py splits ingroup from outgroup.
-INGROUP = [s for s in ALL_SAMPLES if "tarsalis" not in s.lower()]
+# The ingroup forms from the sample sheet, as partition_pangenome.py uses.
+INGROUP = INGROUP_SAMPLES
 
 rule extract_absence_queries:
     """One representative protein and genomic locus per cloud/shell orthogroup."""

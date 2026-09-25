@@ -32,6 +32,9 @@ rule partition_pangenome:
     output:
         table="results/pangenome/partitioned_orthogroups.tsv",
         summary="results/pangenome/pangenome_summary.tsv"
+    params:
+        ingroup=INGROUP_SAMPLES,
+        outgroup=OUTGROUP_SAMPLES
     script: "../scripts/partition_pangenome.py"
 
 rule cloud_composition:

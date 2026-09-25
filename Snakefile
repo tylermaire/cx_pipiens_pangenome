@@ -29,6 +29,33 @@ if config["threads"] > _avail:
 INGROUP_SAMPLES = list(samples[samples["is_outgroup"] == False].index)
 OUTGROUP_SAMPLES = list(samples[samples["is_outgroup"] == True].index)
 
+# -- Annotation and download source of each sample (V5) --
+# annotation: reference = the RefSeq annotation Liftoff transfers from;
+#             liftoff   = models transferred from the reference;
+#             native    = the sample's own gene set (the outgroup, from Ensembl).
+# source:     ncbi (datasets CLI) or ensembl (FTP; genome and gene set together).
+def _column(name, default):
+    if name in samples.columns:
+        return samples[name].fillna(default).astype(str).str.strip().to_dict()
+    return {s: default for s in ALL_SAMPLES}
+
+ANNOTATION = _column("annotation", "liftoff")
+SOURCE = _column("source", "ncbi")
+LIFTOFF_SAMPLES = [s for s in ALL_SAMPLES if ANNOTATION[s] == "liftoff"]
+NATIVE_SAMPLES = [s for s in ALL_SAMPLES if ANNOTATION[s] == "native"]
+NCBI_SAMPLES = [s for s in ALL_SAMPLES if SOURCE[s] == "ncbi"]
+ENSEMBL_SAMPLES = [s for s in ALL_SAMPLES if SOURCE[s] == "ensembl"]
+OUTGROUP = config["outgroup"]["name"]
+if OUTGROUP_SAMPLES != [OUTGROUP]:
+    raise ValueError(f"config outgroup {OUTGROUP} does not match the outgroup rows of "
+                     f"{config['samples']}: {OUTGROUP_SAMPLES}")
+
+
+def one_of(names):
+    """Wildcard constraint matching exactly these sample names (or nothing)."""
+    import re as _re
+    return "|".join(_re.escape(n) for n in names) if names else "(?!x)x"
+
 # -- Pairwise combinations for synteny (ingroup only) --
 PAIRS = list(combinations(INGROUP_SAMPLES, 2))
 
@@ -77,4 +104,11 @@ rule all:
         "results/validation/absence_summary.tsv",
         "results/cafe/transfer_bias_summary.tsv",
         "results/synteny/synteny_summary.tsv",
-        "figures/Figure_1_assembly_quality.png",
+        # Rooted analyses with the outgroup (V5)
+        "results/phylo/quartet_robustness.tsv",
+        "results/phylo/rooted/rooted_summary.tsv",
+        "results/phylo/dstat/d_statistics.tsv",
+        # Manuscript figures, tables and supplement, built from results/
+        "figures/revision/Figure_1_pangenome.pdf",
+        "tables/manuscript_tables.json",
+        "tables/Supplementary_Tables.xlsx",
