@@ -9,8 +9,9 @@ and no record of which parameters produced which. This rule replaces both.
 skani is run once per pair with explicit parameters (recorded in the output
 header) rather than relying on defaults that may change between versions.
 Pairs for which skani reports no value are written as NA rather than dropped:
-Cx. tarsalis is divergent enough that genome-wide identity falls below the
-threshold at which skani will report, and that is a result worth showing.
+an outgroup can be divergent enough that genome-wide identity falls below the
+threshold at which skani will report (Cx. tarsalis, the outgroup up to V4,
+was), and that is a result worth showing.
 
 Snakemake provides:
     input.genomes  one FASTA per sample

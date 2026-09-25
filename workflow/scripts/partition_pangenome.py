@@ -13,8 +13,16 @@ if "Total" in gene_counts.columns:
     gene_counts = gene_counts.drop(columns=["Total"])
 
 all_samples = list(gene_counts.columns)
-outgroup = [s for s in all_samples if "tarsalis" in s.lower()]
-ingroup = [s for s in all_samples if s not in outgroup]
+# The compartments are defined over the ingroup forms; the outgroup (from the
+# sample sheet) only decides whether an orthogroup is outgroup only.
+outgroup = [s for s in snakemake.params.outgroup if s in all_samples]
+ingroup = [s for s in snakemake.params.ingroup if s in all_samples]
+missing = [s for s in snakemake.params.ingroup if s not in all_samples]
+if missing:
+    raise SystemExit(f"ingroup samples missing from the OrthoFinder counts: {missing}")
+other = [s for s in all_samples if s not in ingroup and s not in outgroup]
+if other:
+    raise SystemExit(f"OrthoFinder counts hold samples not in the sample sheet: {other}")
 n_ingroup = len(ingroup)
 
 print(f"Ingroup samples: {ingroup}")

@@ -27,7 +27,8 @@ whose reference model is clean.
 
 Snakemake provides:
     input.gffs, input.proteins, input.table, input.of
-    params.samples, params.reference
+    params.samples, params.reference, params.native (samples annotated with
+    their own gene set rather than by Liftoff; optional)
     output.summary, output.by_compartment
 """
 
@@ -76,15 +77,17 @@ def not_clean(attrs):
     return attrs.get("partial") == "true" or "exception" in attrs
 
 
-def summarise_sample(sample, kept, flags, is_reference, ref=None):
+def summarise_sample(sample, kept, flags, is_reference, ref=None, is_native=False):
     """One summary row. ref is the reference genome's liftoff_flags() output,
-    used to set aside models whose reference model is not clean."""
+    used to set aside models whose reference model is not clean. A native
+    gene set (the outgroup's own annotation, V5) has no Liftoff flags."""
     found = [flags[t] for t in kept if t in flags]
     n = len(found)
     has_flags = any("valid_ORF" in f for f in found)
     row = {"sample": sample, "n_kept_models": len(kept), "n_in_gff": n,
            "liftoff_flags": "yes" if has_flags else
-           ("no (reference annotation)" if is_reference else "no")}
+           ("no (reference annotation)" if is_reference else
+            "no (native annotation)" if is_native else "no")}
 
     def count(pred):
         return sum(1 for f in found if pred(f))
@@ -182,12 +185,13 @@ def main():
     prot = {os.path.basename(p)[:-3]: p for p in sm.input.proteins}
     where = compartments(sm.input.table, sm.input.of, samples)
 
+    native = set(getattr(sm.params, "native", []) or [])
     ref = liftoff_flags(gff[reference]) if reference in gff else None
     summary, comp_rows = [], []
     for s in samples:
         kept = fasta_ids(prot[s])
         flags = ref if s == reference and ref is not None else liftoff_flags(gff[s])
-        row = summarise_sample(s, kept, flags, s == reference, ref)
+        row = summarise_sample(s, kept, flags, s == reference, ref, s in native)
         summary.append(row)
         if row["liftoff_flags"] == "yes":
             comp_rows.extend(by_compartment(s, kept, flags, where))

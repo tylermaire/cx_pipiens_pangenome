@@ -1,14 +1,32 @@
+PREBUILT_LIBRARY = (config.get("repeats") or {}).get("prebuilt_library", "") or ""
+
+
 rule repeatmodeler:
     """Build de novo repeat library from reference genome.
-    Single-threaded for ~32 h on the LTRStruct phase."""
+    Single-threaded for ~32 h on the LTRStruct phase. The library depends
+    only on the reference assembly, so when config repeats prebuilt_library
+    names a file (the V4 library, kept in data/repeat_library/), it is copied
+    instead of rebuilt."""
     input:
         ref=f"resources/genomes/{config['reference']['name']}.fasta"
     output: "results/repeats/custom_repeat_lib.fa"
+    params:
+        prebuilt=PREBUILT_LIBRARY
     threads: 16
     conda: "../envs/repeatmasker.yaml"
     shell:
         """
         set -euo pipefail
+        if [ -n "{params.prebuilt}" ]; then
+            if [ ! -s "{params.prebuilt}" ]; then
+                echo "prebuilt repeat library {params.prebuilt} is missing or empty" >&2
+                exit 1
+            fi
+            mkdir -p results/repeats
+            cp "{params.prebuilt}" {output}
+            echo "Reused the repeat library {params.prebuilt}"
+            exit 0
+        fi
         WORKDIR=$(pwd)
         rm -rf results/repeats/repeatmodeler_workdir
         mkdir -p results/repeats/repeatmodeler_workdir

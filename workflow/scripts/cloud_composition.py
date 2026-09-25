@@ -7,8 +7,9 @@ that reading has two problems, and this script measures both.
 
 1. Outgroup genes. OrthoFinder orthogroups contain at least two genes, and
    unassigned singletons are not partitioned. A cloud orthogroup with a single
-   ingroup gene therefore has to contain a Cx. tarsalis gene, so "form
-   specific" orthogroups can be shared with the outgroup.
+   ingroup gene therefore has to contain an outgroup gene (Cx. perexiguus from
+   V5, Cx. tarsalis before), so "form specific" orthogroups can be shared with
+   the outgroup.
 
 2. Same gene elsewhere. Every model in the transferred genomes was placed by
    Liftoff from a Cx. quinquefasciatus gene and keeps that gene's ID. If a
