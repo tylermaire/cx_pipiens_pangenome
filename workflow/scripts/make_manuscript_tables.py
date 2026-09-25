@@ -14,38 +14,33 @@ import glob
 import json
 import os
 
-REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-ORDER = ["Cx_quinquefasciatus", "Cx_pallens", "Cx_molestus", "Cx_pipiens"]
-NAME = {"Cx_quinquefasciatus": "*Cx. quinquefasciatus*", "Cx_pallens": "*Cx. pipiens pallens*",
-        "Cx_molestus": "*Cx. pipiens* f. *molestus*", "Cx_pipiens": "*Cx. pipiens* f. *pipiens*",
-        "Cx_tarsalis": "*Cx. tarsalis*"}
-SHORT = {"Cx_quinquefasciatus": "*quinquefasciatus*", "Cx_pallens": "*pallens*",
-         "Cx_molestus": "*molestus*", "Cx_pipiens": "*pipiens*"}
-ASSEMBLY = {"Cx_quinquefasciatus": "GCF_015732765.1 (VPISU_Cqui_1.0_pri_paternal)",
-            "Cx_pallens": "GCF_016801865.2 (TS_CPP_V2)",
-            "Cx_molestus": "GCA_024516115.1 (TS_CPM_V1)",
-            "Cx_pipiens": "GCA_963924435.1 (idCulPipi1.1)",
-            "Cx_tarsalis": "CtarK1 (osf.io/mdwqx)"}
-# Summed length of the three chromosome scale sequences, read from
-# results/synteny/genomes/<sample>.chromosomes.fasta when present; the values
-# below were measured on those files of the V4 run and are used otherwise.
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import forms  # noqa: E402
+
+REPO = forms.REPO
+ORDER = forms.INGROUP
+OUTGROUP = forms.outgroup()
+NAME = forms.NAME
+SHORT = forms.SHORT
+ASSEMBLY = {s: f"{acc} ({name})" for s, (acc, name) in forms.ACCESSION.items()}
+ASSEMBLY["Cx_tarsalis"] = "CtarK1 (osf.io/mdwqx)"
+# Summed length of the three chromosome scale sequences. forms reads it from
+# results/synteny/genomes/<sample>.chromosomes.fasta (ingroup) or the
+# downloaded genome (outgroup); these V4 measurements of the synteny FASTA
+# files are used when neither file is present.
 CHROM_BP_V4 = {"Cx_quinquefasciatus": 559588684, "Cx_pallens": 549446285,
                "Cx_molestus": 530551183, "Cx_pipiens": 532519368}
 
 
 def chromosome_bp(sample):
-    path = os.path.join(REPO, "results", "synteny", "genomes", f"{sample}.chromosomes.fasta")
-    if not os.path.exists(path):
-        return CHROM_BP_V4[sample]
-    total = 0
-    with open(path) as fh:
-        for line in fh:
-            if not line.startswith(">"):
-                total += len(line.strip())
-    return total
+    bp = forms.chromosome_scale_bp(sample)
+    return bp if bp is not None else CHROM_BP_V4.get(sample)
 
 
-CHROM_BP = {s: chromosome_bp(s) for s in CHROM_BP_V4}
+CHROM_BP = {s: chromosome_bp(s) for s in ORDER + [OUTGROUP]}
+CHROM_BP = {s: v for s, v in CHROM_BP.items() if v}
 
 
 def tsv(path, skip_comments=True):
@@ -72,12 +67,25 @@ def main():
     args = ap.parse_args()
     os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
     V = values()
+
+    def version(tool, fallback):
+        for sec in ("tools", "tools_observed"):
+            v = V.get((sec, tool, ""))
+            if v and v != "NA" and not v.startswith("not present"):
+                return v.split(",")[0]
+        return fallback
+
     quast = {r["Assembly"]: r for r in tsv("results/quast/report.tsv", skip_comments=False)}
+    ref_busco = json.load(open(glob.glob(os.path.join(
+        REPO, f"results/busco/{ORDER[0]}/short_summary*.json"))[0]))
+    busco_version = ref_busco.get("versions", {}).get("busco", "6.1.0")
+    busco_lineage = ref_busco.get("lineage_dataset", {}).get("name", "diptera_odb10")
+    busco_n = int(ref_busco["results"]["n_markers"])
     tables = {}
 
     # Table 1: assemblies
     rows = []
-    for s in ORDER + ["Cx_tarsalis"]:
+    for s in ORDER + [OUTGROUP]:
         size = float(quast["Total length (>= 0 bp)"][s]) / 1e6
         seqs = int(quast["# contigs (>= 0 bp)"][s])
         n50 = float(quast["N50"][s]) / 1e6
@@ -98,17 +106,20 @@ def main():
                    "Complete BUSCO, genome (%)", "Repeats masked (%)"],
         "rows": rows,
         "widths": [1750, 2500, 650, 950, 850, 700, 1150, 1000, 900],
-        "notes": ["Size, sequences and scaffold N50 from QUAST 5.3.0 (all sequences counted); "
-                  "contig N50 as reported by BUSCO, which splits scaffolds at gaps. BUSCO 6.1.0 "
-                  "with the diptera_odb10 dataset (3,285 genes), genome mode with miniprot. "
-                  "Repeats were masked with RepeatMasker using a RepeatModeler2 library built "
-                  "from the *Cx. quinquefasciatus* assembly; *Cx. tarsalis* was not masked. The *Cx. tarsalis* "
-                  "assembly is contig level. Further statistics in Supp. Table S1."],
+        "notes": [f"Size, sequences and scaffold N50 from QUAST {version('quast', '5.3.0')} "
+                  "(all sequences counted); contig N50 as reported by BUSCO, which splits "
+                  f"scaffolds at gaps. BUSCO {busco_version} with the {busco_lineage} dataset "
+                  f"({busco_n:,} genes), genome mode with miniprot. Repeats were masked with "
+                  "RepeatMasker using a RepeatModeler2 library built from the "
+                  f"*Cx. quinquefasciatus* assembly; the outgroup, {NAME[OUTGROUP]}, was not "
+                  "masked." + (" The *Cx. tarsalis* assembly is contig level."
+                               if OUTGROUP == "Cx_tarsalis" else "")
+                  + " Further statistics in Supp. Table S1."],
     }
 
     # Table 2: gene sets
     part = tsv("results/pangenome/partitioned_orthogroups.tsv")
-    per = {s: {} for s in ORDER + ["Cx_tarsalis"]}
+    per = {s: {} for s in ORDER + [OUTGROUP]}
     for r in part:
         for s in per:
             per[s][r["compartment"]] = per[s].get(r["compartment"], 0) + int(r[s])
@@ -124,7 +135,8 @@ def main():
                     unassigned[head[i]] += 1
     tq = {r["sample"]: r for r in tsv("results/annotation/transfer_quality.tsv")}
     rows = []
-    for s in ORDER + ["Cx_tarsalis"]:
+    og_only_note = ""
+    for s in ORDER + [OUTGROUP]:
         kept = int(tq[s]["n_kept_models"])
         inval = tq[s]["pct_invalid_orf"]
         clean = tq[s]["pct_invalid_orf_clean_ref"]
@@ -138,8 +150,8 @@ def main():
                      f"{core:,}", f"{shell:,}", f"{cloud:,}",
                      f"{unassigned[s]:,}" + ("^a^" if og_only else "")])
         if og_only:
-            og_only_note = (f"^a^A further {og_only} *Cx. tarsalis* genes are in the "
-                            f"{sum(1 for r in part if r['compartment'] == 'outgroup_only')} "
+            og_only_note = (f"^a^A further {og_only:,} {NAME[s]} genes are in the "
+                            f"{sum(1 for r in part if r['compartment'] == 'outgroup_only'):,} "
                             "outgroup only orthogroups.")
     tables["2"] = {
         "title": "Table 2. Gene sets after annotation transfer and their place in the pangenome",
@@ -151,7 +163,12 @@ def main():
         "notes": ["One protein per gene (longest isoform). Valid open reading frames (ORF) as "
                   "recorded by Liftoff; the last ORF column sets aside models whose "
                   "*Cx. quinquefasciatus* source model is partial or carries a RefSeq sequence "
-                  "exception (872 of the kept reference models). Core, shell and cloud give the "
+                  f"exception ({int(tq[ORDER[0]]['n_ref_model_not_clean']):,} of the kept "
+                  "reference models)."
+                  + (f" {NAME[OUTGROUP]} keeps {forms.OUTGROUP_ANNOTATION.get(OUTGROUP, 'its own gene set')}, "
+                     "which carries no Liftoff flags."
+                     if tq[OUTGROUP].get("liftoff_flags", "").startswith("no") else "")
+                  + " Core, shell and cloud give the "
                   "number of genes of each form in orthogroups of that compartment, classified "
                   "by the four ingroup forms; unassigned genes were placed in no orthogroup.",
                   og_only_note],
@@ -159,6 +176,8 @@ def main():
 
     # Table 3: pairwise identity and synteny
     syn = {(r["sample1"], r["sample2"]): r for r in tsv("results/synteny/synteny_summary.tsv")}
+    n_trimmed = int(float(V.get(("phylogeny", "trimmed_alignments", ""), "0") or 0)) or \
+        max(int(r["n_loci"]) for r in tsv("results/phylo/sco_pairwise_identity.tsv"))
     sco = {}
     for r in tsv("results/phylo/sco_pairwise_identity.tsv"):
         sco[frozenset([r["taxon_a"], r["taxon_b"]])] = r
@@ -187,7 +206,7 @@ def main():
         "notes": ["skani ANI and aligned fraction (both directions) on the complete "
                   "assemblies; minimap2 identity is the length weighted identity of "
                   "alignments between the three chromosome scale sequences; median protein "
-                  "identity is over the 9,098 trimmed single copy ortholog alignments. Anchors "
+                  f"identity is over the {n_trimmed:,} trimmed single copy ortholog alignments. Anchors "
                   "are genes, coding or non coding, shared by both assemblies on homologous "
                   "chromosomes. Further values in Supp. Tables S7 and S9."],
     }

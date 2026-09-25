@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
-"""Build Supplementary_Tables.xlsx (Supp. Tables S1 to S11) from the workflow outputs.
+"""Build Supplementary_Tables.xlsx (Supp. Tables S1 to S12) from the workflow outputs.
 
     python workflow/scripts/make_supplement.py [out.xlsx]
 
-
 Every value is read from a workflow output; nothing is typed by hand except
-labels, captions and the summed length of the three chromosome scale
-sequences (CHROM_BP, measured on the V4 synteny FASTA files). Each sheet
-names the files it was built from.
+labels and captions, whose counts and software versions are also read from
+the outputs (results/manuscript_values.tsv for versions). The summed length
+of the three chromosome scale sequences falls back on V4 measurements of the
+synteny FASTA files when those files are absent. Each sheet names the files
+it was built from. S12 (the outgroup analyses, V5) is written when
+results/phylo/rooted and results/phylo/dstat hold their outputs. The
+outgroup is read from config/samples.tsv (or CX_SAMPLE_SHEET).
 """
 import collections
 import csv
@@ -22,20 +25,28 @@ from openpyxl import Workbook
 from openpyxl.styles import Alignment, Border, Font, Side
 from openpyxl.utils import get_column_letter
 
-REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(REPO, "tables", "Supplementary_Tables.xlsx")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import forms as samples_meta  # noqa: E402
 
-ORDER = ["Cx_quinquefasciatus", "Cx_pallens", "Cx_molestus", "Cx_pipiens"]
-ALL5 = ORDER + ["Cx_tarsalis"]
-FORM = {"Cx_quinquefasciatus": "quinquefasciatus", "Cx_pallens": "pallens",
-        "Cx_molestus": "molestus", "Cx_pipiens": "pipiens", "Cx_tarsalis": "Cx. tarsalis"}
-ACCESSION = {"Cx_quinquefasciatus": ("GCF_015732765.1", "VPISU_Cqui_1.0_pri_paternal"),
-             "Cx_pallens": ("GCF_016801865.2", "TS_CPP_V2"),
-             "Cx_molestus": ("GCA_024516115.1", "TS_CPM_V1"),
-             "Cx_pipiens": ("GCA_963924435.1", "idCulPipi1.1"),
-             "Cx_tarsalis": ("osf.io/mdwqx", "CtarK1")}
-CHROM_BP = {"Cx_quinquefasciatus": 559588684, "Cx_pallens": 549446285,
-            "Cx_molestus": 530551183, "Cx_pipiens": 532519368}
+REPO = samples_meta.REPO
+OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(REPO, "tables", "Supplementary_Tables.xlsx")
+RELEASE = "v3.0"          # the git tag of the V5 workflow cited in the README sheet
+
+ORDER = samples_meta.INGROUP
+OUTGROUP = samples_meta.outgroup()
+ALL5 = ORDER + [OUTGROUP]
+FORM = samples_meta.FORM
+ACCESSION = samples_meta.ACCESSION
+OG = FORM[OUTGROUP]                      # the outgroup's name in captions
+CHROM_BP_V4 = {"Cx_quinquefasciatus": 559588684, "Cx_pallens": 549446285,
+               "Cx_molestus": 530551183, "Cx_pipiens": 532519368}
+CHROM_BP = {}
+for _s in ALL5:
+    _bp = samples_meta.chromosome_scale_bp(_s)
+    if _bp is None:
+        _bp = CHROM_BP_V4.get(_s)
+    if _bp:
+        CHROM_BP[_s] = _bp
 
 FONT = "Arial"
 F_TITLE = Font(name=FONT, size=12, bold=True)
@@ -56,6 +67,34 @@ def tsv(p, skip_comments=True):
     with open(path(p)) as fh:
         lines = [l for l in fh if l.strip() and not (skip_comments and l.startswith("#"))]
     return list(csv.DictReader(lines, delimiter="\t"))
+
+
+def _values():
+    p = os.path.join(REPO, "results", "manuscript_values.tsv")
+    if not os.path.exists(p):
+        return {}
+    with open(p) as fh:
+        return {(r["section"], r["item"], r["sample"]): r["value"]
+                for r in csv.DictReader(fh, delimiter="\t")}
+
+
+VALUES = _values()
+
+
+def version(tool, fallback):
+    """Version a run used, from results/manuscript_values.tsv (conda
+    environments first, then what the outputs record), else the fallback."""
+    for sec in ("tools", "tools_observed"):
+        v = VALUES.get((sec, tool, ""))
+        if v and v != "NA" and not v.startswith("not present"):
+            return v.split(",")[0]
+    return fallback
+
+
+def pct_range(values, digits=0):
+    lo, hi = min(values), max(values)
+    a, b = f"{lo:.{digits}f}", f"{hi:.{digits}f}"
+    return f"{a}%" if a == b else f"{a} to {b}%"
 
 
 def forms(text):
@@ -274,23 +313,30 @@ def s1():
         Block("(b) BUSCO, genome mode (miniprot)",
               busco_cols + [("e", "Complete with an internal stop codon", "int"),
                             ("ep", "Complete with an internal stop codon (%)", "pct1")], gen),
-        Block("(c) BUSCO, protein mode (transferred gene sets, one protein per gene)",
+        Block("(c) BUSCO, protein mode (gene sets used for orthology, one protein per gene)",
               busco_cols, prot),
     ]
+    ref_json = json.load(open(glob.glob(path(f"results/busco/{ORDER[0]}/short_summary*.json"))[0]))
+    busco_v = ref_json.get("versions", {}).get("busco", "6.1.0")
+    lineage = ref_json.get("lineage_dataset", {}).get("name", "diptera_odb10")
+    stops = [float(g["ep"]) for g in gen if g.get("ep") not in (None, "")]
+    stop_text = (f"; this share ranged from {pct_range(stops, 1)} across the five assemblies"
+                 if stops else "")
+    chrom_forms = [FORM[s] for s in ALL5 if s in CHROM_BP]
     return ("S1 Assemblies",
             "Supp. Table S1. Assembly statistics and BUSCO completeness",
-            "Statistics of the five assemblies (a) and BUSCO 6.1.0 completeness against the "
-            "diptera_odb10 dataset in genome mode (b) and in protein mode on the gene sets used "
+            f"Statistics of the five assemblies (a) and BUSCO {busco_v} completeness against the "
+            f"{lineage} dataset in genome mode (b) and in protein mode on the gene sets used "
             "for orthology (c). Total length, sequences, scaffold N50, L50, largest sequence and "
-            "GC content are from QUAST 5.3.0 counting all sequences; contigs, contig N50 and gaps "
-            "are as reported by BUSCO, which counts scaffolds split at gaps. The chromosome scale "
-            "columns give the summed length of the three chromosome scale sequences of each "
-            "ingroup assembly. In genome mode, BUSCO also reports the complete genes whose "
-            "miniprot alignment contains an internal stop codon; this share was similar in all "
-            "five assemblies, including the reference.",
+            f"GC content are from QUAST {version('quast', '5.3.0')} counting all sequences; "
+            "contigs, contig N50 and gaps are as reported by BUSCO, which counts scaffolds split "
+            "at gaps. The chromosome scale columns give the summed length of the three longest "
+            f"sequences ({', '.join(chrom_forms)}). In genome mode, BUSCO also reports the "
+            "complete genes whose miniprot alignment contains an internal stop codon"
+            f"{stop_text}.",
             "results/quast/report.tsv; results/busco/<form>/short_summary*.json; "
             "results/busco_proteins/<form>/short_summary*.json; "
-            "results/synteny/genomes/<form>.chromosomes.fasta (V4 run)",
+            "results/synteny/genomes/<form>.chromosomes.fasta; resources/genomes/<form>.fasta",
             blocks)
 
 
@@ -304,6 +350,20 @@ def s2():
         d["liftoff_flags"] = "no (reference annotation)" if r["sample"] == "Cx_quinquefasciatus" \
             else r["liftoff_flags"]
         rows.append(d)
+    by = {r["sample"]: r for r in tq}
+    ref_row = by[ORDER[0]]
+    # share of the transfers of a partial or exception reference model that fail the ORF check
+    fail = []
+    for s in ORDER[1:]:
+        r = by.get(s, {})
+        try:
+            bad = int(r["n_invalid_orf"]) - int(r["n_invalid_orf_clean_ref"])
+            fail.append(100.0 * bad / int(r["n_ref_model_not_clean"]))
+        except (KeyError, ValueError, ZeroDivisionError):
+            pass
+    og_flags = by.get(OUTGROUP, {}).get("liftoff_flags", "")
+    og_text = (f" The outgroup, {OG}, keeps {samples_meta.OUTGROUP_ANNOTATION.get(OUTGROUP, 'its own gene set')} "
+               "and carries no Liftoff flags either." if og_flags.startswith("no") else "")
     comp_order = ["core", "shell", "cloud", "outgroup_only", "unassigned"]
     bc = tsv("results/annotation/transfer_quality_by_compartment.tsv")
     bc.sort(key=lambda x: (ALL5.index(x["sample"]), comp_order.index(x["compartment"])))
@@ -335,17 +395,19 @@ def s2():
     ]
     return ("S2 Transfer quality",
             "Supp. Table S2. Quality of the transferred gene models",
-            "Liftoff 1.6.3 flags for the gene models kept for analysis (one per gene), by form (a) "
+            f"Liftoff {version('liftoff', '1.6.3')} flags for the gene models kept for analysis (one per gene), by form (a) "
             "and by pangenome compartment (b). A valid open reading frame (ORF) has a start codon, "
             "a stop codon and no internal stop codon. 'Protein differs from reference' counts "
             "models whose protein is not identical to the Cx. quinquefasciatus reference protein, "
             "which includes true amino acid differences between forms. Source reference models "
-            "that are partial or carry a RefSeq sequence exception (872 of the 15,094 reference "
-            "models) usually fail the ORF check in any genome (87 to 89% of their transfers in "
-            "the ingroup genomes); the last columns of (a) set their transfers aside. The reference annotation was not transferred and carries no Liftoff flags; "
-            "for it, the column lists how many of its own models are partial or carry an "
-            "exception. In (b), compartments are those of the orthogroup holding each model; "
-            "unassigned models were placed in no orthogroup.",
+            f"that are partial or carry a RefSeq sequence exception ({int(ref_row['n_ref_model_not_clean']):,} "
+            f"of the {int(ref_row['n_kept_models']):,} reference models) usually fail the ORF check in "
+            f"any genome ({pct_range(fail)} of their transfers in the ingroup genomes); the last "
+            "columns of (a) set their transfers aside. The reference annotation was not "
+            "transferred and carries no Liftoff flags; for it, the column lists how many of its "
+            f"own models are partial or carry an exception.{og_text} In (b), compartments are "
+            "those of the orthogroup holding each model; unassigned models were placed in no "
+            "orthogroup.",
             "results/annotation/transfer_quality.tsv; "
             "results/annotation/transfer_quality_by_compartment.tsv",
             blocks)
@@ -362,11 +424,11 @@ def s3():
             ("compartment", "Compartment", "text")]
     return ("S3 Partition",
             "Supp. Table S3. Pangenome partition of the orthogroups",
-            "Number of genes (one protein per gene) of each form in each of the 13,885 "
-            "OrthoFinder 3.1.5 orthogroups, and the compartment assigned from the four ingroup "
-            "forms: core (genes from all four), shell (two or three), cloud (one) and outgroup "
-            "only (Cx. tarsalis genes only). Genes that OrthoFinder assigned to no orthogroup are "
-            "not listed.",
+            f"Number of genes (one protein per gene) of each form in each of the {len(part):,} "
+            f"OrthoFinder {version('orthofinder', '3.1.5')} orthogroups, and the compartment "
+            "assigned from the four ingroup forms: core (genes from all four), shell (two or "
+            f"three), cloud (one) and outgroup only ({OG} genes only). Genes that OrthoFinder "
+            "assigned to no orthogroup are not listed.",
             "results/pangenome/partitioned_orthogroups.tsv",
             [Block(None, cols, part, autofilter=True)])
 
@@ -387,7 +449,7 @@ def s4():
     blocks = [
         Block("(a) Summary by form",
               [("form", "Form", "text"), ("n_cloud_orthogroups", "Cloud orthogroups", "int"),
-               ("with_outgroup_gene", "With a Cx. tarsalis gene", "int"),
+               ("with_outgroup_gene", f"With a {OG} gene", "int"),
                ("single_ingroup_gene", "With a single ingroup gene", "int"),
                ("same_gene_elsewhere", "Same gene in another form", "int"),
                ("same_gene_in_reference", "Same gene in quinquefasciatus", "int"),
@@ -396,7 +458,7 @@ def s4():
         Block("(b) Cloud orthogroups",
               [("orthogroup", "Orthogroup", "text"), ("form", "Form", "text"),
                ("n_ingroup_genes", "Ingroup genes", "int"),
-               ("n_outgroup_genes", "Cx. tarsalis genes", "int"),
+               ("n_outgroup_genes", f"{OG} genes", "int"),
                ("genes", "Transcripts", "text"), ("gene_ids", "Genes", "text"),
                ("same_gene_forms", "Forms with the same gene", "text"),
                ("same_gene_orthogroups", "Orthogroups of the same gene", "text"),
@@ -406,7 +468,7 @@ def s4():
     ]
     return ("S4 Cloud",
             "Supp. Table S4. Composition of the cloud orthogroups",
-            "Summary by form (a) and each of the 476 cloud orthogroups (b). Liftoff keeps the "
+            f"Summary by form (a) and each of the {len(per):,} cloud orthogroups (b). Liftoff keeps the "
             "reference gene identifier on every transferred model, so models of the same gene "
             "can be traced across forms. 'Same gene in another form': another ingroup form "
             "carries a protein coding model with the same gene identifier, under a different "
@@ -463,8 +525,8 @@ def s5():
             "Supp. Table S5. Validation of the gene absences implied by cloud and shell orthogroups",
             "Summary by compartment (a) and every absence event (b), an orthogroup and a form "
             "without it. The longest ingroup protein of the orthogroup (query) was aligned to the genome "
-            "of the form without it with miniprot 0.18 (protein probe), and the genomic locus of "
-            "its gene, introns included, with minimap2 2.31 (locus probe); identity and coverage "
+            f"of the form without it with miniprot {version('miniprot', '0.18')} (protein probe), and the genomic locus of "
+            f"its gene, introns included, with minimap2 {version('minimap2', '2.31')} (locus probe); identity and coverage "
             "are for the best hit of each probe, 0 when there was none. Calls, in order of "
             "precedence: clustered elsewhere, basis same gene identifier (the target proteome holds "
             "a model with the query's gene identifier); absent (no hit with either probe); weak "
@@ -496,9 +558,17 @@ def s6():
     }
     acc = [{"m": acc_label[r["measure"]], "v": r["value"]}
            for r in tsv("results/phylo/locus_accounting.tsv")]
-    role = {"species_tree": "Species tree", "major_discordant": "Major discordant (gDF2)",
-            "minor_discordant": "Minor discordant (gDF1)"}
     topo = tsv("results/phylo/quartet_topology_counts.tsv")
+    by_role = {r["role"]: dict(r) for r in topo}
+    major, minor = by_role["major_discordant"], by_role["minor_discordant"]
+
+    def with_label(name, r):
+        return f"{name} ({r['iqtree_label']})" if r.get("iqtree_label") else name
+
+    role = {"species_tree": "Species tree",
+            "major_discordant": with_label("Major discordant", major),
+            "minor_discordant": with_label("Minor discordant", minor)}
+    n_gene_trees = sum(int(r["n_gene_trees"]) for r in topo)
     for r in topo:
         r["role"] = role[r["role"]]
     cf = [l for l in open(path("results/phylo/concord.cf.stat")) if not l.startswith("#")]
@@ -518,6 +588,9 @@ def s6():
     ]
     sup = tsv("results/phylo/quartet_asymmetry_by_support.tsv")
     sites = tsv("results/phylo/quartet_site_patterns.tsv")
+    conc_row = next((r for r in sites if r["role"] == "concentration"), None)
+    n_top = int(conc_row["n_loci"]) if conc_row else 0
+    top_label = f"Top 1% of loci by informative sites ({n_top:,} loci)"
     robust = tsv("results/phylo/quartet_robustness.tsv")
     for r in robust:
         r["subset"] = (r["subset"][0].upper() + r["subset"][1:]).replace(">=", "\u2265")
@@ -528,9 +601,9 @@ def s6():
         "locus_majority_species_tree": ("Locus majority votes", True),
         "locus_majority_major_discordant_gene_trees": ("Locus majority votes", True),
         "locus_majority_minor_discordant_gene_trees": ("Locus majority votes", True),
-        "top_loci_species_tree": ("Top 1% of loci by informative sites (91 loci)", True),
-        "top_loci_major_discordant_gene_trees": ("Top 1% of loci by informative sites (91 loci)", True),
-        "top_loci_minor_discordant_gene_trees": ("Top 1% of loci by informative sites (91 loci)", True),
+        "top_loci_species_tree": (top_label, True),
+        "top_loci_major_discordant_gene_trees": (top_label, True),
+        "top_loci_minor_discordant_gene_trees": (top_label, True),
     }
     test_label = {
         "discordant sites: gene tree major vs minor":
@@ -576,7 +649,7 @@ def s6():
               [("split", "Split", "text"), ("role", "Topology", "text"),
                ("n_gene_trees", "Gene trees", "int"), ("pct", "Gene trees (%)", "pct2"),
                ("iqtree_label", "IQ-TREE label", "text")], topo),
-        Block("(c) Concordance factors of the internal branch (IQ-TREE 3.1.3)",
+        Block(f"(c) Concordance factors of the internal branch (IQ-TREE {version('iqtree', '3.1.3')})",
               [("m", "Measure", "text"), ("v", "Value", "gen")], cfrows),
         Block("(d) Discordant gene trees by minimum UFBoot support of the internal branch",
               [("min_ufboot", "Minimum UFBoot", "int"), ("n_gene_trees", "Gene trees", "int"),
@@ -601,21 +674,27 @@ def s6():
     ]
     # the concordance factor block mixes formats; format each value by its row
     blocks[2].row_formats = [r["f"] for r in cfrows]
+
+    def split_text(r):
+        return forms(r["split"]).replace("+", " + ")
+
+    def label_text(r):
+        return f", is {r['iqtree_label']} in IQ-TREE's labels" if r.get("iqtree_label") else ""
     return ("S6 Quartet tests",
             "Supp. Table S6. Single copy loci and tests of the four taxon quartet",
             "(a) Single copy loci from orthogroups to gene trees; distinct sequences are counted "
             "on the trimmed alignments. The remaining parts test the symmetry of the two "
             "discordant topologies of the unrooted quartet. Splits are written as the two pairs of "
-            "forms separated by a vertical bar; the major discordant split, molestus + "
-            "quinquefasciatus | pallens + pipiens, is gDF2 in IQ-TREE's labels, and the minor "
-            "discordant split, molestus + pallens | pipiens + quinquefasciatus, is gDF1. (b) Gene "
-            "trees of the 7,646 loci with a gene tree. (c) Concordance factors of the internal "
+            "forms separated by a vertical bar; the major discordant split, "
+            f"{split_text(major)}{label_text(major)}, and the minor discordant split, "
+            f"{split_text(minor)}{label_text(minor)}. (b) Gene trees of the {n_gene_trees:,} "
+            "loci with a gene tree. (c) Concordance factors of the internal "
             "branch. (d) The same counts among gene trees whose internal branch reached each "
             "UFBoot value; the major share is tested against 0.5 with an exact binomial test, with "
             "Clopper Pearson 95% confidence intervals. (e) "
             "Parsimony informative sites summed over loci; locus majority votes, in which each "
             "locus counts once for the split supported by most of its informative sites (ties and "
-            "loci without informative sites set aside); and the 91 loci (1%) with the most "
+            f"loci without informative sites set aside); and the {n_top:,} loci (1%) with the most "
             "informative sites. Share (%) is the share of sites or loci in the group that support "
             "the split; for tests, the share of discordant sites or votes supporting the major "
             "discordant split, and the confidence interval is for that share (0 to 1 scale). "
@@ -651,6 +730,15 @@ def s7():
                    "bp": s["total_aligned_bp"] if s else None})
     for r in ident:
         r["taxon_a"], r["taxon_b"] = FORM[r["taxon_a"]], FORM[r["taxon_b"]]
+    na = [r for r in ani if r["ani"] in ("NA", "")]
+    og_pairs = [r for r in ani if OUTGROUP in (r["sample1"], r["sample2"])]
+    if na and len(na) == len(og_pairs) and all(OUTGROUP in (r["sample1"], r["sample2"]) for r in na):
+        ani_note = f" skani returned no estimate for pairs with {OG}."
+    elif na:
+        ani_note = (" skani returned no estimate for "
+                    + ", ".join(f"{FORM[r['sample1']]} vs {FORM[r['sample2']]}" for r in na) + ".")
+    else:
+        ani_note = ""
     blocks = [
         Block("(a) Branch lengths, concatenated tree and per locus gene trees (substitutions per site)",
               [("branch", "Branch", "text"), ("concat_tree", "Concatenated tree", "f5"),
@@ -681,10 +769,10 @@ def s7():
             "Pairwise protein identity for each pair of forms, computed for each trimmed single "
             "copy alignment over columns where both forms have a residue. (c) Whole genome "
             "identity: skani (skani dist -s 80, first assembly of the pair given first) on the "
-            "complete assemblies, with the aligned fractions as skani labels them; minimap2 2.31 "
-            "(-x asm20) identity is the length weighted mean of one minus the divergence of each "
-            "alignment between the three chromosome scale sequences of the two assemblies. skani "
-            "returned no estimate for pairs with Cx. tarsalis.",
+            "complete assemblies, with the aligned fractions as skani labels them; minimap2 "
+            f"{version('minimap2', '2.31')} (-x asm20) identity is the length weighted mean of one "
+            "minus the divergence of each alignment between the three chromosome scale sequences "
+            f"of the two assemblies.{ani_note}",
             "results/phylo/branch_length_summary.tsv; results/phylo/sco_pairwise_identity.tsv; "
             "results/synteny/ani_pairs.tsv; results/synteny/synteny_summary.tsv",
             blocks)
@@ -778,20 +866,27 @@ def s8():
     ]
     blocks[4].row_formats = [t["f"] for t in tests]
     blocks[0].row_formats = ["text", "text", "gen", "f5", "f5", "int", "int", "int"]
+    n_in = int(float(tb["n_families_in_counts"]))
+    n_tested = int(float(tb["n_families"]))
+    rooted = os.path.exists(path("results/phylo/rooted/rooted_tree.treefile"))
+    tree_note = ("the tree is the species tree rooted with the outgroup, and branch lengths were "
+                 "assumed because divergence times are not known" if rooted else
+                 "branch lengths were assumed because neither the root nor divergence times are "
+                 "known")
     return ("S8 CAFE",
             "Supp. Table S8. CAFE gene family analysis and the annotation transfer control",
-            "CAFE 5 on the gene counts of the 13,885 orthogroups in the four ingroup forms; CAFE "
-            "tests only families present at the root and set aside the 977 without genes on one "
-            "side of it, so the analyses below cover the 12,908 tested families. (a) Model and "
-            "tree; branch lengths were assumed because neither the root nor divergence times are "
-            "known. (b) Families increasing and decreasing on each branch, with a "
+            f"CAFE 5 on the counts of genes of the four ingroup forms in {n_in:,} orthogroups; "
+            "CAFE tests only families present at the root and set aside the "
+            f"{n_in - n_tested:,} without genes on one side of it, so the analyses below cover "
+            f"the {n_tested:,} tested families. (a) Model and tree; {tree_note}. (b) Families "
+            "increasing and decreasing on each branch, with a "
             "binomial test of increases against decreases. (c) Families binned by the number of "
             "copies in the Cx. quinquefasciatus reference: mean copies per transferred genome "
             "(pallens, molestus and pipiens), mean share of reference copies retained (retention), "
             "mean copies lost (deficit) and the share of families CAFE called significant. (d) "
             "Total copies of each form over the tested families and its deficit relative to the "
             "reference, with CAFE's increases and decreases on its terminal branch. (e) Tests "
-            "comparing families with one and with two or more reference copies. (f) The 333 "
+            f"comparing families with one and with two or more reference copies. (f) The {len(sig):,} "
             "families with P < 0.05 and their copies per form; CAFE reports P to three decimals.",
             "results/cafe/output/Gamma_results.txt; results/cafe/ultrametric_tree.nwk; "
             "results/cafe/branch_summary.tsv; results/cafe/transfer_bias_by_copy_number.tsv; "
@@ -926,12 +1021,12 @@ def s10():
             ("low", "Low complexity (%)", "pct2")]
     return ("S10 Repeats",
             "Supp. Table S10. Repeat content of the ingroup assemblies",
-            "RepeatMasker 4.1.7 summaries for the four ingroup assemblies, each masked with one "
-            "RepeatModeler 2.0.7 library built from the Cx. quinquefasciatus assembly. Percentages "
+            f"RepeatMasker {version('repeatmasker', '4.1.7').split('-')[0]} summaries for the four ingroup assemblies, each masked with one "
+            f"RepeatModeler {version('repeatmodeler', '2.0.7')} library built from the Cx. quinquefasciatus assembly. Percentages "
             "are of the total assembly length. "
             "Interspersed repeats comprise retroelements, DNA transposons, rolling circles and "
             "unclassified repeats; most interspersed repeats in the de novo library were "
-            "unclassified. No SINEs or Penelope elements were found. Cx. tarsalis was not masked.",
+            f"unclassified. No SINEs or Penelope elements were found. {OG} was not masked.",
             "results/repeats/<form>/<form>.fasta.tbl",
             [Block(None, cols, rows)])
 
@@ -979,12 +1074,150 @@ def s11():
             blocks)
 
 
+# ------------------------------------------------------------------ S12
+def s12():
+    """The outgroup analyses (V5): five taxon loci, the rooted species tree,
+    rooted gene tree topologies and the D statistics. None when absent."""
+    need = ["results/phylo/rooted/rooted_summary.tsv",
+            "results/phylo/rooted/rooted_topology_counts.tsv",
+            "results/phylo/rooted/sco5_accounting.tsv",
+            "results/phylo/rooted/alignment_summary.tsv",
+            "results/phylo/dstat/d_statistics.tsv"]
+    missing = [p for p in need if not os.path.exists(path(p))]
+    if missing:
+        print(f"S12 skipped, missing: {', '.join(missing)}")
+        return None
+    item_label = {
+        "single_copy_in_all_taxa": "Orthogroups with one gene in each of the five taxa",
+        "removed_no_protein": "Removed: a protein missing from the proteome",
+        "removed_no_cds": "Removed: a coding sequence missing",
+        "removed_cds_mismatch": "Removed: a coding sequence whose translation matches its "
+                                "protein at less than 95% identity in every frame",
+        "written": "Loci with proteins and coding sequences",
+        "alignments": "Protein alignments (MAFFT)",
+        "no_columns_kept": "Codon alignment not made: trimAl kept no column",
+        "alignment_not_translation": "Codon alignment not made: alignment differs from the translation",
+        "cds_length_mismatch": "Codon alignment not made: coding sequence length differs",
+        "missing_files": "Codon alignment not made: files missing",
+        "trimmed_protein_alignments_at_least_50_columns":
+            "Trimmed protein alignments of at least 50 columns (rooted tree)",
+    }
+    acc = []
+    for r in tsv("results/phylo/rooted/sco5_accounting.tsv"):
+        if r["sample"]:
+            if r["item"] == "cds_translation_frame_not_0" and r["value"] != "0":
+                acc.append({"m": f"Coding sequences read from the second or third base "
+                                 f"(partial models), {FORM[r['sample']]}", "v": r["value"]})
+            continue
+        acc.append({"m": item_label.get(r["item"], r["item"]), "v": r["value"]})
+    for r in tsv("results/phylo/rooted/alignment_summary.tsv"):
+        label = item_label.get(r["item"], r["item"])
+        if r["item"] == "written":
+            label = "Codon alignments"
+        acc.append({"m": label, "v": r["value"]})
+    summ = {r["item"]: r["value"] for r in tsv("results/phylo/rooted/rooted_summary.tsv")}
+    tree_rows = [
+        {"m": "Loci in the concatenated alignment", "v": summ.get("concatenated alignment loci")},
+        {"m": "Columns in the concatenated alignment",
+         "v": summ.get("concatenated alignment columns")},
+        {"m": "Rooted topology of the ingroup", "v": forms(summ.get("rooted ingroup topology"))},
+        {"m": "Root of the ingroup", "v": forms(summ.get("root position"))},
+    ]
+    clades = []
+    for k, v in summ.items():
+        if k.startswith("(") and k.endswith(" UFBoot"):
+            name = k[:-len(" UFBoot")]
+            row = {"clade": forms(name).replace(",", ", "), "ufboot": v,
+                   "length": summ.get(f"{name} branch length")}
+            for f in ("gCF", "gDF1", "gDF2", "gDFP", "gN", "sCF", "sDF1", "sDF2", "sN"):
+                row[f] = summ.get(f"{name} {f}")
+            clades.append(row)
+    topo = tsv("results/phylo/rooted/rooted_topology_counts.tsv")
+    for r in topo:
+        r["rooted_topology"] = forms(r["rooted_topology"]).replace(",", ", ")
+        r["quartet_split"] = forms(r["quartet_split"]).replace("+", " + ")
+    dstat = tsv("results/phylo/dstat/d_statistics.tsv")
+    set_label = {"all_loci": "all loci", "intact_loci": "loci with four intact models"}
+    class_label = {"all_sites": "all sites", "third_positions": "third codon positions"}
+    for r in dstat:
+        r["statistic"] = forms(r["statistic"]).replace(",", ", ").replace(";", "; ")
+        r["locus_set"] = set_label.get(r["locus_set"], r["locus_set"])
+        r["site_class"] = class_label.get(r["site_class"], r["site_class"])
+        r["excess_derived_sharing"] = (forms(r["excess_derived_sharing"]).replace("+", " + ")
+                                       if r.get("abs_Z_at_least_3") == "True" else "none")
+    blocks = [
+        Block("(a) Five taxon single copy loci", [("m", "Measure", "text"), ("v", "Value", "int")],
+              acc),
+        Block("(b) Species tree rooted with the outgroup",
+              [("m", "Measure", "text"), ("v", "Value", "gen")], tree_rows),
+        Block("(c) Internal branches of the rooted tree",
+              [("clade", "Clade", "text"), ("ufboot", "UFBoot", "int"),
+               ("gCF", "gCF (%)", "pct2"), ("gDF1", "gDF1 (%)", "pct2"),
+               ("gDF2", "gDF2 (%)", "pct2"), ("gDFP", "gDFP (%)", "pct2"),
+               ("gN", "Gene trees (gN)", "int"), ("sCF", "sCF (%)", "pct2"),
+               ("sDF1", "sDF1 (%)", "pct2"), ("sDF2", "sDF2 (%)", "pct2"),
+               ("sN", "Sites (sN)", "pct2"), ("length", "Branch length", "f5")], clades),
+        Block("(d) Rooted topologies of the five taxon gene trees",
+              [("rooted_topology", "Rooted ingroup topology", "text"),
+               ("quartet_split", "Unrooted ingroup split", "text"),
+               ("is_species_tree", "Species tree", "bool"),
+               ("n_all", "Gene trees", "int"), ("pct_all", "Gene trees (%)", "pct2"),
+               ("n_resolved", "Resolved gene trees", "int"),
+               ("pct_resolved", "Resolved gene trees (%)", "pct2"),
+               ("n_ufboot95", "Gene trees, UFBoot \u2265 95", "int"),
+               ("pct_ufboot95", "Gene trees, UFBoot \u2265 95 (%)", "pct2")], topo),
+        Block("(e) D statistics",
+              [("test", "Test", "text"), ("statistic", "Statistic", "text"),
+               ("locus_set", "Loci", "text"), ("site_class", "Sites", "text"),
+               ("consistent_with_rooted_tree", "P1 and P2 sisters in the rooted tree", "bool"),
+               ("n_loci", "Loci (n)", "int"), ("n_blocks", "Jackknife blocks", "int"),
+               ("n_sites", "Sites (n)", "int"), ("BBAA", "BBAA", "int"),
+               ("ABBA", "ABBA", "int"), ("BABA", "BABA", "int"), ("D", "D", "f4"),
+               ("se", "SE", "f4"), ("Z", "Z", "f3"), ("p", "P", "p"),
+               ("p_bonferroni", "P, Bonferroni", "p"),
+               ("excess_derived_sharing", "Pair sharing more derived alleles (|Z| \u2265 3)",
+                "text")], dstat),
+    ]
+    blocks[1].row_formats = ["int", "int", "text", "text"]
+    block_mb = VALUES.get(("parameters", "D statistics", ""), "")
+    m = re.search(r"over (\d+) Mb windows", block_mb)
+    window = f"{m.group(1)} Mb" if m else "5 Mb"
+    return ("S12 Outgroup tests",
+            "Supp. Table S12. Rooted species tree and D statistics with the outgroup",
+            f"Analyses of the orthogroups with one gene in each ingroup form and in {OG}. (a) "
+            "Loci from orthogroups to alignments. Each protein was aligned with MAFFT (--auto) and "
+            "trimmed with trimAl (-automated1), and each coding sequence was read in the frame "
+            "whose translation matches its protein, stop codons removed, then placed codon by "
+            "codon on the aligned residues, keeping the columns trimAl kept. (b, c) Maximum "
+            f"likelihood tree of the concatenated trimmed protein alignments (IQ-TREE "
+            f"{version('iqtree', '3.1.3')}, one partition per locus, ModelFinder, 1,000 ultrafast "
+            f"bootstrap replicates), rooted with {OG}, with gene (gCF) and site (sCF) "
+            "concordance factors of each internal branch against the gene trees of the same loci; "
+            "each branch is named by the ingroup clade it defines. (d) Rooted ingroup topology of "
+            "each gene tree after rooting with the outgroup; resolved gene trees have both "
+            "internal branches longer than IQ-TREE's minimum length, and the last columns count "
+            "gene trees with both internal branches at UFBoot 95 or more. (e) D(P1, P2; P3, O) = "
+            "(ABBA - BABA) / (ABBA + BABA) over codon alignment columns where all five taxa carry "
+            "A, C, G or T, with the outgroup allele taken as ancestral: ABBA, P2 and P3 share the "
+            "derived allele; BABA, P1 and P3 do; BBAA, P1 and P2 do. D is 0 when incomplete "
+            "lineage sorting alone explains the discordant sites. Standard errors are from a "
+            f"weighted block jackknife over {window} windows of the Cx. quinquefasciatus "
+            "assembly, each locus placed by its reference gene; P is two sided from Z = D / SE, "
+            "and Bonferroni P multiplies it by the number of tests. The tests were set before the "
+            "run from the four taxon species tree; intact models as in Supp. Table S6(f).",
+            "results/phylo/rooted/sco5_accounting.tsv; results/phylo/rooted/alignment_summary.tsv; "
+            "results/phylo/rooted/rooted_summary.tsv; results/phylo/rooted/rooted_topology_counts.tsv; "
+            "results/phylo/dstat/d_statistics.tsv",
+            blocks)
+
+
 # ------------------------------------------------------------------ build
 def main():
     wb = Workbook()
     readme = wb.active
     readme.title = "README"
-    sheets = [s1(), s2(), s3(), s4(), s5(), s6(), s7(), s8(), s9(), s10(), s11()]
+    sheets = [s1(), s2(), s3(), s4(), s5(), s6(), s7(), s8(), s9(), s10(), s11(), s12()]
+    sheets = [x for x in sheets if x is not None]
     contents = []
     for name, title, caption, source, blocks in sheets:
         ws, nrows = write_sheet(wb, name, title, caption, source, blocks,
@@ -1018,16 +1251,23 @@ def main():
                 c.number_format = "#,##0"
     for i in range(1, 5):
         readme.cell(row=r, column=i).border = Border(bottom=THIN)
+    og_acc, og_asm = ACCESSION[OUTGROUP]
+    if OUTGROUP == "Cx_tarsalis":
+        og_ref, models = f"{og_asm}, {og_acc}", ("Gene models of every form except quinquefasciatus "
+                                                 "were transferred")
+    else:
+        og_ref = f"{og_acc}, {og_asm}, with its own Ensembl gene set"
+        models = ("Gene models of pallens, molestus and pipiens were transferred")
     notes = [
         "Forms: quinquefasciatus, Cx. quinquefasciatus (GCF_015732765.1, source of the reference "
         "annotation); pallens, Cx. pipiens pallens (GCF_016801865.2); molestus, Cx. pipiens form "
         "molestus (GCA_024516115.1); pipiens, Cx. pipiens form pipiens (GCA_963924435.1); "
-        "Cx. tarsalis, outgroup (CtarK1, osf.io/mdwqx).",
-        "Gene models of every form except quinquefasciatus were transferred from the "
-        "Cx. quinquefasciatus RefSeq annotation (NCBI Annotation Release 100) with Liftoff 1.6.3, "
-        "so gene and transcript identifiers are those of the reference.",
+        f"{OG}, outgroup ({og_ref}).",
+        f"{models} from the Cx. quinquefasciatus RefSeq annotation (NCBI Annotation Release 100) "
+        f"with Liftoff {version('liftoff', '1.6.3')}, so their gene and transcript identifiers are "
+        "those of the reference.",
         "Every value was produced by the workflow at https://github.com/tylermaire/cx_pipiens_pangenome "
-        "(release v2.2); each sheet names the output files it was taken from.",
+        f"(release {RELEASE}); each sheet names the output files it was taken from.",
         "Transcript identifiers are RefSeq transcript accessions with the prefix rna-; the workflow's "
         "protein files drop the period before the version number (rna-XM_0382506301 for "
         "rna-XM_038250630.1).",
