@@ -37,9 +37,25 @@ Liftoff transfers should reproduce V4 (a useful check: compare
 `results/annotation/transfer_quality.tsv` with V4). Orthogroups change,
 because OrthoFinder now clusters with a different fifth proteome.
 
-## Running it on AWS
+## Running it on Ubuntu
 
-Same instance type and setup as V4 (c7i.24xlarge, conda and Snakemake).
+The commands are the same on an AWS instance (V4 used a c7i.24xlarge, 96
+vCPU) and on your own Ubuntu machine, including Ubuntu under WSL on Windows.
+`$(nproc)` is the number of cores the machine has.
+
+One time setup, if the machine has no conda or Snakemake yet:
+
+```bash
+sudo apt update && sudo apt install -y git curl tmux
+curl -L -O https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
+bash Miniforge3-Linux-x86_64.sh -b -p "$HOME/miniforge3"
+source "$HOME/miniforge3/bin/activate"
+conda config --set channel_priority strict
+conda create -y -n snakemake -c conda-forge -c bioconda snakemake
+```
+
+Each new terminal then starts with
+`source "$HOME/miniforge3/bin/activate" && conda activate snakemake`.
 
 ```bash
 git clone https://github.com/tylermaire/cx_pipiens_pangenome.git
@@ -47,7 +63,7 @@ cd cx_pipiens_pangenome
 git checkout v5-perexiguus
 
 # 1. the plan: 91 jobs, no errors
-snakemake -n --use-conda --cores 96
+snakemake -n --use-conda --cores $(nproc)
 
 # 2. build the conda environments first; a failure here costs minutes
 snakemake --use-conda --conda-create-envs-only --cores 8
@@ -65,15 +81,26 @@ GCA_964243045.1, put the two full addresses in `config/config.yaml`
 (`outgroup: genome_url` and `gff_url`) and run step 3 again.
 
 ```bash
-# 4. the full run, detached so a dropped connection does not stop it
-nohup snakemake --use-conda --cores 96 --keep-going --rerun-incomplete > run_v5.log 2>&1 &
-tail -f run_v5.log
+# 4. the full run, inside tmux so it keeps going if the terminal closes
+tmux new -s v5
+snakemake --use-conda --cores $(nproc) --keep-going --rerun-incomplete 2>&1 | tee run_v5.log
+# detach with Ctrl+b then d; come back with: tmux attach -t v5
 ```
 
-Expect roughly 12 to 18 hours, against 31 for V4 (17.7 of those were
-RepeatModeler). The last line of a finished run reads `91 of 91 steps (100%)
-done`; with `--keep-going`, any failures are listed by
-`grep -n "Error in rule" run_v5.log`.
+Expect roughly 12 to 18 hours on 96 cores, against 31 for V4 (17.7 of those
+were RepeatModeler); on 16 cores expect several days. The last lines of a
+finished run read `91 of 91 steps (100%) done`; with `--keep-going`, any
+failures are listed by `grep -n "Error in rule" run_v5.log`. After a stop,
+running the same command again resumes where it left off.
+
+On your own machine rather than AWS:
+
+* Disk: about 200 GB free (`df -h ~`); the eggNOG database alone is about 60 GB.
+* Memory: 64 GB or more is safest (`free -g`). WSL gives Ubuntu half of the
+  PC's memory unless `.wslconfig` in the Windows user folder sets `memory=`.
+* Under WSL, clone into the Ubuntu home folder (`~`), not into `/mnt/c` or
+  `/mnt/d`: the Windows drives are many times slower from Ubuntu and conda
+  environments do not work well there. Keep the PC from sleeping during the run.
 
 ## After the run
 
@@ -86,11 +113,12 @@ tar -czf results_v5_full.tar.gz results figures/revision tables run_v5.log
 ```
 
 Copy `results_v5_small.tar.gz` to the Culex Pangeneome folder on your computer
-(the same way the V4 archive came back, for example through S3), keep the full
-archive, then stop the instance. With the small archive, every number, table
-and figure of the manuscript can be updated, and any summary script can be
-fixed and rerun locally with `patch_results.py` (steps now include `rooted` and
-`dstat`) without another cloud run.
+(from AWS for example with `aws s3 cp` or `scp`; under WSL the Windows drives
+are `/mnt/c` and `/mnt/d`, so `cp` is enough), keep the full archive, and on
+AWS stop the instance. With the small archive, every number, table and figure
+of the manuscript can be updated, and any summary script can be fixed and
+rerun locally with `patch_results.py` (steps now include `rooted` and `dstat`)
+without another run.
 
 ## Reading the D statistics
 
