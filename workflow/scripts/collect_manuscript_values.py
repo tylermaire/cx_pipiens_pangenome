@@ -198,6 +198,8 @@ def phylogeny():
     else:
         add("phylogeny", "concordance", None, path)
 
+    rooted()
+
     for path, section in (("results/phylo/quartet_topology_counts.tsv", "quartet"),
                           ("results/phylo/quartet_asymmetry_by_support.tsv", "quartet_support"),
                           ("results/phylo/quartet_site_patterns.tsv", "quartet_sites"),
@@ -205,6 +207,25 @@ def phylogeny():
                           ("results/phylo/branch_length_summary.tsv", "branch_lengths"),
                           ("results/phylo/sco_pairwise_identity.tsv", "sco_identity"),
                           ("results/phylo/locus_accounting.tsv", "loci")):
+        rows = read_tsv(path)
+        if rows is None:
+            add(section, "table", None, path)
+            continue
+        flatten(section, path, rows)
+
+
+def rooted():
+    """The outgroup analyses (V5): the rooted species tree, rooted gene tree
+    topologies and the D statistics."""
+    path = "results/phylo/rooted/rooted_summary.tsv"
+    rows = read_tsv(path)
+    if rows is None:
+        add("rooted", "summary", None, path)
+    else:
+        for r in rows:
+            add("rooted", r["item"], r["value"], path)
+    for path, section in (("results/phylo/rooted/rooted_topology_counts.tsv", "rooted_topologies"),
+                          ("results/phylo/dstat/d_statistics.tsv", "dstat")):
         rows = read_tsv(path)
         if rows is None:
             add(section, "table", None, path)

@@ -2,6 +2,8 @@ rule extract_sco_sequences:
     """Extract single-copy ortholog sequences for ingroup species."""
     input: "results/orthofinder/output"
     output: directory("results/phylo/sco_fastas")
+    params:
+        ingroup=INGROUP_SAMPLES
     conda: "../envs/phylo.yaml"
     script: "../scripts/extract_sco.py"
 
@@ -108,3 +110,159 @@ rule divergence_diagnostics:
         sco_dir="results/phylo/sco_fastas"
     conda: "../envs/phylo.yaml"
     script: "../scripts/divergence_diagnostics.py"
+
+
+# -------------------------------------------------------------------------
+# Rooted analyses with the outgroup (V5)
+# -------------------------------------------------------------------------
+# The four taxon analyses above are unchanged. These add the outgroup: loci
+# single copy in all five taxa, a concatenated protein tree rooted with the
+# outgroup (with gene and site concordance), the rooted topologies of the
+# gene trees, and ABBA BABA tests on codon alignments of the same loci.
+
+rule extract_sco5:
+    """Single copy orthologs of all five taxa: proteins, and coding
+    sequences in frame so that each protein is its CDS's translation."""
+    input:
+        of="results/orthofinder/output",
+        proteins=expand("results/proteins/{s}.fa", s=ALL_SAMPLES),
+        cds=expand("results/cds/{s}.fa", s=ALL_SAMPLES)
+    output:
+        fastas=directory("results/phylo/rooted/sco5"),
+        loci="results/phylo/rooted/sco5_loci.tsv",
+        accounting="results/phylo/rooted/sco5_accounting.tsv"
+    params:
+        samples=INGROUP_SAMPLES + OUTGROUP_SAMPLES,
+        reference=REF
+    conda: "../envs/phylo.yaml"
+    script: "../scripts/extract_sco5.py"
+
+rule rooted_alignments:
+    """MAFFT protein alignments of the five taxon loci, trimmed with trimAl
+    -automated1 as in the four taxon analysis, and codon alignments holding
+    the columns trimAl kept. Trees use trimmed protein alignments of at
+    least 50 columns (as in V4); the D statistics use every codon alignment.
+    One directory output with three subdirectories: raw (MAFFT alignments
+    and trimAl column maps), trimmed (for IQ-TREE, which reads every file in
+    the directory, so it must not hold Snakemake's timestamp file) and codon."""
+    input:
+        sco="results/phylo/rooted/sco5"
+    output:
+        aln=directory("results/phylo/rooted/alignments"),
+        summary="results/phylo/rooted/alignment_summary.tsv"
+    threads: config["threads"]
+    conda: "../envs/phylo.yaml"
+    shell:
+        """
+        set -euo pipefail
+        rm -rf {output.aln}
+        mkdir -p {output.aln}/raw {output.aln}/trimmed {output.aln}/codon
+        ls {input.sco}/*.faa | xargs -P {threads} -I FAAFILE sh -c '
+            og=$(basename FAAFILE .faa)
+            mafft --auto FAAFILE > {output.aln}/raw/$og.aln 2>/dev/null
+            trimal -in {output.aln}/raw/$og.aln -out {output.aln}/raw/$og.trim \
+                -automated1 -colnumbering > {output.aln}/raw/$og.cols 2>/dev/null || true
+        '
+        python workflow/scripts/codon_align.py --sco {input.sco} \
+            --alignments {output.aln}/raw --out {output.aln}/codon --summary {output.summary}
+        n=0
+        for f in {output.aln}/raw/*.trim; do
+            [ -s "$f" ] || continue
+            cols=$(awk '/^>/{{if (seen) exit; seen=1; next}} {{n += length($0)}} END{{print n+0}}' "$f")
+            if [ "$cols" -ge 50 ]; then
+                cp "$f" {output.aln}/trimmed/
+                n=$((n + 1))
+            fi
+        done
+        printf 'trimmed_protein_alignments_at_least_50_columns\t%s\n' "$n" >> {output.summary}
+        echo "Trimmed protein alignments of at least 50 columns: $n"
+        """
+
+rule rooted_tree:
+    """One gene tree per five taxon locus, the concatenated protein tree
+    rooted with the outgroup (per locus partitions, as the four taxon tree),
+    and gene and site concordance factors on it."""
+    input:
+        aln="results/phylo/rooted/alignments"
+    output:
+        tree="results/phylo/rooted/rooted_tree.treefile",
+        concord="results/phylo/rooted/rooted_concord.cf.tree",
+        gene_trees="results/phylo/rooted/rooted_gene_trees.nwk",
+        ids="results/phylo/rooted/rooted_gene_tree_ids.txt"
+    params:
+        model=config["iqtree"]["model"],
+        bb=config["iqtree"]["bootstrap"],
+        outgroup=OUTGROUP,
+        gene_tree_dir="results/phylo/rooted/gene_trees"
+    threads: config["threads"]
+    conda: "../envs/phylo.yaml"
+    shell:
+        """
+        set -euo pipefail
+        rm -rf {params.gene_tree_dir} && mkdir -p {params.gene_tree_dir}
+        ls {input.aln}/trimmed/*.trim | xargs -P {threads} -I TRIMFILE sh -c '
+            og=$(basename TRIMFILE .trim)
+            iqtree -s TRIMFILE -m MFP -bb 1000 -nt 1 \
+                --prefix {params.gene_tree_dir}/$og -quiet >/dev/null 2>&1 || true
+        '
+        : > {output.gene_trees}
+        : > {output.ids}
+        for t in {params.gene_tree_dir}/*.treefile; do
+            cat "$t" >> {output.gene_trees}
+            basename "$t" .treefile >> {output.ids}
+        done
+        echo "Gene trees: $(wc -l < {output.ids})"
+        iqtree -p {input.aln}/trimmed/ -m {params.model} -bb {params.bb} \
+            -o {params.outgroup} -nt {threads} \
+            --prefix results/phylo/rooted/rooted_tree -quiet
+        iqtree -t {output.tree} --gcf {output.gene_trees} -p {input.aln}/trimmed/ \
+            --scf 100 -o {params.outgroup} -nt {threads} \
+            --prefix results/phylo/rooted/rooted_concord -quiet
+        """
+
+rule rooted_summary:
+    """The rooted species tree (topology, root position, support and
+    concordance per branch) and the rooted topologies of the gene trees."""
+    input:
+        tree="results/phylo/rooted/rooted_tree.treefile",
+        concord="results/phylo/rooted/rooted_concord.cf.tree",
+        gene_trees="results/phylo/rooted/rooted_gene_trees.nwk",
+        ids="results/phylo/rooted/rooted_gene_tree_ids.txt",
+        aln="results/phylo/rooted/alignments",
+        accounting="results/phylo/rooted/sco5_accounting.tsv",
+        alignments="results/phylo/rooted/alignment_summary.tsv"
+    output:
+        summary="results/phylo/rooted/rooted_summary.tsv",
+        topologies="results/phylo/rooted/rooted_topology_counts.tsv"
+    params:
+        outgroup=OUTGROUP,
+        ingroup=INGROUP_SAMPLES,
+        trimmed="results/phylo/rooted/alignments/trimmed",
+        cf_stat="results/phylo/rooted/rooted_concord.cf.stat",
+        cf_branch="results/phylo/rooted/rooted_concord.cf.branch"
+    conda: "../envs/phylo.yaml"
+    script: "../scripts/rooted_summary.py"
+
+rule d_statistics:
+    """ABBA BABA tests D(P1, P2; P3, outgroup) on the codon alignments, on
+    all sites and third codon positions, on all loci and on loci whose four
+    ingroup models are intact, with a block jackknife over windows of the
+    reference assembly."""
+    input:
+        aln="results/phylo/rooted/alignments",
+        tree="results/phylo/rooted/rooted_tree.treefile",
+        loci="results/phylo/rooted/sco5_loci.tsv",
+        of="results/orthofinder/output",
+        gffs=expand("results/annotation/{s}_liftoff.gff3", s=INGROUP_SAMPLES)
+    output:
+        table="results/phylo/dstat/d_statistics.tsv",
+        per_locus="results/phylo/dstat/d_statistics_per_locus.tsv"
+    params:
+        outgroup=OUTGROUP,
+        ingroup=INGROUP_SAMPLES,
+        reference=REF,
+        codon="results/phylo/rooted/alignments/codon",
+        tests=(config.get("dstat") or {}).get("tests", []),
+        block_size=(config.get("dstat") or {}).get("block_size", 5000000)
+    conda: "../envs/phylo.yaml"
+    script: "../scripts/d_statistics.py"
