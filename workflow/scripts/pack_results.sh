@@ -35,6 +35,7 @@ want "results/orthofinder/output/*/Orthogroups/Orthogroups*.tsv"
 want "results/orthofinder/output/*/Log.txt"
 want "results/phylo/*.tsv" "results/phylo/*.txt" results/phylo/all_gene_trees.nwk
 want "results/phylo/concat_tree.*" "results/phylo/concord.cf.*" results/phylo/trimmed
+want results/phylo/iqtree_crash_v5.log
 want "results/phylo/rooted/*.tsv" "results/phylo/rooted/*.txt" "results/phylo/rooted/*.nwk"
 want "results/phylo/rooted/rooted_tree.*" "results/phylo/rooted/rooted_concord.cf.*"
 want results/phylo/rooted/alignments/trimmed results/phylo/rooted/alignments/codon

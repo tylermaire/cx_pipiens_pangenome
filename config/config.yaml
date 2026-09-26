@@ -53,6 +53,13 @@ orthofinder:
 # -- IQ-TREE phylogenetics --
 iqtree:
   model: MFP
+  # Rate heterogeneity models ModelFinder may use for the four taxon
+  # concatenated tree (rule concat_and_tree). FreeRate (+R) models are left
+  # out: with them, IQ-TREE 3.1.3 stopped on the V5 matrix of 9,126 loci
+  # (assertion in ratefree.cpp, RateFree::initFromCatMinusOne). In V4, with
+  # FreeRate models allowed, they were chosen for 8 of 9,098 loci. Leave empty
+  # for the IQ-TREE default. Gene trees and the rooted tree keep the default.
+  concat_mrate: E,I,G,I+G
   bootstrap: 1000
  
 # -- D statistics (ABBA BABA) with the outgroup (V5) --
