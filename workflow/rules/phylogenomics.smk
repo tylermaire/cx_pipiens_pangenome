@@ -15,7 +15,9 @@ rule concat_and_tree:
         concord="results/phylo/concord.cf.tree"
     params:
         model=config["iqtree"]["model"],
-        bb=config["iqtree"]["bootstrap"]
+        bb=config["iqtree"]["bootstrap"],
+        mrate=("-mrate " + str(config["iqtree"]["concat_mrate"])
+               if config["iqtree"].get("concat_mrate") else "")
     threads: config["threads"]
     conda: "../envs/phylo.yaml"
     shell:
@@ -24,6 +26,10 @@ rule concat_and_tree:
         # OG0000123 is a different gene set. Never resume across runs.
         rm -rf results/phylo/alignments results/phylo/trimmed results/phylo/gene_trees
         mkdir -p results/phylo/alignments results/phylo/trimmed results/phylo/gene_trees
+        # Likewise for the tree files: IQ-TREE would resume a stale checkpoint,
+        # and quartet_asymmetry would read a stale concord.cf.stat if the
+        # concordance step failed.
+        rm -f results/phylo/concat_tree.* results/phylo/concord.*
 
         for fa in results/phylo/sco_fastas/*.fa; do
             og=$(basename $fa .fa)
@@ -57,9 +63,10 @@ rule concat_and_tree:
 
         cat results/phylo/gene_trees/*.treefile > results/phylo/all_gene_trees.nwk 2>/dev/null || true
 
+        # params.mrate: see iqtree: concat_mrate in config.yaml
         iqtree -p results/phylo/trimmed/ \
-            -m {params.model} -bb {params.bb} -nt {threads} \
-            --prefix results/phylo/concat_tree -quiet
+            -m {params.model} {params.mrate} -bb {params.bb} -nt {threads} \
+            --prefix results/phylo/concat_tree -quiet -redo
 
         iqtree -t results/phylo/concat_tree.treefile \
             --gcf results/phylo/all_gene_trees.nwk \
