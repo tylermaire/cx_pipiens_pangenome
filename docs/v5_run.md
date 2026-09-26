@@ -58,11 +58,13 @@ Each new terminal then starts with
 `source "$HOME/miniforge3/bin/activate" && conda activate snakemake`.
 
 ```bash
-git clone https://github.com/tylermaire/cx_pipiens_pangenome.git
+# clone the branch directly: some TSV files on main are stored with Windows
+# line endings, and a later "git checkout" stops on them as local changes
+git clone -b v5-perexiguus https://github.com/tylermaire/cx_pipiens_pangenome.git
 cd cx_pipiens_pangenome
-git checkout v5-perexiguus
 
-# 1. the plan: 91 jobs, no errors
+# 1. the plan: 91 jobs, no errors (always with --use-conda: without it,
+#    Snakemake reports every software environment as changed)
 snakemake -n --use-conda --cores $(nproc)
 
 # 2. build the conda environments first; a failure here costs minutes
@@ -81,17 +83,52 @@ GCA_964243045.1, put the two full addresses in `config/config.yaml`
 (`outgroup: genome_url` and `gff_url`) and run step 3 again.
 
 ```bash
-# 4. the full run, inside tmux so it keeps going if the terminal closes
-tmux new -s v5
-snakemake --use-conda --cores $(nproc) --keep-going --rerun-incomplete 2>&1 | tee run_v5.log
-# detach with Ctrl+b then d; come back with: tmux attach -t v5
+# 4. the full run, as a system service: it keeps going when the terminal
+#    closes, and one job killed for memory does not stop the others
+sudo systemd-run --unit=cxv5 --same-dir --uid=$(id -u) --gid=$(id -g) \
+  -E PATH="$PATH" -E HOME="$HOME" -E USER="$USER" \
+  -p OOMPolicy=continue -p LimitNOFILE=65536 \
+  -p StandardOutput=append:"$PWD/run_v5.log" -p StandardError=append:"$PWD/run_v5.log" \
+  "$(which snakemake)" --use-conda --cores $(nproc) --keep-going --rerun-incomplete \
+  --rerun-triggers mtime \
+  --resources mem_mb=175000 \
+  --set-resources eggnog_mapper:mem_mb=20000 repeatmasker:mem_mb=16000 orthofinder:mem_mb=30000 \
+  concat_and_tree:mem_mb=30000 rooted_tree:mem_mb=30000 absence_dna_align:mem_mb=20000 \
+  absence_protein_align:mem_mb=10000 busco_proteins:mem_mb=5000 skani_ani:mem_mb=10000
+
+systemctl status cxv5 --no-pager     # active (running) while it works
+tail -f run_v5.log                   # Ctrl+c stops the viewing, not the run
 ```
+
+`mem_mb=175000` is for a machine with 185 GB of memory; set it about 10 GB
+below the total that `free -g` reports. The rule `synteny_minimap2` declares
+160 GB itself (minimap2 asm20 peaks near 150 GB), so the limit lets only one
+of those two jobs run at a time. Declared memory is only enforced when
+`--resources mem_mb=` is given.
 
 Expect roughly 12 to 18 hours on 96 cores, against 31 for V4 (17.7 of those
 were RepeatModeler); on 16 cores expect several days. The last lines of a
 finished run read `91 of 91 steps (100%) done`; with `--keep-going`, any
 failures are listed by `grep -n "Error in rule" run_v5.log`. After a stop,
-running the same command again resumes where it left off.
+`sudo systemctl reset-failed cxv5` frees the unit name, and the same command
+resumes where the run left off (`--rerun-triggers mtime` keeps finished jobs
+from being redone because of a changed environment file or rule).
+
+## Problems met in the V5 run
+
+* **Out of memory (first attempt, under tmux).** Two `synteny_minimap2` jobs
+  and eggNOG mapper ran together and reached 183.6 GB. The kernel killed one
+  minimap2, and systemd then stopped the whole tmux session (Ubuntu 26.04
+  runs each tmux session as a systemd scope that stops when one process is
+  killed for memory). Fixed by the memory limits and the service form above.
+* **IQ-TREE stopped in `concat_and_tree`.** On the four taxon matrix of 9,126
+  loci, ModelFinder in IQ-TREE 3.1.3 failed an internal check while fitting
+  FreeRate models (`ratefree.cpp: RateFree::initFromCatMinusOne`, exit status
+  134). The four taxon concatenated tree now leaves FreeRate models out
+  (`iqtree: concat_mrate: E,I,G,I+G` in `config.yaml`); in V4, with them
+  allowed, FreeRate models were chosen for only 8 of 9,098 loci. Gene trees and
+  the rooted tree keep the full model set. The IQ-TREE log of the failure is
+  kept as `results/phylo/iqtree_crash_v5.log`.
 
 On your own machine rather than AWS:
 
