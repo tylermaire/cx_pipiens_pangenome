@@ -1,0 +1,29 @@
+locus_set	test	statistic	n_loci	n_blocks	ABBA	BABA	D	se	Z
+all	T1	D(Cx_pallens,Cx_quinquefasciatus;Cx_pipiens,Cx_perexiguus)	6846	115	27689	193190	-0.74928	0.02848	-26.313
+all	T2	D(Cx_pallens,Cx_quinquefasciatus;Cx_molestus,Cx_perexiguus)	6846	115	30727	187601	-0.71852	0.02937	-24.466
+all	T3	D(Cx_molestus,Cx_pipiens;Cx_pallens,Cx_perexiguus)	6846	115	60436	60079	0.00296	0.07148	0.041
+all	T4	D(Cx_molestus,Cx_pipiens;Cx_quinquefasciatus,Cx_perexiguus)	6846	115	29447	36983	-0.11344	0.01868	-6.074
+intact	T1	D(Cx_pallens,Cx_quinquefasciatus;Cx_pipiens,Cx_perexiguus)	4592	112	15908	25576	-0.23305	0.03221	-7.235
+intact	T2	D(Cx_pallens,Cx_quinquefasciatus;Cx_molestus,Cx_perexiguus)	4592	112	18293	24110	-0.13718	0.04096	-3.349
+intact	T3	D(Cx_molestus,Cx_pipiens;Cx_pallens,Cx_perexiguus)	4592	112	18336	19889	-0.04063	0.01679	-2.42
+intact	T4	D(Cx_molestus,Cx_pipiens;Cx_quinquefasciatus,Cx_perexiguus)	4592	112	16414	21771	-0.14029	0.01914	-7.328
+not intact	T1	D(Cx_pallens,Cx_quinquefasciatus;Cx_pipiens,Cx_perexiguus)	2254	113	11781	167614	-0.86866	0.01564	-55.553
+not intact	T2	D(Cx_pallens,Cx_quinquefasciatus;Cx_molestus,Cx_perexiguus)	2254	113	12434	163491	-0.85864	0.0157	-54.706
+not intact	T3	D(Cx_molestus,Cx_pipiens;Cx_pallens,Cx_perexiguus)	2254	113	42100	40190	0.02321	0.08903	0.261
+not intact	T4	D(Cx_molestus,Cx_pipiens;Cx_quinquefasciatus,Cx_perexiguus)	2254	113	13033	15212	-0.07715	0.02563	-3.011
+identity >= 95%	T1	D(Cx_pallens,Cx_quinquefasciatus;Cx_pipiens,Cx_perexiguus)	5063	114	16473	26585	-0.23485	0.02721	-8.63
+identity >= 95%	T2	D(Cx_pallens,Cx_quinquefasciatus;Cx_molestus,Cx_perexiguus)	5063	114	18932	24764	-0.13347	0.03791	-3.521
+identity >= 95%	T3	D(Cx_molestus,Cx_pipiens;Cx_pallens,Cx_perexiguus)	5063	114	19402	20495	-0.0274	0.0129	-2.124
+identity >= 95%	T4	D(Cx_molestus,Cx_pipiens;Cx_quinquefasciatus,Cx_perexiguus)	5063	114	17246	22614	-0.13467	0.01756	-7.669
+identity >= 98%	T1	D(Cx_pallens,Cx_quinquefasciatus;Cx_pipiens,Cx_perexiguus)	1102	114	1134	2044	-0.28634	0.04317	-6.633
+identity >= 98%	T2	D(Cx_pallens,Cx_quinquefasciatus;Cx_molestus,Cx_perexiguus)	1102	114	1429	1870	-0.13368	0.05673	-2.357
+identity >= 98%	T3	D(Cx_molestus,Cx_pipiens;Cx_pallens,Cx_perexiguus)	1102	114	1198	1252	-0.02204	0.02212	-0.996
+identity >= 98%	T4	D(Cx_molestus,Cx_pipiens;Cx_quinquefasciatus,Cx_perexiguus)	1102	114	1042	1576	-0.20397	0.03377	-6.041
+intact, identity >= 95%	T1	D(Cx_pallens,Cx_quinquefasciatus;Cx_pipiens,Cx_perexiguus)	3995	112	13083	20926	-0.23062	0.02814	-8.194
+intact, identity >= 95%	T2	D(Cx_pallens,Cx_quinquefasciatus;Cx_molestus,Cx_perexiguus)	3995	112	15134	19707	-0.13125	0.0397	-3.306
+intact, identity >= 95%	T3	D(Cx_molestus,Cx_pipiens;Cx_pallens,Cx_perexiguus)	3995	112	15010	16310	-0.04151	0.01292	-3.213
+intact, identity >= 95%	T4	D(Cx_molestus,Cx_pipiens;Cx_quinquefasciatus,Cx_perexiguus)	3995	112	13476	18023	-0.14435	0.01817	-7.947
+intact, identity >= 98%	T1	D(Cx_pallens,Cx_quinquefasciatus;Cx_pipiens,Cx_perexiguus)	889	112	985	1737	-0.27627	0.04565	-6.052
+intact, identity >= 98%	T2	D(Cx_pallens,Cx_quinquefasciatus;Cx_molestus,Cx_perexiguus)	889	112	1207	1599	-0.1397	0.0599	-2.332
+intact, identity >= 98%	T3	D(Cx_molestus,Cx_pipiens;Cx_pallens,Cx_perexiguus)	889	112	1001	1038	-0.01815	0.0254	-0.714
+intact, identity >= 98%	T4	D(Cx_molestus,Cx_pipiens;Cx_quinquefasciatus,Cx_perexiguus)	889	112	884	1288	-0.186	0.03761	-4.946

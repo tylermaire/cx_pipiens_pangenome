@@ -1,0 +1,321 @@
+locus_class	site_class	n_loci	derived_in	n_sites	per_100_loci
+all	all_sites	6846	Cx_molestus+Cx_pallens	33760	493.1
+all	all_sites	6846	Cx_molestus+Cx_pipiens	49301	720.1
+all	all_sites	6846	Cx_molestus+Cx_quinquefasciatus	10911	159.4
+all	all_sites	6846	Cx_pallens+Cx_pipiens	38510	562.5
+all	all_sites	6846	Cx_pallens+Cx_quinquefasciatus	34802	508.4
+all	all_sites	6846	Cx_pipiens+Cx_quinquefasciatus	8008	117.0
+all	all_sites	6846	Cx_molestus+Cx_pallens+Cx_pipiens	149391	2182.2
+all	all_sites	6846	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	25419	371.3
+all	all_sites	6846	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	19218	280.7
+all	all_sites	6846	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	20938	305.8
+all	third_positions	6846	Cx_molestus+Cx_pallens	13900	203.0
+all	third_positions	6846	Cx_molestus+Cx_pipiens	30402	444.1
+all	third_positions	6846	Cx_molestus+Cx_quinquefasciatus	8751	127.8
+all	third_positions	6846	Cx_pallens+Cx_pipiens	16390	239.4
+all	third_positions	6846	Cx_pallens+Cx_quinquefasciatus	28007	409.1
+all	third_positions	6846	Cx_pipiens+Cx_quinquefasciatus	6362	92.9
+all	third_positions	6846	Cx_molestus+Cx_pallens+Cx_pipiens	62066	906.6
+all	third_positions	6846	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	20671	301.9
+all	third_positions	6846	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	15359	224.3
+all	third_positions	6846	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	16937	247.4
+intact	all_sites	4592	Cx_molestus+Cx_pallens	4541	98.9
+intact	all_sites	4592	Cx_molestus+Cx_pipiens	21371	465.4
+intact	all_sites	4592	Cx_molestus+Cx_quinquefasciatus	6451	140.5
+intact	all_sites	4592	Cx_pallens+Cx_pipiens	6010	130.9
+intact	all_sites	4592	Cx_pallens+Cx_quinquefasciatus	23264	506.6
+intact	all_sites	4592	Cx_pipiens+Cx_quinquefasciatus	4181	91.0
+intact	all_sites	4592	Cx_molestus+Cx_pallens+Cx_pipiens	19286	420.0
+intact	all_sites	4592	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	15063	328.0
+intact	all_sites	4592	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	11571	252.0
+intact	all_sites	4592	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	12072	262.9
+intact	third_positions	4592	Cx_molestus+Cx_pallens	3765	82.0
+intact	third_positions	4592	Cx_molestus+Cx_pipiens	17050	371.3
+intact	third_positions	4592	Cx_molestus+Cx_quinquefasciatus	5339	116.3
+intact	third_positions	4592	Cx_pallens+Cx_pipiens	4937	107.5
+intact	third_positions	4592	Cx_pallens+Cx_quinquefasciatus	18941	412.5
+intact	third_positions	4592	Cx_pipiens+Cx_quinquefasciatus	3517	76.6
+intact	third_positions	4592	Cx_molestus+Cx_pallens+Cx_pipiens	15647	340.7
+intact	third_positions	4592	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	12712	276.8
+intact	third_positions	4592	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	9490	206.7
+intact	third_positions	4592	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	10186	221.8
+not intact	all_sites	2254	Cx_molestus+Cx_pallens	29219	1296.3
+not intact	all_sites	2254	Cx_molestus+Cx_pipiens	27930	1239.1
+not intact	all_sites	2254	Cx_molestus+Cx_quinquefasciatus	4460	197.9
+not intact	all_sites	2254	Cx_pallens+Cx_pipiens	32500	1441.9
+not intact	all_sites	2254	Cx_pallens+Cx_quinquefasciatus	11538	511.9
+not intact	all_sites	2254	Cx_pipiens+Cx_quinquefasciatus	3827	169.8
+not intact	all_sites	2254	Cx_molestus+Cx_pallens+Cx_pipiens	130105	5772.2
+not intact	all_sites	2254	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	10356	459.4
+not intact	all_sites	2254	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	7647	339.3
+not intact	all_sites	2254	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	8866	393.3
+not intact	third_positions	2254	Cx_molestus+Cx_pallens	10135	449.6
+not intact	third_positions	2254	Cx_molestus+Cx_pipiens	13352	592.4
+not intact	third_positions	2254	Cx_molestus+Cx_quinquefasciatus	3412	151.4
+not intact	third_positions	2254	Cx_pallens+Cx_pipiens	11453	508.1
+not intact	third_positions	2254	Cx_pallens+Cx_quinquefasciatus	9066	402.2
+not intact	third_positions	2254	Cx_pipiens+Cx_quinquefasciatus	2845	126.2
+not intact	third_positions	2254	Cx_molestus+Cx_pallens+Cx_pipiens	46419	2059.4
+not intact	third_positions	2254	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	7959	353.1
+not intact	third_positions	2254	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	5869	260.4
+not intact	third_positions	2254	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	6751	299.5
+not intact: RefSeq exception	all_sites	408	Cx_molestus+Cx_pallens	15797	3871.8
+not intact: RefSeq exception	all_sites	408	Cx_molestus+Cx_pipiens	9316	2283.3
+not intact: RefSeq exception	all_sites	408	Cx_molestus+Cx_quinquefasciatus	1574	385.8
+not intact: RefSeq exception	all_sites	408	Cx_pallens+Cx_pipiens	21998	5391.7
+not intact: RefSeq exception	all_sites	408	Cx_pallens+Cx_quinquefasciatus	2386	584.8
+not intact: RefSeq exception	all_sites	408	Cx_pipiens+Cx_quinquefasciatus	1152	282.4
+not intact: RefSeq exception	all_sites	408	Cx_molestus+Cx_pallens+Cx_pipiens	104286	25560.3
+not intact: RefSeq exception	all_sites	408	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	1945	476.7
+not intact: RefSeq exception	all_sites	408	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	1263	309.6
+not intact: RefSeq exception	all_sites	408	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	2168	531.4
+not intact: RefSeq exception	third_positions	408	Cx_molestus+Cx_pallens	4923	1206.6
+not intact: RefSeq exception	third_positions	408	Cx_molestus+Cx_pipiens	3713	910.0
+not intact: RefSeq exception	third_positions	408	Cx_molestus+Cx_quinquefasciatus	1211	296.8
+not intact: RefSeq exception	third_positions	408	Cx_pallens+Cx_pipiens	6901	1691.4
+not intact: RefSeq exception	third_positions	408	Cx_pallens+Cx_quinquefasciatus	1921	470.8
+not intact: RefSeq exception	third_positions	408	Cx_pipiens+Cx_quinquefasciatus	854	209.3
+not intact: RefSeq exception	third_positions	408	Cx_molestus+Cx_pallens+Cx_pipiens	34599	8480.1
+not intact: RefSeq exception	third_positions	408	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	1546	378.9
+not intact: RefSeq exception	third_positions	408	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	992	243.1
+not intact: RefSeq exception	third_positions	408	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	1665	408.1
+not intact: invalid ORF: Cx_molestus	all_sites	385	Cx_molestus+Cx_pallens	368	95.6
+not intact: invalid ORF: Cx_molestus	all_sites	385	Cx_molestus+Cx_pipiens	1470	381.8
+not intact: invalid ORF: Cx_molestus	all_sites	385	Cx_molestus+Cx_quinquefasciatus	629	163.4
+not intact: invalid ORF: Cx_molestus	all_sites	385	Cx_pallens+Cx_pipiens	521	135.3
+not intact: invalid ORF: Cx_molestus	all_sites	385	Cx_pallens+Cx_quinquefasciatus	1594	414.0
+not intact: invalid ORF: Cx_molestus	all_sites	385	Cx_pipiens+Cx_quinquefasciatus	386	100.3
+not intact: invalid ORF: Cx_molestus	all_sites	385	Cx_molestus+Cx_pallens+Cx_pipiens	1419	368.6
+not intact: invalid ORF: Cx_molestus	all_sites	385	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	1051	273.0
+not intact: invalid ORF: Cx_molestus	all_sites	385	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	854	221.8
+not intact: invalid ORF: Cx_molestus	all_sites	385	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	2115	549.4
+not intact: invalid ORF: Cx_molestus	third_positions	385	Cx_molestus+Cx_pallens	299	77.7
+not intact: invalid ORF: Cx_molestus	third_positions	385	Cx_molestus+Cx_pipiens	1159	301.0
+not intact: invalid ORF: Cx_molestus	third_positions	385	Cx_molestus+Cx_quinquefasciatus	477	123.9
+not intact: invalid ORF: Cx_molestus	third_positions	385	Cx_pallens+Cx_pipiens	427	110.9
+not intact: invalid ORF: Cx_molestus	third_positions	385	Cx_pallens+Cx_quinquefasciatus	1289	334.8
+not intact: invalid ORF: Cx_molestus	third_positions	385	Cx_pipiens+Cx_quinquefasciatus	323	83.9
+not intact: invalid ORF: Cx_molestus	third_positions	385	Cx_molestus+Cx_pallens+Cx_pipiens	1104	286.8
+not intact: invalid ORF: Cx_molestus	third_positions	385	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	875	227.3
+not intact: invalid ORF: Cx_molestus	third_positions	385	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	675	175.3
+not intact: invalid ORF: Cx_molestus	third_positions	385	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	1499	389.4
+not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens	all_sites	381	Cx_molestus+Cx_pallens	5049	1325.2
+not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens	all_sites	381	Cx_molestus+Cx_pipiens	2879	755.6
+not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens	all_sites	381	Cx_molestus+Cx_quinquefasciatus	437	114.7
+not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens	all_sites	381	Cx_pallens+Cx_pipiens	1751	459.6
+not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens	all_sites	381	Cx_pallens+Cx_quinquefasciatus	1452	381.1
+not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens	all_sites	381	Cx_pipiens+Cx_quinquefasciatus	581	152.5
+not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens	all_sites	381	Cx_molestus+Cx_pallens+Cx_pipiens	20233	5310.5
+not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens	all_sites	381	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	1242	326.0
+not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens	all_sites	381	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	821	215.5
+not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens	all_sites	381	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	998	261.9
+not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens	third_positions	381	Cx_molestus+Cx_pallens	1753	460.1
+not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens	third_positions	381	Cx_molestus+Cx_pipiens	1503	394.5
+not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens	third_positions	381	Cx_molestus+Cx_quinquefasciatus	320	84.0
+not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens	third_positions	381	Cx_pallens+Cx_pipiens	758	199.0
+not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens	third_positions	381	Cx_pallens+Cx_quinquefasciatus	1117	293.2
+not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens	third_positions	381	Cx_pipiens+Cx_quinquefasciatus	456	119.7
+not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens	third_positions	381	Cx_molestus+Cx_pallens+Cx_pipiens	7416	1946.5
+not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens	third_positions	381	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	945	248.0
+not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens	third_positions	381	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	623	163.5
+not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens	third_positions	381	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	742	194.8
+not intact: invalid ORF: Cx_pipiens	all_sites	335	Cx_molestus+Cx_pallens	360	107.5
+not intact: invalid ORF: Cx_pipiens	all_sites	335	Cx_molestus+Cx_pipiens	1726	515.2
+not intact: invalid ORF: Cx_pipiens	all_sites	335	Cx_molestus+Cx_quinquefasciatus	490	146.3
+not intact: invalid ORF: Cx_pipiens	all_sites	335	Cx_pallens+Cx_pipiens	444	132.5
+not intact: invalid ORF: Cx_pipiens	all_sites	335	Cx_pallens+Cx_quinquefasciatus	1960	585.1
+not intact: invalid ORF: Cx_pipiens	all_sites	335	Cx_pipiens+Cx_quinquefasciatus	395	117.9
+not intact: invalid ORF: Cx_pipiens	all_sites	335	Cx_molestus+Cx_pallens+Cx_pipiens	1209	360.9
+not intact: invalid ORF: Cx_pipiens	all_sites	335	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	3172	946.9
+not intact: invalid ORF: Cx_pipiens	all_sites	335	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	895	267.2
+not intact: invalid ORF: Cx_pipiens	all_sites	335	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	1123	335.2
+not intact: invalid ORF: Cx_pipiens	third_positions	335	Cx_molestus+Cx_pallens	295	88.1
+not intact: invalid ORF: Cx_pipiens	third_positions	335	Cx_molestus+Cx_pipiens	1369	408.7
+not intact: invalid ORF: Cx_pipiens	third_positions	335	Cx_molestus+Cx_quinquefasciatus	386	115.2
+not intact: invalid ORF: Cx_pipiens	third_positions	335	Cx_pallens+Cx_pipiens	341	101.8
+not intact: invalid ORF: Cx_pipiens	third_positions	335	Cx_pallens+Cx_quinquefasciatus	1565	467.2
+not intact: invalid ORF: Cx_pipiens	third_positions	335	Cx_pipiens+Cx_quinquefasciatus	323	96.4
+not intact: invalid ORF: Cx_pipiens	third_positions	335	Cx_molestus+Cx_pallens+Cx_pipiens	974	290.7
+not intact: invalid ORF: Cx_pipiens	third_positions	335	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	2236	667.5
+not intact: invalid ORF: Cx_pipiens	third_positions	335	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	706	210.7
+not intact: invalid ORF: Cx_pipiens	third_positions	335	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	918	274.0
+not intact: invalid ORF: Cx_pallens	all_sites	281	Cx_molestus+Cx_pallens	415	147.7
+not intact: invalid ORF: Cx_pallens	all_sites	281	Cx_molestus+Cx_pipiens	1014	360.9
+not intact: invalid ORF: Cx_pallens	all_sites	281	Cx_molestus+Cx_quinquefasciatus	516	183.6
+not intact: invalid ORF: Cx_pallens	all_sites	281	Cx_pallens+Cx_pipiens	515	183.3
+not intact: invalid ORF: Cx_pallens	all_sites	281	Cx_pallens+Cx_quinquefasciatus	1147	408.2
+not intact: invalid ORF: Cx_pallens	all_sites	281	Cx_pipiens+Cx_quinquefasciatus	352	125.3
+not intact: invalid ORF: Cx_pallens	all_sites	281	Cx_molestus+Cx_pallens+Cx_pipiens	1243	442.3
+not intact: invalid ORF: Cx_pallens	all_sites	281	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	936	333.1
+not intact: invalid ORF: Cx_pallens	all_sites	281	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	2235	795.4
+not intact: invalid ORF: Cx_pallens	all_sites	281	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	666	237.0
+not intact: invalid ORF: Cx_pallens	third_positions	281	Cx_molestus+Cx_pallens	340	121.0
+not intact: invalid ORF: Cx_pallens	third_positions	281	Cx_molestus+Cx_pipiens	804	286.1
+not intact: invalid ORF: Cx_pallens	third_positions	281	Cx_molestus+Cx_quinquefasciatus	421	149.8
+not intact: invalid ORF: Cx_pallens	third_positions	281	Cx_pallens+Cx_pipiens	433	154.1
+not intact: invalid ORF: Cx_pallens	third_positions	281	Cx_pallens+Cx_quinquefasciatus	922	328.1
+not intact: invalid ORF: Cx_pallens	third_positions	281	Cx_pipiens+Cx_quinquefasciatus	302	107.5
+not intact: invalid ORF: Cx_pallens	third_positions	281	Cx_molestus+Cx_pallens+Cx_pipiens	993	353.4
+not intact: invalid ORF: Cx_pallens	third_positions	281	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	778	276.9
+not intact: invalid ORF: Cx_pallens	third_positions	281	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	1660	590.7
+not intact: invalid ORF: Cx_pallens	third_positions	281	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	563	200.4
+not intact: invalid ORF: Cx_molestus,Cx_pipiens	all_sites	214	Cx_molestus+Cx_pallens	164	76.6
+not intact: invalid ORF: Cx_molestus,Cx_pipiens	all_sites	214	Cx_molestus+Cx_pipiens	10423	4870.6
+not intact: invalid ORF: Cx_molestus,Cx_pipiens	all_sites	214	Cx_molestus+Cx_quinquefasciatus	166	77.6
+not intact: invalid ORF: Cx_molestus,Cx_pipiens	all_sites	214	Cx_pallens+Cx_pipiens	193	90.2
+not intact: invalid ORF: Cx_molestus,Cx_pipiens	all_sites	214	Cx_pallens+Cx_quinquefasciatus	1977	923.8
+not intact: invalid ORF: Cx_molestus,Cx_pipiens	all_sites	214	Cx_pipiens+Cx_quinquefasciatus	338	157.9
+not intact: invalid ORF: Cx_molestus,Cx_pipiens	all_sites	214	Cx_molestus+Cx_pallens+Cx_pipiens	692	323.4
+not intact: invalid ORF: Cx_molestus,Cx_pipiens	all_sites	214	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	1108	517.8
+not intact: invalid ORF: Cx_molestus,Cx_pipiens	all_sites	214	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	310	144.9
+not intact: invalid ORF: Cx_molestus,Cx_pipiens	all_sites	214	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	905	422.9
+not intact: invalid ORF: Cx_molestus,Cx_pipiens	third_positions	214	Cx_molestus+Cx_pallens	133	62.1
+not intact: invalid ORF: Cx_molestus,Cx_pipiens	third_positions	214	Cx_molestus+Cx_pipiens	3981	1860.3
+not intact: invalid ORF: Cx_molestus,Cx_pipiens	third_positions	214	Cx_molestus+Cx_quinquefasciatus	133	62.1
+not intact: invalid ORF: Cx_molestus,Cx_pipiens	third_positions	214	Cx_pallens+Cx_pipiens	160	74.8
+not intact: invalid ORF: Cx_molestus,Cx_pipiens	third_positions	214	Cx_pallens+Cx_quinquefasciatus	1437	671.5
+not intact: invalid ORF: Cx_molestus,Cx_pipiens	third_positions	214	Cx_pipiens+Cx_quinquefasciatus	183	85.5
+not intact: invalid ORF: Cx_molestus,Cx_pipiens	third_positions	214	Cx_molestus+Cx_pallens+Cx_pipiens	535	250.0
+not intact: invalid ORF: Cx_molestus,Cx_pipiens	third_positions	214	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	833	389.3
+not intact: invalid ORF: Cx_molestus,Cx_pipiens	third_positions	214	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	252	117.8
+not intact: invalid ORF: Cx_molestus,Cx_pipiens	third_positions	214	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	642	300.0
+not intact: invalid ORF: Cx_molestus,Cx_pallens	all_sites	130	Cx_molestus+Cx_pallens	6948	5344.6
+not intact: invalid ORF: Cx_molestus,Cx_pallens	all_sites	130	Cx_molestus+Cx_pipiens	507	390.0
+not intact: invalid ORF: Cx_molestus,Cx_pallens	all_sites	130	Cx_molestus+Cx_quinquefasciatus	146	112.3
+not intact: invalid ORF: Cx_molestus,Cx_pallens	all_sites	130	Cx_pallens+Cx_pipiens	161	123.8
+not intact: invalid ORF: Cx_molestus,Cx_pallens	all_sites	130	Cx_pallens+Cx_quinquefasciatus	529	406.9
+not intact: invalid ORF: Cx_molestus,Cx_pallens	all_sites	130	Cx_pipiens+Cx_quinquefasciatus	506	389.2
+not intact: invalid ORF: Cx_molestus,Cx_pallens	all_sites	130	Cx_molestus+Cx_pallens+Cx_pipiens	540	415.4
+not intact: invalid ORF: Cx_molestus,Cx_pallens	all_sites	130	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	383	294.6
+not intact: invalid ORF: Cx_molestus,Cx_pallens	all_sites	130	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	804	618.5
+not intact: invalid ORF: Cx_molestus,Cx_pallens	all_sites	130	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	560	430.8
+not intact: invalid ORF: Cx_molestus,Cx_pallens	third_positions	130	Cx_molestus+Cx_pallens	2293	1763.8
+not intact: invalid ORF: Cx_molestus,Cx_pallens	third_positions	130	Cx_molestus+Cx_pipiens	403	310.0
+not intact: invalid ORF: Cx_molestus,Cx_pallens	third_positions	130	Cx_molestus+Cx_quinquefasciatus	116	89.2
+not intact: invalid ORF: Cx_molestus,Cx_pallens	third_positions	130	Cx_pallens+Cx_pipiens	119	91.5
+not intact: invalid ORF: Cx_molestus,Cx_pallens	third_positions	130	Cx_pallens+Cx_quinquefasciatus	412	316.9
+not intact: invalid ORF: Cx_molestus,Cx_pallens	third_positions	130	Cx_pipiens+Cx_quinquefasciatus	309	237.7
+not intact: invalid ORF: Cx_molestus,Cx_pallens	third_positions	130	Cx_molestus+Cx_pallens+Cx_pipiens	422	324.6
+not intact: invalid ORF: Cx_molestus,Cx_pallens	third_positions	130	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	322	247.7
+not intact: invalid ORF: Cx_molestus,Cx_pallens	third_positions	130	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	573	440.8
+not intact: invalid ORF: Cx_molestus,Cx_pallens	third_positions	130	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	444	341.5
+not intact: invalid ORF: Cx_pallens,Cx_pipiens	all_sites	105	Cx_molestus+Cx_pallens	98	93.3
+not intact: invalid ORF: Cx_pallens,Cx_pipiens	all_sites	105	Cx_molestus+Cx_pipiens	428	407.6
+not intact: invalid ORF: Cx_pallens,Cx_pipiens	all_sites	105	Cx_molestus+Cx_quinquefasciatus	490	466.7
+not intact: invalid ORF: Cx_pallens,Cx_pipiens	all_sites	105	Cx_pallens+Cx_pipiens	6887	6559.0
+not intact: invalid ORF: Cx_pallens,Cx_pipiens	all_sites	105	Cx_pallens+Cx_quinquefasciatus	443	421.9
+not intact: invalid ORF: Cx_pallens,Cx_pipiens	all_sites	105	Cx_pipiens+Cx_quinquefasciatus	100	95.2
+not intact: invalid ORF: Cx_pallens,Cx_pipiens	all_sites	105	Cx_molestus+Cx_pallens+Cx_pipiens	412	392.4
+not intact: invalid ORF: Cx_pallens,Cx_pipiens	all_sites	105	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	450	428.6
+not intact: invalid ORF: Cx_pallens,Cx_pipiens	all_sites	105	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	430	409.5
+not intact: invalid ORF: Cx_pallens,Cx_pipiens	all_sites	105	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	297	282.9
+not intact: invalid ORF: Cx_pallens,Cx_pipiens	third_positions	105	Cx_molestus+Cx_pallens	82	78.1
+not intact: invalid ORF: Cx_pallens,Cx_pipiens	third_positions	105	Cx_molestus+Cx_pipiens	352	335.2
+not intact: invalid ORF: Cx_pallens,Cx_pipiens	third_positions	105	Cx_molestus+Cx_quinquefasciatus	339	322.9
+not intact: invalid ORF: Cx_pallens,Cx_pipiens	third_positions	105	Cx_pallens+Cx_pipiens	2292	2182.9
+not intact: invalid ORF: Cx_pallens,Cx_pipiens	third_positions	105	Cx_pallens+Cx_quinquefasciatus	368	350.5
+not intact: invalid ORF: Cx_pallens,Cx_pipiens	third_positions	105	Cx_pipiens+Cx_quinquefasciatus	85	81.0
+not intact: invalid ORF: Cx_pallens,Cx_pipiens	third_positions	105	Cx_molestus+Cx_pallens+Cx_pipiens	324	308.6
+not intact: invalid ORF: Cx_pallens,Cx_pipiens	third_positions	105	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	364	346.7
+not intact: invalid ORF: Cx_pallens,Cx_pipiens	third_positions	105	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	357	340.0
+not intact: invalid ORF: Cx_pallens,Cx_pipiens	third_positions	105	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	251	239.0
+not intact: partial reference model	all_sites	15	Cx_molestus+Cx_pallens	20	133.3
+not intact: partial reference model	all_sites	15	Cx_molestus+Cx_pipiens	167	1113.3
+not intact: partial reference model	all_sites	15	Cx_molestus+Cx_quinquefasciatus	12	80.0
+not intact: partial reference model	all_sites	15	Cx_pallens+Cx_pipiens	30	200.0
+not intact: partial reference model	all_sites	15	Cx_pallens+Cx_quinquefasciatus	50	333.3
+not intact: partial reference model	all_sites	15	Cx_pipiens+Cx_quinquefasciatus	17	113.3
+not intact: partial reference model	all_sites	15	Cx_molestus+Cx_pallens+Cx_pipiens	71	473.3
+not intact: partial reference model	all_sites	15	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	69	460.0
+not intact: partial reference model	all_sites	15	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	35	233.3
+not intact: partial reference model	all_sites	15	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	34	226.7
+not intact: partial reference model	third_positions	15	Cx_molestus+Cx_pallens	17	113.3
+not intact: partial reference model	third_positions	15	Cx_molestus+Cx_pipiens	68	453.3
+not intact: partial reference model	third_positions	15	Cx_molestus+Cx_quinquefasciatus	9	60.0
+not intact: partial reference model	third_positions	15	Cx_pallens+Cx_pipiens	22	146.7
+not intact: partial reference model	third_positions	15	Cx_pallens+Cx_quinquefasciatus	35	233.3
+not intact: partial reference model	third_positions	15	Cx_pipiens+Cx_quinquefasciatus	10	66.7
+not intact: partial reference model	third_positions	15	Cx_molestus+Cx_pallens+Cx_pipiens	52	346.7
+not intact: partial reference model	third_positions	15	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	60	400.0
+not intact: partial reference model	third_positions	15	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	31	206.7
+not intact: partial reference model	third_positions	15	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	27	180.0
+identity >= 95%	all_sites	5063	Cx_molestus+Cx_pallens	4745	93.7
+identity >= 95%	all_sites	5063	Cx_molestus+Cx_pipiens	21753	429.6
+identity >= 95%	all_sites	5063	Cx_molestus+Cx_quinquefasciatus	6878	135.8
+identity >= 95%	all_sites	5063	Cx_pallens+Cx_pipiens	6553	129.4
+identity >= 95%	all_sites	5063	Cx_pallens+Cx_quinquefasciatus	23638	466.9
+identity >= 95%	all_sites	5063	Cx_pipiens+Cx_quinquefasciatus	4502	88.9
+identity >= 95%	all_sites	5063	Cx_molestus+Cx_pallens+Cx_pipiens	19745	390.0
+identity >= 95%	all_sites	5063	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	15478	305.7
+identity >= 95%	all_sites	5063	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	11801	233.1
+identity >= 95%	all_sites	5063	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	12579	248.4
+identity >= 95%	third_positions	5063	Cx_molestus+Cx_pallens	4023	79.5
+identity >= 95%	third_positions	5063	Cx_molestus+Cx_pipiens	17853	352.6
+identity >= 95%	third_positions	5063	Cx_molestus+Cx_quinquefasciatus	5780	114.2
+identity >= 95%	third_positions	5063	Cx_pallens+Cx_pipiens	5364	105.9
+identity >= 95%	third_positions	5063	Cx_pallens+Cx_quinquefasciatus	19748	390.0
+identity >= 95%	third_positions	5063	Cx_pipiens+Cx_quinquefasciatus	3862	76.3
+identity >= 95%	third_positions	5063	Cx_molestus+Cx_pallens+Cx_pipiens	16275	321.4
+identity >= 95%	third_positions	5063	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	13314	263.0
+identity >= 95%	third_positions	5063	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	9988	197.3
+identity >= 95%	third_positions	5063	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	10809	213.5
+identity >= 98%	all_sites	1102	Cx_molestus+Cx_pallens	263	23.9
+identity >= 98%	all_sites	1102	Cx_molestus+Cx_pipiens	1508	136.8
+identity >= 98%	all_sites	1102	Cx_molestus+Cx_quinquefasciatus	585	53.1
+identity >= 98%	all_sites	1102	Cx_pallens+Cx_pipiens	450	40.8
+identity >= 98%	all_sites	1102	Cx_pallens+Cx_quinquefasciatus	1705	154.7
+identity >= 98%	all_sites	1102	Cx_pipiens+Cx_quinquefasciatus	297	27.0
+identity >= 98%	all_sites	1102	Cx_molestus+Cx_pallens+Cx_pipiens	1587	144.0
+identity >= 98%	all_sites	1102	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	978	88.7
+identity >= 98%	all_sites	1102	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	832	75.5
+identity >= 98%	all_sites	1102	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	736	66.8
+identity >= 98%	third_positions	1102	Cx_molestus+Cx_pallens	224	20.3
+identity >= 98%	third_positions	1102	Cx_molestus+Cx_pipiens	1306	118.5
+identity >= 98%	third_positions	1102	Cx_molestus+Cx_quinquefasciatus	479	43.5
+identity >= 98%	third_positions	1102	Cx_pallens+Cx_pipiens	395	35.8
+identity >= 98%	third_positions	1102	Cx_pallens+Cx_quinquefasciatus	1493	135.5
+identity >= 98%	third_positions	1102	Cx_pipiens+Cx_quinquefasciatus	260	23.6
+identity >= 98%	third_positions	1102	Cx_molestus+Cx_pallens+Cx_pipiens	1304	118.3
+identity >= 98%	third_positions	1102	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	875	79.4
+identity >= 98%	third_positions	1102	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	722	65.5
+identity >= 98%	third_positions	1102	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	649	58.9
+intact, identity >= 95%	all_sites	3995	Cx_molestus+Cx_pallens	3786	94.8
+intact, identity >= 95%	all_sites	3995	Cx_molestus+Cx_pipiens	17124	428.6
+intact, identity >= 95%	all_sites	3995	Cx_molestus+Cx_quinquefasciatus	5508	137.9
+intact, identity >= 95%	all_sites	3995	Cx_pallens+Cx_pipiens	5000	125.2
+intact, identity >= 95%	all_sites	3995	Cx_pallens+Cx_quinquefasciatus	18490	462.8
+intact, identity >= 95%	all_sites	3995	Cx_pipiens+Cx_quinquefasciatus	3548	88.8
+intact, identity >= 95%	all_sites	3995	Cx_molestus+Cx_pallens+Cx_pipiens	15705	393.1
+intact, identity >= 95%	all_sites	3995	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	12310	308.1
+intact, identity >= 95%	all_sites	3995	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	9409	235.5
+intact, identity >= 95%	all_sites	3995	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	9807	245.5
+intact, identity >= 95%	third_positions	3995	Cx_molestus+Cx_pallens	3205	80.2
+intact, identity >= 95%	third_positions	3995	Cx_molestus+Cx_pipiens	14054	351.8
+intact, identity >= 95%	third_positions	3995	Cx_molestus+Cx_quinquefasciatus	4654	116.5
+intact, identity >= 95%	third_positions	3995	Cx_pallens+Cx_pipiens	4205	105.3
+intact, identity >= 95%	third_positions	3995	Cx_pallens+Cx_quinquefasciatus	15489	387.7
+intact, identity >= 95%	third_positions	3995	Cx_pipiens+Cx_quinquefasciatus	3048	76.3
+intact, identity >= 95%	third_positions	3995	Cx_molestus+Cx_pallens+Cx_pipiens	12998	325.4
+intact, identity >= 95%	third_positions	3995	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	10591	265.1
+intact, identity >= 95%	third_positions	3995	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	7996	200.2
+intact, identity >= 95%	third_positions	3995	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	8478	212.2
+intact, identity >= 98%	all_sites	889	Cx_molestus+Cx_pallens	226	25.4
+intact, identity >= 98%	all_sites	889	Cx_molestus+Cx_pipiens	1240	139.5
+intact, identity >= 98%	all_sites	889	Cx_molestus+Cx_quinquefasciatus	473	53.2
+intact, identity >= 98%	all_sites	889	Cx_pallens+Cx_pipiens	374	42.1
+intact, identity >= 98%	all_sites	889	Cx_pallens+Cx_quinquefasciatus	1394	156.8
+intact, identity >= 98%	all_sites	889	Cx_pipiens+Cx_quinquefasciatus	257	28.9
+intact, identity >= 98%	all_sites	889	Cx_molestus+Cx_pallens+Cx_pipiens	1357	152.6
+intact, identity >= 98%	all_sites	889	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	805	90.6
+intact, identity >= 98%	all_sites	889	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	723	81.3
+intact, identity >= 98%	all_sites	889	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	619	69.6
+intact, identity >= 98%	third_positions	889	Cx_molestus+Cx_pallens	191	21.5
+intact, identity >= 98%	third_positions	889	Cx_molestus+Cx_pipiens	1083	121.8
+intact, identity >= 98%	third_positions	889	Cx_molestus+Cx_quinquefasciatus	406	45.7
+intact, identity >= 98%	third_positions	889	Cx_pallens+Cx_pipiens	333	37.5
+intact, identity >= 98%	third_positions	889	Cx_pallens+Cx_quinquefasciatus	1215	136.7
+intact, identity >= 98%	third_positions	889	Cx_pipiens+Cx_quinquefasciatus	224	25.2
+intact, identity >= 98%	third_positions	889	Cx_molestus+Cx_pallens+Cx_pipiens	1116	125.5
+intact, identity >= 98%	third_positions	889	Cx_molestus+Cx_pallens+Cx_quinquefasciatus	720	81.0
+intact, identity >= 98%	third_positions	889	Cx_molestus+Cx_pipiens+Cx_quinquefasciatus	627	70.5
+intact, identity >= 98%	third_positions	889	Cx_pallens+Cx_pipiens+Cx_quinquefasciatus	548	61.6

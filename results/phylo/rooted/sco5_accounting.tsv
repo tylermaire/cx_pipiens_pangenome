@@ -1,0 +1,21 @@
+item	sample	value
+single_copy_in_all_taxa		6846
+written		6846
+removed_no_protein		0
+removed_no_cds		0
+removed_cds_mismatch		0
+cds_translation_exact	Cx_quinquefasciatus	6846
+cds_translation_frame_not_0	Cx_quinquefasciatus	0
+cds_translation_below_identity	Cx_quinquefasciatus	0
+cds_translation_exact	Cx_pallens	6846
+cds_translation_frame_not_0	Cx_pallens	0
+cds_translation_below_identity	Cx_pallens	0
+cds_translation_exact	Cx_molestus	6846
+cds_translation_frame_not_0	Cx_molestus	0
+cds_translation_below_identity	Cx_molestus	0
+cds_translation_exact	Cx_pipiens	6846
+cds_translation_frame_not_0	Cx_pipiens	0
+cds_translation_below_identity	Cx_pipiens	0
+cds_translation_exact	Cx_perexiguus	6846
+cds_translation_frame_not_0	Cx_perexiguus	0
+cds_translation_below_identity	Cx_perexiguus	0

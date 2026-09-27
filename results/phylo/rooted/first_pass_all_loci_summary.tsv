@@ -1,0 +1,64 @@
+item	value
+loci: single_copy_in_all_taxa	6846
+loci: written	6846
+loci: removed_no_protein	0
+loci: removed_no_cds	0
+loci: removed_cds_mismatch	0
+loci: cds_translation_exact Cx_quinquefasciatus	6846
+loci: cds_translation_frame_not_0 Cx_quinquefasciatus	0
+loci: cds_translation_below_identity Cx_quinquefasciatus	0
+loci: cds_translation_exact Cx_pallens	6846
+loci: cds_translation_frame_not_0 Cx_pallens	0
+loci: cds_translation_below_identity Cx_pallens	0
+loci: cds_translation_exact Cx_molestus	6846
+loci: cds_translation_frame_not_0 Cx_molestus	0
+loci: cds_translation_below_identity Cx_molestus	0
+loci: cds_translation_exact Cx_pipiens	6846
+loci: cds_translation_frame_not_0 Cx_pipiens	0
+loci: cds_translation_below_identity Cx_pipiens	0
+loci: cds_translation_exact Cx_perexiguus	6846
+loci: cds_translation_frame_not_0 Cx_perexiguus	0
+loci: cds_translation_below_identity Cx_perexiguus	0
+loci: alignments	6846
+loci: written	6846
+loci: trimmed_protein_alignments_at_least_50_columns	6831
+concatenated alignment loci	6831
+concatenated alignment columns	3976880
+rooted ingroup topology	(((Cx_molestus,Cx_pipiens),Cx_pallens),Cx_quinquefasciatus);
+root position	between (Cx_molestus,Cx_pallens,Cx_pipiens) and Cx_quinquefasciatus
+(Cx_molestus,Cx_pipiens) UFBoot	100.0
+(Cx_molestus,Cx_pipiens) branch length	0.0069061313
+(Cx_molestus,Cx_pipiens) gCF	39.3
+(Cx_molestus,Cx_pipiens) gCF_N	2412
+(Cx_molestus,Cx_pipiens) gDF1	11.68
+(Cx_molestus,Cx_pipiens) gDF1_N	717
+(Cx_molestus,Cx_pipiens) gDF2	17.48
+(Cx_molestus,Cx_pipiens) gDF2_N	1073
+(Cx_molestus,Cx_pipiens) gDFP	31.54
+(Cx_molestus,Cx_pipiens) gDFP_N	1936
+(Cx_molestus,Cx_pipiens) gN	6138
+(Cx_molestus,Cx_pipiens) sCF	35.23
+(Cx_molestus,Cx_pipiens) sDF1	31.56
+(Cx_molestus,Cx_pipiens) sDF2	33.21
+(Cx_molestus,Cx_pipiens) sN	47052.64
+(Cx_molestus,Cx_pallens,Cx_pipiens) UFBoot	100.0
+(Cx_molestus,Cx_pallens,Cx_pipiens) branch length	0.032935557
+(Cx_molestus,Cx_pallens,Cx_pipiens) gCF	32.06
+(Cx_molestus,Cx_pallens,Cx_pipiens) gCF_N	1968
+(Cx_molestus,Cx_pallens,Cx_pipiens) gDF1	33.68
+(Cx_molestus,Cx_pallens,Cx_pipiens) gDF1_N	2067
+(Cx_molestus,Cx_pallens,Cx_pipiens) gDF2	13.9
+(Cx_molestus,Cx_pallens,Cx_pipiens) gDF2_N	853
+(Cx_molestus,Cx_pallens,Cx_pipiens) gDFP	20.36
+(Cx_molestus,Cx_pallens,Cx_pipiens) gDFP_N	1250
+(Cx_molestus,Cx_pallens,Cx_pipiens) gN	6138
+(Cx_molestus,Cx_pallens,Cx_pipiens) sCF	88.26
+(Cx_molestus,Cx_pallens,Cx_pipiens) sDF1	8.04
+(Cx_molestus,Cx_pallens,Cx_pipiens) sDF2	3.71
+(Cx_molestus,Cx_pallens,Cx_pipiens) sN	78378.68
+gene trees all	6138
+gene trees resolved	3653
+gene trees ufboot95	153
+gene trees without all five taxa	0
+gene trees matching the rooted species tree (pct of all)	13.85
+gene trees with the species tree quartet split (pct of all)	52.66
