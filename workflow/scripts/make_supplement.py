@@ -949,7 +949,7 @@ def s8():
             "binomial test of increases against decreases. (c) Families binned by the number of "
             "copies in the Cx. quinquefasciatus reference: mean copies per transferred genome "
             "(pallens, molestus and pipiens), mean share of reference copies retained (retention), "
-            "mean copies lost (deficit) and the share of families CAFE called significant. (d) "
+            "mean copies lost (deficit) and the share of families with P < 0.05. (d) "
             "Total copies of each form over the tested families and its deficit relative to the "
             "reference, with CAFE's increases and decreases on its terminal branch. (e) Tests "
             f"comparing families with one and with two or more reference copies. (f) The {len(sig):,} "
