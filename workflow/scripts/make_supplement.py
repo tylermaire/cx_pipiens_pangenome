@@ -605,6 +605,17 @@ def s6():
         "top_loci_major_discordant_gene_trees": (top_label, True),
         "top_loci_minor_discordant_gene_trees": (top_label, True),
     }
+    # the same counts on loci with four intact models (quartet_asymmetry.intact_site_rows)
+    for role in ("species_tree", "major_discordant_gene_trees", "minor_discordant_gene_trees"):
+        label[f"intact_loci_{role}"] = ("Loci with four intact models, summed sites", True)
+        label[f"intact_loci_locus_majority_{role}"] = (
+            "Loci with four intact models, locus majority votes", True)
+    role_test = {
+        "intact_loci_binomial_test":
+            "Test: summed discordant sites, major vs minor split, loci with four intact models",
+        "intact_loci_locus_majority_binomial_test":
+            "Test: locus majority votes, major vs minor split, loci with four intact models",
+    }
     test_label = {
         "discordant sites: gene tree major vs minor":
             "Test: summed discordant sites, major vs minor split, all loci",
@@ -623,6 +634,8 @@ def s6():
             d["split"] = forms(r["split"]).replace("+", " + ")
         elif r["role"] == "binomial_test":
             d["measure"] = test_label[r["split"]]
+        elif r["role"] in role_test:
+            d["measure"] = role_test[r["role"]]
         elif r["role"] == "locus_majority_undecided":
             d["measure"] = "Loci without a majority split (ties or no informative sites)"
         elif r["role"] == "median":
@@ -705,7 +718,10 @@ def s6():
             "loci whose four gene models are "
             "intact (reference model neither partial nor with a RefSeq exception, and a valid ORF "
             "for each transferred model), and on the rest. Part (e) also gives how many of the "
-            "top 1% of loci, and of the other loci, hold a gene model that is not intact.",
+            "top 1% of loci, and of the other loci, hold a gene model that is not intact, and "
+            "repeats the site counts and votes on the loci with four intact models, because a "
+            "transfer error shared by two forms makes every misaligned codon after it a site "
+            "shared by those forms (Supp. Table S13).",
             "results/phylo/locus_accounting.tsv; results/phylo/quartet_topology_counts.tsv; "
             "results/phylo/concord.cf.stat; results/phylo/quartet_asymmetry_by_support.tsv; "
             "results/phylo/quartet_site_patterns.tsv",
