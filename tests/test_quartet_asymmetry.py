@@ -113,22 +113,44 @@ def main():
                      "OG1\trna-a1\trna-a1\trna-a1\trna-a1\n"
                      "OG2\trna-b1\trna-b1\trna-b1\trna-b1\n"
                      "OG3\trna-c1\trna-c1\trna-c1\trna-c1\n"
-                     "OG4\trna-d1, rna-e1\trna-d1\trna-d1\trna-d1\n")
+                     "OG4\trna-d1, rna-e1\trna-d1\trna-d1\trna-d1\n"
+                     "OG5\trna-f1\trna-f1\trna-f1\trna-f1\n")
         gffs = {}
         for form in ("R", "T1", "T2", "T3"):
             path = os.path.join(tmp, f"{form}_liftoff.gff3")
             with open(path, "w") as fh:
-                for tid in ("a.1", "b.1", "c.1", "d.1"):
+                for tid in ("a.1", "b.1", "c.1", "d.1", "f.1"):
                     attrs = f"ID=rna-{tid};Parent=gene-{tid[0]}"
                     if form == "R" and tid == "c.1":
                         attrs += ";partial=true"
+                    if form == "R" and tid == "f.1":
+                        attrs += ";exception=unclassified translation discrepancy"
                     if form != "R":
                         valid = "False" if (form == "T2" and tid == "b.1") else "True"
                         attrs += f";valid_ORF={valid}"
                     fh.write(f"chr1\tx\tmRNA\t1\t100\t.\t+\t.\t{attrs}\n")
             gffs[form] = path
         got = qa.intact_loci(tmp, gffs, "R")
-    assert got == {"OG1": True, "OG2": False, "OG3": False}, got
+        why = qa.locus_reasons(tmp, gffs, "R")
+    assert got == {"OG1": True, "OG2": False, "OG3": False, "OG5": False}, got
+    assert why == {"OG1": "intact", "OG2": "invalid ORF: T2", "OG3": "partial reference model",
+                   "OG5": "RefSeq exception"}, why
+    assert all((why[k] == "intact") == v for k, v in got.items())
+
+    # site counts on intact loci only: OG2's 40 major sites are left out
+    per_locus = [collections.Counter({splits[0]: 5, splits[1]: 3, splits[2]: 1}),
+                 collections.Counter({splits[1]: 40}),
+                 collections.Counter({splits[0]: 2, splits[2]: 4})]
+    rows = {r["role"]: r for r in qa.intact_site_rows(
+        per_locus, ["OG1", "OG2", "OG5b"], splits, {"OG1": True, "OG2": False, "OG5b": True},
+        TAXA)}
+    assert rows["intact_loci_species_tree"]["n_informative_sites"] == 7
+    assert rows["intact_loci_major_discordant_gene_trees"]["n_informative_sites"] == 3
+    assert rows["intact_loci_minor_discordant_gene_trees"]["n_informative_sites"] == 5
+    assert rows["intact_loci_binomial_test"]["n_informative_sites"] == 8
+    assert rows["intact_loci_locus_majority_species_tree"]["n_loci"] == 1
+    assert rows["intact_loci_locus_majority_minor_discordant_gene_trees"]["n_loci"] == 1
+    assert rows["intact_loci_locus_majority_binomial_test"]["n_loci"] == 1
 
     # locus quality: the top locus by informative sites is the broken one
     per_locus = [collections.Counter({splits[0]: 9}), collections.Counter({splits[1]: 1}),

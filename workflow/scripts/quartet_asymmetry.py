@@ -38,7 +38,11 @@ Outputs
                     with the binomial test on the two discordant splits, and
                     reports how much of the site total the top 1% of loci hold,
                     and how many of those loci, against the rest, contain a
-                    transferred model without a valid ORF
+                    transferred model without a valid ORF. The site count and
+                    the locus vote are repeated on loci with four intact
+                    models (roles intact_loci_*): a transfer error shared by
+                    two forms makes every misaligned codon after it a site
+                    shared by those two forms
   robustness        the gene tree test on subsets that remove the obvious
                     sources of spurious discordance: gene trees whose internal
                     branch sits at IQ-TREE's minimum length (no substitution
@@ -232,6 +236,44 @@ def intact_loci(of_dir, gffs, reference):
                             if g.strip()] for form, i in cols.items()}
             if all(len(g) == 1 for g in genes.values()):
                 out[f[0]] = all(intact(form, g[0]) for form, g in genes.items())
+    return out
+
+
+def locus_reasons(of_dir, gffs, reference):
+    """{orthogroup: 'intact', or why not} for single copy orthogroups, with
+    the checks of intact_loci: 'RefSeq exception' or 'partial reference
+    model' when a model's reference source carries a RefSeq exception or is
+    partial, 'no reference model' when a model has no source in the reference
+    annotation, else 'invalid ORF: <forms>' for transferred models without a
+    valid ORF. A locus is 'intact' exactly when intact_loci marks it True."""
+    tables = glob.glob(os.path.join(of_dir, "**", "Orthogroups.tsv"), recursive=True)
+    tables = [t for t in tables if os.sep + "Orthogroups" + os.sep in t] or tables
+    if not tables:
+        raise SystemExit(f"no Orthogroups.tsv under {of_dir}")
+    attrs = {form: gff_transcripts(path) for form, path in gffs.items()}
+    ref = attrs[reference]
+    out = {}
+    with open(tables[0]) as fh:
+        head = fh.readline().rstrip("\n").split("\t")
+        cols = {form: head.index(form) for form in gffs}
+        for line in fh:
+            f = line.rstrip("\n").split("\t")
+            genes = {form: [g.strip() for g in (f[i] if i < len(f) else "").split(",")
+                            if g.strip()] for form, i in cols.items()}
+            if not all(len(g) == 1 for g in genes.values()):
+                continue
+            ids = {form: g[0] for form, g in genes.items()}
+            sources = [ref.get(t) for t in ids.values()]
+            if any(a is not None and "exception" in a for a in sources):
+                out[f[0]] = "RefSeq exception"
+            elif any(a is not None and a.get("partial") == "true" for a in sources):
+                out[f[0]] = "partial reference model"
+            elif any(a is None for a in sources):
+                out[f[0]] = "no reference model"
+            else:
+                bad = sorted(form for form, t in ids.items() if form != reference
+                             and attrs[form].get(t, {}).get("valid_ORF") != "True")
+                out[f[0]] = "invalid ORF: " + ",".join(bad) if bad else "intact"
     return out
 
 
@@ -495,6 +537,52 @@ def locus_quality_rows(per_locus, names, splits, intact, top_share=0.01):
     return rows
 
 
+def intact_site_rows(per_locus, names, splits, intact, taxa):
+    """The site count and the locus vote again, on loci with four intact
+    models only. A transfer error shared by two forms (the same shifted
+    reading frame, say) turns every misaligned codon after it into a site
+    shared by those two forms, so the summed site counts of all loci mix
+    such errors with real signal (V5 run: rooting_site_patterns.tsv). Roles
+    carry the prefix intact_loci_ so that readers keyed on role are not
+    affected."""
+    conc, major, minor = splits
+    keep = [loc for loc, n in zip(per_locus, names) if intact.get(n) is True]
+    tot = collections.Counter()
+    for loc in keep:
+        tot.update({s: loc[s] for s in splits})
+    n_all = sum(tot.values())
+    rows = []
+    for s, role in ((conc, "species_tree"), (major, "major_discordant_gene_trees"),
+                    (minor, "minor_discordant_gene_trees")):
+        rows.append({"split": label(s, taxa), "role": f"intact_loci_{role}", "n_loci": len(keep),
+                     "n_informative_sites": tot[s],
+                     "pct": round(100.0 * tot[s] / n_all, 2) if n_all else 0.0})
+    s1, s2 = tot[major], tot[minor]
+    p, lo, hi = binom(s1, s2)
+    rows.append({"split": "loci with four intact models, discordant sites: gene tree major vs minor",
+                 "role": "intact_loci_binomial_test", "n_loci": len(keep),
+                 "n_informative_sites": s1 + s2,
+                 "pct": round(100.0 * s1 / (s1 + s2), 2) if s1 + s2 else float("nan"),
+                 "binomial_p": p, "ci95_low": lo, "ci95_high": hi})
+    votes = collections.Counter()
+    for loc in keep:
+        best = max(loc[s] for s in splits)
+        winners = [s for s in splits if loc[s] == best]
+        if best > 0 and len(winners) == 1:
+            votes[winners[0]] += 1
+    m1, m2 = votes[major], votes[minor]
+    p, lo, hi = binom(m1, m2)
+    for s, role in ((conc, "species_tree"), (major, "major_discordant_gene_trees"),
+                    (minor, "minor_discordant_gene_trees")):
+        rows.append({"split": label(s, taxa), "role": f"intact_loci_locus_majority_{role}",
+                     "n_loci": votes[s]})
+    rows.append({"split": "loci with four intact models, locus majority: gene tree major vs minor",
+                 "role": "intact_loci_locus_majority_binomial_test", "n_loci": m1 + m2,
+                 "pct": round(100.0 * m1 / (m1 + m2), 2) if m1 + m2 else float("nan"),
+                 "binomial_p": p, "ci95_low": lo, "ci95_high": hi})
+    return rows
+
+
 def _pairs(taxa):
     t = sorted(taxa)
     return [(t[0], t[1]), (t[0], t[2]), (t[0], t[3])]
@@ -540,6 +628,7 @@ def run(gene_trees, species_tree, cf_stat, aln_dir, out_topo, out_support, out_s
               f"{sum(intact.values())} of {len(intact)}")
         if per_locus:
             sites += locus_quality_rows(per_locus, names, splits, intact)
+            sites += intact_site_rows(per_locus, names, splits, intact, taxa)
     write_tsv(topo, out_topo)
     write_tsv(support, out_support)
     if out_sites:

@@ -16,6 +16,7 @@ Snakemake provides:
     output[0]
 """
 
+import collections
 import csv
 import glob
 import json
@@ -225,12 +226,38 @@ def rooted():
         for r in rows:
             add("rooted", r["item"], r["value"], path)
     for path, section in (("results/phylo/rooted/rooted_topology_counts.tsv", "rooted_topologies"),
-                          ("results/phylo/dstat/d_statistics.tsv", "dstat")):
+                          ("results/phylo/dstat/d_statistics.tsv", "dstat"),
+                          ("results/phylo/rooted/rooting_gene_trees.tsv", "rooting_gene_trees"),
+                          ("results/phylo/rooted/rooting_dstat_sets.tsv", "rooting_dstat")):
         rows = read_tsv(path)
         if rows is None:
             add(section, "table", None, path)
             continue
         flatten(section, path, rows)
+    path = "results/phylo/rooted/rooting_site_patterns.tsv"
+    rows = read_tsv(path)
+    if rows is None:
+        add("rooting_patterns", "table", None, path)
+    else:
+        seen = set()
+        for r in rows:
+            if r["locus_class"] not in seen:
+                seen.add(r["locus_class"])
+                add("rooting_patterns", f"{r['locus_class']} | n_loci", r["n_loci"], path)
+            key = f"{r['locus_class']} | {r['site_class']} | derived in {r['derived_in']}"
+            add("rooting_patterns", f"{key} | n_sites", r["n_sites"], path)
+            add("rooting_patterns", f"{key} | per_100_loci", r["per_100_loci"], path)
+    path = "results/phylo/rooted/locus_quality.tsv"
+    rows = read_tsv(path)
+    if rows is None:
+        add("locus_quality", "table", None, path)
+    else:
+        add("locus_quality", "five taxon loci", len(rows), path)
+        for reason, n in collections.Counter(r["reason"] for r in rows).most_common():
+            add("locus_quality", f"reason: {reason}", n, path)
+        add("locus_quality", "loci with a tree alignment",
+            sum(r["tree_alignment"] == "True" for r in rows), path)
+        add("locus_quality", "loci in the rooted tree", sum(r["tree"] == "True" for r in rows), path)
 
 
 # ---------------------------------------------------------------- CAFE

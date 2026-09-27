@@ -23,11 +23,12 @@ chromosomes, 436 Mb) comes with its own Ensembl gene set (Ruiz-López et al.
 | The outgroup keeps its own annotation (Ensembl type prefixes removed from identifiers); Liftoff only for pallens, molestus and pipiens | rules `native_annotation`, `liftoff`; `normalize_gff.py` |
 | Coding sequences of the kept proteins, under the same names | rule `extract_cds`; `filter_cds.py` |
 | Five taxon single copy loci, codon alignments on the trimAl columns of the protein alignments | rules `extract_sco5`, `rooted_alignments`; `extract_sco5.py`, `codon_align.py` |
-| Concatenated protein tree rooted with the outgroup, gene and site concordance, rooted topologies of the gene trees | rules `rooted_tree`, `rooted_summary`; `rooted_summary.py`, `rooting.py` |
+| Concatenated protein tree rooted with the outgroup, from loci whose four ingroup models are intact, gene and site concordance, rooted topologies of the gene trees | rules `rooted_locus_quality`, `rooted_tree`, `rooted_summary`; `locus_quality.py`, `rooted_summary.py`, `rooting.py` |
+| Derived allele patterns by gene model quality, and the root and D statistics on filtered locus sets (Supp. Table S13) | rule `rooting_diagnostics`; `rooting_diagnostics.py` |
 | ABBA BABA tests: four planned tests, all sites and third codon positions, all loci and loci with intact models, block jackknife over 5 Mb windows of the reference | rule `d_statistics`; `d_statistics.py`; `dstat` in `config.yaml` |
 | CAFE on the ingroup counts, on the species tree rooted with the outgroup (V4 assumed the root) | `format_cafe_input.py`, rule `prepare_cafe_input` |
 | The V4 RepeatModeler library is reused (about 18 hours saved) | `data/repeat_library/custom_repeat_lib_V4.fa`, rule `repeatmodeler` |
-| Figures, Tables 1 to 4 and Supp. Tables S1 to S12 built by the workflow; captions read their counts and versions from the outputs; new S12 for the outgroup analyses; Figure 2 shows the rooted tree and the D statistics | rules `revision_figures`, `manuscript_tables`; `forms.py` and the three builders |
+| Figures, Tables 1 to 4 and Supp. Tables S1 to S13 built by the workflow; captions read their counts and versions from the outputs; new S12 and S13 for the outgroup analyses; Figure 2 shows the rooted tree and the D statistics | rules `revision_figures`, `manuscript_tables`; `forms.py` and the three builders |
 | New results in the values table (sections `rooted`, `rooted_topologies`, `dstat`) | `collect_manuscript_values.py`, `report.smk` |
 | Tests, including a Snakemake run of the outgroup rules on a simulated data set with gene flow from pallens into pipiens | `tests/test_rooted_analyses.py` |
 
@@ -129,6 +130,26 @@ from being redone because of a changed environment file or rule).
   allowed, FreeRate models were chosen for only 8 of 9,098 loci. Gene trees and
   the rooted tree keep the full model set. The IQ-TREE log of the failure is
   kept as `results/phylo/iqtree_crash_v5.log`.
+* **Shared transfer errors moved the root.** The first rooted tree, from all
+  6,846 five taxon loci, placed the root on the quinquefasciatus branch
+  (UFBoot 100). Split by gene model quality, the sites carrying that signal
+  (pallens, molestus and pipiens derived, quinquefasciatus and the outgroup
+  ancestral) came from loci whose models are not intact: 256 per locus where
+  RefSeq had corrected the reference model for an error in the reference
+  genome, against 4 in intact loci. In such loci the three transferred models
+  share a shifted reading frame, so their codons are 91 to 99% identical to
+  each other and 40 to 82% identical to quinquefasciatus and the outgroup, and
+  every misaligned codon counts as a shared derived allele; errors shared by
+  two forms inflate that pair in the same way. On the 4,592 intact loci the
+  sites favor a root between (molestus, pipiens) and (pallens,
+  quinquefasciatus), the most frequent rooted gene tree is that topology, and
+  the D statistics do not change when loci are further filtered by ingroup
+  identity. The rooted tree, its concordance factors and the rooted gene tree
+  counts now use the intact loci (`rooted: loci: intact`, rule
+  `rooted_locus_quality`); the D statistics are reported on all loci and on
+  intact loci, and `rooting_diagnostics` writes the comparison (Supp. Table
+  S13). The four taxon site counts (`quartet_site_patterns.tsv`) are repeated
+  on intact loci for the same reason.
 
 On your own machine rather than AWS:
 

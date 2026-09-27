@@ -108,6 +108,7 @@ rule all:
         "results/phylo/quartet_robustness.tsv",
         "results/phylo/rooted/rooted_summary.tsv",
         "results/phylo/dstat/d_statistics.tsv",
+        "results/phylo/rooted/rooting_site_patterns.tsv",
         # Manuscript figures, tables and supplement, built from results/
         "figures/revision/Figure_1_pangenome.pdf",
         "tables/manuscript_tables.json",

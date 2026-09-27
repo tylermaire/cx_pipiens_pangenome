@@ -33,9 +33,9 @@ Gene models from the *Cx. quinquefasciatus* RefSeq annotation are transferred to
 | `repeats.smk` | repeat library and masking | RepeatModeler2, RepeatMasker |
 | `functional.smk` | key gene families | eggNOG mapper |
 | `report.smk` | every value the manuscript cites, with its source file | |
-| `figures.smk` | Figures 1 to 4, Tables 1 to 4 and Supplementary Tables S1 to S12 | matplotlib, openpyxl |
+| `figures.smk` | Figures 1 to 4, Tables 1 to 4 and Supplementary Tables S1 to S13 | matplotlib, openpyxl |
 
-The outgroup analyses (V5) use orthogroups with one gene in each of the five taxa: proteins are aligned with MAFFT and trimmed with trimAl, coding sequences are placed codon by codon on the trimmed protein alignments, the concatenated protein alignment gives a species tree rooted with *Cx. perexiguus*, and ABBA BABA tests (D statistics, block jackknife over windows of the reference assembly) ask whether one form shares more derived alleles with another than incomplete lineage sorting allows. The planned tests are set in `config/config.yaml`.
+The outgroup analyses (V5) use orthogroups with one gene in each of the five taxa: proteins are aligned with MAFFT and trimmed with trimAl, coding sequences are placed codon by codon on the trimmed protein alignments, the concatenated protein alignment of the loci whose four ingroup gene models are intact gives a species tree rooted with *Cx. perexiguus* (transferred models that share an error in two or three forms make misaligned codons look like shared derived alleles, see `docs/v5_run.md`), and ABBA BABA tests (D statistics, block jackknife over windows of the reference assembly) ask whether one form shares more derived alleles with another than incomplete lineage sorting allows. The planned tests are set in `config/config.yaml`.
 
 The anvi'o gene cluster pangenome is run by hand, outside the workflow.
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build Supplementary_Tables.xlsx (Supp. Tables S1 to S12) from the workflow outputs.
+"""Build Supplementary_Tables.xlsx (Supp. Tables S1 to S13) from the workflow outputs.
 
     python workflow/scripts/make_supplement.py [out.xlsx]
 
@@ -8,7 +8,7 @@ labels and captions, whose counts and software versions are also read from
 the outputs (results/manuscript_values.tsv for versions). The summed length
 of the three chromosome scale sequences falls back on V4 measurements of the
 synteny FASTA files when those files are absent. Each sheet names the files
-it was built from. S12 (the outgroup analyses, V5) is written when
+it was built from. S12 and S13 (the outgroup analyses, V5) are written when
 results/phylo/rooted and results/phylo/dstat hold their outputs. The
 outgroup is read from config/samples.tsv (or CX_SAMPLE_SHEET).
 """
@@ -1100,7 +1100,7 @@ def s12():
         "cds_length_mismatch": "Codon alignment not made: coding sequence length differs",
         "missing_files": "Codon alignment not made: files missing",
         "trimmed_protein_alignments_at_least_50_columns":
-            "Trimmed protein alignments of at least 50 columns (rooted tree)",
+            "Trimmed protein alignments of at least 50 columns",
     }
     acc = []
     for r in tsv("results/phylo/rooted/sco5_accounting.tsv"):
@@ -1116,7 +1116,18 @@ def s12():
             label = "Codon alignments"
         acc.append({"m": label, "v": r["value"]})
     summ = {r["item"]: r["value"] for r in tsv("results/phylo/rooted/rooted_summary.tsv")}
-    tree_rows = [
+    intact_tree = summ.get("rooted tree loci") == "intact"
+    tree_rows = []
+    if "rooted tree loci" in summ:
+        tree_rows += [
+            {"m": "Loci with a trimmed protein alignment of at least 50 columns",
+             "v": summ.get("loci with a trimmed alignment of at least 50 columns")},
+            {"m": "Of these, loci with four intact ingroup models",
+             "v": summ.get("of these, loci with four intact ingroup models")},
+            {"m": "Of these, loci left out of the rooted tree",
+             "v": summ.get("of these, loci left out of the rooted tree")},
+        ]
+    tree_rows += [
         {"m": "Loci in the concatenated alignment", "v": summ.get("concatenated alignment loci")},
         {"m": "Columns in the concatenated alignment",
          "v": summ.get("concatenated alignment columns")},
@@ -1178,7 +1189,7 @@ def s12():
                ("excess_derived_sharing", "Pair sharing more derived alleles (|Z| \u2265 3)",
                 "text")], dstat),
     ]
-    blocks[1].row_formats = ["int", "int", "text", "text"]
+    blocks[1].row_formats = ["int"] * (len(tree_rows) - 2) + ["text", "text"]
     block_mb = VALUES.get(("parameters", "D statistics", ""), "")
     m = re.search(r"over (\d+) Mb windows", block_mb)
     window = f"{m.group(1)} Mb" if m else "5 Mb"
@@ -1189,12 +1200,17 @@ def s12():
             "trimmed with trimAl (-automated1), and each coding sequence was read in the frame "
             "whose translation matches its protein, stop codons removed, then placed codon by "
             "codon on the aligned residues, keeping the columns trimAl kept. (b, c) Maximum "
-            f"likelihood tree of the concatenated trimmed protein alignments (IQ-TREE "
+            "likelihood tree of the concatenated trimmed protein alignments"
+            + (" of the loci whose four ingroup gene models are intact (transfers that share an "
+               "error in two or three forms add false shared derived alleles; Supp. Table S13)"
+               if intact_tree else "") +
+            f" (IQ-TREE "
             f"{version('iqtree', '3.1.3')}, one partition per locus, ModelFinder, 1,000 ultrafast "
             f"bootstrap replicates), rooted with {OG}, with gene (gCF) and site (sCF) "
             "concordance factors of each internal branch against the gene trees of the same loci; "
             "each branch is named by the ingroup clade it defines. (d) Rooted ingroup topology of "
-            "each gene tree after rooting with the outgroup; resolved gene trees have both "
+            "each gene tree of the same loci after rooting with the outgroup; resolved gene trees "
+            "have both "
             "internal branches longer than IQ-TREE's minimum length, and the last columns count "
             "gene trees with both internal branches at UFBoot 95 or more. (e) D(P1, P2; P3, O) = "
             "(ABBA - BABA) / (ABBA + BABA) over codon alignment columns where all five taxa carry "
@@ -1211,12 +1227,114 @@ def s12():
             blocks)
 
 
+# ------------------------------------------------------------------ S13
+def abbr_taxa(text, sep="+"):
+    return " + ".join(samples_meta.ABBR.get(t, t) for t in str(text).split(sep))
+
+
+def class_label(name):
+    """Readable label of a locus class or set of rooting_diagnostics.py."""
+    fixed = {"all": "All loci", "intact": "Four intact ingroup models",
+             "not intact": "A model not intact"}
+    if name in fixed:
+        return fixed[name]
+    if name.startswith("not intact: "):
+        why = name[len("not intact: "):]
+        if why == "RefSeq exception":
+            return "Not intact: reference model corrected by RefSeq"
+        if why.startswith("invalid ORF: "):
+            return "Not intact: no valid ORF in " + abbr_taxa(why[len("invalid ORF: "):], ",")
+        return "Not intact: " + why
+    m = re.match(r"^(intact, )?identity >= (.+)$", name)
+    if m:
+        return ("Intact, ingroup" if m.group(1) else "Ingroup") + f" identity \u2265 {m.group(2)}"
+    return name
+
+
+def s13():
+    """Shared transfer errors and the root: derived allele patterns by gene
+    model quality, and the rooted gene trees and D statistics on filtered
+    locus sets (rooting_diagnostics.py). None when absent."""
+    need = ["results/phylo/rooted/rooting_site_patterns.tsv",
+            "results/phylo/rooted/rooting_gene_trees.tsv",
+            "results/phylo/rooted/rooting_dstat_sets.tsv"]
+    missing = [p for p in need if not os.path.exists(path(p))]
+    if missing:
+        print(f"S13 skipped, missing: {', '.join(missing)}")
+        return None
+    pat = tsv("results/phylo/rooted/rooting_site_patterns.tsv")
+    order = sorted(dict.fromkeys(r["derived_in"] for r in pat),
+                   key=lambda d: (d.count("+"), abbr_taxa(d)))
+    keys = {d: f"p{i}" for i, d in enumerate(order)}
+    rows = []
+    for site_class in ("all_sites", "third_positions"):
+        for name in dict.fromkeys(r["locus_class"] for r in pat):
+            sel = {r["derived_in"]: r for r in pat
+                   if r["locus_class"] == name and r["site_class"] == site_class}
+            if not sel:
+                continue
+            row = {"cls": class_label(name),
+                   "sites": "all" if site_class == "all_sites" else "third codon positions",
+                   "n": next(iter(sel.values()))["n_loci"]}
+            for d in order:
+                row[keys[d]] = sel[d]["per_100_loci"] if d in sel else None
+            rows.append(row)
+    trees = tsv("results/phylo/rooted/rooting_gene_trees.tsv")
+    for r in trees:
+        r["locus_set"] = class_label(r["locus_set"])
+        r["rooted_topology"] = forms(r["rooted_topology"]).replace(",", ", ")
+    dsets = tsv("results/phylo/rooted/rooting_dstat_sets.tsv")
+    for r in dsets:
+        r["locus_set"] = class_label(r["locus_set"])
+        r["statistic"] = forms(r["statistic"]).replace(",", ", ").replace(";", "; ")
+    blocks = [
+        Block("(a) Derived alleles per 100 loci by gene model quality and ingroup identity",
+              [("cls", "Loci", "text"), ("sites", "Sites", "text"), ("n", "Loci (n)", "int")] +
+              [(keys[d], f"Derived in {abbr_taxa(d)}", "pct1") for d in order], rows),
+        Block("(b) Most frequent rooted topologies of the resolved gene trees",
+              [("locus_set", "Loci", "text"), ("rank", "Rank", "int"),
+               ("rooted_topology", "Rooted ingroup topology", "text"),
+               ("is_species_tree", "Species tree", "bool"),
+               ("n_resolved", "Resolved gene trees", "int"),
+               ("pct_resolved", "Resolved gene trees (%)", "pct2"),
+               ("n_resolved_total", "Resolved gene trees in the set", "int")], trees),
+        Block("(c) D statistics by locus set, all sites",
+              [("locus_set", "Loci", "text"), ("test", "Test", "text"),
+               ("statistic", "Statistic", "text"), ("n_loci", "Loci (n)", "int"),
+               ("n_blocks", "Jackknife blocks", "int"), ("ABBA", "ABBA", "int"),
+               ("BABA", "BABA", "int"), ("D", "D", "f4"), ("se", "SE", "f4"),
+               ("Z", "Z", "f3")], dsets),
+    ]
+    return ("S13 Transfer errors",
+            "Supp. Table S13. Shared transfer errors and the root of the ingroup",
+            "Five taxon loci of Supp. Table S12. Sites are codon alignment columns where all five "
+            f"taxa carry A, C, G or T and exactly two alleles occur; the {OG} allele is taken as "
+            "ancestral and each site is labelled by the ingroup forms carrying the other allele. "
+            "A site derived in two forms supports the clade of those two; one derived in three "
+            "supports a root on the branch to the fourth. (a) Sites per 100 loci. A locus is "
+            "intact when its reference model is neither partial nor corrected by RefSeq for an "
+            "error in the reference genome and each transferred model has a valid ORF (Liftoff); "
+            "loci that are not intact are split by the first reason that applies. Ingroup "
+            "identity is the lowest pairwise identity of the four ingroup sequences over the "
+            "codon alignment. Where the transferred models of two or three forms share an error "
+            "(most often a reading frame shifted where RefSeq corrected the reference model), "
+            "every misaligned codon after it counts as a derived allele shared by those forms. "
+            "(b) Rooted ingroup topologies of the gene trees whose internal branches are both "
+            "longer than IQ-TREE's minimum length; the species tree is the tree of Supp. Table "
+            "S12(b). (c) The tests of Supp. Table S12(e) on each locus set, with the same "
+            "weighted block jackknife.",
+            "results/phylo/rooted/rooting_site_patterns.tsv; "
+            "results/phylo/rooted/rooting_gene_trees.tsv; results/phylo/rooted/rooting_dstat_sets.tsv; "
+            "results/phylo/rooted/locus_quality.tsv",
+            blocks)
+
+
 # ------------------------------------------------------------------ build
 def main():
     wb = Workbook()
     readme = wb.active
     readme.title = "README"
-    sheets = [s1(), s2(), s3(), s4(), s5(), s6(), s7(), s8(), s9(), s10(), s11(), s12()]
+    sheets = [s1(), s2(), s3(), s4(), s5(), s6(), s7(), s8(), s9(), s10(), s11(), s12(), s13()]
     sheets = [x for x in sheets if x is not None]
     contents = []
     for name, title, caption, source, blocks in sheets:

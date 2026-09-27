@@ -12,6 +12,7 @@ tree must recover the species tree with the root between the two pairs, and
 the D statistics must find the pallens and pipiens excess (D < 0 in the
 first planned test, D > 0 in the third) and none in the second.
 """
+import collections
 import csv
 import os
 import random
@@ -346,9 +347,9 @@ def build_workspace(ws, n_loci=80, seed=7):
 
 def run_rules(ws):
     targets = ["results/phylo/dstat/d_statistics.tsv", "results/phylo/rooted/rooted_summary.tsv",
-               "results/cafe/ultrametric_tree.nwk"]
-    rules = ["extract_sco5", "rooted_alignments", "rooted_tree", "rooted_summary",
-             "d_statistics", "prepare_cafe_input"]
+               "results/cafe/ultrametric_tree.nwk", "results/phylo/rooted/rooting_site_patterns.tsv"]
+    rules = ["extract_sco5", "rooted_alignments", "rooted_locus_quality", "rooted_tree",
+             "rooted_summary", "d_statistics", "rooting_diagnostics", "prepare_cafe_input"]
     cmd = ["snakemake", "--cores", "2", "--allowed-rules", *rules, "--rerun-triggers", "mtime",
            "--nolock", *targets]
     r = subprocess.run(cmd, cwd=ws, capture_output=True, text=True)
@@ -378,6 +379,33 @@ def test_workflow(keep=None):
     assert acc[("cds_translation_frame_not_0", PAL)] == "1", acc
     summ = dict(csv.reader(open(os.path.join(ws, "results/phylo/rooted/rooted_summary.tsv")),
                            delimiter="\t"))
+    # the rooted tree uses the 76 loci whose four ingroup models are intact
+    assert summ["rooted tree loci"] == "intact", summ
+    assert summ["concatenated alignment loci"] == "76", summ
+    assert summ["of these, loci left out of the rooted tree"] == "3", summ
+    quality = list(csv.DictReader(open(os.path.join(ws, "results/phylo/rooted/locus_quality.tsv")),
+                                  delimiter="\t"))
+    assert len(quality) == 79, len(quality)
+    reasons = collections.Counter(r["reason"] for r in quality)
+    assert reasons == {"intact": 76,
+                       "invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens": 3}, reasons
+    assert all(float(r["min_ingroup_identity"]) > 0.9 for r in quality)
+    tree_loci = open(os.path.join(ws, "results/phylo/rooted/tree_loci.txt")).read().split()
+    assert len(tree_loci) == 76 and "OG0000002" not in tree_loci
+    pats = list(csv.DictReader(open(os.path.join(
+        ws, "results/phylo/rooted/rooting_site_patterns.tsv")), delimiter="\t"))
+    classes = list(dict.fromkeys(r["locus_class"] for r in pats))
+    assert classes[:3] == ["all", "intact", "not intact"], classes
+    assert "not intact: invalid ORF: Cx_molestus,Cx_pallens,Cx_pipiens" in classes, classes
+    assert len({r["derived_in"] for r in pats}) == 10
+    dsets = list(csv.DictReader(open(os.path.join(
+        ws, "results/phylo/rooted/rooting_dstat_sets.tsv")), delimiter="\t"))
+    intact_t1 = next(r for r in dsets if r["locus_set"] == "intact" and r["test"] == "T1")
+    assert intact_t1["n_loci"] == "76" and float(intact_t1["D"]) < 0, intact_t1
+    trees = list(csv.DictReader(open(os.path.join(
+        ws, "results/phylo/rooted/rooting_gene_trees.tsv")), delimiter="\t"))
+    top = next(r for r in trees if r["locus_set"] == "intact" and r["rank"] == "1")
+    assert top["is_species_tree"] == "True", top
     assert summ["rooted ingroup topology"] == \
         "((Cx_molestus,Cx_pipiens),(Cx_pallens,Cx_quinquefasciatus));", summ
     assert summ["root position"] == ("between (Cx_molestus,Cx_pipiens) and "
