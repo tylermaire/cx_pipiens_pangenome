@@ -366,6 +366,32 @@ def ani_synteny_te(ingroup):
             add("repeats", label, m.group(1) if m else None, path, s)
 
 
+# ---------------------------------------------------------------- anvi'o
+def anvio():
+    """The anvi'o gene cluster pangenome. It is run by hand, outside the
+    workflow (workflow/scripts/anvio_pangenome.sh), so its rows are NA until
+    results/anvio holds the tables of anvio_compare.py."""
+    path = "results/anvio/anvio_summary.tsv"
+    rows = read_tsv(path)
+    if rows is None:
+        add("anvio", "summary", None, path)
+        return
+    for r in rows:
+        add("anvio", f"{r['section']} | {r['item']}", r["value"], path)
+    for name in ("anvio_combinations", "anvio_vs_orthofinder", "anvio_orf_by_class",
+                 "anvio_one_form"):
+        p = f"results/anvio/{name}.tsv"
+        rows = read_tsv(p)
+        if rows is None:
+            add(name, "table", None, p)
+        elif name == "anvio_combinations":
+            for r in rows:
+                for k in ("n_clusters", "n_genes"):
+                    add(name, f"{r['combination']} | {k}", r[k], p)
+        else:
+            flatten(name, p, rows)
+
+
 # ---------------------------------------------------------------- tools and parameters
 def tools(names):
     found = {}
@@ -432,6 +458,7 @@ def main():
     phylogeny()
     cafe()
     ani_synteny_te(ingroup)
+    anvio()
     tools(list(sm.params.tools))
     versions_from_outputs()
     parameters(dict(sm.params.parameters))

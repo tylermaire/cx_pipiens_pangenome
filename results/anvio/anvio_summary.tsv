@@ -1,0 +1,142 @@
+section	item	value
+clusters	input proteins	57815
+clusters	proteins in gene clusters	57716
+clusters	gene clusters	16623
+not clustered	proteins without a DIAMOND hit, left out of gene clusters	99
+not clustered	protein length, median (residues)	12
+not clustered	protein length, at most 10 residues	40
+not clustered	protein length, largest (residues)	380
+not clustered	Cx_quinquefasciatus | proteins	18
+not clustered	Cx_pallens | proteins	23
+not clustered	Cx_molestus | proteins	27
+not clustered	Cx_pipiens | proteins	31
+not clustered	OrthoFinder core	0
+not clustered	OrthoFinder shell	2
+not clustered	OrthoFinder cloud	0
+not clustered	OrthoFinder unassigned	97
+not clustered	transferred models without a valid ORF	79
+not clustered	transferred models	81
+clusters	clusters in all four forms	9465
+clusters	clusters in all four forms (%)	56.9
+clusters	clusters in three forms	2479
+clusters	clusters in three forms (%)	14.9
+clusters	clusters in two forms	1663
+clusters	clusters in two forms (%)	10.0
+clusters	clusters in one form	3016
+clusters	clusters in one form (%)	18.1
+clusters	genes in all four clusters	43398
+clusters	genes in all four clusters (%)	75.2
+clusters	genes in two or three clusters	11223
+clusters	genes in two or three clusters (%)	19.4
+clusters	genes in one form clusters	3095
+clusters	genes in one form clusters (%)	5.4
+clusters	clusters with one gene in each form	8577
+clusters	genes per cluster, median	4
+clusters	genes per cluster, largest	111
+clusters	clusters of one gene	2952
+per form	Cx_quinquefasciatus | clusters with its genes	12957
+per form	Cx_quinquefasciatus | one form clusters	603
+per form	Cx_quinquefasciatus | clusters missing only this form	422
+per form	Cx_pallens | clusters with its genes	12778
+per form	Cx_pallens | one form clusters	700
+per form	Cx_pallens | clusters missing only this form	709
+per form	Cx_molestus | clusters with its genes	12810
+per form	Cx_molestus | one form clusters	905
+per form	Cx_molestus | clusters missing only this form	843
+per form	Cx_pipiens | clusters with its genes	13094
+per form	Cx_pipiens | one form clusters	808
+per form	Cx_pipiens | clusters missing only this form	505
+one form clusters	Cx_quinquefasciatus | genes	650
+one form clusters	Cx_quinquefasciatus | genes with a kept model of the same gene in another form	585
+one form clusters	Cx_quinquefasciatus | genes whose RefSeq model is partial or has an exception	200
+one form clusters	Cx_quinquefasciatus | genes whose RefSeq model is partial or has an exception (%)	30.8
+one form clusters	Cx_quinquefasciatus | genes OrthoFinder left unassigned	54
+one form clusters	Cx_quinquefasciatus | genes in OrthoFinder cloud orthogroups	150
+one form clusters	Cx_pallens | genes	714
+one form clusters	Cx_pallens | genes with a kept model of the same gene in another form	714
+one form clusters	Cx_pallens | genes whose RefSeq model is partial or has an exception	62
+one form clusters	Cx_pallens | genes whose RefSeq model is partial or has an exception (%)	8.7
+one form clusters	Cx_pallens | genes OrthoFinder left unassigned	371
+one form clusters	Cx_pallens | genes in OrthoFinder cloud orthogroups	16
+one form clusters	Cx_molestus | genes	913
+one form clusters	Cx_molestus | genes with a kept model of the same gene in another form	913
+one form clusters	Cx_molestus | genes whose RefSeq model is partial or has an exception	91
+one form clusters	Cx_molestus | genes whose RefSeq model is partial or has an exception (%)	10.0
+one form clusters	Cx_molestus | genes OrthoFinder left unassigned	545
+one form clusters	Cx_molestus | genes in OrthoFinder cloud orthogroups	11
+one form clusters	Cx_pipiens | genes	818
+one form clusters	Cx_pipiens | genes with a kept model of the same gene in another form	818
+one form clusters	Cx_pipiens | genes whose RefSeq model is partial or has an exception	80
+one form clusters	Cx_pipiens | genes whose RefSeq model is partial or has an exception (%)	9.8
+one form clusters	Cx_pipiens | genes OrthoFinder left unassigned	425
+one form clusters	Cx_pipiens | genes in OrthoFinder cloud orthogroups	13
+one form clusters	Cx_quinquefasciatus | all kept models whose RefSeq model is partial or has an exception (%)	5.8
+one form clusters	all forms | genes	3095
+one form clusters	all forms | genes with a kept model of the same gene in another form	3030
+one form clusters	transferred forms | genes	2445
+one form clusters	transferred forms | genes with a kept model of the same gene in another form	2445
+one form clusters	transferred forms | genes without a valid ORF	2440
+one form clusters	transferred forms | genes without a valid ORF (%)	99.8
+reference gene	transferred models without a valid ORF	13851
+reference gene	transferred models without a valid ORF | not in the gene cluster of the reference model	5703
+reference gene	transferred models without a valid ORF | not in the gene cluster of the reference model (%)	41.2
+reference gene	transferred models without a valid ORF | not in the orthogroup of the reference model	3794
+reference gene	transferred models without a valid ORF | not in the orthogroup of the reference model (%)	27.4
+reference gene	transferred models with a valid ORF	28870
+reference gene	transferred models with a valid ORF | not in the gene cluster of the reference model	47
+reference gene	transferred models with a valid ORF | not in the gene cluster of the reference model (%)	0.2
+reference gene	transferred models with a valid ORF | not in the orthogroup of the reference model	102
+reference gene	transferred models with a valid ORF | not in the orthogroup of the reference model (%)	0.4
+one form clusters	Cx_quinquefasciatus | genes with a transferred model without a valid ORF	582
+one form clusters	all forms | broken transfers or reference models with a broken transfer	3022
+one form clusters	all forms | broken transfers or reference models with a broken transfer (%)	97.6
+models without a valid ORF	Cx_pallens | all four (%)	19.4
+models without a valid ORF	Cx_pallens | two or three (%)	53.4
+models without a valid ORF	Cx_pallens | one form (%)	99.7
+models without a valid ORF	Cx_molestus | all four (%)	22.4
+models without a valid ORF	Cx_molestus | two or three (%)	59.8
+models without a valid ORF	Cx_molestus | one form (%)	99.9
+models without a valid ORF	Cx_pipiens | all four (%)	21.7
+models without a valid ORF	Cx_pipiens | two or three (%)	54.9
+models without a valid ORF	Cx_pipiens | one form (%)	99.8
+genes by class and compartment	all four | core	42481
+genes by class and compartment	all four | core (%)	97.9
+genes by class and compartment	all four | shell	718
+genes by class and compartment	all four | shell (%)	1.7
+genes by class and compartment	all four | cloud	92
+genes by class and compartment	all four | cloud (%)	0.2
+genes by class and compartment	all four | unassigned	107
+genes by class and compartment	all four | unassigned (%)	0.2
+genes by class and compartment	two or three | core	3571
+genes by class and compartment	two or three | core (%)	31.8
+genes by class and compartment	two or three | shell	7558
+genes by class and compartment	two or three | shell (%)	67.3
+genes by class and compartment	two or three | cloud	21
+genes by class and compartment	two or three | cloud (%)	0.2
+genes by class and compartment	two or three | unassigned	73
+genes by class and compartment	two or three | unassigned (%)	0.7
+genes by class and compartment	one form | core	1118
+genes by class and compartment	one form | core (%)	36.1
+genes by class and compartment	one form | shell	392
+genes by class and compartment	one form | shell (%)	12.7
+genes by class and compartment	one form | cloud	190
+genes by class and compartment	one form | cloud (%)	6.1
+genes by class and compartment	one form | unassigned	1395
+genes by class and compartment	one form | unassigned (%)	45.1
+against OrthoFinder	genes in the corresponding class and compartment	51624
+against OrthoFinder	genes in the corresponding class and compartment (%)	89.4
+against OrthoFinder	orthogroups with ingroup genes in gene clusters	13604
+against OrthoFinder	gene clusters identical to an orthogroup (ingroup genes)	10870
+against OrthoFinder	gene clusters identical to an orthogroup (%)	65.4
+against OrthoFinder	orthogroups whose genes fall in more than one gene cluster	1646
+against OrthoFinder	gene clusters holding genes of more than one orthogroup	529
+against OrthoFinder	core orthogroups	10228
+against OrthoFinder	core orthogroups whose genes are all in four form gene clusters	9086
+against OrthoFinder	four form gene clusters	9465
+against OrthoFinder	four form gene clusters whose genes are all in core orthogroups	9174
+versions	anvio	eunice (v9)
+versions	diamond	2.2.8
+versions	mcl	22-282
+versions	famsa	2.2.2-7eb7612
+sources	gene cluster table	results/anvio/summary/Culex_pipiens_complex_gene_clusters_summary.txt.gz
+sources	genes and ORF flags	transcript_genes.tsv

@@ -136,3 +136,12 @@ results/phylo/rooted/*.iqtree
 results/phylo/rooted/*.bionj
 results/phylo/rooted/*.splits.nex
 results/phylo/rooted/*.mldist
+
+# anvi'o pangenome (workflow/scripts/anvio_pangenome.sh): databases, inputs,
+# pangenome and summary directories are rebuilt by the script; the tables of
+# anvio_compare.py and versions.tsv in results/anvio are tracked
+results/anvio/*.db
+results/anvio/inputs/
+results/anvio/pan/
+results/anvio/summary/
+results/anvio/logs/

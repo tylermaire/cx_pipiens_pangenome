@@ -9,6 +9,8 @@ from the workflow outputs at the journal's final size (171 mm wide).
             outgroup analyses, the V4 figure (unrooted quartet)
   Figure 3  copy number retention and CAFE significance by reference copy number
   Figure 4  pairwise gene anchor synteny
+  Figure 5  anvi'o gene clusters and the OrthoFinder partition (results/anvio,
+            written by workflow/scripts/anvio_pangenome.sh)
 
 Every number is read from results/; nothing is typed in. Writes a vector PDF
 and an LZW compressed TIFF (1200 dpi) per figure to figures/revision/.
@@ -50,6 +52,12 @@ SERIES = "#2a78d6"
 RAMP = {"core": "#0d366b", "shell": "#1c5cab", "cloud": "#3987e5", "unassigned": "#86b6ef"}
 OUTCOME = {"artifact": "#eb6834", "supported": "#1baf7a", "weak": MUTED}
 CHROM = ["#2a78d6", "#eb6834", "#1baf7a"]
+# anvi'o gene cluster classes: a one hue ordinal ramp (orange), apart from the
+# blue ramp of the OrthoFinder compartments (validated with the dataviz
+# palette check, --ordinal)
+ANVIO = {"all four": "#8a3918", "two or three": "#eb6834", "one form": "#f89c7b"}
+ANVIO_LABEL = {"all four": "All four forms", "two or three": "Two or three forms",
+               "one form": "One form"}
 
 INGROUP = meta.INGROUP
 TRANSFERRED = meta.TRANSFERRED
@@ -748,16 +756,115 @@ def figure4(dpi):
     save(fig, "Figure_4_synteny", dpi)
 
 
+# ------------------------------------------------------------------ figure 5
+def figure5(dpi):
+    need = ["results/anvio/anvio_combinations.tsv", "results/anvio/anvio_vs_orthofinder.tsv",
+            "results/anvio/anvio_orf_by_class.tsv"]
+    if not all(os.path.exists(p) for p in need):
+        # anvi'o runs outside the workflow (workflow/scripts/anvio_pangenome.sh)
+        print("  Figure 5 skipped: results/anvio holds no anvi'o tables")
+        return
+    combos = read_tsv("results/anvio/anvio_combinations.tsv")
+    xt = {r["anvio_class"]: r for r in read_tsv("results/anvio/anvio_vs_orthofinder.tsv")}
+    orf = {(r["form"], r["anvio_class"]): r for r in read_tsv("results/anvio/anvio_orf_by_class.tsv")}
+    classes = list(ANVIO)
+
+    def klass(n):
+        return {4: "all four", 1: "one form"}.get(n, "two or three")
+
+    fig = plt.figure(figsize=(WIDTH, 124 * MM))
+    gs = fig.add_gridspec(2, 1, height_ratios=[1.45, 1], hspace=0.42,
+                          left=0.155, right=0.985, top=0.95, bottom=0.14)
+    top = gs[0].subgridspec(2, 1, height_ratios=[2.3, 1], hspace=0.06)
+    bottom = gs[1].subgridspec(1, 2, wspace=0.55, width_ratios=[1.15, 1])
+
+    # (a) gene clusters by the combination of forms holding them
+    combos.sort(key=lambda r: (-int(r["n_forms"]), -int(r["n_clusters"])))
+    n = [int(r["n_clusters"]) for r in combos]
+    ax = fig.add_subplot(top[0])
+    x = list(range(len(combos)))
+    ax.bar(x, n, width=0.62, color=[ANVIO[klass(int(r["n_forms"]))] for r in combos])
+    for i, v in enumerate(n):
+        ax.text(i, v + max(n) * 0.015, f"{v:,}", ha="center", va="bottom", fontsize=6)
+    ax.set_xlim(-0.6, len(combos) - 0.4)
+    ax.set_ylim(0, max(n) * 1.13)
+    ax.set_xticks([])
+    ax.set_ylabel("Gene clusters")
+    thousands(ax, "y")
+    ax.set_title("(a) Gene clusters by the forms they contain")
+    ax.legend(handles=[Patch(color=ANVIO[k], label=ANVIO_LABEL[k]) for k in classes],
+              frameon=False, loc="upper right", handlelength=1)
+    clean(ax)
+    ax.spines["bottom"].set_color(AXIS)
+    mat = fig.add_subplot(top[1], sharex=ax)
+    for i, r in enumerate(combos):
+        on = [j for j, s in enumerate(INGROUP) if r[s] == "1"]
+        if len(on) > 1:
+            mat.plot([i, i], [min(on), max(on)], color=INK, linewidth=0.8, zorder=1)
+        for j in range(len(INGROUP)):
+            mat.scatter(i, j, s=11, color=INK if j in on else GRID, linewidths=0, zorder=2)
+    mat.set_ylim(len(INGROUP) - 0.5, -0.5)
+    mat.set_yticks(range(len(INGROUP)))
+    mat.set_yticklabels([short(s) for s in INGROUP])
+    italic_ticks(mat.get_yticklabels())
+    mat.tick_params(axis="y", length=0)
+    mat.tick_params(axis="x", bottom=False, labelbottom=False)
+    for side in mat.spines.values():
+        side.set_visible(False)
+
+    # (b) where the genes of each class sit in the OrthoFinder partition
+    ax = fig.add_subplot(bottom[0])
+    left = [0.0] * len(classes)
+    tot = [int(xt[k]["total"]) for k in classes]
+    for comp in ["core", "shell", "cloud", "unassigned"]:
+        vals = [100 * int(xt[k][comp]) / t for k, t in zip(classes, tot)]
+        ax.barh(range(len(classes)), vals, left=left, color=RAMP[comp], height=0.6,
+                edgecolor="white", linewidth=0.6, label=comp.capitalize())
+        for i, (lft, v) in enumerate(zip(left, vals)):
+            if v >= 8:
+                ax.text(lft + v / 2, i, f"{v:.0f}%", ha="center", va="center", fontsize=6,
+                        color="white" if comp != "unassigned" else INK)
+        left = [a + b for a, b in zip(left, vals)]
+    ax.set_yticks(range(len(classes)))
+    ax.set_yticklabels([f"{ANVIO_LABEL[k]}\n({t:,} genes)" for k, t in zip(classes, tot)])
+    ax.invert_yaxis()
+    ax.set_xlim(0, 100)
+    ax.set_xlabel("Genes in OrthoFinder compartments (%)")
+    ax.set_title("(b) Gene cluster classes in the OrthoFinder partition")
+    ax.legend(ncol=4, frameon=False, loc="upper left", bbox_to_anchor=(-0.02, -0.28),
+              handlelength=1, columnspacing=0.8)
+    clean(ax, "x")
+
+    # (c) transferred models without a valid ORF, by class
+    ax = fig.add_subplot(bottom[1])
+    width = 0.26
+    for j, k in enumerate(classes):
+        xs = [i + (j - 1) * width for i in range(len(TRANSFERRED))]
+        vals = [float(orf[(s, k)]["pct_without_valid_orf"]) for s in TRANSFERRED]
+        ax.bar(xs, vals, width=width * 0.92, color=ANVIO[k], label=ANVIO_LABEL[k])
+        for xx, v in zip(xs, vals):
+            ax.text(xx, v + 1.5, f"{v:.1f}", ha="center", va="bottom", fontsize=5.2)
+    ax.set_xticks(range(len(TRANSFERRED)))
+    ax.set_xticklabels([short(s) for s in TRANSFERRED])
+    italic_ticks(ax.get_xticklabels())
+    ax.set_ylim(0, 108)
+    ax.set_ylabel("Models without a valid ORF (%)")
+    ax.set_title("(c) Models without a valid ORF")      # classes shaded as in (a)
+    clean(ax)
+    save(fig, "Figure_5_anvio_pangenome", dpi)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dpi", type=int, default=1200)
-    ap.add_argument("--only", default="1,2,3,4")
+    ap.add_argument("--only", default="1,2,3,4,5")
     a = ap.parse_args()
     style()
     for n in a.only.split(","):
         print(f"Figure {n}")
-        {"1": figure1, "2": figure2, "3": figure3, "4": figure4}[n.strip()](a.dpi)
+        {"1": figure1, "2": figure2, "3": figure3, "4": figure4,
+         "5": figure5}[n.strip()](a.dpi)
 
 
 if __name__ == "__main__":

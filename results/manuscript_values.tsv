@@ -5382,3 +5382,252 @@ rooted_all_loci	gene trees ufboot95		153	results/phylo/rooted/first_pass_all_loc
 rooted_all_loci	gene trees without all five taxa		0	results/phylo/rooted/first_pass_all_loci_summary.tsv
 rooted_all_loci	gene trees matching the rooted species tree (pct of all)		13.85	results/phylo/rooted/first_pass_all_loci_summary.tsv
 rooted_all_loci	gene trees with the species tree quartet split (pct of all)		52.66	results/phylo/rooted/first_pass_all_loci_summary.tsv
+anvio	clusters | input proteins		57815	results/anvio/anvio_summary.tsv
+anvio	clusters | proteins in gene clusters		57716	results/anvio/anvio_summary.tsv
+anvio	clusters | gene clusters		16623	results/anvio/anvio_summary.tsv
+anvio	not clustered | proteins without a DIAMOND hit, left out of gene clusters		99	results/anvio/anvio_summary.tsv
+anvio	not clustered | protein length, median (residues)		12	results/anvio/anvio_summary.tsv
+anvio	not clustered | protein length, at most 10 residues		40	results/anvio/anvio_summary.tsv
+anvio	not clustered | protein length, largest (residues)		380	results/anvio/anvio_summary.tsv
+anvio	not clustered | Cx_quinquefasciatus | proteins		18	results/anvio/anvio_summary.tsv
+anvio	not clustered | Cx_pallens | proteins		23	results/anvio/anvio_summary.tsv
+anvio	not clustered | Cx_molestus | proteins		27	results/anvio/anvio_summary.tsv
+anvio	not clustered | Cx_pipiens | proteins		31	results/anvio/anvio_summary.tsv
+anvio	not clustered | OrthoFinder core		0	results/anvio/anvio_summary.tsv
+anvio	not clustered | OrthoFinder shell		2	results/anvio/anvio_summary.tsv
+anvio	not clustered | OrthoFinder cloud		0	results/anvio/anvio_summary.tsv
+anvio	not clustered | OrthoFinder unassigned		97	results/anvio/anvio_summary.tsv
+anvio	not clustered | transferred models without a valid ORF		79	results/anvio/anvio_summary.tsv
+anvio	not clustered | transferred models		81	results/anvio/anvio_summary.tsv
+anvio	clusters | clusters in all four forms		9465	results/anvio/anvio_summary.tsv
+anvio	clusters | clusters in all four forms (%)		56.9	results/anvio/anvio_summary.tsv
+anvio	clusters | clusters in three forms		2479	results/anvio/anvio_summary.tsv
+anvio	clusters | clusters in three forms (%)		14.9	results/anvio/anvio_summary.tsv
+anvio	clusters | clusters in two forms		1663	results/anvio/anvio_summary.tsv
+anvio	clusters | clusters in two forms (%)		10.0	results/anvio/anvio_summary.tsv
+anvio	clusters | clusters in one form		3016	results/anvio/anvio_summary.tsv
+anvio	clusters | clusters in one form (%)		18.1	results/anvio/anvio_summary.tsv
+anvio	clusters | genes in all four clusters		43398	results/anvio/anvio_summary.tsv
+anvio	clusters | genes in all four clusters (%)		75.2	results/anvio/anvio_summary.tsv
+anvio	clusters | genes in two or three clusters		11223	results/anvio/anvio_summary.tsv
+anvio	clusters | genes in two or three clusters (%)		19.4	results/anvio/anvio_summary.tsv
+anvio	clusters | genes in one form clusters		3095	results/anvio/anvio_summary.tsv
+anvio	clusters | genes in one form clusters (%)		5.4	results/anvio/anvio_summary.tsv
+anvio	clusters | clusters with one gene in each form		8577	results/anvio/anvio_summary.tsv
+anvio	clusters | genes per cluster, median		4	results/anvio/anvio_summary.tsv
+anvio	clusters | genes per cluster, largest		111	results/anvio/anvio_summary.tsv
+anvio	clusters | clusters of one gene		2952	results/anvio/anvio_summary.tsv
+anvio	per form | Cx_quinquefasciatus | clusters with its genes		12957	results/anvio/anvio_summary.tsv
+anvio	per form | Cx_quinquefasciatus | one form clusters		603	results/anvio/anvio_summary.tsv
+anvio	per form | Cx_quinquefasciatus | clusters missing only this form		422	results/anvio/anvio_summary.tsv
+anvio	per form | Cx_pallens | clusters with its genes		12778	results/anvio/anvio_summary.tsv
+anvio	per form | Cx_pallens | one form clusters		700	results/anvio/anvio_summary.tsv
+anvio	per form | Cx_pallens | clusters missing only this form		709	results/anvio/anvio_summary.tsv
+anvio	per form | Cx_molestus | clusters with its genes		12810	results/anvio/anvio_summary.tsv
+anvio	per form | Cx_molestus | one form clusters		905	results/anvio/anvio_summary.tsv
+anvio	per form | Cx_molestus | clusters missing only this form		843	results/anvio/anvio_summary.tsv
+anvio	per form | Cx_pipiens | clusters with its genes		13094	results/anvio/anvio_summary.tsv
+anvio	per form | Cx_pipiens | one form clusters		808	results/anvio/anvio_summary.tsv
+anvio	per form | Cx_pipiens | clusters missing only this form		505	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_quinquefasciatus | genes		650	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_quinquefasciatus | genes with a kept model of the same gene in another form		585	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_quinquefasciatus | genes whose RefSeq model is partial or has an exception		200	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_quinquefasciatus | genes whose RefSeq model is partial or has an exception (%)		30.8	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_quinquefasciatus | genes OrthoFinder left unassigned		54	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_quinquefasciatus | genes in OrthoFinder cloud orthogroups		150	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_pallens | genes		714	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_pallens | genes with a kept model of the same gene in another form		714	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_pallens | genes whose RefSeq model is partial or has an exception		62	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_pallens | genes whose RefSeq model is partial or has an exception (%)		8.7	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_pallens | genes OrthoFinder left unassigned		371	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_pallens | genes in OrthoFinder cloud orthogroups		16	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_molestus | genes		913	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_molestus | genes with a kept model of the same gene in another form		913	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_molestus | genes whose RefSeq model is partial or has an exception		91	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_molestus | genes whose RefSeq model is partial or has an exception (%)		10.0	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_molestus | genes OrthoFinder left unassigned		545	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_molestus | genes in OrthoFinder cloud orthogroups		11	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_pipiens | genes		818	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_pipiens | genes with a kept model of the same gene in another form		818	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_pipiens | genes whose RefSeq model is partial or has an exception		80	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_pipiens | genes whose RefSeq model is partial or has an exception (%)		9.8	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_pipiens | genes OrthoFinder left unassigned		425	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_pipiens | genes in OrthoFinder cloud orthogroups		13	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_quinquefasciatus | all kept models whose RefSeq model is partial or has an exception (%)		5.8	results/anvio/anvio_summary.tsv
+anvio	one form clusters | all forms | genes		3095	results/anvio/anvio_summary.tsv
+anvio	one form clusters | all forms | genes with a kept model of the same gene in another form		3030	results/anvio/anvio_summary.tsv
+anvio	one form clusters | transferred forms | genes		2445	results/anvio/anvio_summary.tsv
+anvio	one form clusters | transferred forms | genes with a kept model of the same gene in another form		2445	results/anvio/anvio_summary.tsv
+anvio	one form clusters | transferred forms | genes without a valid ORF		2440	results/anvio/anvio_summary.tsv
+anvio	one form clusters | transferred forms | genes without a valid ORF (%)		99.8	results/anvio/anvio_summary.tsv
+anvio	reference gene | transferred models without a valid ORF		13851	results/anvio/anvio_summary.tsv
+anvio	reference gene | transferred models without a valid ORF | not in the gene cluster of the reference model		5703	results/anvio/anvio_summary.tsv
+anvio	reference gene | transferred models without a valid ORF | not in the gene cluster of the reference model (%)		41.2	results/anvio/anvio_summary.tsv
+anvio	reference gene | transferred models without a valid ORF | not in the orthogroup of the reference model		3794	results/anvio/anvio_summary.tsv
+anvio	reference gene | transferred models without a valid ORF | not in the orthogroup of the reference model (%)		27.4	results/anvio/anvio_summary.tsv
+anvio	reference gene | transferred models with a valid ORF		28870	results/anvio/anvio_summary.tsv
+anvio	reference gene | transferred models with a valid ORF | not in the gene cluster of the reference model		47	results/anvio/anvio_summary.tsv
+anvio	reference gene | transferred models with a valid ORF | not in the gene cluster of the reference model (%)		0.2	results/anvio/anvio_summary.tsv
+anvio	reference gene | transferred models with a valid ORF | not in the orthogroup of the reference model		102	results/anvio/anvio_summary.tsv
+anvio	reference gene | transferred models with a valid ORF | not in the orthogroup of the reference model (%)		0.4	results/anvio/anvio_summary.tsv
+anvio	one form clusters | Cx_quinquefasciatus | genes with a transferred model without a valid ORF		582	results/anvio/anvio_summary.tsv
+anvio	one form clusters | all forms | broken transfers or reference models with a broken transfer		3022	results/anvio/anvio_summary.tsv
+anvio	one form clusters | all forms | broken transfers or reference models with a broken transfer (%)		97.6	results/anvio/anvio_summary.tsv
+anvio	models without a valid ORF | Cx_pallens | all four (%)		19.4	results/anvio/anvio_summary.tsv
+anvio	models without a valid ORF | Cx_pallens | two or three (%)		53.4	results/anvio/anvio_summary.tsv
+anvio	models without a valid ORF | Cx_pallens | one form (%)		99.7	results/anvio/anvio_summary.tsv
+anvio	models without a valid ORF | Cx_molestus | all four (%)		22.4	results/anvio/anvio_summary.tsv
+anvio	models without a valid ORF | Cx_molestus | two or three (%)		59.8	results/anvio/anvio_summary.tsv
+anvio	models without a valid ORF | Cx_molestus | one form (%)		99.9	results/anvio/anvio_summary.tsv
+anvio	models without a valid ORF | Cx_pipiens | all four (%)		21.7	results/anvio/anvio_summary.tsv
+anvio	models without a valid ORF | Cx_pipiens | two or three (%)		54.9	results/anvio/anvio_summary.tsv
+anvio	models without a valid ORF | Cx_pipiens | one form (%)		99.8	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | all four | core		42481	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | all four | core (%)		97.9	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | all four | shell		718	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | all four | shell (%)		1.7	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | all four | cloud		92	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | all four | cloud (%)		0.2	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | all four | unassigned		107	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | all four | unassigned (%)		0.2	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | two or three | core		3571	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | two or three | core (%)		31.8	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | two or three | shell		7558	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | two or three | shell (%)		67.3	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | two or three | cloud		21	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | two or three | cloud (%)		0.2	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | two or three | unassigned		73	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | two or three | unassigned (%)		0.7	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | one form | core		1118	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | one form | core (%)		36.1	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | one form | shell		392	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | one form | shell (%)		12.7	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | one form | cloud		190	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | one form | cloud (%)		6.1	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | one form | unassigned		1395	results/anvio/anvio_summary.tsv
+anvio	genes by class and compartment | one form | unassigned (%)		45.1	results/anvio/anvio_summary.tsv
+anvio	against OrthoFinder | genes in the corresponding class and compartment		51624	results/anvio/anvio_summary.tsv
+anvio	against OrthoFinder | genes in the corresponding class and compartment (%)		89.4	results/anvio/anvio_summary.tsv
+anvio	against OrthoFinder | orthogroups with ingroup genes in gene clusters		13604	results/anvio/anvio_summary.tsv
+anvio	against OrthoFinder | gene clusters identical to an orthogroup (ingroup genes)		10870	results/anvio/anvio_summary.tsv
+anvio	against OrthoFinder | gene clusters identical to an orthogroup (%)		65.4	results/anvio/anvio_summary.tsv
+anvio	against OrthoFinder | orthogroups whose genes fall in more than one gene cluster		1646	results/anvio/anvio_summary.tsv
+anvio	against OrthoFinder | gene clusters holding genes of more than one orthogroup		529	results/anvio/anvio_summary.tsv
+anvio	against OrthoFinder | core orthogroups		10228	results/anvio/anvio_summary.tsv
+anvio	against OrthoFinder | core orthogroups whose genes are all in four form gene clusters		9086	results/anvio/anvio_summary.tsv
+anvio	against OrthoFinder | four form gene clusters		9465	results/anvio/anvio_summary.tsv
+anvio	against OrthoFinder | four form gene clusters whose genes are all in core orthogroups		9174	results/anvio/anvio_summary.tsv
+anvio	versions | anvio		eunice (v9)	results/anvio/anvio_summary.tsv
+anvio	versions | diamond		2.2.8	results/anvio/anvio_summary.tsv
+anvio	versions | mcl		22-282	results/anvio/anvio_summary.tsv
+anvio	versions | famsa		2.2.2-7eb7612	results/anvio/anvio_summary.tsv
+anvio	sources | gene cluster table		results/anvio/summary/Culex_pipiens_complex_gene_clusters_summary.txt.gz	results/anvio/anvio_summary.tsv
+anvio	sources | genes and ORF flags		transcript_genes.tsv	results/anvio/anvio_summary.tsv
+anvio_combinations	qui + pal + mol + pip | n_clusters		9465	results/anvio/anvio_combinations.tsv
+anvio_combinations	qui + pal + mol + pip | n_genes		43398	results/anvio/anvio_combinations.tsv
+anvio_combinations	qui + pal + pip | n_clusters		843	results/anvio/anvio_combinations.tsv
+anvio_combinations	qui + pal + pip | n_genes		2623	results/anvio/anvio_combinations.tsv
+anvio_combinations	qui + mol + pip | n_clusters		709	results/anvio/anvio_combinations.tsv
+anvio_combinations	qui + mol + pip | n_genes		2241	results/anvio/anvio_combinations.tsv
+anvio_combinations	qui + pal + mol | n_clusters		505	results/anvio/anvio_combinations.tsv
+anvio_combinations	qui + pal + mol | n_genes		1564	results/anvio/anvio_combinations.tsv
+anvio_combinations	pal + mol + pip | n_clusters		422	results/anvio/anvio_combinations.tsv
+anvio_combinations	pal + mol + pip | n_genes		1354	results/anvio/anvio_combinations.tsv
+anvio_combinations	qui + pal | n_clusters		351	results/anvio/anvio_combinations.tsv
+anvio_combinations	qui + pal | n_genes		747	results/anvio/anvio_combinations.tsv
+anvio_combinations	mol + pip | n_clusters		339	results/anvio/anvio_combinations.tsv
+anvio_combinations	mol + pip | n_genes		698	results/anvio/anvio_combinations.tsv
+anvio_combinations	pal + pip | n_clusters		255	results/anvio/anvio_combinations.tsv
+anvio_combinations	pal + pip | n_genes		513	results/anvio/anvio_combinations.tsv
+anvio_combinations	qui + pip | n_clusters		253	results/anvio/anvio_combinations.tsv
+anvio_combinations	qui + pip | n_genes		531	results/anvio/anvio_combinations.tsv
+anvio_combinations	pal + mol | n_clusters		237	results/anvio/anvio_combinations.tsv
+anvio_combinations	pal + mol | n_genes		483	results/anvio/anvio_combinations.tsv
+anvio_combinations	qui + mol | n_clusters		228	results/anvio/anvio_combinations.tsv
+anvio_combinations	qui + mol | n_genes		469	results/anvio/anvio_combinations.tsv
+anvio_combinations	mol | n_clusters		905	results/anvio/anvio_combinations.tsv
+anvio_combinations	mol | n_genes		913	results/anvio/anvio_combinations.tsv
+anvio_combinations	pip | n_clusters		808	results/anvio/anvio_combinations.tsv
+anvio_combinations	pip | n_genes		818	results/anvio/anvio_combinations.tsv
+anvio_combinations	pal | n_clusters		700	results/anvio/anvio_combinations.tsv
+anvio_combinations	pal | n_genes		714	results/anvio/anvio_combinations.tsv
+anvio_combinations	qui | n_clusters		603	results/anvio/anvio_combinations.tsv
+anvio_combinations	qui | n_genes		650	results/anvio/anvio_combinations.tsv
+anvio_vs_orthofinder	all four | core		42481	results/anvio/anvio_vs_orthofinder.tsv
+anvio_vs_orthofinder	all four | shell		718	results/anvio/anvio_vs_orthofinder.tsv
+anvio_vs_orthofinder	all four | cloud		92	results/anvio/anvio_vs_orthofinder.tsv
+anvio_vs_orthofinder	all four | unassigned		107	results/anvio/anvio_vs_orthofinder.tsv
+anvio_vs_orthofinder	all four | total		43398	results/anvio/anvio_vs_orthofinder.tsv
+anvio_vs_orthofinder	two or three | core		3571	results/anvio/anvio_vs_orthofinder.tsv
+anvio_vs_orthofinder	two or three | shell		7558	results/anvio/anvio_vs_orthofinder.tsv
+anvio_vs_orthofinder	two or three | cloud		21	results/anvio/anvio_vs_orthofinder.tsv
+anvio_vs_orthofinder	two or three | unassigned		73	results/anvio/anvio_vs_orthofinder.tsv
+anvio_vs_orthofinder	two or three | total		11223	results/anvio/anvio_vs_orthofinder.tsv
+anvio_vs_orthofinder	one form | core		1118	results/anvio/anvio_vs_orthofinder.tsv
+anvio_vs_orthofinder	one form | shell		392	results/anvio/anvio_vs_orthofinder.tsv
+anvio_vs_orthofinder	one form | cloud		190	results/anvio/anvio_vs_orthofinder.tsv
+anvio_vs_orthofinder	one form | unassigned		1395	results/anvio/anvio_vs_orthofinder.tsv
+anvio_vs_orthofinder	one form | total		3095	results/anvio/anvio_vs_orthofinder.tsv
+anvio_orf_by_class	Cx_pallens vs all four | n_genes		10685	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_pallens vs all four | n_without_valid_orf		2072	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_pallens vs all four | pct_without_valid_orf		19.4	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_pallens vs two or three | n_genes		2684	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_pallens vs two or three | n_without_valid_orf		1434	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_pallens vs two or three | pct_without_valid_orf		53.4	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_pallens vs one form | n_genes		714	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_pallens vs one form | n_without_valid_orf		712	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_pallens vs one form | pct_without_valid_orf		99.7	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_molestus vs all four | n_genes		10656	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_molestus vs all four | n_without_valid_orf		2390	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_molestus vs all four | pct_without_valid_orf		22.4	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_molestus vs two or three | n_genes		2530	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_molestus vs two or three | n_without_valid_orf		1514	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_molestus vs two or three | pct_without_valid_orf		59.8	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_molestus vs one form | n_genes		913	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_molestus vs one form | n_without_valid_orf		912	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_molestus vs one form | pct_without_valid_orf		99.9	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_pipiens vs all four | n_genes		10727	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_pipiens vs all four | n_without_valid_orf		2323	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_pipiens vs all four | pct_without_valid_orf		21.7	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_pipiens vs two or three | n_genes		2913	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_pipiens vs two or three | n_without_valid_orf		1599	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_pipiens vs two or three | pct_without_valid_orf		54.9	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_pipiens vs one form | n_genes		818	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_pipiens vs one form | n_without_valid_orf		816	results/anvio/anvio_orf_by_class.tsv
+anvio_orf_by_class	Cx_pipiens vs one form | pct_without_valid_orf		99.8	results/anvio/anvio_orf_by_class.tsv
+anvio_one_form	Cx_quinquefasciatus | clusters		603	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_quinquefasciatus | genes		650	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_quinquefasciatus | same_gene_in_another_form		585	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_quinquefasciatus | refseq_model_not_clean		200	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_quinquefasciatus | orthofinder_core		333	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_quinquefasciatus | orthofinder_shell		113	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_quinquefasciatus | orthofinder_cloud		150	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_quinquefasciatus | orthofinder_unassigned		54	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_quinquefasciatus | without_valid_orf		NA	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_pallens | clusters		700	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_pallens | genes		714	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_pallens | same_gene_in_another_form		714	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_pallens | refseq_model_not_clean		62	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_pallens | orthofinder_core		229	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_pallens | orthofinder_shell		98	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_pallens | orthofinder_cloud		16	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_pallens | orthofinder_unassigned		371	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_pallens | without_valid_orf		712	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_molestus | clusters		905	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_molestus | genes		913	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_molestus | same_gene_in_another_form		913	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_molestus | refseq_model_not_clean		91	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_molestus | orthofinder_core		268	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_molestus | orthofinder_shell		89	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_molestus | orthofinder_cloud		11	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_molestus | orthofinder_unassigned		545	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_molestus | without_valid_orf		912	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_pipiens | clusters		808	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_pipiens | genes		818	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_pipiens | same_gene_in_another_form		818	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_pipiens | refseq_model_not_clean		80	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_pipiens | orthofinder_core		288	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_pipiens | orthofinder_shell		92	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_pipiens | orthofinder_cloud		13	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_pipiens | orthofinder_unassigned		425	results/anvio/anvio_one_form.tsv
+anvio_one_form	Cx_pipiens | without_valid_orf		816	results/anvio/anvio_one_form.tsv
