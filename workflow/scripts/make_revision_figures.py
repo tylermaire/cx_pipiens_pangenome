@@ -53,9 +53,13 @@ CHROM = ["#2a78d6", "#eb6834", "#1baf7a"]
 
 INGROUP = meta.INGROUP
 TRANSFERRED = meta.TRANSFERRED
-MARK = {"all_loci all_sites": ("o", SERIES, "All loci, all sites"),
-        "all_loci third_positions": ("D", "#eb6834", "All loci, third codon positions"),
-        "intact_loci all_sites": ("s", "#1baf7a", "Intact models, all sites")}
+# D statistics series: loci with four intact models first (the rooted
+# analyses use them); all loci, which include transfers sharing an error in
+# two or three forms, as the comparison (rooting_site_patterns.tsv)
+MARK = {"intact_loci all_sites": ("o", SERIES, "Intact models, all sites"),
+        "intact_loci third_positions": ("D", "#eb6834", "Intact models, third codon positions"),
+        "all_loci all_sites": ("s", MUTED, "All loci, all sites")}
+OPEN_MARK = "intact_loci third_positions"
 
 
 def short(sample):
@@ -555,6 +559,10 @@ def figure2_rooted(dpi):
         ("Sites, all loci", a1, a2),
         (f"Sites, without top {k} loci", a1 - t1, a2 - t2),
     ]
+    if "intact_loci_major_discordant_gene_trees" in role:
+        measures.append(("Sites, intact models",
+                         int(role["intact_loci_major_discordant_gene_trees"]["n_informative_sites"]),
+                         int(role["intact_loci_minor_discordant_gene_trees"]["n_informative_sites"])))
     shares = []
     for yv, (label, n1, n2) in enumerate(measures):
         p, a, b = ci(n1, n1 + n2)
@@ -582,8 +590,8 @@ def figure2_rooted(dpi):
         if r["test"] not in [t[0] for t in tests]:
             tests.append((r["test"], r))
     by = {(r["test"], f"{r['locus_set']} {r['site_class']}"): r for r in dstat}
-    offsets = {"all_loci all_sites": -0.22, "all_loci third_positions": 0.0,
-               "intact_loci all_sites": 0.22}
+    offsets = {"intact_loci all_sites": -0.22, "intact_loci third_positions": 0.0,
+               "all_loci all_sites": 0.22}
     ext = 0.1
     for i, (tid, r0) in enumerate(tests):
         for key, off in offsets.items():
@@ -594,7 +602,7 @@ def figure2_rooted(dpi):
             mk, col, _ = MARK[key]
             ax.errorbar([d], [i + off], xerr=[[1.96 * se], [1.96 * se]], fmt=mk, color=col,
                         ms=3.0, lw=0.8, capsize=1.6, capthick=0.7,
-                        mfc=col if key != "all_loci third_positions" else "white")
+                        mfc=col if key != OPEN_MARK else "white")
             ext = max(ext, abs(d) + 1.96 * se)
     ax.axvline(0, color=MUTED, lw=0.6)
     lim = min(1.0, math.ceil(ext * 10) / 10 + 0.05)
@@ -614,7 +622,7 @@ def figure2_rooted(dpi):
     ax.set_ylim(len(tests) - 0.3, -0.6)
     ax.set_title("(d) ABBA BABA tests")
     handles = [Line2D([], [], marker=MARK[k][0], ls="", color=MARK[k][1], ms=3.5,
-                      mfc=MARK[k][1] if k != "all_loci third_positions" else "white",
+                      mfc=MARK[k][1] if k != OPEN_MARK else "white",
                       label=MARK[k][2]) for k in offsets]
     fig.legend(handles=handles, frameon=False, loc="lower right", ncol=3, fontsize=6,
                bbox_to_anchor=(0.985, 0.0), handletextpad=0.3, columnspacing=1.2)

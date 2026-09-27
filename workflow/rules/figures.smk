@@ -37,7 +37,7 @@ rule revision_figures:
 
 rule manuscript_tables:
     """Tables 1 to 4 (JSON read by the manuscript build) and the
-    supplementary tables workbook (S1 to S12)."""
+    supplementary tables workbook (S1 to S13)."""
     input:
         "results/manuscript_values.tsv",
         "results/pangenome/partitioned_orthogroups.tsv",
@@ -49,6 +49,9 @@ rule manuscript_tables:
         "results/phylo/rooted/rooted_summary.tsv",
         "results/phylo/rooted/rooted_topology_counts.tsv",
         "results/phylo/dstat/d_statistics.tsv",
+        "results/phylo/rooted/rooting_site_patterns.tsv",
+        "results/phylo/rooted/rooting_gene_trees.tsv",
+        "results/phylo/rooted/rooting_dstat_sets.tsv",
         "results/cafe/significant_families.tsv",
         "results/cafe/transfer_bias_summary.tsv",
         "results/synteny/ani_pairs.tsv",

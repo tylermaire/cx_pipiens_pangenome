@@ -62,6 +62,19 @@ iqtree:
   concat_mrate: E,I,G,I+G
   bootstrap: 1000
  
+# -- Rooted analyses with the outgroup (V5) --
+# Loci of the rooted tree, its concordance factors and the rooted gene tree
+# counts: "intact" (the four ingroup models intact: the reference model
+# neither partial nor corrected by RefSeq, each transferred model with a
+# valid ORF) or "all". Transfers that share an error in two or three forms
+# (most often a reading frame shifted where RefSeq corrected the reference
+# model) make every misaligned codon look like a shared derived allele; with
+# "all", such loci moved the root to the quinquefasciatus branch in the first
+# V5 run (results/phylo/rooted/rooting_site_patterns.tsv). The D statistics
+# are reported on all loci and on intact loci either way.
+rooted:
+  loci: intact
+
 # -- D statistics (ABBA BABA) with the outgroup (V5) --
 # Planned tests, fixed before the run from the four taxon species tree
 # ((Cx_pallens, Cx_quinquefasciatus), (Cx_molestus, Cx_pipiens)), each as

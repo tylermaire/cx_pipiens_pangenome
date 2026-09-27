@@ -18,10 +18,15 @@ Under incomplete lineage sorting alone the two quartet splits that disagree
 with the species tree are equally frequent; the rooted topology adds where
 the root falls within each split.
 
+The tree and the gene tree counts use the loci in tree_loci.txt (config
+rooted: loci; by default loci whose four ingroup models are intact, see
+locus_quality.py); the summary also counts the loci left out.
+
 Snakemake provides input.tree, input.gene_trees, input.ids, input.accounting,
-input.alignments; params.outgroup, params.ingroup, params.trimmed (the
-trimmed protein alignments of the concatenated tree), params.cf_stat,
-params.cf_branch; output.summary, output.topologies.
+input.alignments, input.quality, input.tree_loci; params.outgroup,
+params.ingroup, params.trimmed (the trimmed protein alignments of the
+concatenated tree), params.cf_stat, params.cf_branch, params.loci;
+output.summary, output.topologies.
 """
 import collections
 import csv
@@ -110,11 +115,16 @@ def species_tree_rows(tree_path, cf_stat, cf_branch, outgroup, ingroup):
     return rows, topo, frozenset(c for c, _, _ in clades)
 
 
-def gene_tree_rows(trees_path, ids_path, outgroup, ingroup, species_topo):
+def gene_tree_rows(trees_path, ids_path, outgroup, ingroup, species_topo, keep=None):
+    """Rooted topology counts of the gene trees, of the loci in keep when
+    given (keep needs ids_path)."""
     lines = [l.strip() for l in open(trees_path) if l.strip()]
     ids = [l.strip() for l in open(ids_path) if l.strip()] if ids_path else []
     if ids and len(ids) != len(lines):
         raise SystemExit(f"{len(lines)} gene trees but {len(ids)} ids")
+    if keep is not None and ids:
+        pairs = [(i, l) for i, l in zip(ids, lines) if i in keep]
+        ids, lines = [i for i, _ in pairs], [l for _, l in pairs]
     counts = {k: collections.Counter() for k in ("all", "resolved", "ufboot95")}
     splits = {}
     skipped = 0
@@ -155,19 +165,32 @@ def write_tsv(rows, path):
 
 
 def run(tree, gene_trees, ids, trimmed, accounting, alignments, outgroup, ingroup,
-        cf_stat, cf_branch, out_summary, out_topologies):
+        cf_stat, cf_branch, out_summary, out_topologies, quality=None, tree_loci=None,
+        loci="all"):
     items = []
     for path in (accounting, alignments):
         if path and os.path.exists(path):
             for r in csv.DictReader(open(path), delimiter="\t"):
                 key = r["item"] + (f" {r['sample']}" if r.get("sample") else "")
                 items.append((f"loci: {key}", r["value"]))
+    keep = None
+    if tree_loci and os.path.exists(tree_loci):
+        keep = {l.strip() for l in open(tree_loci) if l.strip()}
+    if quality and os.path.exists(quality):
+        q = list(csv.DictReader(open(quality), delimiter="\t"))
+        with_aln = [r for r in q if r["tree_alignment"] == "True"]
+        items.append(("rooted tree loci", loci))
+        items.append(("loci with a trimmed alignment of at least 50 columns", len(with_aln)))
+        items.append(("of these, loci with four intact ingroup models",
+                      sum(r["intact"] == "True" for r in with_aln)))
+        items.append(("of these, loci left out of the rooted tree",
+                      sum(r["tree"] != "True" for r in with_aln)))
     aligns = sorted(glob.glob(os.path.join(trimmed, "*.trim"))) if trimmed else []
     items.append(("concatenated alignment loci", len(aligns)))
     items.append(("concatenated alignment columns", sum(fasta_width(p) for p in aligns)))
     tree_rows, topo, _ = species_tree_rows(tree, cf_stat, cf_branch, outgroup, ingroup)
     items.extend(tree_rows)
-    topo_rows, totals, skipped = gene_tree_rows(gene_trees, ids, outgroup, ingroup, topo)
+    topo_rows, totals, skipped = gene_tree_rows(gene_trees, ids, outgroup, ingroup, topo, keep)
     for k, v in totals.items():
         items.append((f"gene trees {k}", v))
     items.append(("gene trees without all five taxa", skipped))
@@ -196,7 +219,9 @@ def main():
     run(sm.input.tree, sm.input.gene_trees, sm.input.ids, sm.params.trimmed,
         sm.input.accounting, sm.input.alignments, sm.params.outgroup,
         list(sm.params.ingroup), sm.params.cf_stat, sm.params.cf_branch,
-        sm.output.summary, sm.output.topologies)
+        sm.output.summary, sm.output.topologies,
+        getattr(sm.input, "quality", None), getattr(sm.input, "tree_loci", None),
+        getattr(sm.params, "loci", "all"))
 
 
 if __name__ == "__main__":

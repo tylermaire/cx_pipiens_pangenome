@@ -185,12 +185,35 @@ rule rooted_alignments:
         echo "Trimmed protein alignments of at least 50 columns: $n"
         """
 
-rule rooted_tree:
-    """One gene tree per five taxon locus, the concatenated protein tree
-    rooted with the outgroup (per locus partitions, as the four taxon tree),
-    and gene and site concordance factors on it."""
+rule rooted_locus_quality:
+    """Gene model quality and lowest ingroup identity of each five taxon
+    locus, and the loci of the rooted tree: those whose four ingroup models
+    are intact (config rooted: loci). Transfers that share an error in two or
+    three forms make misaligned codons look like shared derived alleles; in
+    the first V5 run such loci moved the root (rooting_diagnostics)."""
     input:
-        aln="results/phylo/rooted/alignments"
+        aln="results/phylo/rooted/alignments",
+        of="results/orthofinder/output",
+        gffs=expand("results/annotation/{s}_liftoff.gff3", s=INGROUP_SAMPLES)
+    output:
+        quality="results/phylo/rooted/locus_quality.tsv",
+        tree_loci="results/phylo/rooted/tree_loci.txt"
+    params:
+        ingroup=INGROUP_SAMPLES,
+        outgroup=OUTGROUP,
+        reference=REF,
+        loci=(config.get("rooted") or {}).get("loci", "intact")
+    conda: "../envs/phylo.yaml"
+    script: "../scripts/locus_quality.py"
+
+rule rooted_tree:
+    """One gene tree per five taxon locus (all loci, for the diagnostics),
+    and the concatenated protein tree of the loci in tree_loci.txt rooted
+    with the outgroup (per locus partitions, as the four taxon tree), with
+    gene and site concordance factors from the same loci."""
+    input:
+        aln="results/phylo/rooted/alignments",
+        tree_loci="results/phylo/rooted/tree_loci.txt"
     output:
         tree="results/phylo/rooted/rooted_tree.treefile",
         concord="results/phylo/rooted/rooted_concord.cf.tree",
@@ -200,13 +223,18 @@ rule rooted_tree:
         model=config["iqtree"]["model"],
         bb=config["iqtree"]["bootstrap"],
         outgroup=OUTGROUP,
-        gene_tree_dir="results/phylo/rooted/gene_trees"
+        gene_tree_dir="results/phylo/rooted/gene_trees",
+        # alignments of the tree loci only: IQ-TREE -p reads every file there
+        tree_dir="results/phylo/rooted/tree_alignments",
+        tree_gene_trees="results/phylo/rooted/tree_gene_trees.nwk"
     threads: config["threads"]
     conda: "../envs/phylo.yaml"
     shell:
         """
         set -euo pipefail
-        rm -rf {params.gene_tree_dir} && mkdir -p {params.gene_tree_dir}
+        rm -rf {params.gene_tree_dir} {params.tree_dir}
+        rm -f results/phylo/rooted/rooted_tree.* results/phylo/rooted/rooted_concord.*
+        mkdir -p {params.gene_tree_dir} {params.tree_dir}
         ls {input.aln}/trimmed/*.trim | xargs -P {threads} -I TRIMFILE sh -c '
             og=$(basename TRIMFILE .trim)
             iqtree -s TRIMFILE -m MFP -bb 1000 -nt 1 \
@@ -219,12 +247,21 @@ rule rooted_tree:
             basename "$t" .treefile >> {output.ids}
         done
         echo "Gene trees: $(wc -l < {output.ids})"
-        iqtree -p {input.aln}/trimmed/ -m {params.model} -bb {params.bb} \
+        : > {params.tree_gene_trees}
+        while read -r og; do
+            cp {input.aln}/trimmed/$og.trim {params.tree_dir}/
+            if [ -s {params.gene_tree_dir}/$og.treefile ]; then
+                cat {params.gene_tree_dir}/$og.treefile >> {params.tree_gene_trees}
+            fi
+        done < {input.tree_loci}
+        echo "Loci in the rooted tree: $(ls {params.tree_dir} | wc -l)," \
+             "gene trees for its concordance factors: $(wc -l < {params.tree_gene_trees})"
+        iqtree -p {params.tree_dir}/ -m {params.model} -bb {params.bb} \
             -o {params.outgroup} -nt {threads} \
-            --prefix results/phylo/rooted/rooted_tree -quiet
-        iqtree -t {output.tree} --gcf {output.gene_trees} -p {input.aln}/trimmed/ \
+            --prefix results/phylo/rooted/rooted_tree -quiet -redo
+        iqtree -t {output.tree} --gcf {params.tree_gene_trees} -p {params.tree_dir}/ \
             --scf 100 -o {params.outgroup} -nt {threads} \
-            --prefix results/phylo/rooted/rooted_concord -quiet
+            --prefix results/phylo/rooted/rooted_concord -quiet -redo
         """
 
 rule rooted_summary:
@@ -237,16 +274,19 @@ rule rooted_summary:
         ids="results/phylo/rooted/rooted_gene_tree_ids.txt",
         aln="results/phylo/rooted/alignments",
         accounting="results/phylo/rooted/sco5_accounting.tsv",
-        alignments="results/phylo/rooted/alignment_summary.tsv"
+        alignments="results/phylo/rooted/alignment_summary.tsv",
+        quality="results/phylo/rooted/locus_quality.tsv",
+        tree_loci="results/phylo/rooted/tree_loci.txt"
     output:
         summary="results/phylo/rooted/rooted_summary.tsv",
         topologies="results/phylo/rooted/rooted_topology_counts.tsv"
     params:
         outgroup=OUTGROUP,
         ingroup=INGROUP_SAMPLES,
-        trimmed="results/phylo/rooted/alignments/trimmed",
+        trimmed="results/phylo/rooted/tree_alignments",
         cf_stat="results/phylo/rooted/rooted_concord.cf.stat",
-        cf_branch="results/phylo/rooted/rooted_concord.cf.branch"
+        cf_branch="results/phylo/rooted/rooted_concord.cf.branch",
+        loci=(config.get("rooted") or {}).get("loci", "intact")
     conda: "../envs/phylo.yaml"
     script: "../scripts/rooted_summary.py"
 
@@ -273,3 +313,26 @@ rule d_statistics:
         block_size=(config.get("dstat") or {}).get("block_size", 5000000)
     conda: "../envs/phylo.yaml"
     script: "../scripts/d_statistics.py"
+
+rule rooting_diagnostics:
+    """Derived allele patterns by gene model quality, and the rooted gene
+    tree topologies and D statistics on locus sets filtered by model
+    quality and by ingroup identity (Supp. Table S13)."""
+    input:
+        quality="results/phylo/rooted/locus_quality.tsv",
+        aln="results/phylo/rooted/alignments",
+        gene_trees="results/phylo/rooted/rooted_gene_trees.nwk",
+        ids="results/phylo/rooted/rooted_gene_tree_ids.txt",
+        tree="results/phylo/rooted/rooted_tree.treefile",
+        dstat="results/phylo/dstat/d_statistics.tsv",
+        per_locus="results/phylo/dstat/d_statistics_per_locus.tsv"
+    output:
+        patterns="results/phylo/rooted/rooting_site_patterns.tsv",
+        gene_trees="results/phylo/rooted/rooting_gene_trees.tsv",
+        dstat="results/phylo/rooted/rooting_dstat_sets.tsv"
+    params:
+        ingroup=INGROUP_SAMPLES,
+        outgroup=OUTGROUP,
+        identity=[0.95, 0.98]
+    conda: "../envs/phylo.yaml"
+    script: "../scripts/rooting_diagnostics.py"
