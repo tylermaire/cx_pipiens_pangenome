@@ -225,6 +225,14 @@ def rooted():
     else:
         for r in rows:
             add("rooted", r["item"], r["value"], path)
+    # the same analysis on all loci (kept from the first V5 pass, when the
+    # rooted tree used every locus): shared transfer errors move its root
+    path = "results/phylo/rooted/first_pass_all_loci_summary.tsv"
+    rows = read_tsv(path)
+    if rows:
+        for r in rows:
+            if not r["item"].startswith("loci: "):
+                add("rooted_all_loci", r["item"], r["value"], path)
     for path, section in (("results/phylo/rooted/rooted_topology_counts.tsv", "rooted_topologies"),
                           ("results/phylo/dstat/d_statistics.tsv", "dstat"),
                           ("results/phylo/rooted/rooting_gene_trees.tsv", "rooting_gene_trees"),
@@ -275,6 +283,17 @@ def cafe():
     sig = read_tsv("results/cafe/significant_families.tsv")
     add("cafe", "significant_families", len(sig) if sig is not None else None,
         "results/cafe/significant_families.tsv")
+    rr_path = "results/cafe/cafe5_reruns.tsv"
+    rr = read_tsv(rr_path)
+    if rr:
+        n = [int(r["families_with_estimated_P_below_0.05"]) for r in rr]
+        est = [float(r["estimated_P_one_copy_in_one_form_of_each_pair"]) for r in rr]
+        add("cafe", "repeated CAFE5 runs with fixed lambda and alpha", len(rr), rr_path)
+        add("cafe", "repeated runs: families with estimated P < 0.05, lowest", min(n), rr_path)
+        add("cafe", "repeated runs: families with estimated P < 0.05, highest", max(n), rr_path)
+        add("cafe", "repeated runs: runs with more than 800", sum(x > 800 for x in n), rr_path)
+        add("cafe", "repeated runs: estimated P of one copy in one form of each pair, mean",
+            round(sum(est) / len(est), 4), rr_path)
     fp_path = "results/cafe/family_pvalues.tsv"
     fp = read_tsv(fp_path)
     if fp:

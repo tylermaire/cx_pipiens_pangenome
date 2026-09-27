@@ -181,6 +181,9 @@ def main():
     sco = {}
     for r in tsv("results/phylo/sco_pairwise_identity.tsv"):
         sco[frozenset([r["taxon_a"], r["taxon_b"]])] = r
+    per_pair = sorted(int(r["n_loci"]) for r in sco.values())
+    pair_loci = (f"{per_pair[0]:,}" if per_pair[0] == per_pair[-1]
+                 else f"{per_pair[0]:,} to {per_pair[-1]:,}")
     ani_rows = tsv("results/synteny/ani_pairs.tsv")
     rows = []
     for (a, b), r in syn.items():
@@ -193,7 +196,11 @@ def main():
                      f"{100 * float(sco[pair]['median_identity']):.2f}",
                      f"{int(r['n_shared_genes_chr1_3']):,}",
                      f"{float(r['pct_collinear_anchors']):.1f}",
-                     f"{float(r['pct_shared_genes_other_chromosome']):.1f}",
+                     # from the counts: the stored percentage has two decimals, and
+                     # rounding it again can move the last digit (12.645 -> 12.65 -> 12.7)
+                     f"{100 * int(r['n_shared_genes_other_chromosome']) / int(r['n_shared_genes_top_sequences']):.1f}"
+                     if r.get("n_shared_genes_top_sequences") not in (None, "", "0", "NA")
+                     else f"{float(r['pct_shared_genes_other_chromosome']):.1f}",
                      r["n_inversions_intra_chr"]])
     tables["3"] = {
         "title": "Table 3. Pairwise identity and synteny between the ingroup assemblies",
@@ -206,7 +213,8 @@ def main():
         "notes": ["skani ANI and aligned fraction (both directions) on the complete "
                   "assemblies; minimap2 identity is the length weighted identity of "
                   "alignments between the three chromosome scale sequences; median protein "
-                  f"identity is over the {n_trimmed:,} trimmed single copy ortholog alignments. Anchors "
+                  f"identity is over the {n_trimmed:,} trimmed single copy ortholog alignments "
+                  f"({pair_loci} per pair, those with columns where both forms have a residue). Anchors "
                   "are genes, coding or non coding, shared by both assemblies on homologous "
                   "chromosomes. Further values in Supp. Tables S7 and S9."],
     }

@@ -36,7 +36,7 @@ Usage, from the repository root with results/ holding the run:
 
 With only the tracked result tables at hand (the repository, not the run),
 the values step can redo single sections of results/manuscript_values.tsv:
-    python workflow/scripts/patch_results.py --steps cafe,values --values-sections cafe,parameters
+    python workflow/scripts/patch_results.py --steps cafe,values --values-sections cafe,rooted,parameters
 """
 
 import argparse
@@ -289,6 +289,7 @@ def value_params(cfg, all_s, ingroup, ref):
 # alone, each with the call that fills it.
 VALUE_SECTIONS = {
     "cafe": lambda mod, params: mod.cafe(),
+    "rooted": lambda mod, params: mod.rooted(),
     "parameters": lambda mod, params: mod.parameters(dict(params["parameters"])),
 }
 

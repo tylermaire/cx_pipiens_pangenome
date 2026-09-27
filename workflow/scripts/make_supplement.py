@@ -81,13 +81,20 @@ def _values():
 VALUES = _values()
 
 
-def version(tool, fallback):
+def version(tool, fallback, newest=False):
     """Version a run used, from results/manuscript_values.tsv (conda
-    environments first, then what the outputs record), else the fallback."""
+    environments first, then what the outputs record), else the fallback.
+    A tool installed in several environments has several versions ("2.24,2.31"
+    for minimap2: 2.24 inside Liftoff's environment, 2.31 for the alignments of
+    the validation and synteny rules); newest=True takes the highest."""
     for sec in ("tools", "tools_observed"):
         v = VALUES.get((sec, tool, ""))
         if v and v != "NA" and not v.startswith("not present"):
-            return v.split(",")[0]
+            parts = [x.strip() for x in v.split(",") if x.strip()]
+            if newest:
+                key = lambda x: [int(t) if t.isdigit() else t for t in re.split(r"[.\-]", x)]
+                return max(parts, key=key)
+            return parts[0]
     return fallback
 
 
@@ -526,7 +533,7 @@ def s5():
             "Summary by compartment (a) and every absence event (b), an orthogroup and a form "
             "without it. The longest ingroup protein of the orthogroup (query) was aligned to the genome "
             f"of the form without it with miniprot {version('miniprot', '0.18')} (protein probe), and the genomic locus of "
-            f"its gene, introns included, with minimap2 {version('minimap2', '2.31')} (locus probe); identity and coverage "
+            f"its gene, introns included, with minimap2 {version('minimap2', '2.31', newest=True)} (locus probe); identity and coverage "
             "are for the best hit of each probe, 0 when there was none. Calls, in order of "
             "precedence: clustered elsewhere, basis same gene identifier (the target proteome holds "
             "a model with the query's gene identifier); absent (no hit with either probe); weak "
@@ -786,7 +793,7 @@ def s7():
             "copy alignment over columns where both forms have a residue. (c) Whole genome "
             "identity: skani (skani dist -s 80, first assembly of the pair given first) on the "
             "complete assemblies, with the aligned fractions as skani labels them; minimap2 "
-            f"{version('minimap2', '2.31')} (-x asm20) identity is the length weighted mean of one "
+            f"{version('minimap2', '2.31', newest=True)} (-x asm20) identity is the length weighted mean of one "
             "minus the divergence of each alignment between the three chromosome scale sequences "
             f"of the two assemblies.{ani_note}",
             "results/phylo/branch_length_summary.tsv; results/phylo/sco_pairwise_identity.tsv; "
@@ -905,12 +912,23 @@ def s8():
               [("og", "Orthogroup", "text")] + p_cols +
               [(s, f"{FORM[s]} copies", "int") for s in ORDER], sig, autofilter=True),
     ]
+    reruns_path = "results/cafe/cafe5_reruns.tsv"
+    reruns = tsv(reruns_path) if exact and os.path.exists(path(reruns_path)) else []
     if flips:
         blocks.append(Block(
             "(g) Count patterns called differently by the exact P and CAFE5's estimate",
             [(s, f"{FORM[s]} copies", "int") for s in ORDER] +
             [("n", "Families", "int"), ("est", "CAFE5 simulated P", "f3"),
              ("exact", "P (exact)", "f4")], flips))
+    if reruns:
+        blocks.append(Block(
+            "(h) Repeated CAFE5 runs with lambda and alpha fixed at the fitted values",
+            [("run", "Run", "int"),
+             ("families_with_estimated_P_below_0.05", "Families with estimated P < 0.05", "int"),
+             ("estimated_P_one_copy_in_one_form_of_each_pair",
+              "Estimated P, one copy in one form of each pair", "f3"),
+             ("families_called_differently_from_exact_P",
+              "Families called differently from the exact P", "int")], reruns))
     blocks[4].row_formats = [t["f"] for t in tests]
     blocks[0].row_formats = (["text", "text", "gen", "f5", "f5", "int", "int", "int"] +
                              (["text", "int"] if exact else []))
@@ -941,14 +959,23 @@ def s8():
                "estimates them from 1,000 simulated families per root size, to three decimals, "
                "and its estimates change from run to run; they are shown beside the exact values. "
                "(g) The count patterns whose call differs between the two; every family with the "
-               "same counts shares one P value." if exact else
+               "same counts shares one P value."
+               + (" (h) Twenty further CAFE5 runs on the same counts, with lambda and alpha fixed "
+                  "at the fitted values (CAFE5 built from the hahnlab/CAFE5 repository at commit "
+                  "b9e3b2e, whose P value code is that of release 5.1.0, which the run used): "
+                  "families with an estimated P < 0.05, the estimate shared by the families with "
+                  "one copy in one form of each pair and none in the other two (exact P "
+                  + (f"{flips[0]['exact']:.4f}" if flips else "NA")
+                  + "), and families called differently from the exact P." if reruns else "")
+               if exact else
                "families with P < 0.05 and their copies per form; CAFE reports P to three "
                "decimals."),
             "results/cafe/output/Gamma_results.txt; results/cafe/ultrametric_tree.nwk; "
             "results/cafe/branch_summary.tsv; results/cafe/transfer_bias_by_copy_number.tsv; "
             "results/cafe/transfer_bias_by_lineage.tsv; results/cafe/transfer_bias_summary.tsv; "
             "results/cafe/significant_families.tsv; results/cafe/gene_counts_filtered.tsv"
-            + ("; results/cafe/family_pvalues.tsv" if exact else ""),
+            + ("; results/cafe/family_pvalues.tsv" if exact else "")
+            + ("; results/cafe/cafe5_reruns.tsv" if reruns else ""),
             blocks)
 
 
@@ -1344,18 +1371,38 @@ def s13():
     for r in dsets:
         r["locus_set"] = class_label(r["locus_set"])
         r["statistic"] = forms(r["statistic"]).replace(",", ", ").replace(";", "; ")
+    tree_rows = []
+    for label, p in (("intact loci (the rooted tree)", "results/phylo/rooted/rooted_summary.tsv"),
+                     ("all loci", "results/phylo/rooted/first_pass_all_loci_summary.tsv")):
+        if not os.path.exists(path(p)):
+            continue
+        items = {r["item"]: r["value"] for r in tsv(p)}
+        clades = [k[:-len(" UFBoot")] for k in items if k.endswith(" UFBoot")]
+        for c in clades:
+            tree_rows.append({
+                "loci": label, "n": items.get("concatenated alignment loci"),
+                "cols": items.get("concatenated alignment columns"),
+                "topology": forms(items.get("rooted ingroup topology", "")).replace(",", ", "),
+                "clade": forms(c).replace(",", ", "),
+                "ufboot": items.get(f"{c} UFBoot"), "gcf": items.get(f"{c} gCF"),
+                "scf": items.get(f"{c} sCF")})
     blocks = [
-        Block("(a) Derived alleles per 100 loci by gene model quality and ingroup identity",
+        Block("(a) Species trees rooted with the outgroup, from intact loci and from all loci",
+              [("loci", "Loci", "text"), ("n", "Loci (n)", "int"),
+               ("cols", "Alignment columns", "int"), ("topology", "Rooted ingroup topology", "text"),
+               ("clade", "Clade", "text"), ("ufboot", "UFBoot", "int"), ("gcf", "gCF", "pct2"),
+               ("scf", "sCF", "pct2")], tree_rows),
+        Block("(b) Derived alleles per 100 loci by gene model quality and ingroup identity",
               [("cls", "Loci", "text"), ("sites", "Sites", "text"), ("n", "Loci (n)", "int")] +
               [(keys[d], f"Derived in {abbr_taxa(d)}", "pct1") for d in order], rows),
-        Block("(b) Most frequent rooted topologies of the resolved gene trees",
+        Block("(c) Most frequent rooted topologies of the resolved gene trees",
               [("locus_set", "Loci", "text"), ("rank", "Rank", "int"),
                ("rooted_topology", "Rooted ingroup topology", "text"),
                ("is_species_tree", "Species tree", "bool"),
                ("n_resolved", "Resolved gene trees", "int"),
                ("pct_resolved", "Resolved gene trees (%)", "pct2"),
                ("n_resolved_total", "Resolved gene trees in the set", "int")], trees),
-        Block("(c) D statistics by locus set, all sites",
+        Block("(d) D statistics by locus set, all sites",
               [("locus_set", "Loci", "text"), ("test", "Test", "text"),
                ("statistic", "Statistic", "text"), ("n_loci", "Loci (n)", "int"),
                ("n_blocks", "Jackknife blocks", "int"), ("ABBA", "ABBA", "int"),
@@ -1368,18 +1415,23 @@ def s13():
             f"taxa carry A, C, G or T and exactly two alleles occur; the {OG} allele is taken as "
             "ancestral and each site is labelled by the ingroup forms carrying the other allele. "
             "A site derived in two forms supports the clade of those two; one derived in three "
-            "supports a root on the branch to the fourth. (a) Sites per 100 loci. A locus is "
+            "supports a root on the branch to the fourth. (a) The rooted tree of Supp. Table "
+            "S12, from the loci with four intact ingroup models, and the same analysis on all "
+            "loci, whose shared transfer errors place the root on the quinquefasciatus branch. "
+            "(b) Sites per 100 loci. A locus is "
             "intact when its reference model is neither partial nor corrected by RefSeq for an "
             "error in the reference genome and each transferred model has a valid ORF (Liftoff); "
             "loci that are not intact are split by the first reason that applies. Ingroup "
             "identity is the lowest pairwise identity of the four ingroup sequences over the "
             "codon alignment. Where the transferred models of two or three forms share an error "
-            "(most often a reading frame shifted where RefSeq corrected the reference model), "
+            "(for example a reading frame shifted where RefSeq corrected the reference model), "
             "every misaligned codon after it counts as a derived allele shared by those forms. "
-            "(b) Rooted ingroup topologies of the gene trees whose internal branches are both "
+            "(c) Rooted ingroup topologies of the gene trees whose internal branches are both "
             "longer than IQ-TREE's minimum length; the species tree is the tree of Supp. Table "
-            "S12(b). (c) The tests of Supp. Table S12(e) on each locus set, with the same "
+            "S12(b). (d) The tests of Supp. Table S12(e) on each locus set, with the same "
             "weighted block jackknife.",
+            "results/phylo/rooted/rooted_summary.tsv; "
+            "results/phylo/rooted/first_pass_all_loci_summary.tsv; "
             "results/phylo/rooted/rooting_site_patterns.tsv; "
             "results/phylo/rooted/rooting_gene_trees.tsv; results/phylo/rooted/rooting_dstat_sets.tsv; "
             "results/phylo/rooted/locus_quality.tsv",

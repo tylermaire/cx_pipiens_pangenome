@@ -2201,6 +2201,11 @@ cafe	lambda		0.044915757099474	results/cafe/output/Gamma_results.txt
 cafe	alpha		0.271136	results/cafe/output/Gamma_results.txt
 cafe	neg_log_likelihood		24770.5	results/cafe/output/Gamma_results.txt
 cafe	significant_families		264	results/cafe/significant_families.tsv
+cafe	repeated CAFE5 runs with fixed lambda and alpha		20	results/cafe/cafe5_reruns.tsv
+cafe	repeated runs: families with estimated P < 0.05, lowest		192	results/cafe/cafe5_reruns.tsv
+cafe	repeated runs: families with estimated P < 0.05, highest		837	results/cafe/cafe5_reruns.tsv
+cafe	repeated runs: runs with more than 800		4	results/cafe/cafe5_reruns.tsv
+cafe	repeated runs: estimated P of one copy in one form of each pair, mean		0.0562	results/cafe/cafe5_reruns.tsv
 cafe	family P values		exact	results/cafe/family_pvalues.tsv
 cafe	families with P < 0.05, exact		264	results/cafe/family_pvalues.tsv
 cafe	families with P < 0.05, CAFE5 estimate		834	results/cafe/family_pvalues.tsv
@@ -5337,3 +5342,43 @@ parameters	busco lineage		diptera_odb10	config/config.yaml and workflow rules
 parameters	minimap2 synteny		-x asm20 --secondary=no on the three longest sequences	config/config.yaml and workflow rules
 parameters	synteny inversions		runs of >= 3 anchors spanning >= 100 kb after orientation normalisation	config/config.yaml and workflow rules
 parameters	absence validation		miniprot --outn 1; minimap2 -x asm20 -N 1; hit id >= 0.80, protein cov >= 0.70, DNA cov >= 0.50; same gene protein identity >= 0.90	config/config.yaml and workflow rules
+rooted_all_loci	concatenated alignment loci		6831	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	concatenated alignment columns		3976880	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	rooted ingroup topology		(((Cx_molestus,Cx_pipiens),Cx_pallens),Cx_quinquefasciatus);	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	root position		between (Cx_molestus,Cx_pallens,Cx_pipiens) and Cx_quinquefasciatus	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pipiens) UFBoot		100.0	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pipiens) branch length		0.0069061313	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pipiens) gCF		39.3	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pipiens) gCF_N		2412	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pipiens) gDF1		11.68	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pipiens) gDF1_N		717	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pipiens) gDF2		17.48	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pipiens) gDF2_N		1073	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pipiens) gDFP		31.54	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pipiens) gDFP_N		1936	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pipiens) gN		6138	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pipiens) sCF		35.23	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pipiens) sDF1		31.56	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pipiens) sDF2		33.21	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pipiens) sN		47052.64	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pallens,Cx_pipiens) UFBoot		100.0	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pallens,Cx_pipiens) branch length		0.032935557	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pallens,Cx_pipiens) gCF		32.06	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pallens,Cx_pipiens) gCF_N		1968	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pallens,Cx_pipiens) gDF1		33.68	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pallens,Cx_pipiens) gDF1_N		2067	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pallens,Cx_pipiens) gDF2		13.9	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pallens,Cx_pipiens) gDF2_N		853	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pallens,Cx_pipiens) gDFP		20.36	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pallens,Cx_pipiens) gDFP_N		1250	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pallens,Cx_pipiens) gN		6138	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pallens,Cx_pipiens) sCF		88.26	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pallens,Cx_pipiens) sDF1		8.04	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pallens,Cx_pipiens) sDF2		3.71	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	(Cx_molestus,Cx_pallens,Cx_pipiens) sN		78378.68	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	gene trees all		6138	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	gene trees resolved		3653	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	gene trees ufboot95		153	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	gene trees without all five taxa		0	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	gene trees matching the rooted species tree (pct of all)		13.85	results/phylo/rooted/first_pass_all_loci_summary.tsv
+rooted_all_loci	gene trees with the species tree quartet split (pct of all)		52.66	results/phylo/rooted/first_pass_all_loci_summary.tsv
