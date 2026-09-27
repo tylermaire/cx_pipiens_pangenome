@@ -132,7 +132,8 @@ from being redone because of a changed environment file or rule).
   kept as `results/phylo/iqtree_crash_v5.log` in the run archive, and its first
   and last lines as `results/phylo/iqtree_crash_v5_excerpt.log`.
 * **Shared transfer errors moved the root.** The first rooted tree, from all
-  6,846 five taxon loci, placed the root on the quinquefasciatus branch
+  6,831 five taxon loci with a trimmed alignment (6,846 loci in all), placed
+  the root on the quinquefasciatus branch
   (UFBoot 100). Split by gene model quality, the sites carrying that signal
   (pallens, molestus and pipiens derived, quinquefasciatus and the outgroup
   ancestral) came from loci whose models are not intact: 256 per locus where
@@ -151,6 +152,10 @@ from being redone because of a changed environment file or rule).
   intact loci, and `rooting_diagnostics` writes the comparison (Supp. Table
   S13). The four taxon site counts (`quartet_site_patterns.tsv`) are repeated
   on intact loci for the same reason.
+  Of the 4,592 intact loci, 4,017 have a rooted gene tree; the other 575
+  have at most two distinct protein sequences in their trimmed alignments
+  (100 with one, 475 with two; checked on the downloaded run, Sep 27), too
+  few for IQ-TREE to build a tree.
 * **CAFE5's P values changed the count of significant families by chance.**
   The run called 834 families significant, against 333 in V4, with nearly the
   same model (lambda 0.0449 against 0.0432). The difference is 572 families
