@@ -38,14 +38,37 @@ rule cafe5:
         }}
         """
 
+CAFE_PVALUES = str(config["cafe"].get("pvalues", "cafe")).lower()
+
+rule cafe_exact_pvalues:
+    """Exact family P values under the fitted CAFE5 model.
+
+    CAFE5 estimates each family's P value from 1,000 families it simulates
+    with an unseeded random number generator, so the estimates change from run
+    to run and every family with the same counts shares one estimate. On the
+    four taxon tree the distribution can be summed exactly; this rule does so
+    with CAFE5's definition and model (workflow/scripts/cafe_exact_pvalues.py)."""
+    input:
+        counts="results/cafe/gene_counts_filtered.tsv",
+        tree="results/cafe/ultrametric_tree.nwk",
+        cafe_dir="results/cafe/output"
+    output:
+        table="results/cafe/family_pvalues.tsv"
+    conda: "../envs/phylo.yaml"
+    script: "../scripts/cafe_exact_pvalues.py"
+
 rule parse_cafe_results:
-    """Extract significantly evolving gene families."""
-    input: "results/cafe/output"
+    """Extract significantly evolving gene families, by the exact P values
+    (config cafe: pvalues: exact) or by CAFE5's estimates ("cafe")."""
+    input:
+        cafe_dir="results/cafe/output",
+        pvalues=(["results/cafe/family_pvalues.tsv"] if CAFE_PVALUES == "exact" else [])
     output:
         significant="results/cafe/significant_families.tsv",
         summary="results/cafe/branch_summary.tsv"
     params:
-        pvalue=config["cafe"]["pvalue_threshold"]
+        pvalue=config["cafe"]["pvalue_threshold"],
+        source=CAFE_PVALUES
     conda: "../envs/phylo.yaml"
     script: "../scripts/parse_cafe.py"
 

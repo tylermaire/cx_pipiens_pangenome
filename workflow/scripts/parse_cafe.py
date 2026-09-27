@@ -20,6 +20,13 @@ Outputs:
 The binomial test replaces a hardcoded "p<2e-16 each branch" caption. That
 claim is not true of every dataset and must be read from the data.
 
+Family P values (V5): with params.source "exact", the P value of each family
+is the exact one from cafe_exact_pvalues.py (input.pvalues), and CAFE5's own
+simulated estimate is kept beside it as cafe_pvalue; with "cafe", CAFE5's
+estimate is used as before. CAFE5 estimates each P value from 1,000 simulated
+families with an unseeded random number generator, so its estimates differ
+between runs and every family with the same counts shares one estimate.
+
 Internal nodes appear in Gamma_clade_results.txt only as "<6>", "<7>". They are
 named here by the taxa below them (for example "Cx_pallens+Cx_quinquefasciatus"),
 read from the node IDs in Gamma_asr.tre, so the table can be published as it
@@ -38,8 +45,16 @@ try:
 except ImportError:
     binomtest = None
 
-cafe_dir = snakemake.input[0]
+cafe_dir = getattr(snakemake.input, "cafe_dir", None) or snakemake.input[0]
 pvalue_threshold = snakemake.params.pvalue
+source = str(getattr(snakemake.params, "source", "cafe") or "cafe").lower()
+pvalue_table = getattr(snakemake.input, "pvalues", None)
+if isinstance(pvalue_table, (list, tuple)):
+    pvalue_table = pvalue_table[0] if pvalue_table else None
+if source not in ("exact", "cafe"):
+    sys.exit(f"ERROR: params.source must be 'exact' or 'cafe', not {source!r}")
+if source == "exact" and not pvalue_table:
+    sys.exit("ERROR: exact P values requested but no input.pvalues table given")
 
 family_file = os.path.join(cafe_dir, "Gamma_family_results.txt")
 clade_file = os.path.join(cafe_dir, "Gamma_clade_results.txt")
@@ -65,10 +80,28 @@ if n_anon:
     print(f"WARNING: {n_anon}/{len(fam)} families have no identifier. Check that "
           f"format_cafe_input.py wrote the orthogroup id into the Desc column.")
 
+n_cafe_estimate = int((fam[pcol] < pvalue_threshold).sum())
+if source == "exact":
+    ex = pd.read_csv(pvalue_table, sep="\t", dtype={"orthogroup": str})
+    exact = dict(zip(ex["orthogroup"].str.strip(), ex["exact_pvalue"]))
+    ids = fam[idcol].astype(str).str.strip()
+    if set(ids) != set(exact):
+        sys.exit(f"ERROR: {pvalue_table} and {family_file} list different families "
+                 f"({len(set(ids) - set(exact))} only in CAFE5's results, "
+                 f"{len(set(exact) - set(ids))} only in the exact table)")
+    fam["cafe_pvalue"] = fam[pcol]
+    fam["exact_pvalue"] = ids.map(exact).astype(float)
+    fam[pcol] = fam["exact_pvalue"]
+    # CAFE5's y/n column follows its own estimate, not the P value used here
+    fam = fam.drop(columns=[c for c in fam.columns if c.lower().startswith("significant")])
+
 sig = fam[fam[pcol] < pvalue_threshold].copy()
 sig = sig.rename(columns={idcol: "orthogroup"})
 sig.to_csv(snakemake.output.significant, sep="\t", index=False)
-print(f"Significant (p < {pvalue_threshold}): {len(sig)} of {len(fam)} families")
+print(f"Significant (p < {pvalue_threshold}): {len(sig)} of {len(fam)} families "
+      f"({'exact P values' if source == 'exact' else 'CAFE5 estimates'})")
+if source == "exact":
+    print(f"  with CAFE5's simulated estimates instead: {n_cafe_estimate}")
 
 # ---- node names from the reconstructed tree -------------------------------
 def node_leaves(newick):

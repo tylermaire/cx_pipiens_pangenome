@@ -129,7 +129,8 @@ from being redone because of a changed environment file or rule).
   (`iqtree: concat_mrate: E,I,G,I+G` in `config.yaml`); in V4, with them
   allowed, FreeRate models were chosen for only 8 of 9,098 loci. Gene trees and
   the rooted tree keep the full model set. The IQ-TREE log of the failure is
-  kept as `results/phylo/iqtree_crash_v5.log`.
+  kept as `results/phylo/iqtree_crash_v5.log` in the run archive, and its first
+  and last lines as `results/phylo/iqtree_crash_v5_excerpt.log`.
 * **Shared transfer errors moved the root.** The first rooted tree, from all
   6,846 five taxon loci, placed the root on the quinquefasciatus branch
   (UFBoot 100). Split by gene model quality, the sites carrying that signal
@@ -150,6 +151,34 @@ from being redone because of a changed environment file or rule).
   intact loci, and `rooting_diagnostics` writes the comparison (Supp. Table
   S13). The four taxon site counts (`quartet_site_patterns.tsv`) are repeated
   on intact loci for the same reason.
+* **CAFE5's P values changed the count of significant families by chance.**
+  The run called 834 families significant, against 333 in V4, with nearly the
+  same model (lambda 0.0449 against 0.0432). The difference is 572 families
+  with one copy in one form of each pair and none in the other two (for
+  example pallens and pipiens), which all share one P value. CAFE5 estimates
+  each P value from 1,000 families it simulates per root size, with an
+  unseeded random number generator (`compute_pvalues(..., 1000)` in
+  `execute.cpp`), so the estimate carries an error of about 0.007 near 0.05.
+  It put these families at 0.042 in this run and at 0.054 in V4; the exact
+  value is 0.0555. In 20 further CAFE5 runs on the same counts, with lambda
+  and alpha fixed at the fitted values, the number of families with estimated
+  P < 0.05 ranged from 192 to 837 (median 237; above 800 in 4 of 20), and the
+  estimate for these families averaged 0.0561
+  (`docs/cafe5_reruns_v5.tsv`; CAFE5 built from the hahnlab/CAFE5 repository
+  at commit b9e3b2e, whose P value code is that of the 5.1.0 release the run
+  used). With four ingroup forms the distribution can be summed exactly, so
+  the workflow now computes the P values exactly under the fitted model, as
+  CAFE5 defines them (`cafe: pvalues: exact`, rule `cafe_exact_pvalues`,
+  `results/cafe/family_pvalues.tsv`), and keeps CAFE5's estimate beside each.
+  With exact P values 264 families are significant (334 in V4, whose
+  estimates agreed with the exact values to within 0.003 on average), and
+  the transfer control reads as in V4: 12 of 11,188 single copy families
+  (0.1%) against 182 of 1,108 multi copy families (16.4%), odds ratio 183.
+  The model, the tree and the per branch counts are CAFE5's and do not change.
+  The CAFE outputs, Figure 3, the values table and Supp. Table S8 were
+  rebuilt from the run's CAFE5 output with `patch_results.py --steps
+  cafe,values --values-sections cafe,parameters` and the figure and table
+  scripts; nothing upstream was rerun.
 
 On your own machine rather than AWS:
 

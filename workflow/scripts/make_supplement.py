@@ -813,6 +813,29 @@ def s8():
         {"m": "Families tested (present at the root)", "v": tb["n_families"]},
         {"m": "Significant families (P < 0.05)", "v": tb["n_significant"]},
     ]
+    fp_path = "results/cafe/family_pvalues.tsv"
+    sig_rows = tsv("results/cafe/significant_families.tsv")
+    exact = os.path.exists(path(fp_path)) and bool(sig_rows) and "exact_pvalue" in sig_rows[0]
+    flips = []
+    if exact:
+        fp = tsv(fp_path)
+        n_est = sum(float(r["cafe_pvalue"]) < 0.05 for r in fp)
+        model[-1]["m"] = "Significant families (exact P < 0.05)"
+        model += [
+            {"m": "Family P values", "v": "exact under the fitted model"},
+            {"m": "Families with CAFE5's simulated P < 0.05", "v": n_est},
+        ]
+        leaves = [k for k in fp[0] if k not in ("orthogroup", "cafe_pvalue", "exact_pvalue")]
+        groups = collections.OrderedDict()
+        for r in fp:
+            c, e = float(r["cafe_pvalue"]), float(r["exact_pvalue"])
+            if (c < 0.05) != (e < 0.05):
+                key = tuple(r[k] for k in leaves) + (c, e)
+                groups[key] = groups.get(key, 0) + 1
+        for key, n in sorted(groups.items(), key=lambda kv: -kv[1]):
+            d = {s: key[i] for i, s in enumerate(leaves)}
+            d.update({"n": n, "est": key[-2], "exact": key[-1]})
+            flips.append(d)
     br = tsv("results/cafe/branch_summary.tsv")
     for r in br:
         r["taxon"] = forms(r["taxon"]).replace("+", " + ")
@@ -850,13 +873,15 @@ def s8():
     tests = [{"m": lab, "v": tb[k], "f": f} for k, lab, f in labels]
     counts = {r["Family ID"]: r for r in tsv("results/cafe/gene_counts_filtered.tsv")}
     sig = []
-    for r in tsv("results/cafe/significant_families.tsv"):
+    for r in sig_rows:
         c = counts[r["orthogroup"]]
-        d = {"og": r["orthogroup"], "p": r["pvalue"]}
+        d = {"og": r["orthogroup"], "p": r["pvalue"], "est": r.get("cafe_pvalue", "")}
         for s in ORDER:
             d[s] = c[s]
         sig.append(d)
     sig.sort(key=lambda x: x["og"])
+    p_cols = ([("p", "P (exact)", "p"), ("est", "CAFE5 simulated P", "f3")] if exact
+              else [("p", "CAFE P", "f3")])
     blocks = [
         Block("(a) Model", [("m", "Measure", "text"), ("v", "Value", "gen")], model),
         Block("(b) Changes per branch",
@@ -877,11 +902,18 @@ def s8():
                ("net_contraction", "Net contraction", "int")], lin),
         Block("(e) Tests", [("m", "Measure", "text"), ("v", "Value", "gen")], tests),
         Block("(f) Significant families",
-              [("og", "Orthogroup", "text"), ("p", "CAFE P", "f3")] +
+              [("og", "Orthogroup", "text")] + p_cols +
               [(s, f"{FORM[s]} copies", "int") for s in ORDER], sig, autofilter=True),
     ]
+    if flips:
+        blocks.append(Block(
+            "(g) Count patterns called differently by the exact P and CAFE5's estimate",
+            [(s, f"{FORM[s]} copies", "int") for s in ORDER] +
+            [("n", "Families", "int"), ("est", "CAFE5 simulated P", "f3"),
+             ("exact", "P (exact)", "f4")], flips))
     blocks[4].row_formats = [t["f"] for t in tests]
-    blocks[0].row_formats = ["text", "text", "gen", "f5", "f5", "int", "int", "int"]
+    blocks[0].row_formats = (["text", "text", "gen", "f5", "f5", "int", "int", "int"] +
+                             (["text", "int"] if exact else []))
     n_in = int(float(tb["n_families_in_counts"]))
     n_tested = int(float(tb["n_families"]))
     rooted = os.path.exists(path("results/phylo/rooted/rooted_tree.treefile"))
@@ -903,11 +935,20 @@ def s8():
             "Total copies of each form over the tested families and its deficit relative to the "
             "reference, with CAFE's increases and decreases on its terminal branch. (e) Tests "
             f"comparing families with one and with two or more reference copies. (f) The {len(sig):,} "
-            "families with P < 0.05 and their copies per form; CAFE reports P to three decimals.",
+            + ("families with P < 0.05 and their copies per form. P values are exact under the "
+               "fitted model, as CAFE5 defines them (the probability, given the root size, of "
+               "counts at most as likely as those observed; the largest over root sizes). CAFE5 "
+               "estimates them from 1,000 simulated families per root size, to three decimals, "
+               "and its estimates change from run to run; they are shown beside the exact values. "
+               "(g) The count patterns whose call differs between the two; every family with the "
+               "same counts shares one P value." if exact else
+               "families with P < 0.05 and their copies per form; CAFE reports P to three "
+               "decimals."),
             "results/cafe/output/Gamma_results.txt; results/cafe/ultrametric_tree.nwk; "
             "results/cafe/branch_summary.tsv; results/cafe/transfer_bias_by_copy_number.tsv; "
             "results/cafe/transfer_bias_by_lineage.tsv; results/cafe/transfer_bias_summary.tsv; "
-            "results/cafe/significant_families.tsv; results/cafe/gene_counts_filtered.tsv",
+            "results/cafe/significant_families.tsv; results/cafe/gene_counts_filtered.tsv"
+            + ("; results/cafe/family_pvalues.tsv" if exact else ""),
             blocks)
 
 
