@@ -4,8 +4,10 @@
 # Built from results/ by the same scripts that can be run by hand from the
 # repository root (see each script's header). make_all_figures.R and
 # make_figures*.py drew the figures of the first submission; they are kept for
-# reference but are no longer part of the workflow. Figure 7 of that
-# submission (anvi'o) is made in the anvi'o interface, outside the workflow.
+# reference but are no longer part of the workflow. The anvi'o pangenome runs
+# outside the workflow (workflow/scripts/anvio_pangenome.sh); Figure 5 and
+# Supplementary Table S14 are drawn from its tables in results/anvio when they
+# are there, and skipped otherwise.
 
 REVISION_FIGURES = ["Figure_1_pangenome", "Figure_2_phylogeny", "Figure_3_copy_number",
                     "Figure_4_synteny"]
@@ -37,7 +39,8 @@ rule revision_figures:
 
 rule manuscript_tables:
     """Tables 1 to 4 (JSON read by the manuscript build) and the
-    supplementary tables workbook (S1 to S13)."""
+    supplementary tables workbook (S1 to S13, and S14 when results/anvio
+    holds the anvi'o tables)."""
     input:
         "results/manuscript_values.tsv",
         "results/pangenome/partitioned_orthogroups.tsv",

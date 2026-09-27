@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build Supplementary_Tables.xlsx (Supp. Tables S1 to S13) from the workflow outputs.
+"""Build Supplementary_Tables.xlsx (Supp. Tables S1 to S14) from the workflow outputs.
 
     python workflow/scripts/make_supplement.py [out.xlsx]
 
@@ -9,7 +9,8 @@ the outputs (results/manuscript_values.tsv for versions). The summed length
 of the three chromosome scale sequences falls back on V4 measurements of the
 synteny FASTA files when those files are absent. Each sheet names the files
 it was built from. S12 and S13 (the outgroup analyses, V5) are written when
-results/phylo/rooted and results/phylo/dstat hold their outputs. The
+results/phylo/rooted and results/phylo/dstat hold their outputs, and S14 (the
+anvi'o pangenome, run by hand) when results/anvio holds its tables. The
 outgroup is read from config/samples.tsv (or CX_SAMPLE_SHEET).
 """
 import collections
@@ -1438,12 +1439,159 @@ def s13():
             blocks)
 
 
+# ------------------------------------------------------------------ S14
+def s14():
+    """The anvi'o gene clusters and the OrthoFinder partition
+    (anvio_compare.py; anvi'o is run by hand, outside the workflow). None
+    when results/anvio lacks the tables."""
+    need = ["results/anvio/anvio_summary.tsv", "results/anvio/anvio_combinations.tsv",
+            "results/anvio/anvio_vs_orthofinder.tsv", "results/anvio/anvio_orf_by_class.tsv",
+            "results/anvio/anvio_one_form.tsv"]
+    missing = [p for p in need if not os.path.exists(path(p))]
+    if missing:
+        print(f"S14 skipped, missing: {', '.join(missing)}")
+        return None
+    S = {(r["section"], r["item"]): r["value"] for r in tsv("results/anvio/anvio_summary.tsv")}
+
+    def g(section, item):
+        return S[(section, item)]
+
+    def tool(name, fallback):
+        v = S.get(("versions", name), fallback)
+        return re.sub(r"^.*\(v(\S+)\)$", r"\1", v).split("-")[0] if name != "mcl" else v
+
+    measures = [
+        ("Ingroup proteins (one per gene, as in Supp. Table S3)", g("clusters", "input proteins"), "int"),
+        ("Proteins in gene clusters", g("clusters", "proteins in gene clusters"), "int"),
+        ("Proteins without a DIAMOND hit, left out of gene clusters",
+         g("not clustered", "proteins without a DIAMOND hit, left out of gene clusters"), "int"),
+        ("  their median length (residues)",
+         g("not clustered", "protein length, median (residues)"), "gen"),
+        ("  of them unassigned by OrthoFinder", g("not clustered", "OrthoFinder unassigned"), "int"),
+        ("Gene clusters", g("clusters", "gene clusters"), "int"),
+        ("  with genes of all four forms", g("clusters", "clusters in all four forms"), "int"),
+        ("  with genes of three forms", g("clusters", "clusters in three forms"), "int"),
+        ("  with genes of two forms", g("clusters", "clusters in two forms"), "int"),
+        ("  with genes of one form", g("clusters", "clusters in one form"), "int"),
+        ("Gene clusters with one gene of each form",
+         g("clusters", "clusters with one gene in each form"), "int"),
+        ("Genes per gene cluster, median", g("clusters", "genes per cluster, median"), "gen"),
+        ("Genes per gene cluster, largest", g("clusters", "genes per cluster, largest"), "int"),
+        ("Gene clusters identical to an orthogroup (ingroup genes)",
+         g("against OrthoFinder", "gene clusters identical to an orthogroup (ingroup genes)"), "int"),
+        ("Orthogroups whose genes fall in more than one gene cluster",
+         g("against OrthoFinder", "orthogroups whose genes fall in more than one gene cluster"), "int"),
+        ("Gene clusters holding genes of more than one orthogroup",
+         g("against OrthoFinder", "gene clusters holding genes of more than one orthogroup"), "int"),
+        ("Core orthogroups", g("against OrthoFinder", "core orthogroups"), "int"),
+        ("  whose genes are all in four form gene clusters",
+         g("against OrthoFinder", "core orthogroups whose genes are all in four form gene clusters"),
+         "int"),
+        ("Four form gene clusters whose genes are all in core orthogroups",
+         g("against OrthoFinder", "four form gene clusters whose genes are all in core orthogroups"),
+         "int"),
+        ("Clustered genes in the corresponding class and compartment (%)",
+         g("against OrthoFinder", "genes in the corresponding class and compartment (%)"), "pct1"),
+        ("Transferred models without a valid ORF",
+         g("reference gene", "transferred models without a valid ORF"), "int"),
+        ("  not in the gene cluster of their reference gene's model",
+         g("reference gene", "transferred models without a valid ORF | not in the gene cluster of "
+                             "the reference model"), "int"),
+        ("  not in the orthogroup of their reference gene's model",
+         g("reference gene", "transferred models without a valid ORF | not in the orthogroup of "
+                             "the reference model"), "int"),
+        ("Transferred models with a valid ORF",
+         g("reference gene", "transferred models with a valid ORF"), "int"),
+        ("  not in the gene cluster of their reference gene's model",
+         g("reference gene", "transferred models with a valid ORF | not in the gene cluster of "
+                             "the reference model"), "int"),
+        ("  not in the orthogroup of their reference gene's model",
+         g("reference gene", "transferred models with a valid ORF | not in the orthogroup of "
+                             "the reference model"), "int"),
+        ("Genes of one form gene clusters that are broken transfers, or reference models with a "
+         "broken transfer (%)",
+         g("one form clusters", "all forms | broken transfers or reference models with a broken "
+                                "transfer (%)"), "pct1"),
+    ]
+    mrows = [{"m": m, "v": v} for m, v, _ in measures]
+    label = {"qui": "quinquefasciatus", "pal": "pallens", "mol": "molestus", "pip": "pipiens"}
+    combos = tsv("results/anvio/anvio_combinations.tsv")
+    for r in combos:
+        r["combination"] = " + ".join(label[x.strip()] for x in r["combination"].split("+"))
+    xt = tsv("results/anvio/anvio_vs_orthofinder.tsv")
+    klass = {"all four": "All four forms", "two or three": "Two or three forms",
+             "one form": "One form"}
+    for r in xt:
+        r["anvio_class"] = klass[r["anvio_class"]]
+    orf = tsv("results/anvio/anvio_orf_by_class.tsv")
+    for r in orf:
+        r["anvio_class"] = klass[r["anvio_class"]]
+        r["form"] = forms(r["form"])
+    one = tsv("results/anvio/anvio_one_form.tsv")
+    for r in one:
+        r["form"] = forms(r["form"])
+    blocks = [
+        Block("(a) Gene clusters and the OrthoFinder partition",
+              [("m", "Measure", "text"), ("v", "Value", "gen")], mrows),
+        Block("(b) Gene clusters by the forms whose genes they contain",
+              [("combination", "Forms", "text"), ("n_forms", "Forms (n)", "int"),
+               ("n_clusters", "Gene clusters", "int"), ("n_genes", "Genes", "int")], combos),
+        Block("(c) Genes by gene cluster class and OrthoFinder compartment",
+              [("anvio_class", "Gene cluster class", "text"), ("core", "Core", "int"),
+               ("shell", "Shell", "int"), ("cloud", "Cloud", "int"),
+               ("unassigned", "Unassigned", "int"), ("total", "Total", "int")], xt),
+        Block("(d) Transferred models without a valid ORF by gene cluster class",
+              [("form", "Form", "text"), ("anvio_class", "Gene cluster class", "text"),
+               ("n_genes", "Genes", "int"), ("n_without_valid_orf", "Without a valid ORF", "int"),
+               ("pct_without_valid_orf", "Without a valid ORF (%)", "pct1")], orf),
+        Block("(e) One form gene clusters",
+              [("form", "Form", "text"), ("clusters", "Gene clusters", "int"),
+               ("genes", "Genes", "int"),
+               ("same_gene_in_another_form", "Same gene kept in another form", "int"),
+               ("refseq_model_not_clean", "RefSeq model partial or corrected", "int"),
+               ("orthofinder_core", "OrthoFinder core", "int"),
+               ("orthofinder_shell", "OrthoFinder shell", "int"),
+               ("orthofinder_cloud", "OrthoFinder cloud", "int"),
+               ("orthofinder_unassigned", "OrthoFinder unassigned", "int"),
+               ("without_valid_orf", "Without a valid ORF", "int")], one),
+    ]
+    blocks[0].row_formats = [f for _, _, f in measures]
+    return ("S14 anvi'o",
+            "Supp. Table S14. Anvi'o gene clusters and the OrthoFinder partition",
+            f"Gene clusters of the ingroup proteins of Supp. Table S3, from anvi'o "
+            f"{tool('anvio', '9')} (DIAMOND {tool('diamond', '2.2.8')}, minbit 0.5, MCL "
+            f"{tool('mcl', '22-282')} at inflation 10, FAMSA {tool('famsa', '2.2.2')} alignments; "
+            "workflow/scripts/anvio_pangenome.sh), compared "
+            "with the OrthoFinder partition by workflow/scripts/anvio_compare.py. A gene cluster's "
+            "class is the number of forms whose genes it contains: all four, two or three, or one. "
+            "Core, shell and cloud are the OrthoFinder compartments of Supp. Table S3, and "
+            "unassigned genes are those OrthoFinder placed in no orthogroup. (a) Anvi'o builds its "
+            "clustering graph from the DIAMOND hits, so proteins with no hit, not even to "
+            "themselves, are left out of gene clusters. The corresponding classes are all four "
+            "forms and core, two or three forms and shell, and one form and cloud or unassigned. "
+            "A transferred model is apart from its reference gene when it is not in the gene "
+            "cluster (or orthogroup) of the kept quinquefasciatus model of the same gene, "
+            "including when either is left out of gene clusters (or unassigned); a broken "
+            "transfer is a transferred model without a valid ORF. "
+            "(b) Every combination of forms (Fig. 5a). (c) Genes of the gene clusters (Fig. 5b). "
+            "(d) Liftoff's ORF check of the transferred models (Fig. 5c). (e) Genes of one form "
+            "gene clusters: same gene kept in another form counts genes whose reference gene "
+            "also has a kept model in another form; RefSeq model partial or corrected counts "
+            "genes whose reference model is partial or carries a RefSeq exception; the reference "
+            "models of quinquefasciatus carry no Liftoff ORF flags.",
+            "results/anvio/anvio_summary.tsv; results/anvio/anvio_combinations.tsv; "
+            "results/anvio/anvio_vs_orthofinder.tsv; results/anvio/anvio_orf_by_class.tsv; "
+            "results/anvio/anvio_one_form.tsv; results/anvio/anvio_gene_clusters.tsv.gz",
+            blocks)
+
+
 # ------------------------------------------------------------------ build
 def main():
     wb = Workbook()
     readme = wb.active
     readme.title = "README"
-    sheets = [s1(), s2(), s3(), s4(), s5(), s6(), s7(), s8(), s9(), s10(), s11(), s12(), s13()]
+    sheets = [s1(), s2(), s3(), s4(), s5(), s6(), s7(), s8(), s9(), s10(), s11(), s12(), s13(),
+              s14()]
     sheets = [x for x in sheets if x is not None]
     contents = []
     for name, title, caption, source, blocks in sheets:

@@ -233,3 +233,63 @@ the second near 0.
   `curl` added to `phylo.yaml` and the new `figures.yaml`; step 2 builds them.
 * IQ-TREE: the new rules use the options of the V4 rules and were tested with
   IQ-TREE 2.0.7; V4 ran IQ-TREE 3.1.3.
+
+## The anvi'o pangenome
+
+The anvi'o gene cluster pangenome runs outside the workflow, on the proteins
+OrthoFinder used (one per gene, `results/proteins`) and their coding sequences
+(`results/cds`):
+
+```bash
+THREADS=8 bash workflow/scripts/anvio_pangenome.sh
+```
+
+`anvio_inputs.py` makes one contig per gene with an external gene call that
+carries the protein itself, so anvi'o clusters those proteins rather than its
+own translations (3,258 to 3,328 transferred models per form have a coding
+sequence that is not a multiple of three and are flagged partial; one
+*pipiens* contig of 3 nt is padded with N to anvi'o's k-mer size of 4). The
+script then builds the contigs databases, the genomes storage (with
+`--gene-caller workflow`, the source named in the gene calls), and the
+pangenome (DIAMOND, minbit 0.5, MCL inflation 10, FAMSA), adds the default
+collection, summarizes it, and calls `anvio_compare.py`, which writes the
+tables in `results/anvio` (`anvio_*.tsv`, `anvio_gene_clusters.tsv.gz` and
+`versions.tsv`; the databases, inputs, pangenome and summary directories are
+not tracked). Figure 5 and Supplementary Table S14 are drawn from those
+tables, and `patch_results.py --steps values --values-sections anvio` puts
+them in `results/manuscript_values.tsv`. `anvio_compare.py` reads the
+annotation GFFs for the gene of each model and its ORF flag; without them it
+takes the same content from a table (`--gene-table`: sample, transcript, gene,
+valid_ORF, reference_partial, reference_exception). The V5 comparison ran
+where the GFFs were not at hand, from such a table made from the V5 GFFs with
+the same parsing; the per gene table `anvio_gene_clusters.tsv.gz` keeps the
+gene and ORF flag of every model it used.
+
+The V5 run (September 27) used anvi'o 9 (eunice) in a Python 3.10 virtual
+environment installed from PyPI, DIAMOND 2.2.8 (the version of the
+OrthoFinder run), MCL 22-282 and FAMSA 2.2.2, on two cores; the pangenome
+step took about 45 minutes, most of it the homogeneity indices of the gene
+clusters (`--skip-homogeneity` saves that time when the interactive display
+is not needed). Two problems to know about:
+
+* FAMSA 2.4.1 to 2.5.2 cannot read standard input, which is how anvi'o
+  passes sequences to it, so every gene cluster of two or more genes is left
+  unaligned; anvi-pan-genome only warns ("The alignment of sequences failed
+  for ...") and goes on. FAMSA 2.2.2 works.
+* anvi'o builds its MCL graph from the DIAMOND hits alone, so proteins with no
+  hit, not even to themselves, are left out of the gene clusters without a
+  warning: 99 of the 57,815 proteins, mostly fragments (median 12 residues),
+  97 of which OrthoFinder had also left unassigned. `anvio_compare.py`
+  reports them as not clustered.
+
+Result: 16,623 gene clusters, 9,465 of them with genes of all four forms and
+3,016 of one form; 97.9% of the genes in four form clusters are in core
+orthogroups, and 2,440 of the 2,445 transferred models in one form clusters
+lack a valid ORF.
+
+To view the pangenome in the anvi'o interface on a machine with a browser:
+
+```bash
+anvi-display-pan -p results/anvio/pan/Culex_pipiens_complex-PAN.db \
+                 -g results/anvio/CULEX-GENOMES.db     # add -I localhost under WSL
+```

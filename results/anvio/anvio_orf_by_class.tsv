@@ -1,0 +1,10 @@
+form	anvio_class	n_genes	n_without_valid_orf	pct_without_valid_orf
+Cx_pallens	all four	10685	2072	19.4
+Cx_pallens	two or three	2684	1434	53.4
+Cx_pallens	one form	714	712	99.7
+Cx_molestus	all four	10656	2390	22.4
+Cx_molestus	two or three	2530	1514	59.8
+Cx_molestus	one form	913	912	99.9
+Cx_pipiens	all four	10727	2323	21.7
+Cx_pipiens	two or three	2913	1599	54.9
+Cx_pipiens	one form	818	816	99.8

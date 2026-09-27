@@ -37,6 +37,10 @@ Usage, from the repository root with results/ holding the run:
 With only the tracked result tables at hand (the repository, not the run),
 the values step can redo single sections of results/manuscript_values.tsv:
     python workflow/scripts/patch_results.py --steps cafe,values --values-sections cafe,rooted,parameters
+
+The anvi'o section (run by hand with workflow/scripts/anvio_pangenome.sh)
+enters the table the same way:
+    python workflow/scripts/patch_results.py --steps values --values-sections anvio
 """
 
 import argparse
@@ -291,6 +295,7 @@ VALUE_SECTIONS = {
     "cafe": lambda mod, params: mod.cafe(),
     "rooted": lambda mod, params: mod.rooted(),
     "parameters": lambda mod, params: mod.parameters(dict(params["parameters"])),
+    "anvio": lambda mod, params: mod.anvio(),
 }
 
 
