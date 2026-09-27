@@ -1,0 +1,7 @@
+#Taxon_ID	Increase	Decrease
+<6>	53	0
+Cx_molestus<1>	131	1176
+Cx_pipiens<2>	158	746
+<7>	106	0
+Cx_pallens<3>	61	1049
+Cx_quinquefasciatus<4>	473	582

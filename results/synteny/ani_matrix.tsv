@@ -1,6 +1,6 @@
-sample	Cx_quinquefasciatus	Cx_pallens	Cx_molestus	Cx_pipiens	Cx_tarsalis
+sample	Cx_quinquefasciatus	Cx_pallens	Cx_molestus	Cx_pipiens	Cx_perexiguus
 Cx_quinquefasciatus	100.00	94.2200	93.1900	92.8000	NA
 Cx_pallens	94.2200	100.00	93.5500	93.3300	NA
 Cx_molestus	93.1900	93.5500	100.00	94.3500	NA
 Cx_pipiens	92.8000	93.3300	94.3500	100.00	NA
-Cx_tarsalis	NA	NA	NA	NA	100.00
+Cx_perexiguus	NA	NA	NA	NA	100.00

@@ -1,11 +1,11 @@
 {
     "parameters": {
-        "out_path": "/home/ubuntu/pangenome/results/busco_proteins",
+        "out_path": "/home/ubuntu/cx_pipiens_pangenome/results/busco_proteins",
         "cpu": "32",
         "force": "True",
         "restart": "False",
         "quiet": "False",
-        "download_path": "/home/ubuntu/pangenome/busco_downloads",
+        "download_path": "/home/ubuntu/cx_pipiens_pangenome/busco_downloads",
         "datasets_version": "odb10",
         "offline": "False",
         "download_base_url": "https://busco-data.ezlab.org/v5/data/",
@@ -20,11 +20,11 @@
         "tar": "False",
         "opt-out-run-stats": "False",
         "plot_percentages": "False",
-        "in": "/home/ubuntu/pangenome/results/proteins/Cx_pallens.fa",
+        "in": "/home/ubuntu/cx_pipiens_pangenome/results/proteins/Cx_pallens.fa",
         "out": "Cx_pallens",
         "mode": "proteins",
-        "lineage_dataset": "/home/ubuntu/pangenome/busco_downloads/lineages/diptera_odb10",
-        "main_out": "/home/ubuntu/pangenome/results/busco_proteins/Cx_pallens",
+        "lineage_dataset": "/home/ubuntu/cx_pipiens_pangenome/busco_downloads/lineages/diptera_odb10",
+        "main_out": "/home/ubuntu/cx_pipiens_pangenome/results/busco_proteins/Cx_pallens",
         "lineage_results_dir": "run_diptera_odb10",
         "domain": "eukaryota",
         "orthodb_version": "10.1"

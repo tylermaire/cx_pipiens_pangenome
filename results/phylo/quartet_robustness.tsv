@@ -1,10 +1,10 @@
 subset	n_gene_trees	n_concordant	pct_concordant	n_major	n_minor	major_share_of_discordant	binomial_p	ci95_low	ci95_high
-all gene trees	7646	4510	58.99	1752	1384	0.5587	5.348e-11	0.5411	0.5762
-internal branch above the minimum length	6383	4085	64.0	1346	952	0.5857	2.068e-16	0.5653	0.606
-internal branch at the minimum length	1263	425	33.65	406	432	0.4845	3.878e-01	0.4502	0.5189
-no terminal branch longer than 0.1	6563	4000	60.95	1458	1105	0.5689	3.314e-12	0.5494	0.5881
-a terminal branch longer than 0.1	1083	510	47.09	294	279	0.5131	5.587e-01	0.4713	0.5547
-loci with four intact models	4799	2936	61.18	1066	797	0.5722	4.984e-10	0.5494	0.5948
-loci with four intact models, internal branch above the minimum length	3897	2649	67.98	767	481	0.6146	5.377e-16	0.5869	0.6417
-loci with four intact models, UFBoot >= 95	1501	1311	87.34	155	35	0.8158	3.205e-19	0.7532	0.8682
-loci with a model that is not intact	2847	1574	55.29	686	587	0.5389	5.998e-03	0.511	0.5665
+all gene trees	7621	4491	58.93	1746	1384	0.5578	1.050e-10	0.5402	0.5753
+internal branch above the minimum length	6344	4056	63.93	1344	944	0.5874	6.136e-17	0.5669	0.6077
+internal branch at the minimum length	1277	435	34.06	402	440	0.4774	2.022e-01	0.4432	0.5118
+no terminal branch longer than 0.1	6556	3988	60.83	1457	1111	0.5674	9.224e-12	0.5479	0.5866
+a terminal branch longer than 0.1	1065	503	47.23	289	273	0.5142	5.269e-01	0.472	0.5563
+loci with four intact models	4798	2936	61.19	1065	797	0.572	5.719e-10	0.5491	0.5946
+loci with four intact models, internal branch above the minimum length	3882	2642	68.06	761	479	0.6137	1.109e-15	0.586	0.6409
+loci with four intact models, UFBoot >= 95	1497	1303	87.04	151	43	0.7784	2.820e-15	0.7133	0.8347
+loci with a model that is not intact	2823	1555	55.08	681	587	0.5371	8.983e-03	0.5092	0.5648

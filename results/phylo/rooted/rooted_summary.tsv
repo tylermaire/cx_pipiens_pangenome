@@ -1,0 +1,68 @@
+item	value
+loci: single_copy_in_all_taxa	6846
+loci: written	6846
+loci: removed_no_protein	0
+loci: removed_no_cds	0
+loci: removed_cds_mismatch	0
+loci: cds_translation_exact Cx_quinquefasciatus	6846
+loci: cds_translation_frame_not_0 Cx_quinquefasciatus	0
+loci: cds_translation_below_identity Cx_quinquefasciatus	0
+loci: cds_translation_exact Cx_pallens	6846
+loci: cds_translation_frame_not_0 Cx_pallens	0
+loci: cds_translation_below_identity Cx_pallens	0
+loci: cds_translation_exact Cx_molestus	6846
+loci: cds_translation_frame_not_0 Cx_molestus	0
+loci: cds_translation_below_identity Cx_molestus	0
+loci: cds_translation_exact Cx_pipiens	6846
+loci: cds_translation_frame_not_0 Cx_pipiens	0
+loci: cds_translation_below_identity Cx_pipiens	0
+loci: cds_translation_exact Cx_perexiguus	6846
+loci: cds_translation_frame_not_0 Cx_perexiguus	0
+loci: cds_translation_below_identity Cx_perexiguus	0
+loci: alignments	6846
+loci: written	6846
+loci: trimmed_protein_alignments_at_least_50_columns	6831
+rooted tree loci	intact
+loci with a trimmed alignment of at least 50 columns	6831
+of these, loci with four intact ingroup models	4592
+of these, loci left out of the rooted tree	2239
+concatenated alignment loci	4592
+concatenated alignment columns	2444417
+rooted ingroup topology	((Cx_molestus,Cx_pipiens),(Cx_pallens,Cx_quinquefasciatus));
+root position	between (Cx_molestus,Cx_pipiens) and (Cx_pallens,Cx_quinquefasciatus)
+(Cx_molestus,Cx_pipiens) UFBoot	100.0
+(Cx_molestus,Cx_pipiens) branch length	0.0020605825
+(Cx_molestus,Cx_pipiens) gCF	40.18
+(Cx_molestus,Cx_pipiens) gCF_N	1614
+(Cx_molestus,Cx_pipiens) gDF1	16.18
+(Cx_molestus,Cx_pipiens) gDF1_N	650
+(Cx_molestus,Cx_pipiens) gDF2	12.67
+(Cx_molestus,Cx_pipiens) gDF2_N	509
+(Cx_molestus,Cx_pipiens) gDFP	30.97
+(Cx_molestus,Cx_pipiens) gDFP_N	1244
+(Cx_molestus,Cx_pipiens) gN	4017
+(Cx_molestus,Cx_pipiens) sCF	58.26
+(Cx_molestus,Cx_pipiens) sDF1	22.81
+(Cx_molestus,Cx_pipiens) sDF2	18.93
+(Cx_molestus,Cx_pipiens) sN	7434.9
+(Cx_pallens,Cx_quinquefasciatus) UFBoot	100.0
+(Cx_pallens,Cx_quinquefasciatus) branch length	0.002079663
+(Cx_pallens,Cx_quinquefasciatus) gCF	35.5
+(Cx_pallens,Cx_quinquefasciatus) gCF_N	1426
+(Cx_pallens,Cx_quinquefasciatus) gDF1	14.29
+(Cx_pallens,Cx_quinquefasciatus) gDF1_N	574
+(Cx_pallens,Cx_quinquefasciatus) gDF2	30.25
+(Cx_pallens,Cx_quinquefasciatus) gDF2_N	1215
+(Cx_pallens,Cx_quinquefasciatus) gDFP	19.97
+(Cx_pallens,Cx_quinquefasciatus) gDFP_N	802
+(Cx_pallens,Cx_quinquefasciatus) gN	4017
+(Cx_pallens,Cx_quinquefasciatus) sCF	46.05
+(Cx_pallens,Cx_quinquefasciatus) sDF1	19.76
+(Cx_pallens,Cx_quinquefasciatus) sDF2	34.19
+(Cx_pallens,Cx_quinquefasciatus) sN	8177.81
+gene trees all	4017
+gene trees resolved	2150
+gene trees ufboot95	37
+gene trees without all five taxa	0
+gene trees matching the rooted species tree (pct of all)	21.81
+gene trees with the species tree quartet split (pct of all)	53.87

@@ -1,0 +1,16 @@
+rooted_topology	quartet_split	is_species_tree	has_species_tree_split	n_all	pct_all	n_resolved	pct_resolved	n_ufboot95	pct_ufboot95
+((Cx_molestus,Cx_pipiens),(Cx_pallens,Cx_quinquefasciatus));	Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus	True	True	876	21.81	563	26.19	23	62.16
+(((Cx_molestus,Cx_pipiens),Cx_pallens),Cx_quinquefasciatus);	Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus	False	True	538	13.39	381	17.72	7	18.92
+(((Cx_pallens,Cx_pipiens),Cx_molestus),Cx_quinquefasciatus);	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens	False	False	432	10.75	136	6.33	0	0.0
+(((Cx_pallens,Cx_quinquefasciatus),Cx_molestus),Cx_pipiens);	Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus	False	True	300	7.47	216	10.05	2	5.41
+(((Cx_pallens,Cx_quinquefasciatus),Cx_pipiens),Cx_molestus);	Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus	False	True	250	6.22	172	8.0	0	0.0
+(((Cx_molestus,Cx_pallens),Cx_pipiens),Cx_quinquefasciatus);	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus	False	False	245	6.1	118	5.49	1	2.7
+(((Cx_molestus,Cx_quinquefasciatus),Cx_pallens),Cx_pipiens);	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens	False	False	244	6.07	77	3.58	0	0.0
+(((Cx_molestus,Cx_pipiens),Cx_quinquefasciatus),Cx_pallens);	Cx_molestus+Cx_pipiens | Cx_pallens+Cx_quinquefasciatus	False	True	200	4.98	123	5.72	0	0.0
+(((Cx_pipiens,Cx_quinquefasciatus),Cx_molestus),Cx_pallens);	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus	False	False	195	4.85	60	2.79	0	0.0
+(((Cx_molestus,Cx_quinquefasciatus),Cx_pipiens),Cx_pallens);	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens	False	False	179	4.46	104	4.84	2	5.41
+(((Cx_pipiens,Cx_quinquefasciatus),Cx_pallens),Cx_molestus);	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus	False	False	157	3.91	38	1.77	0	0.0
+((Cx_molestus,Cx_quinquefasciatus),(Cx_pallens,Cx_pipiens));	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens	False	False	139	3.46	49	2.28	1	2.7
+(((Cx_molestus,Cx_pallens),Cx_quinquefasciatus),Cx_pipiens);	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus	False	False	106	2.64	43	2.0	0	0.0
+(((Cx_pallens,Cx_pipiens),Cx_quinquefasciatus),Cx_molestus);	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens	False	False	102	2.54	51	2.37	0	0.0
+((Cx_molestus,Cx_pallens),(Cx_pipiens,Cx_quinquefasciatus));	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus	False	False	54	1.34	19	0.88	1	2.7
