@@ -163,8 +163,8 @@ from being redone because of a changed environment file or rule).
   value is 0.0555. In 20 further CAFE5 runs on the same counts, with lambda
   and alpha fixed at the fitted values, the number of families with estimated
   P < 0.05 ranged from 192 to 837 (median 237; above 800 in 4 of 20), and the
-  estimate for these families averaged 0.0561
-  (`docs/cafe5_reruns_v5.tsv`; CAFE5 built from the hahnlab/CAFE5 repository
+  estimate for these families averaged 0.056
+  (`results/cafe/cafe5_reruns.tsv`, Supp. Table S8; CAFE5 built from the hahnlab/CAFE5 repository
   at commit b9e3b2e, whose P value code is that of the 5.1.0 release the run
   used). With four ingroup forms the distribution can be summed exactly, so
   the workflow now computes the P values exactly under the fitted model, as
