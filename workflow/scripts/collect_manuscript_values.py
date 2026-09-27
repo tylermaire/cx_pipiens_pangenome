@@ -275,6 +275,32 @@ def cafe():
     sig = read_tsv("results/cafe/significant_families.tsv")
     add("cafe", "significant_families", len(sig) if sig is not None else None,
         "results/cafe/significant_families.tsv")
+    fp_path = "results/cafe/family_pvalues.tsv"
+    fp = read_tsv(fp_path)
+    if fp:
+        exact_used = sig is not None and all("exact_pvalue" in r for r in sig)
+        add("cafe", "family P values", "exact" if exact_used else "CAFE5 estimates", fp_path)
+        cafe_p = [float(r["cafe_pvalue"]) for r in fp]
+        exact_p = [float(r["exact_pvalue"]) for r in fp]
+        add("cafe", "families with P < 0.05, exact", sum(p < 0.05 for p in exact_p), fp_path)
+        add("cafe", "families with P < 0.05, CAFE5 estimate", sum(p < 0.05 for p in cafe_p),
+            fp_path)
+        diff = [c - e for c, e in zip(cafe_p, exact_p)]
+        add("cafe", "CAFE5 estimate minus exact P, mean", round(sum(diff) / len(diff), 5), fp_path)
+        add("cafe", "CAFE5 estimate minus exact P, largest absolute",
+            round(max(abs(d) for d in diff), 5), fp_path)
+        flips = collections.Counter()
+        for r, c, e in zip(fp, cafe_p, exact_p):
+            if (c < 0.05) != (e < 0.05):
+                counts = ", ".join(f"{k.split('_', 1)[-1]} {v}" for k, v in r.items()
+                                   if k not in ("orthogroup", "cafe_pvalue", "exact_pvalue"))
+                flips[(counts, c, e)] += 1
+        add("cafe", "families whose call differs between exact P and CAFE5 estimate",
+            sum(flips.values()), fp_path)
+        for (counts, c, e), n in flips.most_common(8):
+            add("cafe", f"differing call: {counts} | families", n, fp_path)
+            add("cafe", f"differing call: {counts} | CAFE5 estimate, exact P",
+                f"{c:g}, {e:.4f}", fp_path)
     for path, section in (("results/cafe/branch_summary.tsv", "cafe_branches"),
                           ("results/cafe/transfer_bias_summary.tsv", "transfer_bias"),
                           ("results/cafe/transfer_bias_by_copy_number.tsv", "transfer_bias_bins"),

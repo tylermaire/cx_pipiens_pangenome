@@ -18,7 +18,8 @@ Steps, in default order:
   transfer    transfer_quality.py          (rule transfer_quality)
   quartet     quartet_asymmetry.py         (rule quartet_asymmetry)
   divergence  divergence_diagnostics.py    (rule divergence_diagnostics)
-  cafe        parse_cafe.py, then cafe_transfer_bias.py
+  cafe        cafe_exact_pvalues.py (with cafe: pvalues: exact), parse_cafe.py,
+              then cafe_transfer_bias.py
   synteny     synteny_summary.py           (rule synteny_summary)
   rooted      rooted_summary.py            (rule rooted_summary, V5)
   dstat       d_statistics.py              (rule d_statistics, V5)
@@ -32,6 +33,10 @@ tables, and alignments/trimmed and alignments/codon.
 Usage, from the repository root with results/ holding the run:
     python workflow/scripts/patch_results.py
     python workflow/scripts/patch_results.py --steps absence,cloud
+
+With only the tracked result tables at hand (the repository, not the run),
+the values step can redo single sections of results/manuscript_values.tsv:
+    python workflow/scripts/patch_results.py --steps cafe,values --values-sections cafe,parameters
 """
 
 import argparse
@@ -179,9 +184,17 @@ def step_divergence(cfg, all_s, ingroup, ref):
 
 
 def step_cafe(cfg, all_s, ingroup, ref):
+    source = str(cfg["cafe"].get("pvalues", "cafe")).lower()
+    if source == "exact":
+        run("cafe_exact_pvalues.py",
+            input={"counts": "results/cafe/gene_counts_filtered.tsv",
+                   "tree": "results/cafe/ultrametric_tree.nwk",
+                   "cafe_dir": "results/cafe/output"},
+            output={"table": "results/cafe/family_pvalues.tsv"})
     run("parse_cafe.py",
-        input=["results/cafe/output"],
-        params={"pvalue": cfg["cafe"]["pvalue_threshold"]},
+        input={"cafe_dir": "results/cafe/output",
+               "pvalues": ["results/cafe/family_pvalues.tsv"] if source == "exact" else []},
+        params={"pvalue": cfg["cafe"]["pvalue_threshold"], "source": source},
         output={"significant": "results/cafe/significant_families.tsv",
                 "summary": "results/cafe/branch_summary.tsv"})
     run("cafe_transfer_bias.py",
@@ -241,9 +254,14 @@ def step_dstat(cfg, all_s, ingroup, ref):
                 "per_locus": "results/phylo/dstat/d_statistics_per_locus.tsv"})
 
 
-def step_values(cfg, all_s, ingroup, ref):
+def value_params(cfg, all_s, ingroup, ref):
+    """params of rule manuscript_values (workflow/rules/report.smk)."""
     og = sample_column("is_outgroup", "true")[0]
-    params = {
+    iq = cfg["iqtree"]
+    mrate = f" -mrate {iq['concat_mrate']}" if iq.get("concat_mrate") else ""
+    rooted_loci = (cfg.get("rooted") or {}).get("loci", "intact")
+    exact = str(cfg["cafe"].get("pvalues", "cafe")).lower() == "exact"
+    return {
         "samples": all_s, "ingroup": ingroup, "reference": ref,
         "tools": ["liftoff", "gffread", "orthofinder", "diamond", "mafft", "trimal",
                   "iqtree", "cafe", "skani", "minimap2", "miniprot", "busco", "quast",
@@ -253,18 +271,72 @@ def step_values(cfg, all_s, ingroup, ref):
             "liftoff -sc (copy identity; inert without -copies)": cfg["liftoff"]["copy_identity"],
             "liftoff -copies / -polish": "not used",
             "orthofinder": f"-M {cfg['orthofinder']['method']} -S {cfg['orthofinder']['search']} -a 4",
-            "iqtree species tree": f"-p per locus partitions -m {cfg['iqtree']['model']} -bb {cfg['iqtree']['bootstrap']}",
+            "iqtree species tree": f"-p per locus partitions -m {iq['model']}{mrate} -bb {iq['bootstrap']}",
             "iqtree gene trees": "-m MFP -bb 1000, one per trimmed SCO",
             "concordance": "--gcf all_gene_trees.nwk --scf 100",
-            "cafe": f"-p -k {cfg['cafe']['n_gamma_categories']}; ingroup counts; species tree rooted with {og}; branch lengths assumed (tips 1, root branches 0.5 when the root falls between the two pairs)",
+            "cafe": f"-p -k {cfg['cafe']['n_gamma_categories']}; ingroup counts; species tree rooted with {og}; branch lengths assumed (tips 1, root branches 0.5 when the root falls between the two pairs); family P values " + ("exact under the fitted model, as CAFE5 defines them" if exact else "CAFE5 estimates from 1,000 simulated families"),
             "outgroup": f"{og} {cfg['outgroup']['accession']} ({cfg['outgroup']['assembly']}), own Ensembl gene set",
-            "rooted tree": f"five taxon single copy loci; MAFFT --auto, trimAl -automated1, alignments of at least 50 columns; iqtree -p per locus partitions -m {cfg['iqtree']['model']} -bb {cfg['iqtree']['bootstrap']} -o {og}; --gcf and --scf 100",
+            "rooted tree": f"five taxon single copy loci ({rooted_loci} loci: four intact ingroup models unless 'all'); MAFFT --auto, trimAl -automated1, alignments of at least 50 columns; iqtree -p per locus partitions -m {iq['model']} -bb {iq['bootstrap']} -o {og}; --gcf (gene trees of the same loci) and --scf 100",
             "D statistics": f"codon alignments (trimAl columns of the protein alignment); sites with A, C, G or T in all five taxa; weighted block jackknife over {int((cfg.get('dstat') or {}).get('block_size') or 5000000) // 1000000} Mb windows of the reference assembly",
             "busco lineage": cfg["busco"]["lineage"],
             "minimap2 synteny": "-x asm20 --secondary=no on the three longest sequences",
             "synteny inversions": "runs of >= 3 anchors spanning >= 100 kb after orientation normalisation",
             "absence validation": "miniprot --outn 1; minimap2 -x asm20 -N 1; hit id >= 0.80, protein cov >= 0.70, DNA cov >= 0.50; same gene protein identity >= 0.90",
         }}
+
+
+# Sections of collect_manuscript_values.py that --values-sections can redo
+# alone, each with the call that fills it.
+VALUE_SECTIONS = {
+    "cafe": lambda mod, params: mod.cafe(),
+    "parameters": lambda mod, params: mod.parameters(dict(params["parameters"])),
+}
+
+
+def splice_values(params, sections, path="results/manuscript_values.tsv"):
+    """Recompute only some sections of an existing values table.
+
+    For when results/ holds the tracked tables of a run but not everything the
+    full collector reads (alignments, gene models, conda environments). The
+    rows of the recomputed sections replace the old rows of the same
+    sections, in place; every other row is kept as it is."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "collect_manuscript_values", os.path.join(SCRIPTS, "collect_manuscript_values.py"))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    mod.ROWS.clear()
+    for name in sections:
+        VALUE_SECTIONS[name](mod, params)
+    new = list(mod.ROWS)
+    redone = {r["section"] for r in new}
+    fields = ["section", "item", "sample", "value", "source"]
+    with open(path) as fh:
+        old = list(csv.DictReader(fh, delimiter="\t"))
+    out, placed = [], set()
+    for r in old:
+        sec = r["section"]
+        if sec in redone:
+            if sec not in placed:
+                out.extend(x for x in new if x["section"] == sec)
+                placed.add(sec)
+            continue
+        out.append(r)
+    for sec in [s for s in dict.fromkeys(x["section"] for x in new) if s not in placed]:
+        out.extend(x for x in new if x["section"] == sec)
+    with open(path, "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=fields, delimiter="\t", lineterminator="\n")
+        w.writeheader()
+        w.writerows({k: r.get(k, "") for k in fields} for r in out)
+    print(f"\n=== {path}: sections {', '.join(sorted(redone))} recomputed "
+          f"({len(new)} rows); {len(out) - len(new)} rows kept ===", flush=True)
+
+
+def step_values(cfg, all_s, ingroup, ref, sections=None):
+    params = value_params(cfg, all_s, ingroup, ref)
+    if sections:
+        splice_values(params, sections)
+        return
     run("collect_manuscript_values.py", params=params,
         output=["results/manuscript_values.tsv"])
 
@@ -274,6 +346,10 @@ def main():
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--steps", default=",".join(STEPS),
                     help=f"comma separated, any of {','.join(STEPS)}")
+    ap.add_argument("--values-sections", default="",
+                    help="with the values step, recompute only these sections of the "
+                         f"existing results/manuscript_values.tsv (any of "
+                         f"{','.join(VALUE_SECTIONS)}) and keep the other rows")
     args = ap.parse_args()
     steps = [s.strip() for s in args.steps.split(",") if s.strip()]
     unknown = [s for s in steps if s not in STEPS]
@@ -284,9 +360,16 @@ def main():
     cfg = read_config()
     all_s, ingroup = samples()
     ref = cfg["reference"]["name"]
+    sections = [x.strip() for x in args.values_sections.split(",") if x.strip()]
+    bad = [x for x in sections if x not in VALUE_SECTIONS]
+    if bad:
+        sys.exit(f"unknown values sections: {bad}")
     for s in STEPS:
         if s in steps:
-            globals()[f"step_{s}"](cfg, all_s, ingroup, ref)
+            if s == "values":
+                step_values(cfg, all_s, ingroup, ref, sections)
+            else:
+                globals()[f"step_{s}"](cfg, all_s, ingroup, ref)
 
 
 if __name__ == "__main__":

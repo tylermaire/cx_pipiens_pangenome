@@ -28,7 +28,7 @@ Gene models from the *Cx. quinquefasciatus* RefSeq annotation are transferred to
 | `orthology.smk` | orthogroups, pangenome partition, cloud composition | OrthoFinder, DIAMOND |
 | `validation.smk` | tests of every absence implied by the partition | miniprot, minimap2 |
 | `phylogenomics.smk` | four taxon species tree, concordance and quartet tests; five taxon tree rooted with the outgroup; D statistics | MAFFT, trimAl, IQ-TREE |
-| `gene_families.smk` | gene family change on the rooted species tree, and the annotation transfer control | CAFE5 |
+| `gene_families.smk` | gene family change on the rooted species tree (family P values computed exactly under the fitted model), and the annotation transfer control | CAFE5 |
 | `synteny.smk` | whole genome identity and gene anchor synteny | skani, minimap2 |
 | `repeats.smk` | repeat library and masking | RepeatModeler2, RepeatMasker |
 | `functional.smk` | key gene families | eggNOG mapper |

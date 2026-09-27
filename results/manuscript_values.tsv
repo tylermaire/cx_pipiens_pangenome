@@ -2200,7 +2200,25 @@ loci	trimmed_fewer_than_4_distinct_total | value		3132	results/phylo/locus_accou
 cafe	lambda		0.044915757099474	results/cafe/output/Gamma_results.txt
 cafe	alpha		0.271136	results/cafe/output/Gamma_results.txt
 cafe	neg_log_likelihood		24770.5	results/cafe/output/Gamma_results.txt
-cafe	significant_families		834	results/cafe/significant_families.tsv
+cafe	significant_families		264	results/cafe/significant_families.tsv
+cafe	family P values		exact	results/cafe/family_pvalues.tsv
+cafe	families with P < 0.05, exact		264	results/cafe/family_pvalues.tsv
+cafe	families with P < 0.05, CAFE5 estimate		834	results/cafe/family_pvalues.tsv
+cafe	CAFE5 estimate minus exact P, mean		-0.00644	results/cafe/family_pvalues.tsv
+cafe	CAFE5 estimate minus exact P, largest absolute		0.03507	results/cafe/family_pvalues.tsv
+cafe	families whose call differs between exact P and CAFE5 estimate		574	results/cafe/family_pvalues.tsv
+cafe	differing call: molestus 0, pipiens 1, pallens 0, quinquefasciatus 1 | families		158	results/cafe/family_pvalues.tsv
+cafe	differing call: molestus 0, pipiens 1, pallens 0, quinquefasciatus 1 | CAFE5 estimate, exact P		0.042, 0.0555	results/cafe/family_pvalues.tsv
+cafe	differing call: molestus 0, pipiens 1, pallens 1, quinquefasciatus 0 | families		153	results/cafe/family_pvalues.tsv
+cafe	differing call: molestus 0, pipiens 1, pallens 1, quinquefasciatus 0 | CAFE5 estimate, exact P		0.042, 0.0555	results/cafe/family_pvalues.tsv
+cafe	differing call: molestus 1, pipiens 0, pallens 1, quinquefasciatus 0 | families		133	results/cafe/family_pvalues.tsv
+cafe	differing call: molestus 1, pipiens 0, pallens 1, quinquefasciatus 0 | CAFE5 estimate, exact P		0.042, 0.0555	results/cafe/family_pvalues.tsv
+cafe	differing call: molestus 1, pipiens 0, pallens 0, quinquefasciatus 1 | families		128	results/cafe/family_pvalues.tsv
+cafe	differing call: molestus 1, pipiens 0, pallens 0, quinquefasciatus 1 | CAFE5 estimate, exact P		0.042, 0.0555	results/cafe/family_pvalues.tsv
+cafe	differing call: molestus 5, pipiens 4, pallens 4, quinquefasciatus 7 | families		1	results/cafe/family_pvalues.tsv
+cafe	differing call: molestus 5, pipiens 4, pallens 4, quinquefasciatus 7 | CAFE5 estimate, exact P		0.054, 0.0487	results/cafe/family_pvalues.tsv
+cafe	differing call: molestus 3, pipiens 3, pallens 5, quinquefasciatus 2 | families		1	results/cafe/family_pvalues.tsv
+cafe	differing call: molestus 3, pipiens 3, pallens 5, quinquefasciatus 2 | CAFE5 estimate, exact P		0.059, 0.0480	results/cafe/family_pvalues.tsv
 cafe_branches	Cx_molestus+Cx_pipiens | node_label		<6>	results/cafe/branch_summary.tsv
 cafe_branches	Cx_molestus+Cx_pipiens | increase		53	results/cafe/branch_summary.tsv
 cafe_branches	Cx_molestus+Cx_pipiens | decrease		0	results/cafe/branch_summary.tsv
@@ -2238,26 +2256,26 @@ cafe_branches	Cx_quinquefasciatus | binomial_p		0.0008756734934605579	results/ca
 transfer_bias	n_families | value		12864	results/cafe/transfer_bias_summary.tsv
 transfer_bias	n_families_in_counts | value		13605	results/cafe/transfer_bias_summary.tsv
 transfer_bias	n_families_not_tested | value		741	results/cafe/transfer_bias_summary.tsv
-transfer_bias	n_significant | value		834	results/cafe/transfer_bias_summary.tsv
+transfer_bias	n_significant | value		264	results/cafe/transfer_bias_summary.tsv
 transfer_bias	reference | value		Cx_quinquefasciatus	results/cafe/transfer_bias_summary.tsv
 transfer_bias	n_families_single_copy | value		11188	results/cafe/transfer_bias_summary.tsv
 transfer_bias	n_families_multi_copy | value		1108	results/cafe/transfer_bias_summary.tsv
 transfer_bias	n_families_zero_ref_copy | value		568	results/cafe/transfer_bias_summary.tsv
-transfer_bias	n_significant_single_copy | value		298	results/cafe/transfer_bias_summary.tsv
-transfer_bias	n_significant_multi_copy | value		180	results/cafe/transfer_bias_summary.tsv
-transfer_bias	n_significant_zero_ref_copy | value		356	results/cafe/transfer_bias_summary.tsv
+transfer_bias	n_significant_single_copy | value		12	results/cafe/transfer_bias_summary.tsv
+transfer_bias	n_significant_multi_copy | value		182	results/cafe/transfer_bias_summary.tsv
+transfer_bias	n_significant_zero_ref_copy | value		70	results/cafe/transfer_bias_summary.tsv
 transfer_bias	retention_single_copy | value		0.9364	results/cafe/transfer_bias_summary.tsv
 transfer_bias	retention_multi_copy | value		0.7619	results/cafe/transfer_bias_summary.tsv
-transfer_bias	pct_significant_single_copy | value		2.664	results/cafe/transfer_bias_summary.tsv
-transfer_bias	pct_significant_multi_copy | value		16.245	results/cafe/transfer_bias_summary.tsv
-transfer_bias	pct_significant_zero_ref_copy | value		62.676	results/cafe/transfer_bias_summary.tsv
-transfer_bias	odds_ratio_multi_vs_single_copy | value		7.088	results/cafe/transfer_bias_summary.tsv
-transfer_bias	risk_ratio_multi_vs_single_copy | value		6.099	results/cafe/transfer_bias_summary.tsv
-transfer_bias	fisher_p_two_sided | value		2.76e-69	results/cafe/transfer_bias_summary.tsv
-transfer_bias	mean_deficit_significant | value		1.189	results/cafe/transfer_bias_summary.tsv
-transfer_bias	mean_deficit_not_significant | value		0.0816	results/cafe/transfer_bias_summary.tsv
-transfer_bias	mannwhitney_p_ref_copies_two_sided | value		2.35e-116	results/cafe/transfer_bias_summary.tsv
-transfer_bias	mannwhitney_p_deficit_two_sided | value		< 1e-300	results/cafe/transfer_bias_summary.tsv
+transfer_bias	pct_significant_single_copy | value		0.107	results/cafe/transfer_bias_summary.tsv
+transfer_bias	pct_significant_multi_copy | value		16.426	results/cafe/transfer_bias_summary.tsv
+transfer_bias	pct_significant_zero_ref_copy | value		12.324	results/cafe/transfer_bias_summary.tsv
+transfer_bias	odds_ratio_multi_vs_single_copy | value		183.048	results/cafe/transfer_bias_summary.tsv
+transfer_bias	risk_ratio_multi_vs_single_copy | value		153.145	results/cafe/transfer_bias_summary.tsv
+transfer_bias	fisher_p_two_sided | value		5.29e-179	results/cafe/transfer_bias_summary.tsv
+transfer_bias	mean_deficit_significant | value		1.9519	results/cafe/transfer_bias_summary.tsv
+transfer_bias	mean_deficit_not_significant | value		0.0954	results/cafe/transfer_bias_summary.tsv
+transfer_bias	mannwhitney_p_ref_copies_two_sided | value		< 1e-300	results/cafe/transfer_bias_summary.tsv
+transfer_bias	mannwhitney_p_deficit_two_sided | value		3.8e-175	results/cafe/transfer_bias_summary.tsv
 transfer_bias	per_lineage_pearson_r | value		0.9935	results/cafe/transfer_bias_summary.tsv
 transfer_bias	per_lineage_p | value		0.00655	results/cafe/transfer_bias_summary.tsv
 transfer_bias	n_lineages | value		4	results/cafe/transfer_bias_summary.tsv
@@ -2265,20 +2283,20 @@ transfer_bias	per_lineage_counts_scope | value		all families (Gamma_clade_result
 transfer_bias_bins	0 | n_families		568	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	0 | mean_lifted_copies		0.8938	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	0 | mean_deficit		-0.8938	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	0 | n_significant		356	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	0 | pct_significant		62.676	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	0 | n_significant		70	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	0 | pct_significant		12.324	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	1 | n_families		11188	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	1 | mean_lifted_copies		0.9364	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	1 | mean_retention		0.9364	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	1 | mean_deficit		0.0636	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	1 | n_significant		298	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	1 | pct_significant		2.664	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	1 | n_significant		12	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	1 | pct_significant		0.107	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	2 | n_families		738	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	2 | mean_lifted_copies		1.5537	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	2 | mean_retention		0.7769	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	2 | mean_deficit		0.4463	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	2 | n_significant		82	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	2 | pct_significant		11.111	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	2 | n_significant		83	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	2 | pct_significant		11.247	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	3-5 | n_families		303	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	3-5 | mean_lifted_copies		2.6194	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	3-5 | mean_retention		0.7374	results/cafe/transfer_bias_by_copy_number.tsv
@@ -2289,8 +2307,8 @@ transfer_bias_bins	6-10 | n_families		45	results/cafe/transfer_bias_by_copy_numb
 transfer_bias_bins	6-10 | mean_lifted_copies		5.0222	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	6-10 | mean_retention		0.7067	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	6-10 | mean_deficit		2.1111	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	6-10 | n_significant		14	results/cafe/transfer_bias_by_copy_number.tsv
-transfer_bias_bins	6-10 | pct_significant		31.111	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	6-10 | n_significant		15	results/cafe/transfer_bias_by_copy_number.tsv
+transfer_bias_bins	6-10 | pct_significant		33.333	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	11+ | n_families		22	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	11+ | mean_lifted_copies		13.6364	results/cafe/transfer_bias_by_copy_number.tsv
 transfer_bias_bins	11+ | mean_retention		0.712	results/cafe/transfer_bias_by_copy_number.tsv
@@ -5311,7 +5329,7 @@ parameters	orthofinder		-M msa -S diamond -a 4	config/config.yaml and workflow r
 parameters	iqtree species tree		-p per locus partitions -m MFP -mrate E,I,G,I+G -bb 1000	config/config.yaml and workflow rules
 parameters	iqtree gene trees		-m MFP -bb 1000, one per trimmed SCO	config/config.yaml and workflow rules
 parameters	concordance		--gcf all_gene_trees.nwk --scf 100	config/config.yaml and workflow rules
-parameters	cafe		-p -k 3; ingroup counts; species tree rooted with Cx_perexiguus; branch lengths assumed (tips 1, root branches 0.5 when the root falls between the two pairs)	config/config.yaml and workflow rules
+parameters	cafe		-p -k 3; ingroup counts; species tree rooted with Cx_perexiguus; branch lengths assumed (tips 1, root branches 0.5 when the root falls between the two pairs); family P values exact under the fitted model, as CAFE5 defines them	config/config.yaml and workflow rules
 parameters	outgroup		Cx_perexiguus GCA_964243045.1 (idCulPerx1.1), own Ensembl gene set	config/config.yaml and workflow rules
 parameters	rooted tree		five taxon single copy loci (intact loci: four intact ingroup models unless 'all'); MAFFT --auto, trimAl -automated1, alignments of at least 50 columns; iqtree -p per locus partitions -m MFP -bb 1000 -o Cx_perexiguus; --gcf (gene trees of the same loci) and --scf 100	config/config.yaml and workflow rules
 parameters	D statistics		codon alignments (trimAl columns of the protein alignment); sites with A, C, G or T in all five taxa; weighted block jackknife over 5 Mb windows of the reference assembly	config/config.yaml and workflow rules

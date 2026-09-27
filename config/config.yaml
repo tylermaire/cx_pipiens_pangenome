@@ -103,6 +103,16 @@ dstat:
 cafe:
   pvalue_threshold: 0.05
   n_gamma_categories: 3
+  # Family P values: "exact" or "cafe". CAFE5 estimates each P value from
+  # 1,000 families it simulates with an unseeded random number generator, so
+  # the estimates change from run to run (by about 0.007 near 0.05) and every
+  # family with the same counts shares one estimate. In the V5 run it put the
+  # 572 families with one copy in one form of each pair (none in the other
+  # two) at 0.042; their exact P is 0.0555, and V4's estimate was 0.054.
+  # "exact" sums the distribution exactly under the fitted model, with CAFE5's
+  # definition (four taxon tree with two pairs below the root only); "cafe"
+  # uses CAFE5's estimates.
+  pvalues: exact
  
 # -- Minimap2 genome alignment --
 minimap2:

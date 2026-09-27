@@ -54,6 +54,7 @@ rule manuscript_tables:
         "results/phylo/rooted/rooting_dstat_sets.tsv",
         "results/cafe/significant_families.tsv",
         "results/cafe/transfer_bias_summary.tsv",
+        (["results/cafe/family_pvalues.tsv"] if CAFE_PVALUES == "exact" else []),
         "results/synteny/ani_pairs.tsv",
         "results/synteny/synteny_summary.tsv",
         "results/synteny/chromosome_orientation.tsv",
