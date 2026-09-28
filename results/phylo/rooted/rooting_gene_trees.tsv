@@ -1,0 +1,36 @@
+locus_set	rank	rooted_topology	is_species_tree	n_resolved	pct_resolved	n_resolved_total
+all	1	((Cx_molestus,Cx_pipiens),(Cx_pallens,Cx_quinquefasciatus));	True	838	22.92	3656
+all	2	(((Cx_molestus,Cx_pipiens),Cx_pallens),Cx_quinquefasciatus);	False	640	17.51	3656
+all	3	(((Cx_pallens,Cx_quinquefasciatus),Cx_molestus),Cx_pipiens);	False	326	8.92	3656
+all	4	(((Cx_pallens,Cx_pipiens),Cx_molestus),Cx_quinquefasciatus);	False	308	8.42	3656
+all	5	(((Cx_molestus,Cx_pallens),Cx_pipiens),Cx_quinquefasciatus);	False	277	7.58	3656
+intact	1	((Cx_molestus,Cx_pipiens),(Cx_pallens,Cx_quinquefasciatus));	True	563	26.19	2150
+intact	2	(((Cx_molestus,Cx_pipiens),Cx_pallens),Cx_quinquefasciatus);	False	381	17.72	2150
+intact	3	(((Cx_pallens,Cx_quinquefasciatus),Cx_molestus),Cx_pipiens);	False	216	10.05	2150
+intact	4	(((Cx_pallens,Cx_quinquefasciatus),Cx_pipiens),Cx_molestus);	False	172	8.0	2150
+intact	5	(((Cx_pallens,Cx_pipiens),Cx_molestus),Cx_quinquefasciatus);	False	136	6.33	2150
+not intact	1	((Cx_molestus,Cx_pipiens),(Cx_pallens,Cx_quinquefasciatus));	True	275	18.26	1506
+not intact	2	(((Cx_molestus,Cx_pipiens),Cx_pallens),Cx_quinquefasciatus);	False	259	17.2	1506
+not intact	3	(((Cx_pallens,Cx_pipiens),Cx_molestus),Cx_quinquefasciatus);	False	172	11.42	1506
+not intact	4	(((Cx_molestus,Cx_pallens),Cx_pipiens),Cx_quinquefasciatus);	False	159	10.56	1506
+not intact	5	(((Cx_pallens,Cx_quinquefasciatus),Cx_molestus),Cx_pipiens);	False	110	7.3	1506
+identity >= 95%	1	((Cx_molestus,Cx_pipiens),(Cx_pallens,Cx_quinquefasciatus));	True	537	24.95	2152
+identity >= 95%	2	(((Cx_molestus,Cx_pipiens),Cx_pallens),Cx_quinquefasciatus);	False	365	16.96	2152
+identity >= 95%	3	(((Cx_pallens,Cx_quinquefasciatus),Cx_molestus),Cx_pipiens);	False	214	9.94	2152
+identity >= 95%	4	(((Cx_pallens,Cx_quinquefasciatus),Cx_pipiens),Cx_molestus);	False	186	8.64	2152
+identity >= 95%	5	(((Cx_pallens,Cx_pipiens),Cx_molestus),Cx_quinquefasciatus);	False	139	6.46	2152
+identity >= 98%	1	((Cx_molestus,Cx_pipiens),(Cx_pallens,Cx_quinquefasciatus));	True	38	23.6	161
+identity >= 98%	2	(((Cx_pallens,Cx_quinquefasciatus),Cx_molestus),Cx_pipiens);	False	18	11.18	161
+identity >= 98%	3	(((Cx_molestus,Cx_pipiens),Cx_pallens),Cx_quinquefasciatus);	False	18	11.18	161
+identity >= 98%	4	(((Cx_pallens,Cx_quinquefasciatus),Cx_pipiens),Cx_molestus);	False	16	9.94	161
+identity >= 98%	5	(((Cx_pallens,Cx_pipiens),Cx_molestus),Cx_quinquefasciatus);	False	13	8.07	161
+intact, identity >= 95%	1	((Cx_molestus,Cx_pipiens),(Cx_pallens,Cx_quinquefasciatus));	True	421	25.36	1660
+intact, identity >= 95%	2	(((Cx_molestus,Cx_pipiens),Cx_pallens),Cx_quinquefasciatus);	False	298	17.95	1660
+intact, identity >= 95%	3	(((Cx_pallens,Cx_quinquefasciatus),Cx_molestus),Cx_pipiens);	False	161	9.7	1660
+intact, identity >= 95%	4	(((Cx_pallens,Cx_quinquefasciatus),Cx_pipiens),Cx_molestus);	False	128	7.71	1660
+intact, identity >= 95%	5	(((Cx_pallens,Cx_pipiens),Cx_molestus),Cx_quinquefasciatus);	False	111	6.69	1660
+intact, identity >= 98%	1	((Cx_molestus,Cx_pipiens),(Cx_pallens,Cx_quinquefasciatus));	True	31	24.22	128
+intact, identity >= 98%	2	(((Cx_molestus,Cx_pipiens),Cx_pallens),Cx_quinquefasciatus);	False	16	12.5	128
+intact, identity >= 98%	3	(((Cx_pallens,Cx_quinquefasciatus),Cx_molestus),Cx_pipiens);	False	14	10.94	128
+intact, identity >= 98%	4	(((Cx_pallens,Cx_quinquefasciatus),Cx_pipiens),Cx_molestus);	False	11	8.59	128
+intact, identity >= 98%	5	(((Cx_pallens,Cx_pipiens),Cx_molestus),Cx_quinquefasciatus);	False	11	8.59	128

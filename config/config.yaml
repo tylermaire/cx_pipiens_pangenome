@@ -10,14 +10,23 @@ reference:
   name: Cx_quinquefasciatus
   accession: GCF_015732765.1
  
-# -- Outgroup for tree rooting --
+# -- Outgroup for rooting and the D statistics (V5) --
+# Culex (Culex) perexiguus, Pipiens Group, Univittatus Subgroup: outside the
+# Cx. pipiens complex. Chromosome level ERGA assembly idCulPerx1.1 (PacBio
+# HiFi with Hi-C scaffolding) with its own Ensembl gene set. V1 to V4 used
+# Cx. tarsalis CtarK1, a contig level assembly whose transferred gene models
+# were mostly broken.
+# download.smk takes the genome and the gene set from the Ensembl FTP (so
+# their sequence names match) and picks the newest gene set release under
+# ensembl_base. If Ensembl moves the files, put the full URLs of the gzipped
+# FASTA and GFF3 in genome_url and gff_url.
 outgroup:
-  name: Cx_tarsalis
-  # GCA_016859205.1 was reassigned to a Fusarium oxysporum genome. The real
-  # CtarK1 assembly (Main et al. 2021) is fetched from OSF by download.smk;
-  # the old accession is kept only to document the reassignment.
-  accession: OSF:mdwqx
-  superseded_accession: GCA_016859205.1
+  name: Cx_perexiguus
+  accession: GCA_964243045.1
+  assembly: idCulPerx1.1
+  ensembl_base: https://ftp.ebi.ac.uk/pub/ensemblorganisms/Culex_perexiguus/GCA_964243045.1
+  genome_url: ""
+  gff_url: ""
  
 # -- BUSCO parameters --
 busco:
@@ -25,8 +34,15 @@ busco:
   mode: genome
  
 # -- Liftoff annotation transfer --
+# Liftoff runs WITHOUT -copies and WITHOUT -polish, and with default
+# alignment coverage (-a 0.5). The two values below are passed as:
+#   -s  identity_threshold    child features (exons, CDS) must align at
+#                             >= this sequence identity for a gene to map
+#   -sc copy_identity         identity for extra copies; has no effect
+#                             unless -copies is given, so it is inert here
+# (copy_identity was previously named coverage_threshold, which it is not.)
 liftoff:
-  coverage_threshold: 0.95
+  copy_identity: 0.95
   identity_threshold: 0.90
  
 # -- OrthoFinder --
@@ -37,12 +53,66 @@ orthofinder:
 # -- IQ-TREE phylogenetics --
 iqtree:
   model: MFP
+  # Rate heterogeneity models ModelFinder may use for the four taxon
+  # concatenated tree (rule concat_and_tree). FreeRate (+R) models are left
+  # out: with them, IQ-TREE 3.1.3 stopped on the V5 matrix of 9,126 loci
+  # (assertion in ratefree.cpp, RateFree::initFromCatMinusOne). In V4, with
+  # FreeRate models allowed, they were chosen for 8 of 9,098 loci. Leave empty
+  # for the IQ-TREE default. Gene trees and the rooted tree keep the default.
+  concat_mrate: E,I,G,I+G
   bootstrap: 1000
  
+# -- Rooted analyses with the outgroup (V5) --
+# Loci of the rooted tree, its concordance factors and the rooted gene tree
+# counts: "intact" (the four ingroup models intact: the reference model
+# neither partial nor corrected by RefSeq, each transferred model with a
+# valid ORF) or "all". Transfers that share an error in two or three forms
+# (most often a reading frame shifted where RefSeq corrected the reference
+# model) make every misaligned codon look like a shared derived allele; with
+# "all", such loci moved the root to the quinquefasciatus branch in the first
+# V5 run (results/phylo/rooted/rooting_site_patterns.tsv). The D statistics
+# are reported on all loci and on intact loci either way.
+rooted:
+  loci: intact
+
+# -- D statistics (ABBA BABA) with the outgroup (V5) --
+# Planned tests, fixed before the run from the four taxon species tree
+# ((Cx_pallens, Cx_quinquefasciatus), (Cx_molestus, Cx_pipiens)), each as
+# [P1, P2, P3], with the outgroup as O. D > 0: P2 and P3 share more derived
+# alleles; D < 0: P1 and P3 do.
+# Gene flow between pallens and pipiens gives D < 0 in the first test and
+# D > 0 in the third, and usually D > 0 in the fourth too, because alleles
+# from the pallens lineage carry the history it shares with quinquefasciatus
+# (the simulation in tests/test_rooted_analyses.py shows both). Likewise gene
+# flow between quinquefasciatus and molestus gives D > 0 in the second test,
+# D < 0 in the fourth and usually D < 0 in the third. So the third and fourth
+# tests show which of molestus and pipiens took part, and the first two which
+# of pallens and quinquefasciatus.
+# A planned test the rooted tree contradicts is still run, flagged, and the
+# test the tree implies is added. Loci are grouped into windows of block_size
+# bp of the reference assembly for the block jackknife.
+dstat:
+  block_size: 5000000
+  tests:
+    - [Cx_pallens, Cx_quinquefasciatus, Cx_pipiens]
+    - [Cx_pallens, Cx_quinquefasciatus, Cx_molestus]
+    - [Cx_molestus, Cx_pipiens, Cx_pallens]
+    - [Cx_molestus, Cx_pipiens, Cx_quinquefasciatus]
+
 # -- CAFE5 gene family evolution --
 cafe:
   pvalue_threshold: 0.05
   n_gamma_categories: 3
+  # Family P values: "exact" or "cafe". CAFE5 estimates each P value from
+  # 1,000 families it simulates with an unseeded random number generator, so
+  # the estimates change from run to run (by about 0.007 near 0.05) and every
+  # family with the same counts shares one estimate. In the V5 run it put the
+  # 572 families with one copy in one form of each pair (none in the other
+  # two) at 0.042; their exact P is 0.0555, and V4's estimate was 0.054.
+  # "exact" sums the distribution exactly under the fitted model, with CAFE5's
+  # definition (four taxon tree with two pairs below the root only); "cafe"
+  # uses CAFE5's estimates.
+  pvalues: exact
  
 # -- Minimap2 genome alignment --
 minimap2:
@@ -51,6 +121,13 @@ minimap2:
 # -- RepeatMasker --
 repeatmasker:
   species: culex
+
+# -- Repeat library --
+# The RepeatModeler library depends only on the Cx. quinquefasciatus assembly,
+# so V5 reuses the V4 library (about 18 hours of RepeatModeler) from the
+# repository. Set prebuilt_library to "" to build it again.
+repeats:
+  prebuilt_library: data/repeat_library/custom_repeat_lib_V4.fa
  
 # -- Compute resources --
 # For c7i.24xlarge (96 vCPU, 192 GB RAM) — use most cores per rule and let

@@ -20,23 +20,42 @@ Three measurements:
 
   enrichment   whether families CAFE calls significantly evolving are the same
                families that lose copies in transfer. Reported as the
-               significance rate per copy-number bin, a Mann-Whitney test on
-               reference copy number and on transfer deficit, and an odds
-               ratio for multi-copy versus single-copy families.
+               significance rate per copy-number bin, two sided Mann-Whitney
+               tests on reference copy number and on transfer deficit (families
+               with at least one reference copy), and a two sided Fisher test
+               with odds ratio and risk ratio for multi-copy (2 or more
+               reference copies) against families with one reference copy.
+
+  zero copy    families with no reference copy get their own bin. Every
+               transferred model comes from a reference gene, so these families
+               exist only because transferred copies clustered apart from their
+               source; their significance rate is reported, not pooled with
+               single-copy families. (Pooling them is what produced the
+               earlier odds ratio of 32.4, which was labelled single-copy.)
 
   per-lineage  net CAFE contraction against each genome's total copy-number
                deficit relative to the reference. With four ingroup genomes
                this is four points and is reported as supporting rather than
-               primary evidence.
+               primary evidence. The per-lineage increase and decrease counts
+               come from Gamma_clade_results and cover ALL families, not only
+               the significant ones.
+
+Only families CAFE tested are analysed. CAFE drops families absent from every
+species on one side of the root (every cloud orthogroup, and shell
+orthogroups confined to one pair of forms), so they have no p value; counting
+them as non significant, as an earlier version did, inflated the denominators.
 
 Snakemake provides:
     input.counts   results/cafe/gene_counts_filtered.tsv
     input.sig      results/cafe/significant_families.tsv
     input.branch   results/cafe/branch_summary.tsv
+    input.cafe_dir results/cafe/output (Gamma_family_results.txt lists the
+                   families CAFE tested)
     params.reference, params.ingroup
     output.summary, output.bins, output.lineage
 """
 
+import os
 import sys
 
 import numpy as np
@@ -47,7 +66,12 @@ try:
 except ImportError:
     sys.exit("scipy required; add it to the rule's conda environment")
 
-BINS = [(1, 1), (2, 2), (3, 5), (6, 10), (11, 10_000)]
+BINS = [(0, 0), (1, 1), (2, 2), (3, 5), (6, 10), (11, 10_000)]
+
+
+def fmt_p(p):
+    """Format a p value; one that underflows to 0 is reported as a bound."""
+    return "< 1e-300" if p == 0 else f"{p:.3g}"
 
 
 def bin_label(lo, hi):
@@ -74,6 +98,20 @@ def main():
         sys.exit(f"{anon}/{len(sig_ids)} significant families have no identifier; "
                  f"format_cafe_input.py must write the orthogroup id into Desc.")
 
+    n_in_counts = len(d)
+    cafe_dir = getattr(snakemake.input, "cafe_dir", None)
+    if cafe_dir:
+        fam = os.path.join(cafe_dir, "Gamma_family_results.txt")
+        tested = {line.split("\t")[0].strip() for line in open(fam)
+                  if line.strip() and not line.startswith("#")}
+        untested_sig = sig_ids - tested
+        if untested_sig:
+            sys.exit(f"{len(untested_sig)} significant families are missing from {fam}")
+        d = d[d["orthogroup"].astype(str).isin(tested)].copy()
+    else:
+        print("WARNING: no CAFE output directory given; every family in the counts "
+              "table is treated as tested", file=sys.stderr)
+
     d["ref_copies"] = d[ref]
     d["mean_lifted"] = d[lifted].mean(axis=1)
     d["deficit"] = d["ref_copies"] - d["mean_lifted"]
@@ -88,7 +126,9 @@ def main():
         rows.append({
             "ref_copies": bin_label(lo, hi),
             "n_families": int(m.sum()),
-            "mean_retention": round(float(d.loc[m, "retention"].mean()), 4),
+            "mean_lifted_copies": round(float(d.loc[m, "mean_lifted"].mean()), 4),
+            "mean_retention": round(float(d.loc[m, "retention"].mean()), 4)
+                              if lo > 0 else float("nan"),
             "mean_deficit": round(float(d.loc[m, "deficit"].mean()), 4),
             "n_significant": int(d.loc[m, "is_sig"].sum()),
             "pct_significant": round(100.0 * float(d.loc[m, "is_sig"].mean()), 3),
@@ -96,13 +136,21 @@ def main():
     bins_df = pd.DataFrame(rows)
     bins_df.to_csv(snakemake.output.bins, sep="\t", index=False)
 
-    s, ns = d[d.is_sig], d[~d.is_sig]
-    _, p_copies = mannwhitneyu(s.ref_copies, ns.ref_copies, alternative="greater")
-    _, p_deficit = mannwhitneyu(s.deficit, ns.deficit, alternative="greater")
+    # deficit is defined against a reference copy, so the rank tests use only
+    # families that have one; zero-copy families are reported separately
+    has_ref = d.ref_copies >= 1
+    s, ns = d[has_ref & d.is_sig], d[has_ref & ~d.is_sig]
+    _, p_copies = mannwhitneyu(s.ref_copies, ns.ref_copies, alternative="two-sided")
+    _, p_deficit = mannwhitneyu(s.deficit, ns.deficit, alternative="two-sided")
     multi = d.ref_copies >= 2
+    single = d.ref_copies == 1
+    zero = d.ref_copies == 0
     table = [[int((multi & d.is_sig).sum()), int((multi & ~d.is_sig).sum())],
-             [int((~multi & d.is_sig).sum()), int((~multi & ~d.is_sig).sum())]]
-    odds, p_fisher = fisher_exact(table, alternative="greater")
+             [int((single & d.is_sig).sum()), int((single & ~d.is_sig).sum())]]
+    odds, p_fisher = fisher_exact(table, alternative="two-sided")
+    rate_multi = float(d.loc[multi, "is_sig"].mean())
+    rate_single = float(d.loc[single, "is_sig"].mean())
+    risk = rate_multi / rate_single if rate_single else float("inf")
 
     branch = pd.read_csv(snakemake.input.branch, sep="\t")
     branch = branch[branch["taxon"].isin(ingroup)]
@@ -126,36 +174,53 @@ def main():
     else:
         r_lin, p_lin = float("nan"), float("nan")
 
-    single = d[d.ref_copies == 1]
     summary = {
         "n_families": len(d),
+        "n_families_in_counts": n_in_counts,
+        "n_families_not_tested": n_in_counts - len(d),
         "n_significant": int(d.is_sig.sum()),
         "reference": ref,
-        "retention_single_copy": round(float(single.retention.mean()), 4),
+        "n_families_single_copy": int(single.sum()),
+        "n_families_multi_copy": int(multi.sum()),
+        "n_families_zero_ref_copy": int(zero.sum()),
+        "n_significant_single_copy": int((single & d.is_sig).sum()),
+        "n_significant_multi_copy": int((multi & d.is_sig).sum()),
+        "n_significant_zero_ref_copy": int((zero & d.is_sig).sum()),
+        "retention_single_copy": round(float(d.loc[single, "retention"].mean()), 4),
         "retention_multi_copy": round(float(d.loc[multi, "retention"].mean()), 4),
-        "pct_significant_single_copy": round(100.0 * float(single.is_sig.mean()), 3),
-        "pct_significant_multi_copy": round(100.0 * float(d.loc[multi, "is_sig"].mean()), 3),
+        "pct_significant_single_copy": round(100.0 * rate_single, 3),
+        "pct_significant_multi_copy": round(100.0 * rate_multi, 3),
+        "pct_significant_zero_ref_copy": round(100.0 * float(d.loc[zero, "is_sig"].mean()), 3)
+                                         if zero.any() else float("nan"),
+        "odds_ratio_multi_vs_single_copy": round(float(odds), 3),
+        "risk_ratio_multi_vs_single_copy": round(float(risk), 3),
+        "fisher_p_two_sided": fmt_p(p_fisher),
         "mean_deficit_significant": round(float(s.deficit.mean()), 4),
         "mean_deficit_not_significant": round(float(ns.deficit.mean()), 4),
-        "mannwhitney_p_ref_copies": f"{p_copies:.3g}",
-        "mannwhitney_p_deficit": f"{p_deficit:.3g}",
-        "odds_ratio_multicopy_significant": round(float(odds), 3),
-        "fisher_p": f"{p_fisher:.3g}",
+        "mannwhitney_p_ref_copies_two_sided": fmt_p(p_copies),
+        "mannwhitney_p_deficit_two_sided": fmt_p(p_deficit),
         "per_lineage_pearson_r": round(float(r_lin), 4),
-        "per_lineage_p": f"{p_lin:.3g}",
+        "per_lineage_p": fmt_p(p_lin),
         "n_lineages": len(lin_df),
+        "per_lineage_counts_scope": "all families (Gamma_clade_results)",
     }
     pd.DataFrame([summary]).T.reset_index().to_csv(
         snakemake.output.summary, sep="\t", index=False, header=["metric", "value"])
 
-    print(f"families {len(d)}, significant {d.is_sig.sum()}, reference {ref}\n")
+    print(f"families tested by CAFE {len(d)} of {n_in_counts}, significant "
+          f"{d.is_sig.sum()}, reference {ref}\n")
     print(bins_df.to_string(index=False))
     print(f"\nsignificance rate: single-copy {summary['pct_significant_single_copy']}%"
           f"  multi-copy {summary['pct_significant_multi_copy']}%"
-          f"  (OR {summary['odds_ratio_multicopy_significant']}, p {summary['fisher_p']})")
-    print(f"mean transfer deficit: significant {summary['mean_deficit_significant']}"
-          f"  vs other {summary['mean_deficit_not_significant']}"
-          f"  (p {summary['mannwhitney_p_deficit']})")
+          f"  (OR {summary['odds_ratio_multi_vs_single_copy']},"
+          f" RR {summary['risk_ratio_multi_vs_single_copy']},"
+          f" two sided p {summary['fisher_p_two_sided']})")
+    print(f"zero reference copy families: {summary['n_families_zero_ref_copy']},"
+          f" {summary['pct_significant_zero_ref_copy']}% significant")
+    print(f"mean transfer deficit (families with a reference copy): significant "
+          f"{summary['mean_deficit_significant']}  vs other "
+          f"{summary['mean_deficit_not_significant']}"
+          f"  (two sided p {summary['mannwhitney_p_deficit_two_sided']})")
     print(f"\nper-lineage net contraction vs copy deficit: "
           f"r = {summary['per_lineage_pearson_r']} over {len(lin_df)} lineages")
     print(lin_df.to_string(index=False))

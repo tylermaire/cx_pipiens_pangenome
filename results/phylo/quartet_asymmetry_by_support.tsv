@@ -1,0 +1,7 @@
+min_ufboot	n_gene_trees	n_concordant	pct_concordant	major_split	n_major	minor_split	n_minor	major_share_of_discordant	binomial_p	ci95_low	ci95_high
+0	7621	4491	58.93	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens	1746	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus	1384	0.5578	1.050e-10	0.5402	0.5753
+50	5933	3901	65.75	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens	1216	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus	816	0.5984	6.695e-19	0.5767	0.6198
+70	4904	3440	70.15	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens	898	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus	566	0.6134	3.693e-18	0.5879	0.6384
+80	3825	2838	74.2	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens	643	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus	344	0.6515	1.187e-21	0.6208	0.6812
+90	3022	2347	77.66	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens	444	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus	231	0.6578	1.897e-16	0.6206	0.6936
+95	2502	1969	78.7	Cx_molestus+Cx_quinquefasciatus | Cx_pallens+Cx_pipiens	349	Cx_molestus+Cx_pallens | Cx_pipiens+Cx_quinquefasciatus	184	0.6548	8.036e-13	0.6127	0.6951

@@ -1,3 +1,3 @@
-compartment	absent	clustered_elsewhere	paralog_only	unannotated_locus	weak
-cloud	21	53	1159	72	132
-shell	287	70	2517	249	949
+compartment	n_events	absent	paralog_only	clustered_elsewhere	unannotated_locus	weak	clustered_elsewhere_same_gene_id	clustered_elsewhere_overlap_identity	same_gene_id_unassigned	same_gene_id_median_protein_identity	pct_supported	pct_artifact	pct_weak
+cloud	792	8	13	701	23	47	701	0	137	0.232	2.7	91.4	5.9
+shell	4195	277	95	3114	138	571	3110	4	1153	0.204	8.9	77.5	13.6

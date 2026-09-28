@@ -11,3 +11,4 @@ dependencies:
   - iqtree>=2.2
   - fasttree
   - scipy
+  - curl

@@ -1,0 +1,16 @@
+combination	Cx_quinquefasciatus	Cx_pallens	Cx_molestus	Cx_pipiens	n_forms	n_clusters	n_genes
+qui + pal + mol + pip	1	1	1	1	4	9465	43398
+qui + pal + pip	1	1	0	1	3	843	2623
+qui + mol + pip	1	0	1	1	3	709	2241
+qui + pal + mol	1	1	1	0	3	505	1564
+pal + mol + pip	0	1	1	1	3	422	1354
+qui + pal	1	1	0	0	2	351	747
+mol + pip	0	0	1	1	2	339	698
+pal + pip	0	1	0	1	2	255	513
+qui + pip	1	0	0	1	2	253	531
+pal + mol	0	1	1	0	2	237	483
+qui + mol	1	0	1	0	2	228	469
+mol	0	0	1	0	1	905	913
+pip	0	0	0	1	1	808	818
+pal	0	1	0	0	1	700	714
+qui	1	0	0	0	1	603	650

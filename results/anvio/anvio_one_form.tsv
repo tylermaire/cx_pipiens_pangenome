@@ -1,0 +1,5 @@
+form	clusters	genes	same_gene_in_another_form	refseq_model_not_clean	orthofinder_core	orthofinder_shell	orthofinder_cloud	orthofinder_unassigned	without_valid_orf
+Cx_quinquefasciatus	603	650	585	200	333	113	150	54	NA
+Cx_pallens	700	714	714	62	229	98	16	371	712
+Cx_molestus	905	913	913	91	268	89	11	545	912
+Cx_pipiens	808	818	818	80	288	92	13	425	816
