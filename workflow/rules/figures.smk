@@ -2,9 +2,9 @@
 # Manuscript figures, tables and supplement
 # -------------------------------------------------------------------------
 # Built from results/ by the same scripts that can be run by hand from the
-# repository root (see each script's header). make_all_figures.R and
-# make_figures*.py drew the figures of the first submission; they are kept for
-# reference but are no longer part of the workflow. The anvi'o pangenome runs
+# repository root (see each script's header). The scripts that drew the
+# figures of the preprint are kept in archive/preprint/ and are not part of
+# the workflow. The anvi'o pangenome runs
 # outside the workflow (workflow/scripts/anvio_pangenome.sh); Figure 5 and
 # Supplementary Table S14 are drawn from its tables in results/anvio when they
 # are there, and skipped otherwise.
