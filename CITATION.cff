@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: "If you use this workflow, please cite it as below."
+title: "cx_pipiens_pangenome: workflow for the comparative genomics of four forms of the Culex pipiens complex"
+version: "3.0"
+doi: "10.5281/zenodo.23460827"
+date-released: 2026-10-17
+license: MIT
+repository-code: "https://github.com/tylermaire/cx_pipiens_pangenome"
+authors:
+  - family-names: Maire
+    given-names: Tyler
+    orcid: "https://orcid.org/0009-0007-6451-5408"
+    affiliation: "Indian River Mosquito Control District; University of Maryland Global Campus"
+  - family-names: Maley
+    given-names: Erin
+    orcid: "https://orcid.org/0009-0006-7639-7229"
+    affiliation: "University of Maryland Global Campus"
+  - family-names: Miller
+    given-names: Theresa
+    orcid: "https://orcid.org/0009-0009-3888-2970"
+    affiliation: "University of Maryland Global Campus"
+  - family-names: Kosinski
+    given-names: Kyle
+    orcid: "https://orcid.org/0000-0002-3272-9977"
+    affiliation: "Indian River Mosquito Control District"
+preferred-citation:
+  type: article
+  title: "Phylogenomic relationships and gene content of four forms of the Culex pipiens (Diptera: Culicidae) complex"
+  authors:
+    - family-names: Maire
+      given-names: Tyler
+    - family-names: Maley
+      given-names: Erin
+    - family-names: Miller
+      given-names: Theresa
+    - family-names: Kosinski
+      given-names: Kyle
+  doi: "10.64898/2026.07.25.740720"
+  journal: "bioRxiv"
+  year: 2026

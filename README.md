@@ -2,7 +2,9 @@
 
 Snakemake workflow and analysis code for a comparative genomic study of the *Culex pipiens* complex. We compare four chromosome scale assemblies (*Cx. quinquefasciatus*, *Cx. pipiens pallens*, and *Cx. pipiens* forms *molestus* and *pipiens*), rooted with *Cx. perexiguus* as the outgroup, and measure gene content, the species tree and its discordance, gene flow between forms, gene family change, genome identity, synteny and repeat content. Release `v3.0` holds the code and results of the version prepared for the *Journal of Medical Entomology*.
 
-Maire T., Maley E., Miller T., Kosinski K. *Phylogenomic relationships and gene content of four forms of the* Culex pipiens *L. (Diptera: Culicidae) complex.* Manuscript in preparation for the *Journal of Medical Entomology*.
+Maire T., Maley E., Miller T., Kosinski K. *Phylogenomic relationships and gene content of four forms of the* Culex pipiens *L. (Diptera: Culicidae) complex.* Manuscript submitted to the *Journal of Medical Entomology*.
+
+Code and data: Zenodo, https://doi.org/10.5281/zenodo.23460827
 
 An earlier version of the study was posted as a bioRxiv preprint (https://doi.org/10.64898/2026.07.25.740720). Its manuscript, figures and figure scripts are in [`archive/preprint/`](archive/preprint/).
 
@@ -75,7 +77,7 @@ snakemake -n --use-conda --cores 16          # dry run
 snakemake --use-conda --cores 16             # full run
 ```
 
-`docs/v5_run.md` gives the steps used for the V5 run on AWS, including which outputs to bring back. The RepeatModeler2 library depends only on the *Cx. quinquefasciatus* assembly, so V5 reuses the V4 library in `data/repeat_library/` (set `repeats: prebuilt_library: ""` in `config/config.yaml` to build it again, about 18 hours on 32 cores). Genomes are downloaded into `resources/` and are not tracked. Large outputs (transferred annotations, alignments, gene trees, CAFE output and the anvi'o databases) are not tracked either; they will be archived on Zenodo with the release.
+`docs/v5_run.md` gives the steps used for the V5 run on AWS, including which outputs to bring back. The RepeatModeler2 library depends only on the *Cx. quinquefasciatus* assembly, so V5 reuses the V4 library in `data/repeat_library/` (set `repeats: prebuilt_library: ""` in `config/config.yaml` to build it again, about 18 hours on 32 cores). Genomes are downloaded into `resources/` and are not tracked. Large outputs (transferred annotations, alignments, gene trees, CAFE output and the anvi'o databases) are not tracked either; they are archived with the release on Zenodo, together with a snapshot of the code ([doi:10.5281/zenodo.23460827](https://doi.org/10.5281/zenodo.23460827); all versions: [doi:10.5281/zenodo.23459856](https://doi.org/10.5281/zenodo.23459856)).
 
 ## Figures and tables
 
